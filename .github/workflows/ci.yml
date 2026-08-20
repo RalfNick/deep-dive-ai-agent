@@ -1,0 +1,94 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PIP_DISABLE_PIP_VERSION_CHECK: "1"
+    steps:
+      - name: Check out full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: |
+            requirements-docs.txt
+            chapter1/requirements.txt
+            chapter2/requirements.txt
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: book/package-lock.json
+
+      - name: Install Python dependencies
+        run: >-
+          python -m pip install
+          -r requirements-docs.txt
+          -r chapter1/requirements.txt
+          -r chapter2/requirements.txt
+
+      - name: Install book renderer dependencies
+        run: npm ci --prefix book
+
+      - name: Check publication safety and reachable Git history
+        run: python scripts/check_repository.py --root . --git-history
+
+      - name: Run repository contract tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Run Chapter 1 and Chapter 2 gates
+        run: |
+          python -m unittest discover -s chapter1/tests -v
+          python chapter2/sft_mask_demo.py
+          python chapter2/real_sft_evidence.py
+          python chapter2/preference_demo.py
+          python chapter2/sampling_demo.py
+          python chapter2/reasoning_budget_demo.py
+          python chapter2/structured_output_demo.py
+          python chapter2/model_selection_demo.py
+
+      - name: Run Chapter 3 through Chapter 6 tests
+        run: |
+          python -m unittest discover -s chapter3/tests -v
+          python -m unittest discover -s chapter4/tests -v
+          python -m unittest discover -s chapter5/tests -v
+          python -m unittest discover -s chapter6/tests -v
+
+      - name: Regenerate deterministic teaching reports
+        run: |
+          python chapter1/generate_report.py
+          python chapter3/run_all_experiments.py
+          python -m chapter4.experiments.boundary_matrix_demo
+          python -m chapter5.experiments.run_all --output chapter5/reports/context-experiments.json
+          python -m chapter6.experiments.run_all --output chapter6/reports
+
+      - name: Run book renderer contracts
+        run: npm test --prefix book
+
+      - name: Build Chinese reading site strictly
+        run: |
+          python scripts/build_site.py --root . --output _web
+          python -m mkdocs build --strict
