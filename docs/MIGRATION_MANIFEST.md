@@ -73,6 +73,7 @@
 | `book/reviews/chapter3-review.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 2883 | `b50ec985a2bc82b4ffe1d343daadb201c2387b41ccfef90ef9981c83d660b738` |
 | `book/reviews/chapter4-review-codex.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 13494 | `de1a9f3e24cc2b6a5d828be36b5a52295c82fca12a794ef6e721693fb1e4f121` |
 | `book/reviews/chapter4-review.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 5861 | `5e574b4a181bce0633baa3f09dfaee6bc242ac9bef968fff9e09e24503e6a764` |
+| `book/reviews/chapter5-design-review-codex.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 23087 | `b8e54d88b98ab09633da1eaf90f550aca46fe2bc523a19a0196dc3dfd9e8bd73` |
 | `book/reviews/chapter5-remediation-v1.1.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 5488 | `538348e640be5900743f39d638d95b780cf0b8728f504b59b62c2334ee376d01` |
 | `book/reviews/chapter5-review-codex.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 25319 | `2e726207db21b78875c0d6190e3a99d456a773a2790f10e35083a81b6edf2460` |
 | `book/reviews/chapter5-review.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 6916 | `fb626d7615ce04082968deb70c0a0526aa4abd92aaa591aa69e81e48ebef27b0` |
