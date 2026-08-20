@@ -1,0 +1,189 @@
+{
+  "chapter_version": "1.1",
+  "report_kind": "deterministic_mechanism_evidence",
+  "generated_at": "2026-08-13T00:00:00+08:00",
+  "environment": {
+    "python": "3.11.15",
+    "numpy": "2.2.6",
+    "tiktoken": "0.13.0"
+  },
+  "experiments": [
+    {
+      "id": "tokenizer",
+      "command": "python chapter1/token_demo.py \"深入浅出 AI Agent\"",
+      "controls": {
+        "encoding": "o200k_base",
+        "input": "深入浅出 AI Agent"
+      },
+      "observations": {
+        "characters": 13,
+        "utf8_bytes": 21,
+        "tokens": 5,
+        "token_ids": [
+          125047,
+          190269,
+          6390,
+          20837,
+          28237
+        ],
+        "token_bytes_reconstruct_input": true
+      },
+      "supports": "A concrete tokenizer maps one string to reversible byte spans and model token IDs.",
+      "does_not_prove": "Token counts from this sample generalize across languages, encodings, or models."
+    },
+    {
+      "id": "attention",
+      "command": "python chapter1/attention_demo.py",
+      "controls": {
+        "q_equals_k_equals_v": [
+          [
+            1.0,
+            0.0
+          ],
+          [
+            0.8,
+            0.2
+          ],
+          [
+            0.0,
+            1.0
+          ]
+        ],
+        "d_k": 2
+      },
+      "observations": {
+        "row_sums": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "future_weight_nonzero_count": 0,
+        "weights": [
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.5212,
+            0.4788,
+            0.0
+          ],
+          [
+            0.239233,
+            0.275575,
+            0.485192
+          ]
+        ],
+        "attended_values": [
+          [
+            1.0,
+            0.0
+          ],
+          [
+            0.90424,
+            0.09576
+          ],
+          [
+            0.459693,
+            0.540307
+          ]
+        ]
+      },
+      "supports": "A causal mask removes access to future positions in this inspectable attention calculation.",
+      "does_not_prove": "Attention weights fully explain a real model prediction."
+    },
+    {
+      "id": "bigram",
+      "command": "python chapter1/bigram_lm.py --max-new-chars 120 --seed 7",
+      "controls": {
+        "seed": 7,
+        "max_new_chars": 120,
+        "estimator": "next-character frequency counts"
+      },
+      "observations": {
+        "sample": "Agent 读取任务，选择工具，还要验证答案。\n模型生答案。\n可靠的 读取任务，运行动边界。\n工具，权限限制行动作，而不是堆满所有历史。\n上下文应该保留高价值信息，选动作，运行时执行动边界，运行动边界，观察结果，选择工具扩大能力边界。\n工具",
+        "generated_characters": 120
+      },
+      "supports": "A one-character context can produce local fragments while losing long-range consistency.",
+      "does_not_prove": "Modern Transformer language models behave like a character Bigram model."
+    },
+    {
+      "id": "sampling",
+      "command": "python chapter1/sampling_demo.py --draws 10000 --seed 7",
+      "controls": {
+        "logits": [
+          2.0,
+          1.0,
+          0.1
+        ],
+        "draws": 10000,
+        "seed": 7
+      },
+      "observations": [
+        {
+          "temperature": 0.5,
+          "probabilities": [
+            0.863777,
+            0.1169,
+            0.019323
+          ],
+          "observed_frequencies": [
+            0.8588,
+            0.124,
+            0.0172
+          ],
+          "entropy": 0.453668
+        },
+        {
+          "temperature": 1.0,
+          "probabilities": [
+            0.659001,
+            0.242433,
+            0.098566
+          ],
+          "observed_frequencies": [
+            0.654,
+            0.2434,
+            0.1026
+          ],
+          "entropy": 0.846738
+        },
+        {
+          "temperature": 2.0,
+          "probabilities": [
+            0.501688,
+            0.304289,
+            0.194023
+          ],
+          "observed_frequencies": [
+            0.4997,
+            0.3006,
+            0.1997
+          ],
+          "entropy": 1.026244
+        }
+      ],
+      "supports": "For fixed logits, a higher positive temperature flattens this toy distribution and increases entropy.",
+      "does_not_prove": "Temperature measures creativity or guarantees correctness in a real model."
+    },
+    {
+      "id": "coding_agent",
+      "command": "python chapter1/coding_agent_demo.py",
+      "controls": {
+        "remote_model_called": false,
+        "required_cases": [
+          "plain decimal",
+          "one leading yuan symbol",
+          "internal yuan symbol rejected"
+        ]
+      },
+      "observations": {
+        "broken_exit_code": 1,
+        "candidate_exit_code": 0
+      },
+      "supports": "A proposed patch becomes accepted only after an executor writes it and a verifier returns exit code 0.",
+      "does_not_prove": "A real LLM would propose this patch or that three tests establish production correctness."
+    }
+  ]
+}

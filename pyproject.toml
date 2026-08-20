@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "deep-dive-ai-agent"
+version = "0.1.0"
+description = "Companion repository for the open-source book 深入浅出 AI Agent"
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+license = { text = "Apache-2.0" }
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/RalfNick/deep-dive-ai-agent"
+Issues = "https://github.com/RalfNick/deep-dive-ai-agent/issues"

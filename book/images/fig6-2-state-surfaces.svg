@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">长任务连续性的七个状态表面</title>
+  <desc id="desc">七个状态表面是 Event Log、Workspace evidence、Cross-task Store、Working Set、CompactionArtifact、ContextPacket 与 RunCheckpoint。Commit boundary 是操作关系，不是状态表面。</desc>
+  <defs><style>.t{font-family:'Microsoft YaHei','PingFang SC',sans-serif;fill:#172033}.h{font-size:32px;font-weight:700}.s{font-size:17px;fill:#5d6b82}.k{font-size:19px;font-weight:700}.b{font-size:15px}.sm{font-size:13px;fill:#5d6b82}.desktop{display:inline}.mobile{display:none}.mobile-core-responsive{font-size:11px;font-weight:700}.mobile-source-responsive{font-size:9px;fill:#5d6b82}@media (max-width: 600px){.desktop{display:none}.mobile{display:inline}}</style></defs>
+  <rect width="1200" height="675" rx="24" fill="#f8fafc"/>
+  <g class="desktop" data-layout="desktop">
+  <text x="60" y="64" class="t h">状态不是一团“记忆”：七个状态表面，各有责任</text>
+  <text x="60" y="99" class="t s">先问它保存什么、活多久、由谁验证，再决定该不该进入下一轮 Context</text>
+
+  <rect x="54" y="132" width="1092" height="132" rx="22" fill="#edf4ff" stroke="#6e9fda" stroke-width="2"/>
+  <text x="78" y="164" class="t k">事实层 · 可追溯输入</text>
+  <rect x="78" y="181" width="316" height="61" rx="14" fill="#fff"/>
+  <text x="96" y="206" class="t k">Event Log</text><text x="96" y="228" class="t sm">追加事实 · cursor · 因果来源</text>
+  <rect x="414" y="181" width="316" height="61" rx="14" fill="#fff"/>
+  <text x="432" y="206" class="t k">Workspace evidence</text><text x="432" y="228" class="t sm">文件 / 测试 / digest · 外部真实状态</text>
+  <rect x="750" y="181" width="366" height="61" rx="14" fill="#fff"/>
+  <text x="768" y="206" class="t k">Cross-task Store</text><text x="768" y="228" class="t sm">独立保留 · 不自动等于当前任务事实</text>
+
+  <rect x="54" y="282" width="1092" height="132" rx="22" fill="#eaf9f7" stroke="#47aa9a" stroke-width="2"/>
+  <text x="78" y="314" class="t k">派生层 · 可重建语义</text>
+  <rect x="78" y="331" width="316" height="61" rx="14" fill="#fff"/>
+  <text x="96" y="356" class="t k">Working Set</text><text x="96" y="378" class="t sm">当前目标、约束、开放问题</text>
+  <rect x="414" y="331" width="316" height="61" rx="14" fill="#fff"/>
+  <text x="432" y="356" class="t k">CompactionArtifact</text><text x="432" y="378" class="t sm">结构化交接 · 来源与 locator</text>
+  <rect x="750" y="331" width="366" height="61" rx="14" fill="#172b5b"/>
+  <text x="768" y="356" font-family="Microsoft YaHei" font-size="19" font-weight="700" fill="#fff">ContextPacket</text><text x="768" y="378" font-family="Microsoft YaHei" font-size="13" fill="#cfe0ff">某一次模型调用的确定性输入</text>
+
+  <rect x="54" y="432" width="1092" height="132" rx="22" fill="#fff4e8" stroke="#e6a05b" stroke-width="2"/>
+  <text x="78" y="464" class="t k">执行层 · 恢复运行位置</text>
+  <rect x="78" y="481" width="486" height="61" rx="14" fill="#fff"/>
+  <text x="96" y="506" class="t k">RunCheckpoint</text><text x="96" y="528" class="t sm">next_step · cursor · artifact_id · 执行状态</text>
+  <rect x="584" y="481" width="532" height="61" rx="14" fill="#fff4e8" stroke="#e6a05b" stroke-dasharray="6 5"/>
+  <text x="602" y="506" class="t k">关系 · Commit boundary</text><text x="602" y="528" class="t sm">先持久化 Artifact，再由 Checkpoint 单向引用</text>
+
+  <rect x="153" y="593" width="894" height="44" rx="22" fill="#172b5b"/>
+  <text x="600" y="615" text-anchor="middle" font-family="Microsoft YaHei" font-size="16" fill="#fff">Checkpoint 回答“从哪里跑”；Artifact 与证据回答“基于什么继续判断”</text>
+  <text x="600" y="633" text-anchor="middle" font-family="Microsoft YaHei" font-size="12" fill="#cfe0ff">Commit boundary 是操作关系，不是状态表面</text>
+  </g>
+  <g class="mobile" data-layout="mobile" transform="scale(3.077)">
+    <text x="8" y="14" class="t mobile-core-responsive">七个状态表面：先分所有者，再谈“记忆”</text>
+    <text x="8" y="25" class="t mobile-source-responsive">事实可回放 · 语义可重建 · 执行位置可恢复</text>
+
+    <rect x="7" y="31" width="376" height="52" rx="6" fill="#edf4ff" stroke="#6e9fda" stroke-width="0.8"/>
+    <text x="13" y="43" class="t mobile-core-responsive">事实层</text>
+    <rect x="12" y="48" width="112" height="28" rx="4" fill="#fff"/>
+    <text x="17" y="59" class="t mobile-core-responsive">Event Log</text><text x="17" y="70" class="t mobile-source-responsive">事实 · cursor · 因果</text>
+    <rect x="130" y="48" width="116" height="28" rx="4" fill="#fff"/>
+    <text x="135" y="59" class="t mobile-core-responsive">Workspace</text><text x="135" y="70" class="t mobile-source-responsive">文件 · 测试 · digest</text>
+    <rect x="252" y="48" width="126" height="28" rx="4" fill="#fff"/>
+    <text x="257" y="59" class="t mobile-core-responsive">Cross-task Store</text><text x="257" y="70" class="t mobile-source-responsive">独立保留，不自动加载</text>
+
+    <rect x="7" y="88" width="376" height="52" rx="6" fill="#eaf9f7" stroke="#47aa9a" stroke-width="0.8"/>
+    <text x="13" y="100" class="t mobile-core-responsive">派生层</text>
+    <rect x="12" y="105" width="112" height="28" rx="4" fill="#fff"/>
+    <text x="17" y="116" class="t mobile-core-responsive">Working Set</text><text x="17" y="127" class="t mobile-source-responsive">近期高分辨率语义</text>
+    <rect x="130" y="105" width="116" height="28" rx="4" fill="#fff"/>
+    <text x="135" y="116" class="t mobile-core-responsive">Artifact</text><text x="135" y="127" class="t mobile-source-responsive">交接字段 + locator</text>
+    <rect x="252" y="105" width="126" height="28" rx="4" fill="#172b5b"/>
+    <text x="257" y="116" font-family="Microsoft YaHei" font-size="11" font-weight="700" fill="#fff">ContextPacket</text><text x="257" y="127" font-family="Microsoft YaHei" font-size="9" fill="#cfe0ff">某一轮确定性输入</text>
+
+    <rect x="7" y="145" width="376" height="45" rx="6" fill="#fff4e8" stroke="#e6a05b" stroke-width="0.8"/>
+    <text x="13" y="157" class="t mobile-core-responsive">执行层</text>
+    <rect x="12" y="162" width="154" height="21" rx="4" fill="#fff"/>
+    <text x="17" y="174" class="t mobile-core-responsive">RunCheckpoint</text>
+    <rect x="172" y="158" width="206" height="27" rx="4" fill="#fff4e8" stroke="#e6a05b" stroke-dasharray="2 2"/>
+    <text x="177" y="170" class="t mobile-core-responsive">Commit boundary</text>
+    <text x="177" y="181" class="t mobile-source-responsive">Artifact 先持久化 → Checkpoint 单向引用</text>
+
+    <rect x="24" y="197" width="342" height="16" rx="8" fill="#172b5b"/>
+    <text x="195" y="208" text-anchor="middle" font-family="Microsoft YaHei" font-size="9" fill="#fff">Checkpoint 管位置；Artifact 与证据管“基于什么继续”</text>
+  </g>
+</svg>

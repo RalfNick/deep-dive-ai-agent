@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">从语言模型到可工作的 Agent</title>
+  <desc id="desc">全书六阶段路线：语言模型、结构化生成、工具循环、上下文记忆、安全验证、评估进化。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#EEF2FF"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#0F172A" flood-opacity=".10"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#64748B"/>
+    </marker>
+    <style>
+      .font{font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",sans-serif}
+      .title{font-size:46px;font-weight:700;fill:#0F172A}
+      .sub{font-size:22px;fill:#475569}
+      .n{font-size:24px;font-weight:700;fill:#FFFFFF}
+      .h{font-size:27px;font-weight:700;fill:#0F172A}
+      .p{font-size:19px;fill:#475569}
+      .tag{font-size:17px;font-weight:600}
+    </style>
+  </defs>
+  <rect width="1600" height="900" rx="32" fill="url(#bg)"/>
+  <g class="font">
+    <text x="100" y="100" class="title">从语言模型到可工作的 Agent</text>
+    <text x="100" y="142" class="sub">全书不是功能清单，而是一条逐层增加能力与约束的工程路线</text>
+
+    <path d="M300 310 H395 M695 310 H790 M1090 310 H1185" stroke="#64748B" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+    <path d="M1325 450 V580" stroke="#64748B" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+    <path d="M1090 690 H1065" stroke="#64748B" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+    <path d="M660 690 H590" stroke="#64748B" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+
+    <g filter="url(#shadow)">
+      <rect x="100" y="220" width="200" height="180" rx="24" fill="#FFFFFF"/>
+      <circle cx="145" cy="265" r="25" fill="#4F46E5"/>
+      <text x="145" y="274" text-anchor="middle" class="n">1</text>
+      <text x="130" y="325" class="h">语言模型</text>
+      <text x="130" y="360" class="p">Token · Attention</text>
+      <text x="130" y="387" class="p">下一个 Token</text>
+    </g>
+    <g filter="url(#shadow)">
+      <rect x="395" y="220" width="300" height="180" rx="24" fill="#FFFFFF"/>
+      <circle cx="440" cy="265" r="25" fill="#6366F1"/>
+      <text x="440" y="274" text-anchor="middle" class="n">2</text>
+      <text x="425" y="325" class="h">结构化生成</text>
+      <text x="425" y="360" class="p">指令 · Schema · 采样</text>
+      <text x="425" y="387" class="p">让输出能被程序消费</text>
+    </g>
+    <g filter="url(#shadow)">
+      <rect x="790" y="220" width="300" height="180" rx="24" fill="#FFFFFF"/>
+      <circle cx="835" cy="265" r="25" fill="#0EA5E9"/>
+      <text x="835" y="274" text-anchor="middle" class="n">3</text>
+      <text x="820" y="325" class="h">工具执行循环</text>
+      <text x="820" y="360" class="p">决策 · 行动 · 观察</text>
+      <text x="820" y="387" class="p">模型第一次改变环境</text>
+    </g>
+    <g filter="url(#shadow)">
+      <rect x="1185" y="220" width="300" height="230" rx="24" fill="#FFFFFF"/>
+      <circle cx="1230" cy="265" r="25" fill="#14B8A6"/>
+      <text x="1230" y="274" text-anchor="middle" class="n">4</text>
+      <text x="1215" y="325" class="h">上下文与记忆</text>
+      <text x="1215" y="360" class="p">检索 · 文件 · 压缩</text>
+      <text x="1215" y="387" class="p">跨越长任务保持状态</text>
+      <rect x="1215" y="410" width="216" height="30" rx="15" fill="#CCFBF1"/>
+      <text x="1323" y="431" text-anchor="middle" class="tag" fill="#0F766E">Context Engineering</text>
+    </g>
+    <g filter="url(#shadow)">
+      <rect x="1090" y="600" width="395" height="180" rx="24" fill="#FFFFFF"/>
+      <circle cx="1135" cy="645" r="25" fill="#F59E0B"/>
+      <text x="1135" y="654" text-anchor="middle" class="n">5</text>
+      <text x="1120" y="705" class="h">安全、权限与验证</text>
+      <text x="1120" y="740" class="p">沙箱 · 审批 · 测试 · 恢复</text>
+      <text x="1120" y="767" class="p">让能力有边界，让完成有证据</text>
+    </g>
+    <g filter="url(#shadow)">
+      <rect x="660" y="600" width="395" height="180" rx="24" fill="#FFFFFF"/>
+      <circle cx="705" cy="645" r="25" fill="#F97316"/>
+      <text x="705" y="654" text-anchor="middle" class="n">6</text>
+      <text x="690" y="705" class="h">评估与持续进化</text>
+      <text x="690" y="740" class="p">Eval · Trace · 反馈 · 回归</text>
+      <text x="690" y="767" class="p">从一次成功走向稳定交付</text>
+    </g>
+
+    <rect x="100" y="618" width="475" height="145" rx="24" fill="#0F172A"/>
+    <text x="135" y="668" font-size="24" font-weight="700" fill="#FFFFFF">最终产物</text>
+    <text x="135" y="711" font-size="31" font-weight="700" fill="#A5B4FC">可运行、可评估、可约束的 Agent</text>
+    <text x="135" y="744" font-size="18" fill="#CBD5E1">Coding Agent · 企业知识库 · 多模态任务系统</text>
+  </g>
+</svg>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">监督微调中的标签移位与损失遮罩</title>
+  <desc id="desc">对话被拼成 Token 序列，目标向左移一位；用户部分可用负一百遮罩，只在助手回答目标上计算损失。</desc>
+  <defs><style>.f{font-family:"Microsoft YaHei","PingFang SC",sans-serif}.t{font-size:44px;font-weight:700;fill:#0F172A}.st{font-size:21px;fill:#475569}.h{font-size:25px;font-weight:700;fill:#0F172A}.p{font-size:19px;fill:#475569}.tok{font-size:19px;font-weight:700}</style></defs>
+  <rect width="1600" height="900" rx="32" fill="#F8FAFC"/>
+  <g class="f">
+    <text x="80" y="88" class="t">同一段对话，怎样定义损失，决定模型被要求模仿什么</text>
+    <text x="80" y="130" class="st">位置 t 的输入预测位置 t+1 的目标；assistant-only loss 把提示部分设为 IGNORE_INDEX</text>
+    <text x="90" y="230" class="h">输入 Token</text>
+    <g transform="translate(280 180)">
+      <rect x="0" y="0" width="150" height="90" rx="18" fill="#DBEAFE" stroke="#3B82F6" stroke-width="2"/><text x="75" y="55" text-anchor="middle" class="tok" fill="#1D4ED8">&lt;user&gt;</text>
+      <rect x="165" y="0" width="150" height="90" rx="18" fill="#DBEAFE" stroke="#3B82F6" stroke-width="2"/><text x="240" y="55" text-anchor="middle" class="tok" fill="#1D4ED8">修复</text>
+      <rect x="330" y="0" width="150" height="90" rx="18" fill="#DBEAFE" stroke="#3B82F6" stroke-width="2"/><text x="405" y="55" text-anchor="middle" class="tok" fill="#1D4ED8">价格</text>
+      <rect x="495" y="0" width="165" height="90" rx="18" fill="#EDE9FE" stroke="#8B5CF6" stroke-width="2"/><text x="578" y="55" text-anchor="middle" class="tok" fill="#6D28D9">&lt;assistant&gt;</text>
+      <rect x="675" y="0" width="150" height="90" rx="18" fill="#EDE9FE" stroke="#8B5CF6" stroke-width="2"/><text x="750" y="55" text-anchor="middle" class="tok" fill="#6D28D9">先</text>
+      <rect x="840" y="0" width="150" height="90" rx="18" fill="#EDE9FE" stroke="#8B5CF6" stroke-width="2"/><text x="915" y="55" text-anchor="middle" class="tok" fill="#6D28D9">运行</text>
+      <rect x="1005" y="0" width="150" height="90" rx="18" fill="#EDE9FE" stroke="#8B5CF6" stroke-width="2"/><text x="1080" y="55" text-anchor="middle" class="tok" fill="#6D28D9">测试</text>
+    </g>
+    <text x="90" y="395" class="h">下一 Token 目标</text>
+    <g transform="translate(280 345)">
+      <rect x="0" y="0" width="150" height="90" rx="18" fill="#DBEAFE"/><text x="75" y="55" text-anchor="middle" class="tok" fill="#1D4ED8">修复</text>
+      <rect x="165" y="0" width="150" height="90" rx="18" fill="#DBEAFE"/><text x="240" y="55" text-anchor="middle" class="tok" fill="#1D4ED8">价格</text>
+      <rect x="330" y="0" width="150" height="90" rx="18" fill="#EDE9FE"/><text x="405" y="55" text-anchor="middle" class="tok" fill="#6D28D9">&lt;assistant&gt;</text>
+      <rect x="495" y="0" width="165" height="90" rx="18" fill="#EDE9FE"/><text x="578" y="55" text-anchor="middle" class="tok" fill="#6D28D9">先</text>
+      <rect x="675" y="0" width="150" height="90" rx="18" fill="#EDE9FE"/><text x="750" y="55" text-anchor="middle" class="tok" fill="#6D28D9">运行</text>
+      <rect x="840" y="0" width="150" height="90" rx="18" fill="#EDE9FE"/><text x="915" y="55" text-anchor="middle" class="tok" fill="#6D28D9">测试</text>
+      <rect x="1005" y="0" width="150" height="90" rx="18" fill="#EDE9FE"/><text x="1080" y="55" text-anchor="middle" class="tok" fill="#6D28D9">&lt;eos&gt;</text>
+    </g>
+    <text x="90" y="560" class="h">用于损失的 Label</text>
+    <g transform="translate(280 510)">
+      <rect x="0" y="0" width="150" height="90" rx="18" fill="#E2E8F0"/><text x="75" y="55" text-anchor="middle" class="tok" fill="#64748B">-100</text>
+      <rect x="165" y="0" width="150" height="90" rx="18" fill="#E2E8F0"/><text x="240" y="55" text-anchor="middle" class="tok" fill="#64748B">-100</text>
+      <rect x="330" y="0" width="150" height="90" rx="18" fill="#DDD6FE" stroke="#8B5CF6" stroke-width="2"/><text x="405" y="55" text-anchor="middle" class="tok" fill="#6D28D9">13</text>
+      <rect x="495" y="0" width="165" height="90" rx="18" fill="#DDD6FE" stroke="#8B5CF6" stroke-width="2"/><text x="578" y="55" text-anchor="middle" class="tok" fill="#6D28D9">14</text>
+      <rect x="675" y="0" width="150" height="90" rx="18" fill="#DDD6FE" stroke="#8B5CF6" stroke-width="2"/><text x="750" y="55" text-anchor="middle" class="tok" fill="#6D28D9">15</text>
+      <rect x="840" y="0" width="150" height="90" rx="18" fill="#DDD6FE" stroke="#8B5CF6" stroke-width="2"/><text x="915" y="55" text-anchor="middle" class="tok" fill="#6D28D9">16</text>
+      <rect x="1005" y="0" width="150" height="90" rx="18" fill="#DDD6FE" stroke="#8B5CF6" stroke-width="2"/><text x="1080" y="55" text-anchor="middle" class="tok" fill="#6D28D9">17</text>
+    </g>
+    <rect x="205" y="705" width="1190" height="100" rx="24" fill="#0F172A"/>
+    <text x="800" y="746" text-anchor="middle" font-size="21" font-weight="700" fill="white">遮罩位置仍参与前向计算、提供上下文，但不直接贡献该位置的交叉熵</text>
+    <text x="800" y="782" text-anchor="middle" font-size="18" fill="#CBD5E1">模板边界、截断和多轮拼接一旦错位，模型学到的行为也会错位</text>
+  </g>
+</svg>

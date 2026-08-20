@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">模型 API 是类型化事件流而不只是字符串</title>
+  <desc id="desc">一次响应可以含推理项、文本消息、结构化对象、工具调用和拒绝。应用负责分派、执行、校验与状态管理。</desc>
+  <defs><filter id="s"><feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#0F172A" flood-opacity=".10"/></filter><marker id="a" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#64748B"/></marker><style>.f{font-family:"Microsoft YaHei","PingFang SC",sans-serif}.t{font-size:44px;font-weight:700;fill:#0F172A}.st{font-size:21px;fill:#475569}.h{font-size:26px;font-weight:700;fill:#0F172A}.p{font-size:18px;fill:#475569}.tag{font-size:18px;font-weight:700}</style></defs>
+  <rect width="1600" height="900" rx="32" fill="#F8FAFC"/>
+  <g class="f">
+    <text x="80" y="88" class="t">现代模型 API 返回的是“类型化事件”，不只是一个 answer 字符串</text>
+    <text x="80" y="130" class="st">先按 item / content type 分派，再做结构、语义、权限与执行校验</text>
+    <g filter="url(#s)"><rect x="70" y="245" width="300" height="340" rx="28" fill="#EEF2FF" stroke="#6366F1" stroke-width="3"/><text x="115" y="305" class="h">请求</text><text x="115" y="370" class="p">input / messages</text><text x="115" y="410" class="p">model + effort</text><text x="115" y="450" class="p">tools + schemas</text><text x="115" y="490" class="p">state / previous id</text><rect x="110" y="525" width="220" height="42" rx="13" fill="#4F46E5"/><text x="220" y="553" text-anchor="middle" class="tag" fill="white">声明本轮能力边界</text></g>
+    <path d="M370 415H455" stroke="#64748B" stroke-width="4" marker-end="url(#a)"/>
+    <g filter="url(#s)"><rect x="455" y="205" width="310" height="420" rx="28" fill="#ECFEFF" stroke="#06B6D4" stroke-width="3"/><text x="500" y="265" class="h">模型服务</text><text x="500" y="330" class="p">组织上下文</text><text x="500" y="370" class="p">生成 reasoning / message</text><text x="500" y="410" class="p">生成 tool call</text><text x="500" y="450" class="p">流式传输与停止原因</text><text x="500" y="490" class="p">记录 usage / id</text><rect x="498" y="550" width="225" height="44" rx="13" fill="#0891B2"/><text x="610" y="579" text-anchor="middle" class="tag" fill="white">可能产生多个 item</text></g>
+    <path d="M765 415H845" stroke="#64748B" stroke-width="4" marker-end="url(#a)"/>
+    <g filter="url(#s)"><rect x="845" y="170" width="680" height="500" rx="30" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="3"/><text x="895" y="230" class="h">响应分派器</text>
+      <rect x="895" y="275" width="270" height="82" rx="18" fill="#F1F5F9"/><text x="925" y="309" class="tag" fill="#334155">reasoning</text><text x="925" y="338" class="p">状态 / 摘要 / 计费</text>
+      <rect x="1195" y="275" width="280" height="82" rx="18" fill="#DBEAFE"/><text x="1225" y="309" class="tag" fill="#1D4ED8">message / text</text><text x="1225" y="338" class="p">展示、引用、流式拼接</text>
+      <rect x="895" y="385" width="270" height="82" rx="18" fill="#EDE9FE"/><text x="925" y="419" class="tag" fill="#6D28D9">structured object</text><text x="925" y="448" class="p">Schema 后再验语义</text>
+      <rect x="1195" y="385" width="280" height="82" rx="18" fill="#DCFCE7"/><text x="1225" y="419" class="tag" fill="#15803D">function / tool call</text><text x="1225" y="448" class="p">鉴权 → 执行 → 回传结果</text>
+      <rect x="895" y="495" width="270" height="82" rx="18" fill="#FEE2E2"/><text x="925" y="529" class="tag" fill="#B91C1C">refusal / blocked</text><text x="925" y="558" class="p">显式失败路径</text>
+      <rect x="1195" y="495" width="280" height="82" rx="18" fill="#FFEDD5"/><text x="1225" y="529" class="tag" fill="#C2410C">incomplete / error</text><text x="1225" y="558" class="p">重试、降级或停止</text>
+      <text x="895" y="625" class="p">未知类型必须安全失败，不能静默当作文本</text>
+    </g>
+    <rect x="190" y="755" width="1220" height="78" rx="22" fill="#0F172A"/><text x="800" y="803" text-anchor="middle" font-size="21" font-weight="700" fill="white">Schema 约束“长什么样”；应用决定“能不能做、由谁做、做完怎样验证”</text>
+  </g>
+</svg>

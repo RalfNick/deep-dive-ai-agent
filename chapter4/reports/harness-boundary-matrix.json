@@ -1,0 +1,71 @@
+{
+  "cases": {
+    "checkpoint_missing": {
+      "accepted": null,
+      "duplicate_side_effects": null,
+      "false_completed": null,
+      "policy_violations": null,
+      "recovery_succeeded": false,
+      "sample_count": 1,
+      "simulated_cost_units": 2,
+      "steps": 2,
+      "trace_contract_passed": null
+    },
+    "policy_missing": {
+      "accepted": null,
+      "duplicate_side_effects": null,
+      "false_completed": null,
+      "policy_violations": 1,
+      "recovery_succeeded": null,
+      "sample_count": 1,
+      "simulated_cost_units": 1,
+      "steps": 1,
+      "trace_contract_passed": null
+    },
+    "receipt_missing": {
+      "accepted": true,
+      "duplicate_side_effects": 1,
+      "false_completed": null,
+      "policy_violations": null,
+      "recovery_succeeded": null,
+      "sample_count": 1,
+      "simulated_cost_units": 2,
+      "steps": 2,
+      "trace_contract_passed": null
+    },
+    "reference_run": {
+      "accepted": true,
+      "duplicate_side_effects": 0,
+      "false_completed": false,
+      "policy_violations": 0,
+      "recovery_succeeded": true,
+      "sample_count": 1,
+      "simulated_cost_units": 7,
+      "steps": 4,
+      "trace_contract_passed": true
+    },
+    "trace_evidence_lost": {
+      "accepted": true,
+      "duplicate_side_effects": 0,
+      "false_completed": false,
+      "policy_violations": 0,
+      "recovery_succeeded": true,
+      "sample_count": 1,
+      "simulated_cost_units": 7,
+      "steps": 4,
+      "trace_contract_passed": false
+    },
+    "verifier_missing": {
+      "accepted": false,
+      "duplicate_side_effects": null,
+      "false_completed": true,
+      "policy_violations": null,
+      "recovery_succeeded": null,
+      "sample_count": 1,
+      "simulated_cost_units": 1,
+      "steps": 1,
+      "trace_contract_passed": true
+    }
+  },
+  "comparison_scope": "separate deterministic boundary cases; not a single-variable ablation, statistical rate, model quality, or SDK ranking"
+}

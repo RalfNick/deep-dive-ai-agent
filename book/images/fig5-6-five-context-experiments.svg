@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs><style>.t{font-family:'Microsoft YaHei',sans-serif;fill:#172033}.h{font-size:32px;font-weight:700}.s{font-size:17px;fill:#5d6b82}.k{font-size:19px;font-weight:700}.b{font-size:14px}.sm{font-size:13px}</style></defs>
+  <rect width="1200" height="675" rx="24" fill="#f8fafc"/>
+  <text x="60" y="64" class="t h">五组实验：先判断哪一层失败，再讨论怎样修</text>
+  <text x="60" y="99" class="t s">每组只扰动一个主要变量；Build、Decision、Safety 保持分层，不计算模糊总分</text>
+
+  <g class="t">
+    <rect x="58" y="151" width="210" height="298" rx="20" fill="#e9f2ff" stroke="#6e9fda" stroke-width="2"/>
+    <circle cx="163" cy="194" r="23" fill="#172b5b"/><text x="163" y="201" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">1</text>
+    <text x="163" y="242" text-anchor="middle" class="k">组装消融</text>
+    <text x="83" y="280" class="b">移除必需证据</text><text x="83" y="308" class="b">压低预算</text><text x="83" y="336" class="b">观察 missing</text>
+    <rect x="82" y="374" width="162" height="48" rx="12" fill="#fff"/><text x="163" y="394" text-anchor="middle" class="sm">主要指标</text><text x="163" y="414" text-anchor="middle" class="b">Build</text>
+
+    <rect x="277" y="151" width="210" height="298" rx="20" fill="#f0edff" stroke="#9684d8" stroke-width="2"/>
+    <circle cx="382" cy="194" r="23" fill="#172b5b"/><text x="382" y="201" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">2</text>
+    <text x="382" y="242" text-anchor="middle" class="k">指令冲突</text>
+    <text x="302" y="280" class="b">当前规则 vs 旧规则</text><text x="302" y="308" class="b">受控渠道 vs 网页自述</text><text x="302" y="336" class="b">观察谁被保留</text>
+    <rect x="301" y="374" width="162" height="48" rx="12" fill="#fff"/><text x="382" y="394" text-anchor="middle" class="sm">主要指标</text><text x="382" y="414" text-anchor="middle" class="b">Build + Decision</text>
+
+    <rect x="496" y="151" width="210" height="298" rx="20" fill="#fff2e8" stroke="#e9a06d" stroke-width="2"/>
+    <circle cx="601" cy="194" r="23" fill="#172b5b"/><text x="601" y="201" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">3</text>
+    <text x="601" y="242" text-anchor="middle" class="k">信息位置</text>
+    <text x="521" y="280" class="b">选中集合完全相同</text><text x="521" y="308" class="b">仅移动关键证据</text><text x="521" y="336" class="b">记录请求 digest</text>
+    <rect x="520" y="374" width="162" height="48" rx="12" fill="#fff"/><text x="601" y="394" text-anchor="middle" class="sm">主要指标</text><text x="601" y="414" text-anchor="middle" class="b">Decision</text>
+
+    <rect x="715" y="151" width="210" height="298" rx="20" fill="#eaf8f5" stroke="#58ad9e" stroke-width="2"/>
+    <circle cx="820" cy="194" r="23" fill="#172b5b"/><text x="820" y="201" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">4</text>
+    <text x="820" y="242" text-anchor="middle" class="k">工具描述</text>
+    <text x="740" y="280" class="b">模糊名称与参数</text><text x="740" y="308" class="b">精确用途与边界</text><text x="740" y="336" class="b">观察选错 / 追问</text>
+    <rect x="739" y="374" width="162" height="48" rx="12" fill="#fff"/><text x="820" y="394" text-anchor="middle" class="sm">主要指标</text><text x="820" y="414" text-anchor="middle" class="b">Decision</text>
+
+    <rect x="934" y="151" width="210" height="298" rx="20" fill="#fdecef" stroke="#d9788b" stroke-width="2"/>
+    <circle cx="1039" cy="194" r="23" fill="#172b5b"/><text x="1039" y="201" text-anchor="middle" font-size="18" font-weight="700" fill="#fff">5</text>
+    <text x="1039" y="242" text-anchor="middle" class="k">噪声与注入</text>
+    <text x="959" y="280" class="b">加入无关记录</text><text x="959" y="308" class="b">加入秘密与越界路径</text><text x="959" y="336" class="b">网关作为后置边界</text>
+    <rect x="958" y="374" width="162" height="48" rx="12" fill="#fff"/><text x="1039" y="394" text-anchor="middle" class="sm">主要指标</text><text x="1039" y="414" text-anchor="middle" class="b">Build + Safety</text>
+  </g>
+
+  <rect x="134" y="491" width="932" height="70" rx="18" fill="#fff" stroke="#a9b5c7"/>
+  <text x="176" y="521" class="t b">固定：任务夹具 · 离线决策规则 · 权限策略 · 不执行真实副作用</text>
+  <text x="176" y="548" class="t b">输出：28 条记录 · 每次尝试的 Packet / Probe / Gateway 状态 · 分层失败原因</text>
+
+  <rect x="185" y="593" width="830" height="43" rx="21" fill="#172b5b"/>
+  <text x="600" y="621" text-anchor="middle" font-family="Microsoft YaHei" font-size="17" fill="#fff">实验回答“边界是否生效”，不回答“哪个模型或产品更强”</text>
+</svg>

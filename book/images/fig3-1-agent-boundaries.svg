@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs><style>.t{font-family:'Microsoft YaHei',sans-serif;fill:#172033}.h{font-size:34px;font-weight:700}.s{font-size:20px;fill:#5d6b82}.k{font-size:24px;font-weight:700}.b{font-size:18px}.card{stroke:#d9e2ef;stroke-width:2}.arrow{stroke:#3157d5;stroke-width:4;fill:none;marker-end:url(#a)}</style><marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#3157d5"/></marker></defs>
+  <rect width="1200" height="675" rx="24" fill="#f8fafc"/>
+  <text x="70" y="72" class="t h">从“生成”到“自主选择路径”</text>
+  <text x="70" y="108" class="t s">边界不在于调用了几次模型，而在于下一步由谁决定</text>
+  <rect x="70" y="165" width="245" height="330" rx="22" fill="#fff" class="card"/>
+  <rect x="92" y="188" width="112" height="34" rx="17" fill="#e8edff"/><text x="111" y="212" class="t b">一次生成</text>
+  <text x="94" y="268" class="t k">Model</text><text x="94" y="305" class="t b">输入 → 输出</text>
+  <text x="94" y="365" class="t b">不读取新环境状态</text><text x="94" y="398" class="t b">不产生外部副作用</text><text x="94" y="451" class="t s">例：写一段解释</text>
+  <rect x="360" y="165" width="245" height="330" rx="22" fill="#fff" class="card"/>
+  <rect x="382" y="188" width="132" height="34" rx="17" fill="#e6f8fb"/><text x="401" y="212" class="t b">增强型 LLM</text>
+  <text x="384" y="268" class="t k">Model + 能力</text><text x="384" y="305" class="t b">可检索、可调用工具</text>
+  <text x="384" y="365" class="t b">仍可能只运行一次</text><text x="384" y="398" class="t b">工具能力 ≠ 自主循环</text><text x="384" y="451" class="t s">例：一次搜索后摘要</text>
+  <rect x="650" y="165" width="245" height="330" rx="22" fill="#fff" class="card"/>
+  <rect x="672" y="188" width="108" height="34" rx="17" fill="#fff2e8"/><text x="691" y="212" class="t b">Workflow</text>
+  <text x="674" y="268" class="t k">代码选路径</text><text x="674" y="305" class="t b">固定节点与转移</text>
+  <text x="674" y="365" class="t b">模型填充局部内容</text><text x="674" y="398" class="t b">步骤数可预先描述</text><text x="674" y="451" class="t s">例：抽取 → 审核 → 入库</text>
+  <rect x="940" y="165" width="190" height="330" rx="22" fill="#172b5b" stroke="#172b5b" stroke-width="2"/>
+  <rect x="962" y="188" width="84" height="34" rx="17" fill="#65d1df"/><text x="977" y="212" class="t b">Agent</text>
+  <text x="964" y="268" font-family="Microsoft YaHei" font-size="24" font-weight="700" fill="#fff">模型选路径</text><text x="964" y="305" font-family="Microsoft YaHei" font-size="18" fill="#dce7ff">观察后再决策</text>
+  <text x="964" y="365" font-family="Microsoft YaHei" font-size="18" fill="#dce7ff">步数事先未知</text><text x="964" y="398" font-family="Microsoft YaHei" font-size="18" fill="#dce7ff">受预算与验收约束</text><text x="964" y="451" font-family="Microsoft YaHei" font-size="18" fill="#a9bcdf">例：修复代码任务</text>
+  <path d="M315 330 H350" class="arrow"/><path d="M605 330 H640" class="arrow"/><path d="M895 330 H930" class="arrow"/>
+  <rect x="70" y="545" width="1060" height="70" rx="18" fill="#eef3ff"/>
+  <text x="95" y="588" class="t k">关键问题：</text><text x="240" y="588" class="t b">当新观察出现时，是代码按预定分支走，还是模型决定下一步？</text>
+</svg>

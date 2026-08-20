@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">长任务上下文在事件八与事件二十四的序列化体积</title>
+  <desc id="desc">依据第六章固定报告 S19，append-all 策略在事件八测得 3950 字节，在事件二十四测得 12108 字节。连线仅帮助辨认趋势，不代表中间事件均被测量。</desc>
+  <defs>
+    <style>.t{font-family:'Microsoft YaHei','PingFang SC',sans-serif;fill:#172033}.h{font-size:32px;font-weight:700}.s{font-size:17px;fill:#5d6b82}.k{font-size:20px;font-weight:700}.b{font-size:16px}.sm{font-size:14px;fill:#5d6b82}.num{font-size:30px;font-weight:700}</style>
+    <linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b82f6" stop-opacity=".30"/><stop offset="1" stop-color="#22c7d6" stop-opacity=".04"/></linearGradient>
+  </defs>
+  <rect width="1200" height="675" rx="24" fill="#f8fafc"/>
+  <text x="60" y="64" class="t h">Append-all：历史变长时，送入下一轮的字节也在增长</text>
+  <text x="60" y="99" class="t s">固定轨迹 · sample_count=1 · 指标字段：serialized_bytes（canonical UTF-8 bytes）</text>
+
+  <rect x="58" y="135" width="1084" height="395" rx="22" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
+  <line x1="158" y1="465" x2="1080" y2="465" stroke="#91a0b5" stroke-width="2"/>
+  <line x1="158" y1="190" x2="158" y2="465" stroke="#91a0b5" stroke-width="2"/>
+  <line x1="158" y1="382" x2="1080" y2="382" stroke="#e1e7ef" stroke-dasharray="6 6"/>
+  <line x1="158" y1="298" x2="1080" y2="298" stroke="#e1e7ef" stroke-dasharray="6 6"/>
+  <line x1="158" y1="214" x2="1080" y2="214" stroke="#e1e7ef" stroke-dasharray="6 6"/>
+  <text x="142" y="470" text-anchor="end" class="t sm">0</text>
+  <text x="142" y="387" text-anchor="end" class="t sm">4,000 B</text>
+  <text x="142" y="303" text-anchor="end" class="t sm">8,000 B</text>
+  <text x="142" y="219" text-anchor="end" class="t sm">12,000 B</text>
+
+  <path d="M340 382 L900 212 L900 465 L340 465 Z" fill="url(#area)"/>
+  <path d="M340 382 L900 212" fill="none" stroke="#3b82f6" stroke-width="5" stroke-linecap="round" stroke-dasharray="10 9"/>
+  <circle cx="340" cy="382" r="12" fill="#22c7d6" stroke="#fff" stroke-width="4"/>
+  <circle cx="900" cy="212" r="12" fill="#f59e0b" stroke="#fff" stroke-width="4"/>
+
+  <rect x="212" y="242" width="256" height="106" rx="16" fill="#eaf8fb" stroke="#22a8b6"/>
+  <text x="232" y="273" class="t k">事件 8</text>
+  <text x="232" y="311" class="t num" fill="#087f8c">3,950 B</text>
+  <text x="232" y="335" class="t sm">append-all-cursor-08</text>
+
+  <rect x="770" y="286" width="260" height="106" rx="16" fill="#fff4e5" stroke="#e79a2d"/>
+  <text x="790" y="317" class="t k">事件 24</text>
+  <text x="790" y="355" class="t num" fill="#b86800">12,108 B</text>
+  <text x="790" y="379" class="t sm">append-all-cursor-24</text>
+
+  <text x="340" y="495" text-anchor="middle" class="t b">事件 8</text>
+  <text x="900" y="495" text-anchor="middle" class="t b">事件 24</text>
+  <text x="1090" y="495" text-anchor="end" class="t sm">Event Log cursor</text>
+
+  <rect x="127" y="563" width="946" height="64" rx="20" fill="#172b5b"/>
+  <text x="600" y="589" text-anchor="middle" font-family="Microsoft YaHei" font-size="16" fill="#fff">两点来自固定 JSON；虚线只是视觉引导，不补造事件 9—23 的测量值</text>
+  <text x="600" y="613" text-anchor="middle" font-family="Microsoft YaHei" font-size="14" fill="#cfe0ff">数据源：chapter6/reports/context-continuity.json · S19</text>
+</svg>

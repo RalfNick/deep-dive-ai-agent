@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs><style>.t{font-family:'Microsoft YaHei',sans-serif;fill:#172033}.h{font-size:34px;font-weight:700}.s{font-size:18px;fill:#5d6b82}.k{font-size:15px;font-weight:700}.b{font-size:13px}</style></defs>
+  <rect width="1200" height="675" rx="24" fill="#f8fafc"/>
+  <text x="70" y="70" class="t h">边界故障矩阵：六个独立案例，不是单变量消融</text>
+  <text x="70" y="106" class="t s">每行 n=1；true / false 是确定性观察，— 表示该案例未测量</text>
+  <rect x="46" y="138" width="1108" height="62" rx="14" fill="#172b5b"/>
+  <g font-family="Microsoft YaHei" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">
+    <text x="155" y="174">案例</text><text x="335" y="166">已验收</text><text x="335" y="185">accepted</text><text x="480" y="166">误报完成</text><text x="480" y="185">false completed</text><text x="625" y="166">策略违规</text><text x="625" y="185">violations</text><text x="770" y="166">重复副作用</text><text x="770" y="185">duplicates</text><text x="915" y="166">恢复成功</text><text x="915" y="185">recovered</text><text x="1050" y="166">Trace 合同</text><text x="1050" y="185">passed</text><text x="1125" y="174">n</text>
+  </g>
+  <g class="t b" text-anchor="middle">
+    <rect x="46" y="210" width="1108" height="54" fill="#eaf8f8"/><text x="155" y="243" class="t k">参考运行</text><text x="335" y="243">true</text><text x="480" y="243">false</text><text x="625" y="243">0</text><text x="770" y="243">0</text><text x="915" y="243">true</text><text x="1050" y="243">true</text><text x="1125" y="243">1</text>
+    <rect x="46" y="264" width="1108" height="54" fill="#fff"/><text x="155" y="297" class="t k">Policy 缺失</text><text x="335" y="297">—</text><text x="480" y="297">—</text><text x="625" y="297" fill="#b42318" font-weight="700">1</text><text x="770" y="297">—</text><text x="915" y="297">—</text><text x="1050" y="297">—</text><text x="1125" y="297">1</text>
+    <rect x="46" y="318" width="1108" height="54" fill="#f1f5f9"/><text x="155" y="351" class="t k">Checkpoint 缺失</text><text x="335" y="351">—</text><text x="480" y="351">—</text><text x="625" y="351">—</text><text x="770" y="351">—</text><text x="915" y="351" fill="#b42318" font-weight="700">false</text><text x="1050" y="351">—</text><text x="1125" y="351">1</text>
+    <rect x="46" y="372" width="1108" height="54" fill="#fff"/><text x="155" y="405" class="t k">Receipt 缺失</text><text x="335" y="405">true</text><text x="480" y="405">—</text><text x="625" y="405">—</text><text x="770" y="405" fill="#b42318" font-weight="700">1</text><text x="915" y="405">—</text><text x="1050" y="405">—</text><text x="1125" y="405">1</text>
+    <rect x="46" y="426" width="1108" height="54" fill="#f1f5f9"/><text x="155" y="459" class="t k">Verifier 缺失</text><text x="335" y="459" fill="#b42318" font-weight="700">false</text><text x="480" y="459" fill="#b42318" font-weight="700">true</text><text x="625" y="459">—</text><text x="770" y="459">—</text><text x="915" y="459">—</text><text x="1050" y="459">true</text><text x="1125" y="459">1</text>
+    <rect x="46" y="480" width="1108" height="54" fill="#fff"/><text x="155" y="513" class="t k">Trace 证据丢失</text><text x="335" y="513">true</text><text x="480" y="513">false</text><text x="625" y="513">0</text><text x="770" y="513">0</text><text x="915" y="513">true</text><text x="1050" y="513" fill="#b42318" font-weight="700">false</text><text x="1125" y="513">1</text>
+  </g>
+  <rect x="110" y="574" width="980" height="62" rx="20" fill="#fff2e8" stroke="#efaa79"/>
+  <text x="600" y="601" text-anchor="middle" class="t k">每行只回答一个边界问题；行与行之间不能比较效率或计算成功率</text>
+  <text x="600" y="624" text-anchor="middle" class="t b">通过测试仍可能重复写入；Trace 合同通过仍可能误报完成</text>
+</svg>

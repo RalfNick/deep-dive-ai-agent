@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">模型选择的 Pareto 前沿</title>
+  <desc id="desc">先用任务、安全、成本和容量硬门槛过滤不可行配置，再在可行集内比较质量、延迟与成本的 Pareto 前沿。</desc>
+  <defs><marker id="a" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0 0L12 6L0 12Z" fill="#475569"/></marker><style>.f{font-family:"Microsoft YaHei","PingFang SC",sans-serif}.t{font-size:44px;font-weight:700;fill:#0F172A}.st{font-size:21px;fill:#475569}.h{font-size:22px;font-weight:700}.p{font-size:18px;fill:#475569}</style></defs>
+  <rect width="1600" height="900" rx="32" fill="#F8FAFC"/>
+  <g class="f">
+    <text x="80" y="88" class="t">先过滤不可行配置，再比较 Pareto 前沿</text>
+    <text x="80" y="130" class="st">图中越上方任务成功率越高，越右侧成本越高；圆越大代表 p95 延迟越高</text>
+    <path d="M180 710V220" stroke="#475569" stroke-width="4" marker-end="url(#a)"/><path d="M180 710H1120" stroke="#475569" stroke-width="4" marker-end="url(#a)"/>
+    <text x="95" y="460" transform="rotate(-90 95 460)" font-size="22" font-weight="700" fill="#334155">代表性任务成功率</text><text x="560" y="770" font-size="22" font-weight="700" fill="#334155">单位任务成本</text>
+    <path d="M460 475 C550 420 625 380 720 350" fill="none" stroke="#16A34A" stroke-width="6" stroke-dasharray="16 12"/><text x="520" y="370" class="h" fill="#15803D">可行集内的 Pareto 前沿</text>
+    <circle cx="275" cy="610" r="24" fill="#94A3B8" fill-opacity=".85"/><path d="M258 593L292 627M292 593L258 627" stroke="#DC2626" stroke-width="6"/><text x="225" y="660" class="h" fill="#475569">swift</text>
+    <circle cx="460" cy="475" r="35" fill="#14B8A6" fill-opacity=".85"/><text x="420" y="535" class="h" fill="#0F766E">balanced</text>
+    <circle cx="720" cy="350" r="52" fill="#6366F1" fill-opacity=".82"/><text x="675" y="430" class="h" fill="#4338CA">frontier</text>
+    <circle cx="1000" cy="245" r="78" fill="#94A3B8" fill-opacity=".78"/><path d="M955 200L1045 290M1045 200L955 290" stroke="#DC2626" stroke-width="8"/><text x="930" y="360" class="h" fill="#475569">deliberate</text>
+    <circle cx="610" cy="555" r="42" fill="#94A3B8" fill-opacity=".85"/><path d="M582 527L638 583M638 527L582 583" stroke="#DC2626" stroke-width="7"/><text x="570" y="620" class="h" fill="#475569">legacy</text>
+    <line x1="180" y1="515" x2="1120" y2="515" stroke="#DC2626" stroke-width="3" stroke-dasharray="10 10"/><text x="205" y="500" class="p" fill="#B91C1C">关键任务 / 安全门槛</text>
+    <line x1="865" y1="220" x2="865" y2="710" stroke="#DC2626" stroke-width="3" stroke-dasharray="10 10"/><text x="885" y="690" class="p" fill="#B91C1C">示例成本上限</text>
+    <g transform="translate(1170 230)"><rect width="350" height="440" rx="28" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="3"/><text x="35" y="60" class="h" fill="#0F172A">选择顺序</text><circle cx="55" cy="120" r="22" fill="#4F46E5"/><text x="55" y="128" text-anchor="middle" font-size="18" font-weight="700" fill="white">1</text><text x="95" y="127" class="p">定义任务与错误代价</text><circle cx="55" cy="190" r="22" fill="#4F46E5"/><text x="55" y="198" text-anchor="middle" font-size="18" font-weight="700" fill="white">2</text><text x="95" y="197" class="p">建立代表性评估集</text><circle cx="55" cy="260" r="22" fill="#4F46E5"/><text x="55" y="268" text-anchor="middle" font-size="18" font-weight="700" fill="white">3</text><text x="95" y="267" class="p">先达到质量与安全门槛</text><circle cx="55" cy="330" r="22" fill="#4F46E5"/><text x="55" y="338" text-anchor="middle" font-size="18" font-weight="700" fill="white">4</text><text x="95" y="337" class="p">再优化成本与延迟</text><text x="35" y="400" class="p">按路由组合模型也可能优于单选</text></g>
+    <text x="800" y="842" text-anchor="middle" font-size="20" font-weight="700" fill="#334155">型号、价格和榜单会变；“任务集 → 门槛 → Pareto → 路由”这套方法更稳定</text>
+  </g>
+</svg>

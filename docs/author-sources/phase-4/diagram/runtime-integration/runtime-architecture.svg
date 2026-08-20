@@ -1,0 +1,112 @@
+<svg viewBox="0 0 1080 620" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+    </pattern>
+    <marker id="arrow-cyan" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22d3ee"/>
+    </marker>
+    <marker id="arrow-emerald" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#34d399"/>
+    </marker>
+    <marker id="arrow-slate" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8"/>
+    </marker>
+    <style>
+      text { font-family: 'JetBrains Mono', 'Noto Sans SC', 'PingFang SC', sans-serif; }
+      .title { fill: #f8fafc; font-size: 18px; font-weight: 700; }
+      .subtitle { fill: #94a3b8; font-size: 10px; }
+      .label { fill: #f8fafc; font-size: 12px; font-weight: 700; text-anchor: middle; }
+      .desc { fill: #94a3b8; font-size: 9px; text-anchor: middle; }
+      .tiny { fill: #cbd5e1; font-size: 8px; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="1080" height="620" fill="#0f172a"/>
+  <rect width="1080" height="620" fill="url(#grid)"/>
+
+  <text x="36" y="42" class="title">Phase4 Runtime Integration</text>
+  <text x="36" y="62" class="subtitle">MCP-style tools + Memory + Multi-Agent reviewer in one deterministic runtime</text>
+
+  <rect x="34" y="92" width="210" height="430" rx="14" fill="none" stroke="#22d3ee" stroke-width="1" stroke-dasharray="8,4"/>
+  <text x="52" y="112" fill="#22d3ee" font-size="10" font-weight="700">Input Layer</text>
+
+  <rect x="70" y="170" width="140" height="70" rx="7" fill="#0f172a"/>
+  <rect x="70" y="170" width="140" height="70" rx="7" fill="rgba(8,51,68,0.45)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="140" y="198" class="label">User Question</text>
+  <text x="140" y="216" class="desc">问题 / 偏好 / 任务状态</text>
+
+  <rect x="70" y="312" width="140" height="70" rx="7" fill="#0f172a"/>
+  <rect x="70" y="312" width="140" height="70" rx="7" fill="rgba(30,41,59,0.55)" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="140" y="340" class="label">Runtime API</text>
+  <text x="140" y="358" class="desc">answer(question)</text>
+
+  <rect x="300" y="92" width="230" height="430" rx="14" fill="none" stroke="#34d399" stroke-width="1" stroke-dasharray="8,4"/>
+  <text x="318" y="112" fill="#34d399" font-size="10" font-weight="700">State &amp; Orchestration</text>
+
+  <rect x="340" y="145" width="150" height="70" rx="7" fill="#0f172a"/>
+  <rect x="340" y="145" width="150" height="70" rx="7" fill="rgba(76,29,149,0.42)" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="415" y="173" class="label">Memory Store</text>
+  <text x="415" y="191" class="desc">read before planning</text>
+
+  <rect x="340" y="265" width="150" height="70" rx="7" fill="#0f172a"/>
+  <rect x="340" y="265" width="150" height="70" rx="7" fill="rgba(6,78,59,0.45)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="415" y="293" class="label">Supervisor</text>
+  <text x="415" y="311" class="desc">plan handoffs</text>
+
+  <rect x="340" y="385" width="150" height="70" rx="7" fill="#0f172a"/>
+  <rect x="340" y="385" width="150" height="70" rx="7" fill="rgba(120,53,15,0.35)" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="415" y="413" class="label">Trace</text>
+  <text x="415" y="431" class="desc">route + tools + review</text>
+
+  <rect x="585" y="92" width="230" height="430" rx="14" fill="none" stroke="#fbbf24" stroke-width="1" stroke-dasharray="8,4"/>
+  <text x="603" y="112" fill="#fbbf24" font-size="10" font-weight="700">Read-only Tool Layer</text>
+
+  <rect x="625" y="145" width="150" height="58" rx="7" fill="#0f172a"/>
+  <rect x="625" y="145" width="150" height="58" rx="7" fill="rgba(120,53,15,0.35)" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="700" y="170" class="label">search_docs</text>
+  <text x="700" y="187" class="desc">docs/phase-4</text>
+
+  <rect x="625" y="235" width="150" height="58" rx="7" fill="#0f172a"/>
+  <rect x="625" y="235" width="150" height="58" rx="7" fill="rgba(120,53,15,0.35)" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="700" y="260" class="label">find_code</text>
+  <text x="700" y="277" class="desc">phase code examples</text>
+
+  <rect x="625" y="325" width="150" height="58" rx="7" fill="#0f172a"/>
+  <rect x="625" y="325" width="150" height="58" rx="7" fill="rgba(120,53,15,0.35)" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="700" y="350" class="label">read_benchmark</text>
+  <text x="700" y="367" class="desc">Phase2 / Phase3 CSV</text>
+
+  <rect x="625" y="415" width="150" height="58" rx="7" fill="#0f172a"/>
+  <rect x="625" y="415" width="150" height="58" rx="7" fill="rgba(136,19,55,0.35)" stroke="#fb7185" stroke-width="1.5"/>
+  <text x="700" y="440" class="label">Read-only Guard</text>
+  <text x="700" y="457" class="desc">no write / no shell</text>
+
+  <rect x="870" y="92" width="175" height="430" rx="14" fill="none" stroke="#60a5fa" stroke-width="1" stroke-dasharray="8,4"/>
+  <text x="888" y="112" fill="#60a5fa" font-size="10" font-weight="700">Output Layer</text>
+
+  <rect x="895" y="178" width="125" height="70" rx="7" fill="#0f172a"/>
+  <rect x="895" y="178" width="125" height="70" rx="7" fill="rgba(59,130,246,0.38)" stroke="#60a5fa" stroke-width="1.5"/>
+  <text x="958" y="206" class="label">Reviewer</text>
+  <text x="958" y="224" class="desc">evidence gate</text>
+
+  <rect x="895" y="330" width="125" height="70" rx="7" fill="#0f172a"/>
+  <rect x="895" y="330" width="125" height="70" rx="7" fill="rgba(59,130,246,0.38)" stroke="#60a5fa" stroke-width="1.5"/>
+  <text x="958" y="358" class="label">Answer</text>
+  <text x="958" y="376" class="desc">with evidence + risk</text>
+
+  <path d="M 210 205 L 340 180" fill="none" stroke="#22d3ee" stroke-width="1.6" marker-end="url(#arrow-cyan)"/>
+  <text x="272" y="181" class="tiny">write / recall memory</text>
+  <path d="M 210 347 L 340 300" fill="none" stroke="#34d399" stroke-width="1.6" marker-end="url(#arrow-emerald)"/>
+  <text x="278" y="314" class="tiny">invoke runtime</text>
+  <path d="M 490 300 L 625 174" fill="none" stroke="#fbbf24" stroke-width="1.4" marker-end="url(#arrow-slate)"/>
+  <path d="M 490 300 L 625 264" fill="none" stroke="#fbbf24" stroke-width="1.4" marker-end="url(#arrow-slate)"/>
+  <path d="M 490 300 L 625 354" fill="none" stroke="#fbbf24" stroke-width="1.4" marker-end="url(#arrow-slate)"/>
+  <text x="562" y="275" class="tiny">handoff -> tools</text>
+  <path d="M 775 264 L 895 213" fill="none" stroke="#60a5fa" stroke-width="1.6" marker-end="url(#arrow-slate)"/>
+  <text x="836" y="226" class="tiny">evidence</text>
+  <path d="M 958 248 L 958 330" fill="none" stroke="#60a5fa" stroke-width="1.6" marker-end="url(#arrow-slate)"/>
+  <text x="983" y="293" class="tiny">approved</text>
+  <path d="M 490 420 L 895 365" fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="5,5" marker-end="url(#arrow-slate)"/>
+  <text x="690" y="405" class="tiny">trace attached</text>
+</svg>

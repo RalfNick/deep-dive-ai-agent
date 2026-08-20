@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Claude Code、OpenAI Agent surfaces 与 LangGraph 的责任卡</title>
+  <desc id="desc">三张卡按七个维度映射公开责任。OpenAI Agent surfaces 是复合栏，每个条目明确标注 Codex S01、Responses API S02 或 Agents SDK S04；这些产品表面不可互换。Claude Code 依据 S05/S06，LangGraph 与 LangChain 依据 S09/S10。</desc>
+  <defs><style>.t{font-family:'Microsoft YaHei','PingFang SC',sans-serif;fill:#172033}.h{font-size:29px;font-weight:700}.s{font-size:15px;fill:#5d6b82}.system{font-size:22px;font-weight:700}.mobile-core{font-size:18px;font-weight:700}.dim{font-size:13px;font-weight:700;fill:#5d6b82}.src{font-size:11px;fill:#5d6b82}.sm{font-size:12px;fill:#5d6b82}.desktop{display:inline}.mobile{display:none}.mobile-title-responsive{font-size:13px;font-weight:700}.mobile-system-responsive{font-size:11px;font-weight:700}.mobile-core-responsive{font-size:10px;font-weight:700}.mobile-source-responsive{font-size:8px;fill:#5d6b82}@media (max-width: 600px){.desktop{display:none}.mobile{display:inline}}</style></defs>
+  <rect width="1200" height="675" rx="24" fill="#f8fafc"/>
+  <g class="desktop" data-layout="desktop">
+  <text x="50" y="56" class="t h">责任卡：同样叫“历史与压缩”，公开制品并不相同</text>
+  <text x="50" y="86" class="t s">每个条目都带产品表面与来源 ID · 这是责任映射，不是能力比较</text>
+
+  <rect x="42" y="111" width="356" height="474" rx="21" fill="#edf4ff" stroke="#6e9fda" stroke-width="2"/>
+  <rect x="42" y="111" width="356" height="53" rx="21" fill="#275d9f"/>
+  <text x="220" y="144" text-anchor="middle" font-family="Microsoft YaHei" font-size="22" font-weight="700" fill="#fff">Claude Code</text>
+  <g data-dimension="历史归属" data-source="S05"><rect x="58" y="176" width="324" height="50" rx="12" fill="#fff"/><text x="72" y="197" class="t dim">历史归属</text><text x="160" y="203" class="t mobile-core">Session Context</text><text x="72" y="219" class="t src">Claude Code · S05</text></g>
+  <g data-dimension="压缩触发" data-source="S05"><rect x="58" y="231" width="324" height="50" rx="12" fill="#fff"/><text x="72" y="252" class="t dim">压缩触发</text><text x="160" y="258" class="t mobile-core">/compact / 自动</text><text x="72" y="274" class="t src">Claude Code · S05</text></g>
+  <g data-dimension="压缩制品" data-source="S05"><rect x="58" y="286" width="324" height="50" rx="12" fill="#fff"/><text x="72" y="307" class="t dim">压缩制品</text><text x="160" y="313" class="t mobile-core">结构化会话摘要</text><text x="72" y="329" class="t src">Claude Code · S05</text></g>
+  <g data-dimension="执行恢复" data-source="S06"><rect x="58" y="341" width="324" height="50" rx="12" fill="#fff"/><text x="72" y="362" class="t dim">执行恢复</text><text x="160" y="368" class="t mobile-core">Resume Session</text><text x="72" y="384" class="t src">Claude Code · S06 · 不等于副作用回滚</text></g>
+  <g data-dimension="语义重建" data-source="S05"><rect x="58" y="396" width="324" height="50" rx="12" fill="#fff"/><text x="72" y="417" class="t dim">语义重建</text><text x="160" y="423" class="t mobile-core">摘要 + 规则重载</text><text x="72" y="439" class="t src">Claude Code · S05</text></g>
+  <g data-dimension="跨任务状态" data-source="S05"><rect x="58" y="451" width="324" height="50" rx="12" fill="#fff"/><text x="72" y="472" class="t dim">跨任务状态</text><text x="160" y="478" class="t mobile-core">Auto memory / 文件</text><text x="72" y="494" class="t src">Claude Code · S05 · 区别于摘要</text></g>
+  <g data-dimension="可观测证据" data-source="S05"><rect x="58" y="506" width="324" height="50" rx="12" fill="#fff"/><text x="72" y="527" class="t dim">可观测证据</text><text x="160" y="533" class="t mobile-core">/context / 保留表</text><text x="72" y="549" class="t src">Claude Code · S05</text></g>
+
+  <rect x="422" y="111" width="356" height="474" rx="21" fill="#eaf8f5" stroke="#58ad9e" stroke-width="2"/>
+  <rect x="422" y="111" width="356" height="53" rx="21" fill="#087f8c"/>
+  <text x="600" y="144" text-anchor="middle" font-family="Microsoft YaHei" font-size="22" font-weight="700" fill="#fff">OpenAI Agent surfaces</text>
+  <g data-dimension="历史归属" data-source="S01"><rect x="438" y="176" width="324" height="50" rx="12" fill="#fff"/><text x="452" y="197" class="t dim">历史归属</text><text x="540" y="203" class="t mobile-core">Harness 组装历史</text><text x="452" y="219" class="t src">Codex · S01</text></g>
+  <g data-dimension="压缩触发" data-source="S02"><rect x="438" y="231" width="324" height="50" rx="12" fill="#fff"/><text x="452" y="252" class="t dim">压缩触发</text><text x="540" y="258" class="t mobile-core">服务端 / 显式端点</text><text x="452" y="274" class="t src">Responses API · S02</text></g>
+  <g data-dimension="压缩制品" data-source="S02"><rect x="438" y="286" width="324" height="50" rx="12" fill="#fff"/><text x="452" y="307" class="t dim">压缩制品</text><text x="540" y="313" class="t mobile-core">opaque item</text><text x="452" y="329" class="t src">Responses API · S02</text></g>
+  <g data-dimension="执行恢复" data-source="S04"><rect x="438" y="341" width="324" height="50" rx="12" fill="#fff"/><text x="452" y="362" class="t dim">执行恢复</text><text x="540" y="368" class="t mobile-core">Session 取回历史</text><text x="452" y="384" class="t src">Agents SDK · S04 · 非业务 Checkpoint</text></g>
+  <g data-dimension="语义重建" data-source="S02"><rect x="438" y="396" width="324" height="50" rx="12" fill="#fff"/><text x="452" y="417" class="t dim">语义重建</text><text x="540" y="423" class="t mobile-core">opaque item 原样续传</text><text x="452" y="439" class="t src">Responses API · S02</text></g>
+  <g data-dimension="跨任务状态" data-source="S04"><rect x="438" y="451" width="324" height="50" rx="12" fill="#fff"/><text x="452" y="472" class="t dim">跨任务状态</text><text x="540" y="478" class="t mobile-core">Session 内历史</text><text x="452" y="494" class="t src">Agents SDK · S04 · 长期事实另建</text></g>
+  <g data-dimension="可观测证据" data-source="S04"><rect x="438" y="506" width="324" height="50" rx="12" fill="#fff"/><text x="452" y="527" class="t dim">可观测证据</text><text x="540" y="533" class="t mobile-core">items / Session records</text><text x="452" y="549" class="t src">Agents SDK · S04</text></g>
+
+  <rect x="802" y="111" width="356" height="474" rx="21" fill="#fff4e8" stroke="#e9a06d" stroke-width="2"/>
+  <rect x="802" y="111" width="356" height="53" rx="21" fill="#b86800"/>
+  <text x="980" y="144" text-anchor="middle" font-family="Microsoft YaHei" font-size="22" font-weight="700" fill="#fff">LangGraph</text>
+  <g data-dimension="历史归属" data-source="S09"><rect x="818" y="176" width="324" height="50" rx="12" fill="#fff"/><text x="832" y="197" class="t dim">历史归属</text><text x="920" y="203" class="t mobile-core">thread graph state</text><text x="832" y="219" class="t src">LangGraph · S09</text></g>
+  <g data-dimension="压缩触发" data-source="S10"><rect x="818" y="231" width="324" height="50" rx="12" fill="#fff"/><text x="832" y="252" class="t dim">压缩触发</text><text x="920" y="258" class="t mobile-core">应用定义策略</text><text x="832" y="274" class="t src">LangChain · S10 · trim / delete / summarize</text></g>
+  <g data-dimension="压缩制品" data-source="S10"><rect x="818" y="286" width="324" height="50" rx="12" fill="#fff"/><text x="832" y="307" class="t dim">压缩制品</text><text x="920" y="313" class="t mobile-core">消息 / 摘要状态</text><text x="832" y="329" class="t src">LangChain · S10 · 应用 schema</text></g>
+  <g data-dimension="执行恢复" data-source="S09"><rect x="818" y="341" width="324" height="50" rx="12" fill="#fff"/><text x="832" y="362" class="t dim">执行恢复</text><text x="920" y="368" class="t mobile-core">thread checkpoint</text><text x="832" y="384" class="t src">LangGraph · S09</text></g>
+  <g data-dimension="语义重建" data-source="S09"><rect x="818" y="396" width="324" height="50" rx="12" fill="#fff"/><text x="832" y="417" class="t dim">语义重建</text><text x="920" y="423" class="t mobile-core">从 graph state 继续</text><text x="832" y="439" class="t src">LangGraph · S09 · Packet 由应用定义</text></g>
+  <g data-dimension="跨任务状态" data-source="S09"><rect x="818" y="451" width="324" height="50" rx="12" fill="#fff"/><text x="832" y="472" class="t dim">跨任务状态</text><text x="920" y="478" class="t mobile-core">Store</text><text x="832" y="494" class="t src">LangGraph · S09 · graph state 之外</text></g>
+  <g data-dimension="可观测证据" data-source="S09"><rect x="818" y="506" width="324" height="50" rx="12" fill="#fff"/><text x="832" y="527" class="t dim">可观测证据</text><text x="920" y="533" class="t mobile-core">checkpoint / history</text><text x="832" y="549" class="t src">LangGraph · S09</text></g>
+
+  <rect x="85" y="607" width="1030" height="43" rx="21" fill="#172b5b"/>
+  <text x="600" y="626" text-anchor="middle" font-family="Microsoft YaHei" font-size="14" fill="#fff">OpenAI 复合栏：Codex [S01] · Responses API [S02] · Agents SDK [S04]；产品表面不可互换</text>
+  <text x="600" y="643" text-anchor="middle" font-family="Microsoft YaHei" font-size="11" fill="#cfe0ff">Claude Code [S05][S06] · LangGraph / LangChain [S09][S10] · 核对日期 2026-08-17</text>
+  </g>
+
+  <g class="mobile" data-layout="mobile" transform="scale(3.083)">
+    <text x="8" y="14" class="t mobile-title-responsive">三类 Agent 表面 · 七维责任卡</text>
+    <text x="8" y="26" class="t mobile-source-responsive">每格标来源；OpenAI 的 Codex / Responses / Agents SDK 不可互换</text>
+
+    <rect x="7" y="32" width="376" height="50" rx="6" fill="#edf4ff" stroke="#6e9fda"/>
+    <rect x="7" y="32" width="100" height="50" rx="6" fill="#275d9f"/>
+    <text x="57" y="53" text-anchor="middle" font-family="Microsoft YaHei" font-size="11" font-weight="700" fill="#fff">Claude Code</text>
+    <text x="57" y="68" text-anchor="middle" font-family="Microsoft YaHei" font-size="8" fill="#dbe6ff">S05 / S06</text>
+    <g data-dimension="历史归属" data-source="S05"><rect x="112" y="35" width="64" height="20" rx="3" fill="#fff"/><text x="115" y="42" class="t mobile-source-responsive">历史 · S05</text><text x="115" y="52" class="t mobile-core-responsive">Session</text></g>
+    <g data-dimension="压缩触发" data-source="S05"><rect x="180" y="35" width="64" height="20" rx="3" fill="#fff"/><text x="183" y="42" class="t mobile-source-responsive">触发 · S05</text><text x="183" y="52" class="t mobile-core-responsive">/compact</text></g>
+    <g data-dimension="压缩制品" data-source="S05"><rect x="248" y="35" width="64" height="20" rx="3" fill="#fff"/><text x="251" y="42" class="t mobile-source-responsive">制品 · S05</text><text x="251" y="52" class="t mobile-core-responsive">结构摘要</text></g>
+    <g data-dimension="执行恢复" data-source="S06"><rect x="316" y="35" width="64" height="20" rx="3" fill="#fff"/><text x="319" y="42" class="t mobile-source-responsive">恢复 · S06</text><text x="319" y="52" class="t mobile-core-responsive">Resume</text></g>
+    <g data-dimension="语义重建" data-source="S05"><rect x="112" y="59" width="64" height="20" rx="3" fill="#fff"/><text x="115" y="66" class="t mobile-source-responsive">重建 · S05</text><text x="115" y="76" class="t mobile-core-responsive">摘要+规则</text></g>
+    <g data-dimension="跨任务状态" data-source="S05"><rect x="180" y="59" width="64" height="20" rx="3" fill="#fff"/><text x="183" y="66" class="t mobile-source-responsive">跨任务 · S05</text><text x="183" y="76" class="t mobile-core-responsive">Memory/文件</text></g>
+    <g data-dimension="可观测证据" data-source="S05"><rect x="248" y="59" width="64" height="20" rx="3" fill="#fff"/><text x="251" y="66" class="t mobile-source-responsive">证据 · S05</text><text x="251" y="76" class="t mobile-core-responsive">/context</text></g>
+
+    <rect x="7" y="86" width="376" height="50" rx="6" fill="#eaf8f5" stroke="#58ad9e"/>
+    <rect x="7" y="86" width="100" height="50" rx="6" fill="#087f8c"/>
+    <text x="57" y="103" text-anchor="middle" font-family="Microsoft YaHei" font-size="10" font-weight="700" fill="#fff">OpenAI surfaces</text>
+    <text x="57" y="115" text-anchor="middle" font-family="Microsoft YaHei" font-size="8" fill="#d6fffb">Codex S01 · Responses S02</text>
+    <text x="57" y="125" text-anchor="middle" font-family="Microsoft YaHei" font-size="8" fill="#d6fffb">Agents SDK S04</text>
+    <g data-dimension="历史归属" data-source="S01" data-surface="Codex"><rect x="112" y="89" width="64" height="20" rx="3" fill="#fff"/><text x="115" y="96" class="t mobile-source-responsive">Codex · S01</text><text x="115" y="106" class="t mobile-core-responsive">Harness</text></g>
+    <g data-dimension="压缩触发" data-source="S02" data-surface="Responses API"><rect x="180" y="89" width="64" height="20" rx="3" fill="#fff"/><text x="183" y="96" class="t mobile-source-responsive">Responses · S02</text><text x="183" y="106" class="t mobile-core-responsive">服务/端点</text></g>
+    <g data-dimension="压缩制品" data-source="S02" data-surface="Responses API"><rect x="248" y="89" width="64" height="20" rx="3" fill="#fff"/><text x="251" y="96" class="t mobile-source-responsive">Responses · S02</text><text x="251" y="106" class="t mobile-core-responsive">opaque</text></g>
+    <g data-dimension="执行恢复" data-source="S04" data-surface="Agents SDK"><rect x="316" y="89" width="64" height="20" rx="3" fill="#fff"/><text x="319" y="96" class="t mobile-source-responsive">Agents SDK · S04</text><text x="319" y="106" class="t mobile-core-responsive">Session</text></g>
+    <g data-dimension="语义重建" data-source="S02" data-surface="Responses API"><rect x="112" y="113" width="64" height="20" rx="3" fill="#fff"/><text x="115" y="120" class="t mobile-source-responsive">Responses · S02</text><text x="115" y="130" class="t mobile-core-responsive">item续传</text></g>
+    <g data-dimension="跨任务状态" data-source="S04" data-surface="Agents SDK"><rect x="180" y="113" width="64" height="20" rx="3" fill="#fff"/><text x="183" y="120" class="t mobile-source-responsive">Agents SDK · S04</text><text x="183" y="130" class="t mobile-core-responsive">Session内</text></g>
+    <g data-dimension="可观测证据" data-source="S04" data-surface="Agents SDK"><rect x="248" y="113" width="64" height="20" rx="3" fill="#fff"/><text x="251" y="120" class="t mobile-source-responsive">Agents SDK · S04</text><text x="251" y="130" class="t mobile-core-responsive">records</text></g>
+
+    <rect x="7" y="140" width="376" height="50" rx="6" fill="#fff4e8" stroke="#e9a06d"/>
+    <rect x="7" y="140" width="100" height="50" rx="6" fill="#b86800"/>
+    <text x="57" y="161" text-anchor="middle" font-family="Microsoft YaHei" font-size="11" font-weight="700" fill="#fff">LangGraph</text>
+    <text x="57" y="176" text-anchor="middle" font-family="Microsoft YaHei" font-size="8" fill="#fff0dc">S09 / S10</text>
+    <g data-dimension="历史归属" data-source="S09"><rect x="112" y="143" width="64" height="20" rx="3" fill="#fff"/><text x="115" y="150" class="t mobile-source-responsive">历史 · S09</text><text x="115" y="160" class="t mobile-core-responsive">graph state</text></g>
+    <g data-dimension="压缩触发" data-source="S10"><rect x="180" y="143" width="64" height="20" rx="3" fill="#fff"/><text x="183" y="150" class="t mobile-source-responsive">触发 · S10</text><text x="183" y="160" class="t mobile-core-responsive">应用策略</text></g>
+    <g data-dimension="压缩制品" data-source="S10"><rect x="248" y="143" width="64" height="20" rx="3" fill="#fff"/><text x="251" y="150" class="t mobile-source-responsive">制品 · S10</text><text x="251" y="160" class="t mobile-core-responsive">消息/摘要</text></g>
+    <g data-dimension="执行恢复" data-source="S09"><rect x="316" y="143" width="64" height="20" rx="3" fill="#fff"/><text x="319" y="150" class="t mobile-source-responsive">恢复 · S09</text><text x="319" y="160" class="t mobile-core-responsive">checkpoint</text></g>
+    <g data-dimension="语义重建" data-source="S09"><rect x="112" y="167" width="64" height="20" rx="3" fill="#fff"/><text x="115" y="174" class="t mobile-source-responsive">重建 · S09</text><text x="115" y="184" class="t mobile-core-responsive">state继续</text></g>
+    <g data-dimension="跨任务状态" data-source="S09"><rect x="180" y="167" width="64" height="20" rx="3" fill="#fff"/><text x="183" y="174" class="t mobile-source-responsive">跨任务 · S09</text><text x="183" y="184" class="t mobile-core-responsive">Store</text></g>
+    <g data-dimension="可观测证据" data-source="S09"><rect x="248" y="167" width="64" height="20" rx="3" fill="#fff"/><text x="251" y="174" class="t mobile-source-responsive">证据 · S09</text><text x="251" y="184" class="t mobile-core-responsive">history</text></g>
+
+    <text x="195" y="203" text-anchor="middle" class="t mobile-source-responsive">Claude Code [S05/S06] · OpenAI [S01/S02/S04] · LangGraph [S09/S10]</text>
+    <text x="195" y="214" text-anchor="middle" class="t mobile-source-responsive">责任与制品映射，不比较能力 · 产品表面不可互换</text>
+  </g>
+</svg>

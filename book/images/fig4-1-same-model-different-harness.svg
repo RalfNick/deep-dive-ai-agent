@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <style>.t{font-family:'Microsoft YaHei',sans-serif;fill:#172033}.h{font-size:34px;font-weight:700}.s{font-size:18px;fill:#5d6b82}.k{font-size:22px;font-weight:700}.b{font-size:17px}.sm{font-size:15px}</style>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#6f7f97"/></marker>
+  </defs>
+  <rect width="1200" height="675" rx="24" fill="#f8fafc"/>
+  <text x="70" y="72" class="t h">同一个决策策略，为什么像换了一个 Agent？</text>
+  <text x="70" y="108" class="t s">固定任务、仓库、决策和参数，只替换模型之外的运行系统</text>
+  <rect x="415" y="142" width="370" height="96" rx="20" fill="#e8edff" stroke="#91a8ed" stroke-width="2"/>
+  <text x="600" y="181" text-anchor="middle" class="t k">ScriptedModel</text>
+  <text x="600" y="212" text-anchor="middle" class="t b">“问题已修复，测试已经通过”</text>
+  <path d="M520 240 C430 282 350 294 280 322" fill="none" stroke="#6f7f97" stroke-width="3" marker-end="url(#a)"/>
+  <path d="M680 240 C770 282 850 294 920 322" fill="none" stroke="#6f7f97" stroke-width="3" marker-end="url(#a)"/>
+  <rect x="85" y="332" width="450" height="226" rx="22" fill="#fff2e8" stroke="#efaa79" stroke-width="2"/>
+  <text x="120" y="376" class="t k">内联 Loop</text>
+  <text x="120" y="410" class="t b">最终文本 → 直接映射为 completed</text>
+  <rect x="120" y="445" width="380" height="70" rx="15" fill="#fff" stroke="#e18355"/>
+  <text x="310" y="476" text-anchor="middle" class="t k" fill="#b54720">COMPLETED</text>
+  <text x="310" y="501" text-anchor="middle" class="t sm">仓库测试仍失败 · 误报完成</text>
+  <rect x="665" y="332" width="450" height="226" rx="22" fill="#eaf8f8" stroke="#72c3cc" stroke-width="2"/>
+  <text x="700" y="376" class="t k">组件化 Harness</text>
+  <text x="700" y="410" class="t b">最终文本 → 完成候选 → 独立 Verifier</text>
+  <rect x="700" y="445" width="380" height="70" rx="15" fill="#fff" stroke="#0a91aa"/>
+  <text x="890" y="476" text-anchor="middle" class="t k" fill="#08798e">FAILED_VERIFICATION</text>
+  <text x="890" y="501" text-anchor="middle" class="t sm">拒绝无证据的完成声明</text>
+  <rect x="190" y="594" width="820" height="46" rx="23" fill="#172b5b"/>
+  <text x="600" y="624" text-anchor="middle" font-family="Microsoft YaHei" font-size="17" fill="#fff">差异来自外围控制与证据，不来自模型能力变化</text>
+</svg>

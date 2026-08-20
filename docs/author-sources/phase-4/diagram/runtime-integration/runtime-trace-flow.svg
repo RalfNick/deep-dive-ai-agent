@@ -1,0 +1,113 @@
+<svg viewBox="0 0 980 860" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+    </pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#94a3b8"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#34d399"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#fb7185"/>
+    </marker>
+    <style>
+      text { font-family: 'JetBrains Mono', 'Noto Sans SC', 'PingFang SC', sans-serif; }
+      .title { fill: #f8fafc; font-size: 18px; font-weight: 700; }
+      .subtitle { fill: #94a3b8; font-size: 10px; }
+      .label { fill: #f8fafc; font-size: 12px; font-weight: 700; text-anchor: middle; }
+      .desc { fill: #94a3b8; font-size: 9px; text-anchor: middle; }
+      .arrow-label { fill: #cbd5e1; font-size: 8px; text-anchor: middle; }
+      .yes { fill: #34d399; font-size: 8px; }
+      .no { fill: #fb7185; font-size: 8px; }
+    </style>
+  </defs>
+
+  <rect width="980" height="860" fill="#0f172a"/>
+  <rect width="980" height="860" fill="url(#grid)"/>
+  <text x="34" y="42" class="title">Runtime Trace Flow</text>
+  <text x="34" y="62" class="subtitle">A deterministic request path from memory recall to evidence-gated answer</text>
+
+  <rect x="385" y="95" width="210" height="54" rx="25" fill="#0f172a"/>
+  <rect x="385" y="95" width="210" height="54" rx="25" fill="rgba(59,130,246,0.35)" stroke="#60a5fa" stroke-width="1.5"/>
+  <text x="490" y="126" class="label">runtime.start</text>
+
+  <rect x="385" y="205" width="210" height="64" rx="7" fill="#0f172a"/>
+  <rect x="385" y="205" width="210" height="64" rx="7" fill="rgba(76,29,149,0.42)" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="490" y="231" class="label">MemoryPolicy.extract</text>
+  <text x="490" y="249" class="desc">write explicit preference / task</text>
+
+  <g transform="translate(490,345)">
+    <polygon points="0,-46 70,0 0,46 -70,0" fill="#0f172a"/>
+    <polygon points="0,-46 70,0 0,46 -70,0" fill="rgba(120,53,15,0.35)" stroke="#fbbf24" stroke-width="1.5"/>
+    <text y="-4" class="label">Need write?</text>
+    <text y="14" class="desc">not a question</text>
+  </g>
+
+  <rect x="105" y="315" width="190" height="60" rx="7" fill="#0f172a"/>
+  <rect x="105" y="315" width="190" height="60" rx="7" fill="rgba(76,29,149,0.42)" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="200" y="340" class="label">memory.upsert</text>
+  <text x="200" y="358" class="desc">long-term context</text>
+
+  <rect x="385" y="455" width="210" height="64" rx="7" fill="#0f172a"/>
+  <rect x="385" y="455" width="210" height="64" rx="7" fill="rgba(76,29,149,0.42)" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="490" y="481" class="label">memory.search</text>
+  <text x="490" y="499" class="desc">read before planning</text>
+
+  <rect x="385" y="575" width="210" height="64" rx="7" fill="#0f172a"/>
+  <rect x="385" y="575" width="210" height="64" rx="7" fill="rgba(6,78,59,0.42)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="490" y="601" class="label">supervisor.plan</text>
+  <text x="490" y="619" class="desc">doc / code / benchmark</text>
+
+  <rect x="95" y="690" width="190" height="64" rx="7" fill="#0f172a"/>
+  <rect x="95" y="690" width="190" height="64" rx="7" fill="rgba(120,53,15,0.35)" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="190" y="716" class="label">search_docs</text>
+  <text x="190" y="734" class="desc">article evidence</text>
+
+  <rect x="395" y="690" width="190" height="64" rx="7" fill="#0f172a"/>
+  <rect x="395" y="690" width="190" height="64" rx="7" fill="rgba(120,53,15,0.35)" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="490" y="716" class="label">find_code_examples</text>
+  <text x="490" y="734" class="desc">implementation evidence</text>
+
+  <rect x="695" y="690" width="190" height="64" rx="7" fill="#0f172a"/>
+  <rect x="695" y="690" width="190" height="64" rx="7" fill="rgba(120,53,15,0.35)" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="790" y="716" class="label">read_benchmark</text>
+  <text x="790" y="734" class="desc">experiment evidence</text>
+
+  <g transform="translate(490,810)">
+    <polygon points="0,-46 70,0 0,46 -70,0" fill="#0f172a"/>
+    <polygon points="0,-46 70,0 0,46 -70,0" fill="rgba(59,130,246,0.35)" stroke="#60a5fa" stroke-width="1.5"/>
+    <text y="-4" class="label">Reviewer</text>
+    <text y="14" class="desc">evidence enough?</text>
+  </g>
+
+  <rect x="735" y="780" width="165" height="60" rx="25" fill="#0f172a"/>
+  <rect x="735" y="780" width="165" height="60" rx="25" fill="rgba(6,78,59,0.42)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="818" y="806" class="label">Final Answer</text>
+  <text x="818" y="824" class="desc">evidence + risk + trace</text>
+
+  <rect x="80" y="780" width="165" height="60" rx="25" fill="#0f172a"/>
+  <rect x="80" y="780" width="165" height="60" rx="25" fill="rgba(136,19,55,0.35)" stroke="#fb7185" stroke-width="1.5"/>
+  <text x="163" y="806" class="label">Needs Evidence</text>
+  <text x="163" y="824" class="desc">repair route later</text>
+
+  <line x1="490" y1="149" x2="490" y2="205" stroke="#94a3b8" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <line x1="490" y1="269" x2="490" y2="299" stroke="#94a3b8" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <path d="M420 345 L295 345" fill="none" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+  <text x="355" y="335" class="yes">Yes</text>
+  <path d="M200 375 L200 425 L490 425 L490 455" fill="none" stroke="#94a3b8" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <line x1="490" y1="391" x2="490" y2="455" stroke="#94a3b8" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <text x="502" y="425" class="no">No</text>
+  <line x1="490" y1="519" x2="490" y2="575" stroke="#94a3b8" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <path d="M490 639 L190 690" fill="none" stroke="#fbbf24" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <path d="M490 639 L490 690" fill="none" stroke="#fbbf24" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <path d="M490 639 L790 690" fill="none" stroke="#fbbf24" stroke-width="1.3" marker-end="url(#arrow)"/>
+  <path d="M190 754 L420 810" fill="none" stroke="#94a3b8" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M490 754 L490 764" fill="none" stroke="#94a3b8" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M790 754 L560 810" fill="none" stroke="#94a3b8" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <path d="M560 810 L735 810" fill="none" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+  <text x="628" y="800" class="yes">approved</text>
+  <path d="M420 810 L245 810" fill="none" stroke="#fb7185" stroke-width="1.5" marker-end="url(#arrow-red)"/>
+  <text x="330" y="800" class="no">no evidence</text>
+</svg>

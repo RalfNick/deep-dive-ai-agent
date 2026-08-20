@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs><style>.t{font-family:'Microsoft YaHei',sans-serif;fill:#172033}.h{font-size:32px;font-weight:700}.s{font-size:17px;fill:#5d6b82}.k{font-size:21px;font-weight:700}.b{font-size:16px}.sm{font-size:14px;fill:#5d6b82}</style></defs>
+  <rect width="1200" height="675" rx="24" fill="#f8fafc"/>
+  <text x="60" y="64" class="t h">Prompt、Context、状态与 Context Architecture 不是同一层</text>
+  <text x="60" y="99" class="t s">最容易出错的地方，是把“保存在哪里”和“本轮给模型看什么”混为一谈</text>
+
+  <rect x="65" y="145" width="500" height="175" rx="22" fill="#fff2e8" stroke="#e9a06d" stroke-width="2"/>
+  <text x="95" y="188" class="t k">Prompt</text><text x="500" y="188" text-anchor="end" class="t sm">表达层</text>
+  <text x="95" y="226" class="t b">怎样描述目标、约束、步骤和输出格式</text>
+  <text x="95" y="258" class="t b">关注：措辞、结构、示例、角色与格式</text>
+  <rect x="95" y="280" width="438" height="24" rx="12" fill="#f8d7bd"/>
+  <text x="314" y="297" text-anchor="middle" class="t sm">Prompt 是 Context 的一部分，不是全部</text>
+
+  <rect x="635" y="145" width="500" height="175" rx="22" fill="#eaf8f5" stroke="#58ad9e" stroke-width="2"/>
+  <text x="665" y="188" class="t k">Context</text><text x="1070" y="188" text-anchor="end" class="t sm">本次调用可见面</text>
+  <text x="665" y="226" class="t b">规则、任务、历史、文件、工具与检索证据</text>
+  <text x="665" y="258" class="t b">生命周期：一次模型请求；受 Context Window 容量约束</text>
+  <rect x="665" y="280" width="438" height="24" rx="12" fill="#ccece5"/>
+  <text x="884" y="297" text-anchor="middle" class="t sm">模型只能看见这份有限快照</text>
+
+  <rect x="65" y="365" width="500" height="175" rx="22" fill="#f0edff" stroke="#9684d8" stroke-width="2"/>
+  <text x="95" y="408" class="t k">State / Memory / RAG</text><text x="500" y="408" text-anchor="end" class="t sm">Source / 候选层</text>
+  <text x="95" y="446" class="t b">保存状态，或从外部知识中检索候选证据</text>
+  <text x="95" y="478" class="t b">RAG 负责找候选；是否进入本轮仍由 Builder 决定</text>
+  <rect x="95" y="500" width="438" height="24" rx="12" fill="#ded7fb"/>
+  <text x="314" y="517" text-anchor="middle" class="t sm">保存 / 召回 ≠ 自动加载 ≠ 当前真相</text>
+
+  <rect x="635" y="365" width="500" height="175" rx="22" fill="#e9f2ff" stroke="#6e9fda" stroke-width="2"/>
+  <text x="665" y="408" class="t k">Context Architecture</text><text x="1070" y="408" text-anchor="end" class="t sm">决策系统</text>
+  <text x="665" y="446" class="t b">谁在何时，从哪些来源，以什么策略组装 Context</text>
+  <text x="665" y="478" class="t b">还要回答排除了什么、缺少什么、如何复现</text>
+  <rect x="665" y="500" width="438" height="24" rx="12" fill="#d5e7fb"/>
+  <text x="884" y="517" text-anchor="middle" class="t sm">选择规则本身也要版本化和评估</text>
+
+  <path d="M315 334 H885" stroke="#a9b5c7" stroke-width="2" stroke-dasharray="7 7"/>
+  <rect x="205" y="583" width="790" height="46" rx="23" fill="#172b5b"/>
+  <text x="600" y="613" text-anchor="middle" font-family="Microsoft YaHei" font-size="17" fill="#fff">Context 是瞬时输入；Architecture 是生成这份输入的可治理系统</text>
+</svg>

@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">文本到神经网络向量的转换</title>
+  <desc id="desc">输入文本依次经过 UTF-8 字节、Tokenizer、Token ID、Embedding 和位置机制，转换为 Transformer 可处理的向量。</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="11" flood-color="#0F172A" flood-opacity=".10"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#64748B"/>
+    </marker>
+    <style>
+      .font{font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",sans-serif}
+      .title{font-size:44px;font-weight:700;fill:#0F172A}
+      .sub{font-size:21px;fill:#475569}
+      .h{font-size:24px;font-weight:700;fill:#0F172A}
+      .p{font-size:17px;fill:#475569}
+      .mono{font-family:Consolas,"SFMono-Regular",monospace;font-size:17px;fill:#334155}
+    </style>
+  </defs>
+  <rect width="1600" height="900" rx="32" fill="#F8FAFC"/>
+  <g class="font">
+    <text x="90" y="88" class="title">模型读到的不是“文字”，而是一串向量</text>
+    <text x="90" y="128" class="sub">字符、字节、Token、Token ID 和 Embedding 是五种不同表示</text>
+
+    <g filter="url(#shadow)">
+      <rect x="70" y="290" width="250" height="250" rx="28" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+      <circle cx="115" cy="335" r="24" fill="#4F46E5"/>
+      <text x="115" y="343" text-anchor="middle" font-size="20" font-weight="700" fill="#FFFFFF">1</text>
+      <text x="155" y="343" class="h">人类文本</text>
+      <text x="195" y="414" text-anchor="middle" font-size="31" font-weight="700" fill="#4F46E5">“深入 AI”</text>
+      <text x="195" y="463" text-anchor="middle" class="p">字符数：5</text>
+      <text x="195" y="497" text-anchor="middle" class="p">人类可读符号</text>
+    </g>
+
+    <path d="M320 415 H370" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)"/>
+
+    <g filter="url(#shadow)">
+      <rect x="370" y="260" width="270" height="310" rx="28" fill="#FFF7ED" stroke="#F97316" stroke-width="2"/>
+      <circle cx="415" cy="305" r="24" fill="#F97316"/>
+      <text x="415" y="313" text-anchor="middle" font-size="20" font-weight="700" fill="#FFFFFF">2</text>
+      <text x="455" y="313" class="h">UTF-8 字节</text>
+      <text x="405" y="374" class="mono">E6 B7 B1 E5 85 A5</text>
+      <text x="405" y="410" class="mono">20 41 49</text>
+      <text x="505" y="478" text-anchor="middle" class="p">汉字通常占多个字节</text>
+      <text x="505" y="512" text-anchor="middle" class="p">空格也有自己的字节</text>
+    </g>
+
+    <path d="M640 415 H690" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)"/>
+
+    <g filter="url(#shadow)">
+      <rect x="690" y="230" width="270" height="370" rx="28" fill="#EEF2FF" stroke="#6366F1" stroke-width="2"/>
+      <circle cx="735" cy="275" r="24" fill="#6366F1"/>
+      <text x="735" y="283" text-anchor="middle" font-size="20" font-weight="700" fill="#FFFFFF">3</text>
+      <text x="775" y="283" class="h">Tokenizer</text>
+      <rect x="730" y="345" width="82" height="48" rx="14" fill="#C7D2FE"/>
+      <text x="771" y="376" text-anchor="middle" class="p">深入</text>
+      <rect x="824" y="345" width="74" height="48" rx="14" fill="#C7D2FE"/>
+      <text x="861" y="376" text-anchor="middle" class="p"> AI</text>
+      <text x="825" y="453" text-anchor="middle" class="h">Token ID</text>
+      <text x="825" y="497" text-anchor="middle" class="mono">[125047, 20837]</text>
+      <text x="825" y="548" text-anchor="middle" class="p">切分由固定词表决定</text>
+    </g>
+
+    <path d="M960 415 H1010" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)"/>
+
+    <g filter="url(#shadow)">
+      <rect x="1010" y="200" width="300" height="430" rx="28" fill="#ECFEFF" stroke="#06B6D4" stroke-width="2"/>
+      <circle cx="1055" cy="245" r="24" fill="#0891B2"/>
+      <text x="1055" y="253" text-anchor="middle" font-size="20" font-weight="700" fill="#FFFFFF">4</text>
+      <text x="1095" y="253" class="h">Embedding 查表</text>
+      <text x="1050" y="321" class="mono">125047 → [0.12, -0.7, ...]</text>
+      <text x="1050" y="363" class="mono">20837  → [0.43,  0.1, ...]</text>
+      <rect x="1050" y="420" width="220" height="110" rx="18" fill="#CFFAFE"/>
+      <text x="1160" y="462" text-anchor="middle" class="h">+ 位置信息</text>
+      <text x="1160" y="499" text-anchor="middle" class="p">第 0 位 · 第 1 位</text>
+      <text x="1160" y="575" text-anchor="middle" class="p">得到连续高维向量</text>
+    </g>
+
+    <path d="M1310 415 H1360" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)"/>
+
+    <g filter="url(#shadow)">
+      <rect x="1360" y="260" width="180" height="310" rx="28" fill="#4F46E5"/>
+      <text x="1450" y="322" text-anchor="middle" font-size="24" font-weight="700" fill="#FFFFFF">Transformer</text>
+      <text x="1450" y="366" text-anchor="middle" font-size="18" fill="#E0E7FF">Attention</text>
+      <text x="1450" y="401" text-anchor="middle" font-size="18" fill="#E0E7FF">+ FFN</text>
+      <text x="1450" y="451" text-anchor="middle" font-size="18" fill="#E0E7FF">逐层形成</text>
+      <text x="1450" y="485" text-anchor="middle" font-size="18" fill="#E0E7FF">上下文化表示</text>
+    </g>
+
+    <rect x="145" y="720" width="1310" height="90" rx="24" fill="#0F172A"/>
+    <text x="800" y="758" text-anchor="middle" font-size="21" font-weight="700" fill="#FFFFFF">Token ID 的数值大小没有语义；真正参与计算的是查表得到的向量</text>
+    <text x="800" y="790" text-anchor="middle" font-size="18" fill="#CBD5E1">示例 ID 来自 tiktoken 0.13.0 / o200k_base；其他模型和版本可能不同</text>
+  </g>
+</svg>

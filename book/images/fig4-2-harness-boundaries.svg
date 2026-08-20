@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs><style>.t{font-family:'Microsoft YaHei',sans-serif;fill:#172033}.h{font-size:34px;font-weight:700}.s{font-size:18px;fill:#5d6b82}.k{font-size:20px;font-weight:700}.b{font-size:16px}.sm{font-size:14px;fill:#5d6b82}</style></defs>
+  <rect width="1200" height="675" rx="24" fill="#f8fafc"/>
+  <text x="70" y="72" class="t h">Harness 的边界：不是模型，也不只是 Loop</text>
+  <text x="70" y="108" class="t s">从候选决策到真实系统结果，每一层拥有不同权力</text>
+  <rect x="70" y="150" width="190" height="380" rx="20" fill="#e8edff" stroke="#91a8ed" stroke-width="2"/>
+  <text x="165" y="192" text-anchor="middle" class="t k">Model</text>
+  <text x="95" y="232" class="t b">• 理解输入</text><text x="95" y="264" class="t b">• 产生候选</text><text x="95" y="296" class="t b">• 提议工具</text>
+  <rect x="286" y="150" width="190" height="380" rx="20" fill="#edf3ff" stroke="#91a8ed" stroke-width="2"/>
+  <text x="381" y="192" text-anchor="middle" class="t k">Agent Loop</text>
+  <text x="311" y="232" class="t b">• 决策</text><text x="311" y="264" class="t b">• 行动</text><text x="311" y="296" class="t b">• 观察</text><text x="311" y="328" class="t b">• 重复或结束</text>
+  <rect x="502" y="130" width="230" height="420" rx="22" fill="#172b5b"/>
+  <text x="617" y="178" text-anchor="middle" font-family="Microsoft YaHei" font-size="22" font-weight="700" fill="#fff">Harness</text>
+  <text x="532" y="224" font-family="Microsoft YaHei" font-size="16" fill="#fff">• 装配 Context</text><text x="532" y="258" font-family="Microsoft YaHei" font-size="16" fill="#fff">• 校验并路由动作</text><text x="532" y="292" font-family="Microsoft YaHei" font-size="16" fill="#fff">• 权限、审批、沙箱</text><text x="532" y="326" font-family="Microsoft YaHei" font-size="16" fill="#fff">• 状态、检查点、恢复</text><text x="532" y="360" font-family="Microsoft YaHei" font-size="16" fill="#fff">• 预算、重试、停止</text><text x="532" y="394" font-family="Microsoft YaHei" font-size="16" fill="#fff">• Verifier 与 Trace</text>
+  <rect x="758" y="150" width="170" height="380" rx="20" fill="#eaf8f8" stroke="#72c3cc" stroke-width="2"/>
+  <text x="843" y="192" text-anchor="middle" class="t k">Framework</text>
+  <text x="783" y="232" class="t b">• 提供抽象</text><text x="783" y="264" class="t b">• Graph / SDK</text><text x="783" y="296" class="t b">• 可替换实现</text>
+  <rect x="954" y="150" width="176" height="380" rx="20" fill="#fff2e8" stroke="#efaa79" stroke-width="2"/>
+  <text x="1042" y="192" text-anchor="middle" class="t k">Application</text>
+  <text x="979" y="232" class="t b">• 业务目标</text><text x="979" y="264" class="t b">• 用户体验</text><text x="979" y="296" class="t b">• 业务权限</text><text x="979" y="328" class="t b">• 最终责任</text>
+  <rect x="120" y="575" width="960" height="54" rx="18" fill="#fff" stroke="#cbd5e1"/>
+  <text x="600" y="608" text-anchor="middle" class="t b">Environment 横跨各层：文件、Shell、网络、数据库和用户反馈拥有真实状态</text>
+  <text x="617" y="520" text-anchor="middle" font-family="Microsoft YaHei" font-size="14" fill="#d6e1f6">拥有控制流和执行权</text>
+</svg>

@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">六组固定实验的移动端可读指标卡</title>
+  <desc id="desc">固定报告中的 context growth、summary versus structured、sliding window、checkpoint versus rehydration、generational drift 和 failure matrix 分别展示。所有数值均是独立指标，null 显示为未测，不计算聚合总分。</desc>
+  <defs><style>.t{font-family:'Microsoft YaHei','PingFang SC',sans-serif;fill:#172033}.h{font-size:31px;font-weight:700}.s{font-size:16px;fill:#5d6b82}.k{font-size:22px;font-weight:700}.mobile-core{font-size:20px;font-weight:700}.b{font-size:15px}.variant{font-family:Consolas,'Microsoft YaHei',monospace;font-size:12px;fill:#5d6b82}.sm{font-size:12px;fill:#5d6b82}.desktop{display:inline}.mobile{display:none}.mobile-title-responsive{font-size:13px;font-weight:700}.mobile-heading-responsive{font-size:10px;font-weight:700}.mobile-core-responsive{font-size:10px;font-weight:700}.mobile-source-responsive{font-size:8px;fill:#5d6b82}@media (max-width: 600px){.desktop{display:none}.mobile{display:inline}}</style></defs>
+  <rect width="1200" height="675" rx="24" fill="#f8fafc"/>
+  <g class="desktop" data-layout="desktop">
+  <text x="54" y="60" class="t h">六组实验：每张卡只保留一个核心问题</text>
+  <text x="54" y="92" class="t s">sample_count=1 · canonical UTF-8 bytes · 独立指标，无聚合总分</text>
+  <rect x="916" y="44" width="230" height="42" rx="21" fill="#172b5b"/><text x="1031" y="71" text-anchor="middle" font-family="Microsoft YaHei" font-size="15" fill="#fff">390px 仍可读核心数据</text>
+
+  <g data-variant="append-all-cursor-08 append-all-cursor-24">
+    <rect x="50" y="121" width="348" height="225" rx="20" fill="#e9f2ff" stroke="#6e9fda" stroke-width="2"/>
+    <text x="74" y="157" class="t k">1 · 历史增长</text>
+    <text x="74" y="183" class="t variant">append-all-cursor-08 / 24</text>
+    <text x="74" y="225" class="t mobile-core">事件 8　3,950 B</text>
+    <text x="74" y="267" class="t mobile-core">事件 24　12,108 B</text>
+    <text x="74" y="316" class="t b">只测两个 cursor，不插值中间事件</text>
+  </g>
+
+  <g data-variant="structured-compaction-v1 summary-only-v1">
+    <rect x="426" y="121" width="348" height="225" rx="20" fill="#eaf8f5" stroke="#58ad9e" stroke-width="2"/>
+    <text x="450" y="157" class="t k">2 · 结构化 vs 摘要</text>
+    <text x="450" y="183" class="t variant">structured-compaction-v1 / summary-only-v1</text>
+    <text x="450" y="220" class="t b">结构化</text><text x="535" y="220" class="t mobile-core">约束 1.0　开放问题 1.0</text>
+    <text x="535" y="248" class="t b">3,579 B</text>
+    <text x="450" y="285" class="t b">摘要</text><text x="535" y="285" class="t mobile-core">约束 0.0　开放问题 0.0</text>
+    <text x="535" y="313" class="t b">843 B</text>
+  </g>
+
+  <g data-variant="sliding-window-8-events">
+    <rect x="802" y="121" width="348" height="225" rx="20" fill="#fff4e8" stroke="#e9a06d" stroke-width="2"/>
+    <text x="826" y="157" class="t k">3 · 滑动窗口</text>
+    <text x="826" y="183" class="t variant">sliding-window-8-events</text>
+    <text x="826" y="225" class="t mobile-core">约束 0.5　开放问题 0.0</text>
+    <text x="826" y="262" class="t mobile-core">4,337 B</text>
+    <text x="826" y="296" class="t b">早期约束丢失 → unsafe signature</text>
+    <text x="826" y="322" class="t sm">拒绝假设 1.0 · goal true</text>
+  </g>
+
+  <g data-variant="checkpoint-only-v1 rehydrated-context-v1">
+    <rect x="50" y="372" width="348" height="225" rx="20" fill="#fff4e8" stroke="#e9a06d" stroke-width="2"/>
+    <text x="74" y="408" class="t k">4 · Checkpoint vs 重建</text>
+    <text x="74" y="434" class="t variant">checkpoint-only-v1 / rehydrated-context-v1</text>
+    <text x="74" y="474" class="t b">仅 Checkpoint</text><text x="204" y="474" class="t mobile-core">约束 0.0</text>
+    <text x="74" y="506" class="t b">恢复 未测　Packet 未测　583 B</text>
+    <text x="74" y="546" class="t b">重建 Context</text><text x="204" y="546" class="t mobile-core">约束 1.0</text>
+    <text x="74" y="575" class="t b">恢复 true　Packet true　3,447 B</text>
+  </g>
+
+  <g data-variant="structured-regenerated-v1 summary-generation-1 summary-generation-2">
+    <rect x="426" y="372" width="348" height="225" rx="20" fill="#f0edff" stroke="#9684d8" stroke-width="2"/>
+    <text x="450" y="408" class="t k">5 · 代际漂移</text>
+    <text x="450" y="434" class="t variant">structured-regenerated-v1 / generation-1 / 2</text>
+    <text x="450" y="477" class="t mobile-core">约束 / 开放问题</text>
+    <text x="450" y="515" class="t mobile-core">1.0 / 1.0 → 0 / 0 → 0 / 0</text>
+    <text x="450" y="553" class="t b">3,579 B → 843 B → 16 B</text>
+    <text x="450" y="579" class="t sm">结构化再生 byte-stable</text>
+  </g>
+
+  <g data-variant="failure-matrix">
+    <rect x="802" y="372" width="348" height="225" rx="20" fill="#fdecef" stroke="#d9788b" stroke-width="2"/>
+    <text x="826" y="408" class="t k">6 · 五种失败注入</text>
+    <text x="826" y="445" class="t mobile-core">digest ✕　schema ✕　workspace ✕</text>
+    <text x="826" y="486" class="t mobile-core">约束丢失 → unsafe</text>
+    <text x="826" y="527" class="t mobile-core">开放问题丢失 → 误报完成</text>
+    <text x="826" y="564" class="t b">每种失败各有独立决策与 Trace</text>
+  </g>
+
+  <text x="600" y="637" text-anchor="middle" class="t sm">数据源：chapter6/reports/context-continuity.json · S19 · 图中没有模型或产品比较</text>
+  </g>
+
+  <g class="mobile" data-layout="mobile" transform="scale(3.083)">
+    <text x="8" y="15" class="t mobile-title-responsive">六组实验 · 独立指标，无聚合总分</text>
+    <text x="8" y="27" class="t mobile-source-responsive">sample_count=1 · bytes · — = 未测（恢复 未测 / Packet 未测）</text>
+
+    <rect x="7" y="35" width="184" height="50" rx="6" fill="#e9f2ff" stroke="#6e9fda"/>
+    <text x="14" y="48" class="t mobile-heading-responsive">1 历史增长</text>
+    <text x="14" y="63" class="t mobile-core-responsive">事件 8 3,950 B</text>
+    <text x="14" y="78" class="t mobile-core-responsive">事件 24 12,108 B</text>
+
+    <rect x="199" y="35" width="184" height="50" rx="6" fill="#eaf8f5" stroke="#58ad9e"/>
+    <text x="206" y="48" class="t mobile-heading-responsive">2 结构化 vs 摘要</text>
+    <text x="206" y="63" class="t mobile-core-responsive">结构化 C/O 1.0/1.0 · 3,579 B</text>
+    <text x="206" y="78" class="t mobile-core-responsive">摘要 C/O 0.0/0.0 · 843 B</text>
+
+    <rect x="7" y="89" width="184" height="50" rx="6" fill="#fff4e8" stroke="#e9a06d"/>
+    <text x="14" y="102" class="t mobile-heading-responsive">3 滑动窗口</text>
+    <text x="14" y="117" class="t mobile-core-responsive">C 0.5 · O 0.0 · 4,337 B</text>
+    <text x="14" y="132" class="t mobile-source-responsive">早期约束丢失 → unsafe signature</text>
+
+    <rect x="199" y="89" width="184" height="50" rx="6" fill="#fff4e8" stroke="#e9a06d"/>
+    <text x="206" y="102" class="t mobile-heading-responsive">4 Checkpoint vs 重建</text>
+    <text x="206" y="117" class="t mobile-core-responsive">CP: C0 · R— · P— · 583 B</text>
+    <text x="206" y="132" class="t mobile-core-responsive">重建: C1 · R✓ · P✓ · 3,447 B</text>
+
+    <rect x="7" y="143" width="184" height="50" rx="6" fill="#f0edff" stroke="#9684d8"/>
+    <text x="14" y="156" class="t mobile-heading-responsive">5 代际漂移</text>
+    <text x="14" y="171" class="t mobile-core-responsive">C/O 1/1 → 0/0 → 0/0</text>
+    <text x="14" y="186" class="t mobile-core-responsive">3,579 → 843 → 16 B</text>
+
+    <rect x="199" y="143" width="184" height="50" rx="6" fill="#fdecef" stroke="#d9788b"/>
+    <text x="206" y="154" class="t mobile-heading-responsive">6 五种失败注入</text>
+    <text x="206" y="167" class="t mobile-core-responsive">digest / schema / workspace ✕</text>
+    <text x="206" y="179" class="t mobile-core-responsive">约束丢失 → unsafe</text>
+    <text x="206" y="190" class="t mobile-core-responsive">开放问题丢失 → 误报完成</text>
+
+    <text x="195" y="207" text-anchor="middle" class="t mobile-source-responsive">固定 JSON · S19 · bytes，不是模型或产品比较</text>
+  </g>
+</svg>

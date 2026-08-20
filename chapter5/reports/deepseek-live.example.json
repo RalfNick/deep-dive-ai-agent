@@ -1,0 +1,22 @@
+{
+  "notice": "Schema example only. Values are synthetic; no live prompt, response, or credential is stored.",
+  "run": {
+    "date": "2099-01-01",
+    "requested_model": "provider-model-requested",
+    "returned_model": "provider-model-returned",
+    "provider_request_digest": "0000000000000000000000000000000000000000000000000000000000000000",
+    "probe_status": "ok",
+    "retry_count": 0,
+    "latency_ms": 123.45,
+    "usage": {
+      "completion_tokens": 20,
+      "prompt_tokens": 100,
+      "total_tokens": 120
+    },
+    "decision": {
+      "kind": "needs_context",
+      "message": "Synthetic example",
+      "tool": null
+    }
+  }
+}

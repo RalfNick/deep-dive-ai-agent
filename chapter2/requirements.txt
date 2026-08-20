@@ -1,0 +1,3 @@
+# 六个机制实验只使用 Python 3.11+ 标准库。
+# 真实梯度训练实验 real_sft_evidence.py 额外使用 NumPy。
+numpy==2.2.6

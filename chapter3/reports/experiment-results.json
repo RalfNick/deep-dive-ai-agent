@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-14T00:00:00Z",
+  "runtime": {
+    "python": "3.11.15",
+    "platform": "Windows-10-10.0.19045-SP0"
+  },
+  "experiments": {
+    "one_shot_vs_loop": {
+      "command": [
+        "python",
+        "one_shot_vs_loop.py"
+      ],
+      "exit_code": 0,
+      "stdout": "[one-shot] model returned a plausible implementation\n[one-shot] answer_chars=248\n[one-shot] file_changed=False\n[one-shot] acceptance_tests_pass=False\n\n[closed-loop]\nstatus=completed\ntool_calls=4\nfile_changed=True\nacceptance_tests_pass=True",
+      "proves": "生成候选与环境验收是两个不同事件。",
+      "does_not_prove": "所有任务都必须使用 Agent Loop。"
+    },
+    "agent_loop": {
+      "command": [
+        "python",
+        "agent_loop.py"
+      ],
+      "exit_code": 0,
+      "stdout": "[fixture] state_before=0651b6769ea7\n[1] decide: 先读取真实实现，避免按记忆猜测。\n[1] call: read_file id=call-01-read_file\n[1] result: ok=True changed=False def parse_price(value: str) -> float:\n[2] decide: 先复现失败，获得环境证据。\n[2] call: run_tests id=call-02-run_tests\n[2] result: ok=False changed=False exit_code=1\n[3] decide: 失败与目标缺陷一致，按已读取内容修复。\n[3] call: apply_patch id=call-03-apply_patch\n[3] result: ok=True changed=True updated pricing.py\n[4] decide: 修改后必须用同一验收方式复测。\n[4] call: run_tests id=call-04-run_tests\n[4] result: ok=True changed=False exit_code=0\n[5] decide: 外部测试已通过。\n[5] verify: accepted=True rules=('tests_passed', 'protected_files_unchanged')\n[run] status=completed calls=4 final='修复完成，2 项测试通过。'\n[fixture] state_after=e6e060b7dc9f",
+      "proves": "确定性策略可在受控运行时中完成观察、行动和验证闭环。",
+      "does_not_prove": "该策略代表真实语言模型的任务能力。"
+    },
+    "loop_guards": {
+      "command": [
+        "python",
+        "loop_guards_demo.py"
+      ],
+      "exit_code": 0,
+      "stdout": "[1] decide: 没有利用上一次观察，机械地再次读取同一文件。\n[1] call: read_file id=repeat-1\n[1] result: ok=True changed=False def parse_price(value: str) -> float:\n[2] decide: 没有利用上一次观察，机械地再次读取同一文件。\n[2] call: read_file id=repeat-2\n[2] result: ok=True changed=False def parse_price(value: str) -> float:\n[3] decide: 没有利用上一次观察，机械地再次读取同一文件。\n[3] call: read_file id=repeat-3\n[3] stop: repeated_action\n[run] status=repeated_action calls=3 final=None",
+      "proves": "重复动作检测可以在步数耗尽前终止停滞。",
+      "does_not_prove": "重复工具调用必然是错误。"
+    },
+    "tool_errors": {
+      "command": [
+        "python",
+        "tool_error_demo.py"
+      ],
+      "exit_code": 0,
+      "stdout": "[transient failure: retry with the same idempotency key]\nattempt=1 ok=False type=transient_timeout retryable=True value=response lost after commit\nattempt=2 ok=True type=None retryable=False value=receipt:order-42:1990\nduplicate_ok=True attempts=3 side_effects=1 ledger_entries=1\n\n[permanent failure: do not retry]\nattempt=1 ok=False type=invalid_arguments retryable=False value=cents must be positive",
+      "proves": "同一幂等键可消解本地先提交后超时的不确定结果。",
+      "does_not_prove": "本地字典等价于跨服务支付事务。"
+    },
+    "verifier": {
+      "command": [
+        "python",
+        "verifier_demo.py"
+      ],
+      "exit_code": 0,
+      "stdout": "[naive runner: accepts self-report]\n[1] decide: 代码看起来很简单，我宣布完成。\n[1] verify: accepted=True rules=('verifier_not_configured',)\n[run] status=completed calls=0 final='已修复。'\ntests_pass=False\n\n[verified runner: rejects, repairs, then accepts]\n[1] decide: 代码看起来很简单，我宣布完成。\n[1] verify: accepted=False rules=('tests_failed', 'protected_files_unchanged')\n[2] decide: 验收器拒绝了声明，执行实际修改。\n[2] call: apply_patch id=repair-after-reject\n[2] result: ok=True changed=True updated pricing.py\n[3] decide: 用测试建立完成证据。\n[3] call: run_tests id=verify-after-repair\n[3] result: ok=True changed=False exit_code=0\n[4] decide: 修改存在且测试已通过。\n[4] verify: accepted=True rules=('tests_passed', 'protected_files_unchanged')\n[run] status=completed calls=2 final='修复并验证完成。'\ntests_pass=True",
+      "proves": "外部验证可以拒绝没有环境证据的完成声明。",
+      "does_not_prove": "单元测试覆盖全部用户意图。"
+    },
+    "trace_replay": {
+      "command": [
+        "python",
+        "trace_replay_demo.py"
+      ],
+      "exit_code": 0,
+      "stdout": "calls=4 results=4\nduplicate_call_ids=[]\nduplicate_result_ids=[]\nmissing_result_ids=[]\norphan_result_ids=[]\nresult_before_call_ids=[]\ncompletion_contract_ok=True\naudit_ok=True\nstate_changing_events=1\ninitial_digest=0651b6769ea7\nfinal_digest=e6e060b7dc9f\nreplay_digest=e6e060b7dc9f\nreplay_matches=True",
+      "proves": "有序事件可审计调用关联并回放本地确定性状态变化。",
+      "does_not_prove": "任意外部副作用都可安全回放。"
+    }
+  }
+}

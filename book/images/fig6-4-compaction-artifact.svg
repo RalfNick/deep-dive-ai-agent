@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">自由文本摘要与三个结构化合同的边界</title>
+  <desc id="desc">CompactionArtifact 只拥有制品字段；CarryItem 拥有 source_event_ids、authority 等语义项元数据；EvidenceLocator 拥有 locator_id、kind、ref、content_digest 与 workspace_digest。字段归属与 chapter6 contracts.py 一致。</desc>
+  <defs><style>.t{font-family:'Microsoft YaHei','PingFang SC',sans-serif;fill:#172033}.h{font-size:30px;font-weight:700}.s{font-size:16px;fill:#5d6b82}.k{font-size:19px;font-weight:700}.b{font-size:14px}.sm{font-size:12px;fill:#5d6b82}.code{font-family:Consolas,'Microsoft YaHei',monospace;font-size:14px}.desktop{display:inline}.mobile{display:none}.mobile-core-responsive{font-size:11px;font-weight:700}.mobile-source-responsive{font-size:9px;fill:#5d6b82}@media (max-width: 600px){.desktop{display:none}.mobile{display:inline}}</style></defs>
+  <rect width="1200" height="675" rx="24" fill="#f8fafc"/>
+  <g class="desktop" data-layout="desktop">
+  <text x="54" y="61" class="t h">压缩制品不是一段话：先把字段归还给真正拥有它的合同</text>
+  <text x="54" y="94" class="t s">左：自由文本摘要　中：CompactionArtifact　右：嵌套的 CarryItem 与 EvidenceLocator</text>
+  <rect x="48" y="126" width="244" height="444" rx="20" fill="#fff4e8" stroke="#e9a06d" stroke-width="2"/>
+  <text x="70" y="160" class="t k">自由文本摘要</text>
+  <rect x="70" y="181" width="200" height="166" rx="14" fill="#fff"/>
+  <text x="88" y="211" class="t b">“目标是修复价格，</text><text x="88" y="237" class="t b">已经试过一种方案，</text><text x="88" y="263" class="t b">接下来继续测试……”</text>
+  <text x="88" y="307" class="t sm">能阅读，却难以逐项验证</text><text x="88" y="329" class="t sm">字段、来源与证据边界</text>
+  <rect x="70" y="369" width="200" height="166" rx="14" fill="#fff" stroke="#f2c18e"/>
+  <text x="88" y="401" class="t k">风险</text>
+  <text x="88" y="433" class="t b">约束混入叙述</text><text x="88" y="461" class="t b">开放问题被省略</text><text x="88" y="489" class="t b">证据无法寻址</text><text x="88" y="517" class="t b">二次摘要继续漂移</text>
+  <rect x="312" y="126" width="520" height="444" rx="20" fill="#eaf8f5" stroke="#58ad9e" stroke-width="2"/>
+  <text x="336" y="160" class="t k">CompactionArtifact · 制品字段</text>
+  <text x="336" y="184" class="t sm">聚合 CarryItem 与 EvidenceLocator；不拥有嵌套对象的元数据</text>
+  <rect x="334" y="202" width="232" height="334" rx="14" fill="#fff"/><rect x="578" y="202" width="232" height="334" rx="14" fill="#fff"/>
+  <g class="t code">
+    <text x="352" y="231" data-contract="CompactionArtifact" data-field="artifact_id">artifact_id</text>
+    <text x="352" y="267" data-contract="CompactionArtifact" data-field="run_id">run_id</text>
+    <text x="352" y="303" data-contract="CompactionArtifact" data-field="source_event_range">source_event_range</text>
+    <text x="352" y="339" data-contract="CompactionArtifact" data-field="goal">goal : CarryItem</text>
+    <text x="352" y="375" data-contract="CompactionArtifact" data-field="acceptance_criteria">acceptance_criteria[]</text>
+    <text x="352" y="411" data-contract="CompactionArtifact" data-field="constraints">constraints[]</text>
+    <text x="352" y="447" data-contract="CompactionArtifact" data-field="decisions">decisions[]</text>
+    <text x="352" y="483" data-contract="CompactionArtifact" data-field="rejected_hypotheses">rejected_hypotheses[]</text>
+    <text x="352" y="519" data-contract="CompactionArtifact" data-field="open_issues">open_issues[]</text>
+    <text x="596" y="231" data-contract="CompactionArtifact" data-field="verification_state">verification_state[]</text>
+    <text x="596" y="267" data-contract="CompactionArtifact" data-field="evidence_locators">evidence_locators[]</text>
+    <text x="596" y="303" data-contract="CompactionArtifact" data-field="next_intent">next_intent : CarryItem</text>
+    <text x="596" y="339" data-contract="CompactionArtifact" data-field="created_at">created_at</text>
+    <text x="596" y="375" data-contract="CompactionArtifact" data-field="source_digest">source_digest</text>
+    <text x="596" y="411" data-contract="CompactionArtifact" data-field="workspace_digest">workspace_digest</text>
+    <text x="596" y="447" data-contract="CompactionArtifact" data-field="schema_version">schema_version</text>
+  </g>
+  <text x="596" y="493" class="t sm">字段表来自 contracts.py</text><text x="596" y="517" class="t sm">source_event_ids 不在这里</text>
+  <rect x="852" y="126" width="300" height="250" rx="20" fill="#edf4ff" stroke="#6e9fda" stroke-width="2"/>
+  <text x="874" y="160" class="t k">CarryItem · 语义项</text>
+  <g class="t code">
+    <text x="874" y="197" data-contract="CarryItem" data-field="key">key</text><text x="952" y="197" data-contract="CarryItem" data-field="kind">kind</text><text x="1030" y="197" data-contract="CarryItem" data-field="content">content</text>
+    <text x="874" y="237" data-contract="CarryItem" data-field="authority">authority</text><text x="982" y="237" data-contract="CarryItem" data-field="trust">trust</text><text x="1050" y="237" data-contract="CarryItem" data-field="sensitivity">sensitivity</text>
+    <text x="874" y="277" data-contract="CarryItem" data-field="retention_priority">retention_priority</text>
+    <text x="874" y="317" data-contract="CarryItem" data-field="source_event_ids">source_event_ids</text><text x="1012" y="317" data-contract="CarryItem" data-field="required_for">required_for</text>
+  </g>
+  <text x="874" y="350" class="t sm">authority / trust / 来源随内容项一起走</text>
+  <rect x="852" y="394" width="300" height="176" rx="20" fill="#172b5b"/>
+  <text x="874" y="428" font-family="Microsoft YaHei" font-size="19" font-weight="700" fill="#fff">EvidenceLocator · 证据指针</text>
+  <g font-family="Consolas" font-size="14" fill="#dbe6ff">
+    <text x="874" y="465" data-contract="EvidenceLocator" data-field="locator_id">locator_id</text><text x="990" y="465" data-contract="EvidenceLocator" data-field="kind">kind</text><text x="1058" y="465" data-contract="EvidenceLocator" data-field="ref">ref</text>
+    <text x="874" y="505" data-contract="EvidenceLocator" data-field="content_digest">content_digest</text>
+    <text x="874" y="545" data-contract="EvidenceLocator" data-field="workspace_digest">workspace_digest</text>
+  </g>
+  <rect x="123" y="601" width="954" height="42" rx="21" fill="#172b5b"/>
+  <text x="600" y="628" text-anchor="middle" font-family="Microsoft YaHei" font-size="16" fill="#fff">Artifact 负责聚合；CarryItem 负责语义来源；Locator 负责把证据指回 Workspace</text>
+  </g>
+  <g class="mobile" data-layout="mobile" transform="scale(3.077)">
+    <text x="8" y="14" class="t mobile-core-responsive">压缩制品不是一段话：字段各有所有者</text>
+    <text x="8" y="25" class="t mobile-source-responsive">自由文本可读；结构化合同让来源、状态与证据可检查</text>
+
+    <rect x="7" y="33" width="376" height="38" rx="6" fill="#fff4e8" stroke="#e9a06d" stroke-width="0.8"/>
+    <text x="13" y="47" class="t mobile-core-responsive">自由文本摘要</text>
+    <text x="105" y="47" class="t mobile-source-responsive">“目标是修复价格，接下来继续测试……”</text>
+    <text x="13" y="62" class="t mobile-source-responsive">风险：约束混入叙述 · 开放问题被省略 · 证据无法寻址 · 二次摘要继续漂移</text>
+
+    <rect x="7" y="78" width="376" height="70" rx="6" fill="#eaf8f5" stroke="#58ad9e" stroke-width="0.8"/>
+    <text x="13" y="92" class="t mobile-core-responsive">CompactionArtifact · 聚合合同</text>
+    <rect x="13" y="99" width="113" height="41" rx="4" fill="#fff"/>
+    <text x="18" y="111" class="t mobile-source-responsive">artifact_id / run_id</text>
+    <text x="18" y="123" class="t mobile-source-responsive">range / source_digest</text>
+    <text x="18" y="135" class="t mobile-source-responsive">workspace / schema</text>
+    <rect x="132" y="99" width="126" height="41" rx="4" fill="#fff"/>
+    <text x="137" y="111" class="t mobile-source-responsive">goal / acceptance[]</text>
+    <text x="137" y="123" class="t mobile-source-responsive">constraints[] / decisions[]</text>
+    <text x="137" y="135" class="t mobile-source-responsive">rejected[] / open[]</text>
+    <rect x="264" y="99" width="113" height="41" rx="4" fill="#fff"/>
+    <text x="269" y="111" class="t mobile-source-responsive">verification[]</text>
+    <text x="269" y="123" class="t mobile-source-responsive">next_intent</text>
+    <text x="269" y="135" class="t mobile-source-responsive">evidence_locators[]</text>
+
+    <rect x="7" y="153" width="183" height="41" rx="6" fill="#edf4ff" stroke="#6e9fda" stroke-width="0.8"/>
+    <text x="13" y="166" class="t mobile-core-responsive">CarryItem · 语义项</text>
+    <text x="13" y="179" class="t mobile-source-responsive">key / kind / authority / trust</text>
+    <text x="13" y="190" class="t mobile-source-responsive">source_event_ids / required_for</text>
+    <rect x="197" y="153" width="186" height="41" rx="6" fill="#172b5b"/>
+    <text x="203" y="166" font-family="Microsoft YaHei" font-size="11" font-weight="700" fill="#fff">EvidenceLocator · 证据指针</text>
+    <text x="203" y="179" font-family="Microsoft YaHei" font-size="9" fill="#dbe6ff">ref / content_digest</text>
+    <text x="203" y="190" font-family="Microsoft YaHei" font-size="9" fill="#dbe6ff">workspace_digest</text>
+
+    <rect x="25" y="200" width="340" height="14" rx="7" fill="#172b5b"/>
+    <text x="195" y="210" text-anchor="middle" font-family="Microsoft YaHei" font-size="9" fill="#fff">Artifact 聚合；CarryItem 保留语义来源；Locator 指回 Workspace</text>
+  </g>
+</svg>

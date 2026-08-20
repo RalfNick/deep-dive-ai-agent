@@ -1,0 +1,31 @@
+{
+  "seed": 20260809,
+  "context": 12,
+  "vocab_size": 191,
+  "models": [
+    {
+      "model": "micro-11k",
+      "parameters": 10935,
+      "pretrain_valid_start": 5.252343403371432,
+      "pretrain_valid_end": 0.02553557038513761,
+      "sft_target_loss_before": 8.018983597541737,
+      "sft_target_loss_after": 0.5951416643135775,
+      "task_success_before": 0.0,
+      "task_success_after": 0.6666666666666666,
+      "retain_loss_before": 0.24914647640156137,
+      "retain_loss_after": 0.47274736422735186
+    },
+    {
+      "model": "micro-40k",
+      "parameters": 40111,
+      "pretrain_valid_start": 5.256406108415817,
+      "pretrain_valid_end": 0.02051511297911893,
+      "sft_target_loss_before": 7.18748218998318,
+      "sft_target_loss_after": 0.14639493756523683,
+      "task_success_before": 0.0,
+      "task_success_after": 0.8333333333333334,
+      "retain_loss_before": 0.29043016058716825,
+      "retain_loss_after": 0.26066182660270054
+    }
+  ]
+}

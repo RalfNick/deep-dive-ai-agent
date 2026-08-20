@@ -1,0 +1,478 @@
+{
+  "cases": [
+    {
+      "decision_kind": "unsafe_signature_change",
+      "experiment": "checkpoint_vs_rehydration",
+      "grade": {
+        "acceptance_retention": 0.0,
+        "constraint_retention": 0.0,
+        "duplicate_work_count": null,
+        "false_completion": false,
+        "goal_retained": true,
+        "locator_integrity": null,
+        "negative_constraint_retention": 0.0,
+        "open_issue_retention": 0.0,
+        "packet_contract_passed": null,
+        "rejected_hypothesis_retention": 0.0,
+        "resume_correct": null,
+        "trace_contract_passed": true
+      },
+      "sample_count": 1,
+      "serialized_bytes_after": 583,
+      "serialized_bytes_before": 12108,
+      "supported_claims": [
+        "the checkpoint restores the declared next step while the stable task contract provides only the goal anchor",
+        "no ContextPacket contract is measured for the checkpoint-only control"
+      ],
+      "unsupported_claims": [
+        "real model average task success rate",
+        "model or commercial product ranking",
+        "production-optimal compaction threshold",
+        "cross-process side effects are exactly-once"
+      ],
+      "variant": "checkpoint-only-v1"
+    },
+    {
+      "decision_kind": "apply_legacy_compatible_patch",
+      "experiment": "checkpoint_vs_rehydration",
+      "grade": {
+        "acceptance_retention": 1.0,
+        "constraint_retention": 1.0,
+        "duplicate_work_count": 0,
+        "false_completion": false,
+        "goal_retained": true,
+        "locator_integrity": 1.0,
+        "negative_constraint_retention": 1.0,
+        "open_issue_retention": 1.0,
+        "packet_contract_passed": true,
+        "rejected_hypothesis_retention": 1.0,
+        "resume_correct": true,
+        "trace_contract_passed": true
+      },
+      "sample_count": 1,
+      "serialized_bytes_after": 3447,
+      "serialized_bytes_before": 12108,
+      "supported_claims": [
+        "rehydration produced an actual Chapter 5 ContextPacket and ContextBuildTrace",
+        "the fixed policy continued with the compatible patch without repeating the rejected attempt"
+      ],
+      "unsupported_claims": [
+        "real model average task success rate",
+        "model or commercial product ranking",
+        "production-optimal compaction threshold",
+        "cross-process side effects are exactly-once"
+      ],
+      "variant": "rehydrated-context-v1"
+    },
+    {
+      "decision_kind": null,
+      "experiment": "context_growth",
+      "grade": {
+        "acceptance_retention": 1.0,
+        "constraint_retention": 1.0,
+        "duplicate_work_count": null,
+        "false_completion": false,
+        "goal_retained": true,
+        "locator_integrity": null,
+        "negative_constraint_retention": 1.0,
+        "open_issue_retention": 1.0,
+        "packet_contract_passed": null,
+        "rejected_hypothesis_retention": 1.0,
+        "resume_correct": null,
+        "trace_contract_passed": true
+      },
+      "sample_count": 1,
+      "serialized_bytes_after": 3950,
+      "serialized_bytes_before": 3950,
+      "supported_claims": [
+        "canonical UTF-8 bytes are measured after event 8",
+        "append-all retains each observed event at that cursor"
+      ],
+      "unsupported_claims": [
+        "real model average task success rate",
+        "model or commercial product ranking",
+        "production-optimal compaction threshold",
+        "cross-process side effects are exactly-once"
+      ],
+      "variant": "append-all-cursor-08"
+    },
+    {
+      "decision_kind": "apply_legacy_compatible_patch",
+      "experiment": "context_growth",
+      "grade": {
+        "acceptance_retention": 1.0,
+        "constraint_retention": 1.0,
+        "duplicate_work_count": null,
+        "false_completion": false,
+        "goal_retained": true,
+        "locator_integrity": null,
+        "negative_constraint_retention": 1.0,
+        "open_issue_retention": 1.0,
+        "packet_contract_passed": null,
+        "rejected_hypothesis_retention": 1.0,
+        "resume_correct": null,
+        "trace_contract_passed": true
+      },
+      "sample_count": 1,
+      "serialized_bytes_after": 12108,
+      "serialized_bytes_before": 12108,
+      "supported_claims": [
+        "canonical UTF-8 bytes are measured after event 24",
+        "append-all retains each observed event at that cursor"
+      ],
+      "unsupported_claims": [
+        "real model average task success rate",
+        "model or commercial product ranking",
+        "production-optimal compaction threshold",
+        "cross-process side effects are exactly-once"
+      ],
+      "variant": "append-all-cursor-24"
+    },
+    {
+      "decision_kind": "rejected_artifact_source_digest_mismatch",
+      "experiment": "failure_matrix",
+      "grade": {
+        "acceptance_retention": 0.0,
+        "constraint_retention": 0.0,
+        "duplicate_work_count": null,
+        "false_completion": false,
+        "goal_retained": false,
+        "locator_integrity": null,
+        "negative_constraint_retention": 0.0,
+        "open_issue_retention": 0.0,
+        "packet_contract_passed": null,
+        "rejected_hypothesis_retention": 0.0,
+        "resume_correct": null,
+        "trace_contract_passed": true
+      },
+      "sample_count": 1,
+      "serialized_bytes_after": 7217,
+      "serialized_bytes_before": 12108,
+      "supported_claims": [
+        "the injected boundary was rejected with artifact_source_digest_mismatch"
+      ],
+      "unsupported_claims": [
+        "real model average task success rate",
+        "model or commercial product ranking",
+        "production-optimal compaction threshold",
+        "cross-process side effects are exactly-once"
+      ],
+      "variant": "corrupt-artifact-source-digest"
+    },
+    {
+      "decision_kind": "unsafe_signature_change",
+      "experiment": "failure_matrix",
+      "grade": {
+        "acceptance_retention": 0.0,
+        "constraint_retention": 0.5,
+        "duplicate_work_count": null,
+        "false_completion": false,
+        "goal_retained": true,
+        "locator_integrity": null,
+        "negative_constraint_retention": 0.0,
+        "open_issue_retention": 0.0,
+        "packet_contract_passed": null,
+        "rejected_hypothesis_retention": 1.0,
+        "resume_correct": null,
+        "trace_contract_passed": true
+      },
+      "sample_count": 1,
+      "serialized_bytes_after": 4337,
+      "serialized_bytes_before": 12108,
+      "supported_claims": [
+        "dropping event 2 sends the fixed policy into its unsafe-signature branch"
+      ],
+      "unsupported_claims": [
+        "real model average task success rate",
+        "model or commercial product ranking",
+        "production-optimal compaction threshold",
+        "cross-process side effects are exactly-once"
+      ],
+      "variant": "early-constraint-loss"
+    },
+    {
+      "decision_kind": "injected_summary_claims_complete",
+      "experiment": "failure_matrix",
+      "grade": {
+        "acceptance_retention": 1.0,
+        "constraint_retention": 1.0,
+        "duplicate_work_count": null,
+        "false_completion": true,
+        "goal_retained": true,
+        "locator_integrity": null,
+        "negative_constraint_retention": 1.0,
+        "open_issue_retention": 0.0,
+        "packet_contract_passed": null,
+        "rejected_hypothesis_retention": 1.0,
+        "resume_correct": null,
+        "trace_contract_passed": true
+      },
+      "sample_count": 1,
+      "serialized_bytes_after": 3579,
+      "serialized_bytes_before": 12108,
+      "supported_claims": [
+        "the injected summary replaces an unresolved issue with an unsupported completion claim"
+      ],
+      "unsupported_claims": [
+        "real model average task success rate",
+        "model or commercial product ranking",
+        "production-optimal compaction threshold",
+        "cross-process side effects are exactly-once"
+      ],
+      "variant": "omitted-open-failure"
+    },
+    {
+      "decision_kind": "rejected_artifact_schema",
+      "experiment": "failure_matrix",
+      "grade": {
+        "acceptance_retention": 0.0,
+        "constraint_retention": 0.0,
+        "duplicate_work_count": null,
+        "false_completion": false,
+        "goal_retained": false,
+        "locator_integrity": null,
+        "negative_constraint_retention": 0.0,
+        "open_issue_retention": 0.0,
+        "packet_contract_passed": null,
+        "rejected_hypothesis_retention": 0.0,
+        "resume_correct": null,
+        "trace_contract_passed": true
+      },
+      "sample_count": 1,
+      "serialized_bytes_after": 7272,
+      "serialized_bytes_before": 12108,
+      "supported_claims": [
+        "the injected boundary was rejected with artifact_rejected_schema"
+      ],
+      "unsupported_claims": [
+        "real model average task success rate",
+        "model or commercial product ranking",
+        "production-optimal compaction threshold",
+        "cross-process side effects are exactly-once"
+      ],
+      "variant": "unsupported-artifact-schema"
+    },
+    {
+      "decision_kind": "rejected_stale_workspace_digest",
+      "experiment": "failure_matrix",
+      "grade": {
+        "acceptance_retention": 0.0,
+        "constraint_retention": 0.0,
+        "duplicate_work_count": null,
+        "false_completion": false,
+        "goal_retained": false,
+        "locator_integrity": null,
+        "negative_constraint_retention": 0.0,
+        "open_issue_retention": 0.0,
+        "packet_contract_passed": null,
+        "rejected_hypothesis_retention": 0.0,
+        "resume_correct": null,
+        "trace_contract_passed": true
+      },
+      "sample_count": 1,
+      "serialized_bytes_after": 3579,
+      "serialized_bytes_before": 12108,
+      "supported_claims": [
+        "the stale workspace was rejected with stale_workspace_digest"
+      ],
+      "unsupported_claims": [
+        "real model average task success rate",
+        "model or commercial product ranking",
+        "production-optimal compaction threshold",
+        "cross-process side effects are exactly-once"
+      ],
+      "variant": "workspace-digest-mismatch"
+    },
+    {
+      "decision_kind": "apply_legacy_compatible_patch",
+      "experiment": "generational_drift",
+      "grade": {
+        "acceptance_retention": 1.0,
+        "constraint_retention": 1.0,
+        "duplicate_work_count": null,
+        "false_completion": false,
+        "goal_retained": true,
+        "locator_integrity": 1.0,
+        "negative_constraint_retention": 1.0,
+        "open_issue_retention": 1.0,
+        "packet_contract_passed": null,
+        "rejected_hypothesis_retention": 1.0,
+        "resume_correct": null,
+        "trace_contract_passed": true
+      },
+      "sample_count": 1,
+      "serialized_bytes_after": 3579,
+      "serialized_bytes_before": 12108,
+      "supported_claims": [
+        "structured regeneration from the frozen event log is byte-stable: true"
+      ],
+      "unsupported_claims": [
+        "real model average task success rate",
+        "model or commercial product ranking",
+        "production-optimal compaction threshold",
+        "cross-process side effects are exactly-once"
+      ],
+      "variant": "structured-regenerated-v1"
+    },
+    {
+      "decision_kind": "unsafe_signature_change",
+      "experiment": "generational_drift",
+      "grade": {
+        "acceptance_retention": 0.0,
+        "constraint_retention": 0.0,
+        "duplicate_work_count": null,
+        "false_completion": false,
+        "goal_retained": true,
+        "locator_integrity": null,
+        "negative_constraint_retention": 0.0,
+        "open_issue_retention": 0.0,
+        "packet_contract_passed": null,
+        "rejected_hypothesis_retention": 0.0,
+        "resume_correct": null,
+        "trace_contract_passed": true
+      },
+      "sample_count": 1,
+      "serialized_bytes_after": 843,
+      "serialized_bytes_before": 12108,
+      "supported_claims": [
+        "the first controlled free-text generation loses structured constraints and open state"
+      ],
+      "unsupported_claims": [
+        "real model average task success rate",
+        "model or commercial product ranking",
+        "production-optimal compaction threshold",
+        "cross-process side effects are exactly-once"
+      ],
+      "variant": "summary-generation-1"
+    },
+    {
+      "decision_kind": "unsafe_signature_change",
+      "experiment": "generational_drift",
+      "grade": {
+        "acceptance_retention": 0.0,
+        "constraint_retention": 0.0,
+        "duplicate_work_count": null,
+        "false_completion": false,
+        "goal_retained": true,
+        "locator_integrity": null,
+        "negative_constraint_retention": 0.0,
+        "open_issue_retention": 0.0,
+        "packet_contract_passed": null,
+        "rejected_hypothesis_retention": 0.0,
+        "resume_correct": null,
+        "trace_contract_passed": true
+      },
+      "sample_count": 1,
+      "serialized_bytes_after": 16,
+      "serialized_bytes_before": 843,
+      "supported_claims": [
+        "the declared second-generation transform retains only the goal key"
+      ],
+      "unsupported_claims": [
+        "real model average task success rate",
+        "model or commercial product ranking",
+        "production-optimal compaction threshold",
+        "cross-process side effects are exactly-once"
+      ],
+      "variant": "summary-generation-2"
+    },
+    {
+      "decision_kind": "unsafe_signature_change",
+      "experiment": "sliding_window",
+      "grade": {
+        "acceptance_retention": 0.0,
+        "constraint_retention": 0.5,
+        "duplicate_work_count": null,
+        "false_completion": false,
+        "goal_retained": true,
+        "locator_integrity": null,
+        "negative_constraint_retention": 0.0,
+        "open_issue_retention": 0.0,
+        "packet_contract_passed": null,
+        "rejected_hypothesis_retention": 1.0,
+        "resume_correct": null,
+        "trace_contract_passed": true
+      },
+      "sample_count": 1,
+      "serialized_bytes_after": 4337,
+      "serialized_bytes_before": 12108,
+      "supported_claims": [
+        "the eight-event window omits the event-2 public-signature constraint",
+        "the fixed policy enters its unsafe-signature controlled failure branch"
+      ],
+      "unsupported_claims": [
+        "real model average task success rate",
+        "model or commercial product ranking",
+        "production-optimal compaction threshold",
+        "cross-process side effects are exactly-once"
+      ],
+      "variant": "sliding-window-8-events"
+    },
+    {
+      "decision_kind": "apply_legacy_compatible_patch",
+      "experiment": "summary_vs_structured",
+      "grade": {
+        "acceptance_retention": 1.0,
+        "constraint_retention": 1.0,
+        "duplicate_work_count": null,
+        "false_completion": false,
+        "goal_retained": true,
+        "locator_integrity": 1.0,
+        "negative_constraint_retention": 1.0,
+        "open_issue_retention": 1.0,
+        "packet_contract_passed": null,
+        "rejected_hypothesis_retention": 1.0,
+        "resume_correct": null,
+        "trace_contract_passed": true
+      },
+      "sample_count": 1,
+      "serialized_bytes_after": 3579,
+      "serialized_bytes_before": 12108,
+      "supported_claims": [
+        "the structured artifact retains every declared semantic field",
+        "all generated evidence locators match the frozen workspace digest"
+      ],
+      "unsupported_claims": [
+        "real model average task success rate",
+        "model or commercial product ranking",
+        "production-optimal compaction threshold",
+        "cross-process side effects are exactly-once"
+      ],
+      "variant": "structured-compaction-v1"
+    },
+    {
+      "decision_kind": "unsafe_signature_change",
+      "experiment": "summary_vs_structured",
+      "grade": {
+        "acceptance_retention": 0.0,
+        "constraint_retention": 0.0,
+        "duplicate_work_count": null,
+        "false_completion": false,
+        "goal_retained": true,
+        "locator_integrity": null,
+        "negative_constraint_retention": 0.0,
+        "open_issue_retention": 0.0,
+        "packet_contract_passed": null,
+        "rejected_hypothesis_retention": 0.0,
+        "resume_correct": null,
+        "trace_contract_passed": true
+      },
+      "sample_count": 1,
+      "serialized_bytes_after": 843,
+      "serialized_bytes_before": 12108,
+      "supported_claims": [
+        "the fixed summary rule omits declared constraints and the open failure",
+        "the comparison measures this controlled rule, not model summarization quality"
+      ],
+      "unsupported_claims": [
+        "real model average task success rate",
+        "model or commercial product ranking",
+        "production-optimal compaction threshold",
+        "cross-process side effects are exactly-once"
+      ],
+      "variant": "summary-only-v1"
+    }
+  ],
+  "comparison_scope": "deterministic semantic-continuity contract; not model or product ranking",
+  "run_status": "passed"
+}

@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <style>.t{font-family:'Microsoft YaHei',sans-serif;fill:#172033}.h{font-size:32px;font-weight:700}.s{font-size:17px;fill:#5d6b82}.k{font-size:18px;font-weight:700}.b{font-size:14px}.sm{font-size:13px}</style>
+    <marker id="a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="#6f7f97"/></marker>
+  </defs>
+  <rect width="1200" height="675" rx="24" fill="#f8fafc"/>
+  <text x="60" y="64" class="t h">Context Builder 不是拼接器，而是一条可解释的决策流水线</text>
+  <text x="60" y="99" class="t s">每个闸门保护不同属性；被排除的内容同样要留下不含正文的原因</text>
+
+  <g class="t">
+    <rect x="50" y="166" width="130" height="102" rx="18" fill="#eef2f7" stroke="#9baabe"/><text x="115" y="205" text-anchor="middle" class="k">候选项</text><text x="115" y="235" text-anchor="middle" class="b">多来源</text><text x="115" y="255" text-anchor="middle" class="b">未排序</text>
+    <path d="M184 217 H220" stroke="#6f7f97" stroke-width="2.5" marker-end="url(#a)"/>
+    <rect x="228" y="166" width="130" height="102" rx="18" fill="#e9f2ff" stroke="#6e9fda"/><text x="293" y="205" text-anchor="middle" class="k">资格</text><text x="293" y="235" text-anchor="middle" class="b">范围</text><text x="293" y="255" text-anchor="middle" class="b">敏感度</text>
+    <path d="M362 217 H398" stroke="#6f7f97" stroke-width="2.5" marker-end="url(#a)"/>
+    <rect x="406" y="166" width="130" height="102" rx="18" fill="#f0edff" stroke="#9684d8"/><text x="471" y="205" text-anchor="middle" class="k">归一</text><text x="471" y="235" text-anchor="middle" class="b">去重</text><text x="471" y="255" text-anchor="middle" class="b">版本替代</text>
+    <path d="M540 217 H576" stroke="#6f7f97" stroke-width="2.5" marker-end="url(#a)"/>
+    <rect x="584" y="166" width="130" height="102" rx="18" fill="#fff2e8" stroke="#e9a06d"/><text x="649" y="205" text-anchor="middle" class="k">冲突</text><text x="649" y="235" text-anchor="middle" class="b">类型规则</text><text x="649" y="255" text-anchor="middle" class="b">来源权威</text>
+    <path d="M718 217 H754" stroke="#6f7f97" stroke-width="2.5" marker-end="url(#a)"/>
+    <rect x="762" y="166" width="130" height="102" rx="18" fill="#eaf8f5" stroke="#58ad9e"/><text x="827" y="205" text-anchor="middle" class="k">选择</text><text x="827" y="235" text-anchor="middle" class="b">必需项优先</text><text x="827" y="255" text-anchor="middle" class="b">有限预算</text>
+    <path d="M896 217 H932" stroke="#6f7f97" stroke-width="2.5" marker-end="url(#a)"/>
+    <rect x="940" y="166" width="210" height="102" rx="18" fill="#172b5b"/><text x="1045" y="205" text-anchor="middle" font-family="Microsoft YaHei" font-size="18" font-weight="700" fill="#fff">确定性排序</text><text x="1045" y="235" text-anchor="middle" font-family="Microsoft YaHei" font-size="14" fill="#dbe6ff">序列化 Packet</text><text x="1045" y="255" text-anchor="middle" font-family="Microsoft YaHei" font-size="14" fill="#dbe6ff">计算 digest</text>
+  </g>
+
+  <path d="M293 279 V340 H1030 V287" fill="none" stroke="#6f7f97" stroke-width="2" stroke-dasharray="6 6" marker-end="url(#a)"/>
+  <rect x="92" y="366" width="1016" height="156" rx="22" fill="#fff" stroke="#a9b5c7" stroke-width="2"/>
+  <text x="124" y="405" class="t k">ContextBuildTrace</text>
+  <text x="124" y="440" class="t b">selected_ids　·　excluded_ids + reason codes　·　missing_requirements　·　used_budget　·　policy_version</text>
+  <text x="124" y="474" class="t b">semantic_digest　·　provider_request_digest（序列化后）　·　确定性顺序　·　不保存秘密正文</text>
+  <rect x="124" y="492" width="952" height="15" rx="7" fill="#dce5f1"/><rect x="124" y="492" width="644" height="15" rx="7" fill="#6e9fda"/>
+  <text x="1080" y="505" text-anchor="end" class="t sm">预算使用可观测</text>
+
+  <rect x="203" y="582" width="794" height="46" rx="23" fill="#172b5b"/>
+  <text x="600" y="612" text-anchor="middle" font-family="Microsoft YaHei" font-size="17" fill="#fff">“为什么没选”与“为什么选中”一样，是排查模型行为的证据</text>
+</svg>

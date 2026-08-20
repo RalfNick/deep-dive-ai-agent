@@ -1,0 +1,78 @@
+<svg viewBox="0 0 980 560" xmlns="http://www.w3.org/2000/svg">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'JetBrains Mono', 'Noto Sans SC', 'PingFang SC', sans-serif; }
+  .title { fill:#f8fafc; font-size:18px; font-weight:700; }
+  .subtitle { fill:#94a3b8; font-size:10px; }
+  .label { fill:#f8fafc; font-size:12px; font-weight:700; }
+  .desc { fill:#cbd5e1; font-size:9px; }
+  .tiny { fill:#94a3b8; font-size:8px; }
+  .badge { fill:#0f172a; stroke-width:1.2; }
+  .line { fill:none; stroke:#64748b; stroke-width:1.4; marker-end:url(#arrow); }
+  .dash { fill:none; stroke:#64748b; stroke-width:1.2; stroke-dasharray:5 4; marker-end:url(#arrow); }
+</style>
+<defs>
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.55"/>
+  </pattern>
+  <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/>
+  </marker>
+  <marker id="arrow-cyan" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0 0, 10 3.5, 0 7" fill="#22d3ee"/>
+  </marker>
+  <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+    <feGaussianBlur stdDeviation="2.4" result="blur"/>
+    <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</defs><rect width="100%" height="100%" fill="#0f172a"/><rect width="100%" height="100%" fill="url(#grid)" opacity="0.7"/>
+<text x="34" y="42" class="title">两个 Review 抓出来的 Memory Bug</text><text x="34" y="62" class="subtitle">Memory 的坏味道通常不是立刻崩溃，而是慢慢丢数据、写脏数据</text>
+<rect x="64" y="100" width="398" height="340" rx="16" fill="rgba(136,19,55,0.18)" stroke="#fb7185" stroke-width="1.4"/>
+<text x="88" y="132" class="label">Bug 1：typed search 写回误删</text>
+<g>
+    <rect x="96" y="166" width="130" height="54" rx="10" fill="#0f172a"/>
+    <rect x="96" y="166" width="130" height="54" rx="10" fill="rgba(30,41,59,0.55)" stroke="#94a3b8" stroke-width="1.5" filter="url(#glow)"/>
+    <text x="161" y="192" text-anchor="middle" class="label">all_records</text>
+    <text x="161" y="212" text-anchor="middle" class="desc">pref + entity + task</text>
+  </g>
+<g>
+    <rect x="266" y="166" width="130" height="54" rx="10" fill="#0f172a"/>
+    <rect x="266" y="166" width="130" height="54" rx="10" fill="rgba(120,53,15,0.35)" stroke="#fbbf24" stroke-width="1.5" filter="url(#glow)"/>
+    <text x="331" y="192" text-anchor="middle" class="label">filter(task)</text>
+    <text x="331" y="212" text-anchor="middle" class="desc">只剩 task 视图</text>
+  </g>
+<g>
+    <rect x="181" y="274" width="130" height="54" rx="10" fill="#0f172a"/>
+    <rect x="181" y="274" width="130" height="54" rx="10" fill="rgba(136,19,55,0.42)" stroke="#fb7185" stroke-width="1.5" filter="url(#glow)"/>
+    <text x="246" y="300" text-anchor="middle" class="label">save(records)</text>
+    <text x="246" y="320" text-anchor="middle" class="desc">覆盖原文件</text>
+  </g>
+<path d="M226 193 L266 193" class="line"/>
+<path d="M331 220 L259 274" class="line"/>
+<text x="263" y="366" text-anchor="middle" class="desc">修复：搜索可过滤，写回必须保存 all_records</text>
+<rect x="518" y="100" width="398" height="340" rx="16" fill="rgba(136,19,55,0.18)" stroke="#fb7185" stroke-width="1.4"/>
+<text x="542" y="132" class="label">Bug 2：中文 memory_id 冲突</text>
+<g>
+    <rect x="550" y="166" width="140" height="54" rx="10" fill="#0f172a"/>
+    <rect x="550" y="166" width="140" height="54" rx="10" fill="rgba(30,41,59,0.55)" stroke="#94a3b8" stroke-width="1.5" filter="url(#glow)"/>
+    <text x="620" y="192" text-anchor="middle" class="label">中文 subject</text>
+    <text x="620" y="212" text-anchor="middle" class="desc">用户喜欢短回答</text>
+  </g>
+<g>
+    <rect x="746" y="166" width="140" height="54" rx="10" fill="#0f172a"/>
+    <rect x="746" y="166" width="140" height="54" rx="10" fill="rgba(136,19,55,0.42)" stroke="#fb7185" stroke-width="1.5" filter="url(#glow)"/>
+    <text x="816" y="192" text-anchor="middle" class="label">ASCII slug</text>
+    <text x="816" y="212" text-anchor="middle" class="desc">entity:_</text>
+  </g>
+<g>
+    <rect x="640" y="286" width="160" height="54" rx="10" fill="#0f172a"/>
+    <rect x="640" y="286" width="160" height="54" rx="10" fill="rgba(6,78,59,0.42)" stroke="#34d399" stroke-width="1.5" filter="url(#glow)"/>
+    <text x="720" y="312" text-anchor="middle" class="label">slug + hash</text>
+    <text x="720" y="332" text-anchor="middle" class="desc">entity:用户喜欢...:a1b2</text>
+  </g>
+<path d="M690 193 L746 193" class="line"/>
+<path d="M816 220 L720 286" class="line"/>
+<text x="717" y="376" text-anchor="middle" class="desc">修复：中文 slug 保留语义，hash 保证区分度</text>
+<rect x="112" y="482" width="756" height="34" rx="17" fill="rgba(15,23,42,0.86)" stroke="#334155"/>
+<text x="490" y="504" text-anchor="middle" class="desc">这两个问题都靠测试固定：不是为了覆盖率，而是防止 Memory store 悄悄变脏。</text>
+</svg>

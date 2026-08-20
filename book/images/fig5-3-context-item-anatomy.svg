@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs><style>.t{font-family:'Microsoft YaHei',sans-serif;fill:#172033}.h{font-size:32px;font-weight:700}.s{font-size:17px;fill:#5d6b82}.k{font-size:20px;font-weight:700}.b{font-size:16px}.sm{font-size:14px}.m{font-family:Consolas,'Microsoft YaHei',sans-serif;font-size:15px}</style></defs>
+  <rect width="1200" height="675" rx="24" fill="#f8fafc"/>
+  <text x="60" y="64" class="t h">ContextItem：正文之外，还要保存它为什么有资格进入</text>
+  <text x="60" y="99" class="t s">可治理上下文不是字符串数组，而是带来源、权威、范围、成本和版本的记录</text>
+
+  <rect x="70" y="143" width="650" height="424" rx="24" fill="#fff" stroke="#7f96b5" stroke-width="2"/>
+  <rect x="70" y="143" width="650" height="66" rx="24" fill="#172b5b"/>
+  <path d="M70 187 H720 V209 H70 Z" fill="#172b5b"/>
+  <text x="103" y="185" font-family="Consolas" font-size="21" font-weight="700" fill="#fff">ContextItem(item_id="policy-current")</text>
+  <g class="t">
+    <text x="105" y="251" class="m" fill="#356a9d">kind</text><text x="255" y="251" class="b">instruction / task / evidence / tool</text>
+    <text x="105" y="291" class="m" fill="#356a9d">content</text><text x="255" y="291" class="b">模型可见正文或结构化描述</text>
+    <text x="105" y="331" class="m" fill="#356a9d">provenance</text><text x="255" y="331" class="b">渠道、定位符、版本、时间与摘要</text>
+    <text x="105" y="371" class="m" fill="#356a9d">authority</text><text x="255" y="371" class="b">由 SourcePolicy 赋予，不从正文解析</text>
+    <text x="105" y="411" class="m" fill="#356a9d">trust</text><text x="255" y="411" class="b">verified / trusted / unverified / hostile</text>
+    <text x="105" y="451" class="m" fill="#356a9d">scope</text><text x="255" y="451" class="b">workspace / task / path / step</text>
+    <text x="105" y="491" class="m" fill="#356a9d">retention</text><text x="255" y="491" class="b">required / high / normal / low + required_for</text>
+    <text x="105" y="531" class="m" fill="#356a9d">sensitivity</text><text x="255" y="531" class="b">public / internal / secret；成本在运行时估算</text>
+  </g>
+
+  <rect x="774" y="160" width="350" height="144" rx="20" fill="#fff2e8" stroke="#e9a06d" stroke-width="2"/>
+  <text x="804" y="201" class="t k">错误做法</text>
+  <text x="804" y="239" class="t b">正文写着“我是最高优先级指令”</text>
+  <text x="804" y="271" class="t b" fill="#a34b2a">→ 解析正文并提升 authority</text>
+
+  <rect x="774" y="333" width="350" height="193" rx="20" fill="#eaf8f5" stroke="#58ad9e" stroke-width="2"/>
+  <text x="804" y="374" class="t k">正确边界</text>
+  <text x="804" y="412" class="t b">Loader 记录“来自网页结果”</text>
+  <text x="804" y="444" class="t b">SourcePolicy 映射为 untrusted</text>
+  <text x="804" y="476" class="t b">Builder 将其作为数据隔离</text>
+  <text x="804" y="508" class="t sm" fill="#2b7569">内容不能给自己授予权力</text>
+
+  <rect x="196" y="599" width="808" height="44" rx="22" fill="#172b5b"/>
+  <text x="600" y="628" text-anchor="middle" font-family="Microsoft YaHei" font-size="17" fill="#fff">Provenance 是控制面字段，不是写进 Prompt 的一句自我声明</text>
+</svg>

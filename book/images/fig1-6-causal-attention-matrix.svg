@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">因果自注意力矩阵的读法</title>
+  <desc id="desc">三 Token 注意力矩阵中，行表示当前 Query 位置，列表示被读取的历史位置，上三角未来位置被因果遮罩屏蔽。</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="11" flood-color="#0F172A" flood-opacity=".10"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#64748B"/>
+    </marker>
+    <style>
+      .font{font-family:"Microsoft YaHei","PingFang SC","Noto Sans CJK SC",sans-serif}
+      .title{font-size:44px;font-weight:700;fill:#0F172A}
+      .sub{font-size:21px;fill:#475569}
+      .h{font-size:23px;font-weight:700;fill:#0F172A}
+      .p{font-size:18px;fill:#475569}
+      .cell{font-size:21px;font-weight:700}
+    </style>
+  </defs>
+  <rect width="1600" height="900" rx="32" fill="#F8FAFC"/>
+  <g class="font">
+    <text x="90" y="88" class="title">因果自注意力矩阵应该按“行看列”</text>
+    <text x="90" y="128" class="sub">当前行是正在更新的位置，每一列是它可以读取的信息来源</text>
+
+    <g transform="translate(150 210)" filter="url(#shadow)">
+      <rect x="0" y="0" width="750" height="550" rx="30" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+      <text x="375" y="55" text-anchor="middle" class="h">Softmax 后的注意力权重</text>
+
+      <text x="325" y="116" text-anchor="middle" class="h">Token 1</text>
+      <text x="475" y="116" text-anchor="middle" class="h">Token 2</text>
+      <text x="625" y="116" text-anchor="middle" class="h">Token 3</text>
+
+      <text x="135" y="215" text-anchor="middle" class="h">Query 1</text>
+      <text x="135" y="335" text-anchor="middle" class="h">Query 2</text>
+      <text x="135" y="455" text-anchor="middle" class="h">Query 3</text>
+
+      <rect x="250" y="150" width="150" height="120" fill="#4F46E5"/>
+      <text x="325" y="218" text-anchor="middle" class="cell" fill="#FFFFFF">1.000</text>
+      <rect x="400" y="150" width="150" height="120" fill="#E2E8F0"/>
+      <text x="475" y="218" text-anchor="middle" class="cell" fill="#64748B">MASK</text>
+      <rect x="550" y="150" width="150" height="120" fill="#E2E8F0"/>
+      <text x="625" y="218" text-anchor="middle" class="cell" fill="#64748B">MASK</text>
+
+      <rect x="250" y="270" width="150" height="120" fill="#818CF8"/>
+      <text x="325" y="338" text-anchor="middle" class="cell" fill="#FFFFFF">0.521</text>
+      <rect x="400" y="270" width="150" height="120" fill="#A5B4FC"/>
+      <text x="475" y="338" text-anchor="middle" class="cell" fill="#312E81">0.479</text>
+      <rect x="550" y="270" width="150" height="120" fill="#E2E8F0"/>
+      <text x="625" y="338" text-anchor="middle" class="cell" fill="#64748B">MASK</text>
+
+      <rect x="250" y="390" width="150" height="120" fill="#C7D2FE"/>
+      <text x="325" y="458" text-anchor="middle" class="cell" fill="#312E81">0.239</text>
+      <rect x="400" y="390" width="150" height="120" fill="#A5B4FC"/>
+      <text x="475" y="458" text-anchor="middle" class="cell" fill="#312E81">0.276</text>
+      <rect x="550" y="390" width="150" height="120" fill="#818CF8"/>
+      <text x="625" y="458" text-anchor="middle" class="cell" fill="#FFFFFF">0.485</text>
+
+      <path d="M250 525 H700" stroke="#CBD5E1" stroke-width="2"/>
+      <text x="475" y="545" text-anchor="middle" font-size="16" fill="#64748B">每一行之和 = 1</text>
+    </g>
+
+    <path d="M930 330 H1010" stroke="#64748B" stroke-width="4" marker-end="url(#arrow)"/>
+
+    <g filter="url(#shadow)">
+      <rect x="1010" y="210" width="470" height="550" rx="30" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+      <text x="1055" y="270" class="h">怎样读这张矩阵</text>
+
+      <circle cx="1068" cy="334" r="23" fill="#4F46E5"/>
+      <text x="1068" y="342" text-anchor="middle" font-size="19" font-weight="700" fill="#FFFFFF">1</text>
+      <text x="1110" y="328" class="p">第一行只能读取自己</text>
+      <text x="1110" y="358" class="p">未来两个位置被屏蔽</text>
+
+      <circle cx="1068" cy="424" r="23" fill="#6366F1"/>
+      <text x="1068" y="432" text-anchor="middle" font-size="19" font-weight="700" fill="#FFFFFF">2</text>
+      <text x="1110" y="418" class="p">第二行混合 Token 1、2</text>
+      <text x="1110" y="448" class="p">Token 3 仍属于未来</text>
+
+      <circle cx="1068" cy="514" r="23" fill="#818CF8"/>
+      <text x="1068" y="522" text-anchor="middle" font-size="19" font-weight="700" fill="#FFFFFF">3</text>
+      <text x="1110" y="508" class="p">第三行可读取全部历史</text>
+      <text x="1110" y="538" class="p">按权重加权 Value</text>
+
+      <rect x="1050" y="600" width="390" height="105" rx="20" fill="#FFF7ED" stroke="#FDBA74" stroke-width="2"/>
+      <text x="1245" y="641" text-anchor="middle" class="h" fill="#C2410C">MASK 在 Softmax 前加入</text>
+      <text x="1245" y="676" text-anchor="middle" class="p">未来分数设为负无穷 → 权重为 0</text>
+    </g>
+
+    <rect x="170" y="805" width="1260" height="55" rx="20" fill="#0F172A"/>
+    <text x="800" y="840" text-anchor="middle" font-size="20" font-weight="700" fill="#FFFFFF">权重表示本层的信息汇聚，不等于模型输出的完整因果解释</text>
+  </g>
+</svg>

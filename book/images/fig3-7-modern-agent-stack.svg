@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+ <defs><style>.t{font-family:'Microsoft YaHei',sans-serif;fill:#172033}.h{font-size:34px;font-weight:700}.s{font-size:18px;fill:#5d6b82}.k{font-size:21px;font-weight:700}.b{font-size:16px}</style></defs>
+ <rect width="1200" height="675" rx="24" fill="#f8fafc"/><text x="70" y="72" class="t h">现代 Agent 产品：循环只是骨架</text><text x="70" y="108" class="t s">OpenAI Agents SDK、Claude 工具运行器、LangChain Agent 与 Coding Agent 都在这套分层中选择抽象</text>
+ <rect x="140" y="155" width="920" height="76" rx="18" fill="#172b5b"/><text x="178" y="190" font-family="Microsoft YaHei" font-size="22" font-weight="700" fill="#fff">Goal &amp; Policy</text><text x="400" y="190" font-family="Microsoft YaHei" font-size="17" fill="#d6e1f6">任务、系统指令、授权边界、完成标准</text>
+ <rect x="140" y="249" width="920" height="76" rx="18" fill="#e8edff" stroke="#9eb2ef" stroke-width="2"/><text x="178" y="294" class="t k">Model</text><text x="400" y="294" class="t b">理解、推理、选择工具、生成候选答案</text>
+ <rect x="140" y="343" width="920" height="76" rx="18" fill="#edf3ff" stroke="#9eb2ef" stroke-width="2"/><text x="178" y="388" class="t k">Agent Runtime / Harness</text><text x="485" y="388" class="t b">循环、状态、重试、并发、审批、压缩、Tracing</text>
+ <rect x="140" y="437" width="920" height="76" rx="18" fill="#eaf8f8" stroke="#8bcbd2" stroke-width="2"/><text x="178" y="482" class="t k">Tools &amp; Environment</text><text x="485" y="482" class="t b">文件、Shell、搜索、API、MCP、浏览器、数据库</text>
+ <rect x="140" y="531" width="920" height="76" rx="18" fill="#fff2e8" stroke="#efb186" stroke-width="2"/><text x="178" y="576" class="t k">Verifier &amp; Safety</text><text x="485" y="576" class="t b">测试、Schema、权限、沙箱、审计、人工确认</text>
+ <rect x="75" y="249" width="32" height="358" rx="16" fill="#3157d5"/><text x="58" y="442" transform="rotate(-90 58 442)" font-family="Microsoft YaHei" font-size="18" font-weight="700" fill="#3157d5">观察与事件贯穿全栈</text>
+ <rect x="1093" y="249" width="32" height="358" rx="16" fill="#0a91aa"/><text x="1154" y="472" transform="rotate(90 1154 472)" font-family="Microsoft YaHei" font-size="18" font-weight="700" fill="#0a91aa">预算与控制贯穿全栈</text>
+</svg>

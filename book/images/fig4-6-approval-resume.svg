@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+  <defs><style>.t{font-family:'Microsoft YaHei',sans-serif;fill:#172033}.h{font-size:34px;font-weight:700}.s{font-size:18px;fill:#5d6b82}.k{font-size:17px;font-weight:700}.b{font-size:13px}</style><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#64748b"/></marker></defs>
+  <rect width="1200" height="720" rx="24" fill="#f8fafc"/>
+  <text x="70" y="68" class="t h">审批与恢复：版本校验和 Receipt 共同决定下一步</text>
+  <text x="70" y="103" class="t s">批准绑定预执行摘要；已提交回执必须同时绑定当前结果摘要</text>
+  <g class="t k" text-anchor="middle"><text x="135" y="150">Model</text><text x="355" y="150">Harness</text><text x="585" y="150">State / Receipt Store</text><text x="835" y="150">User</text><text x="1060" y="150">Executor</text></g>
+  <g stroke="#cbd5e1" stroke-width="2" stroke-dasharray="7 7"><line x1="135" y1="172" x2="135" y2="625"/><line x1="355" y1="172" x2="355" y2="625"/><line x1="585" y1="172" x2="585" y2="625"/><line x1="835" y1="172" x2="835" y2="625"/><line x1="1060" y1="172" x2="1060" y2="625"/></g>
+  <path d="M135 205 H345" stroke="#64748b" stroke-width="2.5" marker-end="url(#a)"/><text x="240" y="195" text-anchor="middle" class="t b">apply_patch(action_id=patch-price)</text>
+  <path d="M355 245 H575" stroke="#3157d5" stroke-width="2.5" marker-end="url(#a)"/><text x="465" y="235" text-anchor="middle" class="t b">save WAITING + pending + state_digest</text>
+  <circle cx="585" cy="245" r="7" fill="#3157d5"/>
+  <path d="M355 285 H825" stroke="#d97745" stroke-width="2.5" marker-end="url(#a)"/><text x="590" y="275" text-anchor="middle" class="t b">approval_requested(state_digest, action_id)</text>
+  <rect x="300" y="310" width="590" height="36" rx="18" fill="#fff2e8" stroke="#efaa79"/><text x="595" y="334" text-anchor="middle" class="t b">进程可退出 · 环境尚未写入</text>
+  <path d="M835 380 H365" stroke="#0a91aa" stroke-width="2.5" marker-end="url(#a)"/><text x="600" y="370" text-anchor="middle" class="t b">approve</text>
+  <path d="M355 420 H575" stroke="#3157d5" stroke-width="2.5" marker-end="url(#a)"/><text x="465" y="410" text-anchor="middle" class="t b">load(run_id)</text>
+  <path d="M585 455 H365" stroke="#3157d5" stroke-width="2.5" marker-end="url(#a)"/><text x="475" y="445" text-anchor="middle" class="t b">pending + approved digest + receipt</text>
+  <rect x="325" y="474" width="330" height="34" rx="16" fill="#fff" stroke="#d65353"/><text x="490" y="496" text-anchor="middle" class="t b">digest changed + no matching receipt → APPROVAL_STALE</text>
+  <path d="M355 540 H1050" stroke="#57b99d" stroke-width="2.5" marker-end="url(#a)"/><text x="700" y="530" text-anchor="middle" class="t b">receipt missing → execute once</text>
+  <path d="M1060 575 H595" stroke="#57b99d" stroke-width="2.5" marker-end="url(#a)"/><text x="825" y="565" text-anchor="middle" class="t b">persist receipt(state_digest)</text>
+  <path d="M585 605 H365" stroke="#0a91aa" stroke-width="2.5" marker-end="url(#a)"/><text x="475" y="595" text-anchor="middle" class="t b">崩溃恢复：matching receipt → action_deduplicated</text>
+  <rect x="135" y="656" width="930" height="40" rx="18" fill="#172b5b"/>
+  <text x="600" y="682" text-anchor="middle" font-family="Microsoft YaHei" font-size="15" fill="#fff">Receipt 已写、终态未写时崩溃：旧 Checkpoint 恢复后查询 Receipt，副作用仍只发生一次</text>
+</svg>

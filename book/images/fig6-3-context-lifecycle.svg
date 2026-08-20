@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">从事件到压缩再到上下文重建的完整生命周期</title>
+  <desc id="desc">事件先进入 Event Log 并形成 Working Set；满足策略时生成并校验 Artifact，在提交边界与 Checkpoint 绑定；恢复时先验证，再由 Rehydrator 构建 ContextPacket，运行结果继续追加事件。</desc>
+  <defs>
+    <style>.t{font-family:'Microsoft YaHei','PingFang SC',sans-serif;fill:#172033}.h{font-size:31px;font-weight:700}.s{font-size:17px;fill:#5d6b82}.k{font-size:17px;font-weight:700}.b{font-size:14px}.sm{font-size:12px;fill:#5d6b82}.desktop{display:inline}.mobile{display:none}.mobile-core-responsive{font-size:11px;font-weight:700}.mobile-source-responsive{font-size:9px;fill:#5d6b82}@media (max-width: 600px){.desktop{display:none}.mobile{display:inline}}</style>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 Z" fill="#6f7f97"/></marker>
+  </defs>
+  <rect width="1200" height="675" rx="24" fill="#f8fafc"/>
+  <g class="desktop" data-layout="desktop">
+  <text x="60" y="63" class="t h">Context 生命周期：压缩不是终点，而是一次可验证的交接</text>
+  <text x="60" y="98" class="t s">蓝色记录事实 · 青色派生语义 · 橙色建立提交边界 · 深蓝色生成下一轮输入</text>
+
+  <rect x="55" y="147" width="140" height="92" rx="18" fill="#e9f2ff" stroke="#6e9fda" stroke-width="2"/>
+  <text x="125" y="182" text-anchor="middle" class="t k">1 观察</text><text x="125" y="207" text-anchor="middle" class="t b">工具 / 用户</text><text x="125" y="226" text-anchor="middle" class="t sm">新事实</text>
+  <path d="M200 193 H236" stroke="#6f7f97" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <rect x="244" y="147" width="140" height="92" rx="18" fill="#e9f2ff" stroke="#6e9fda" stroke-width="2"/>
+  <text x="314" y="182" text-anchor="middle" class="t k">2 Event Log</text><text x="314" y="207" text-anchor="middle" class="t b">append</text><text x="314" y="226" text-anchor="middle" class="t sm">cursor 前进</text>
+  <path d="M389 193 H425" stroke="#6f7f97" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <rect x="433" y="147" width="140" height="92" rx="18" fill="#eaf8f5" stroke="#58ad9e" stroke-width="2"/>
+  <text x="503" y="182" text-anchor="middle" class="t k">3 Working Set</text><text x="503" y="207" text-anchor="middle" class="t b">折叠当前语义</text><text x="503" y="226" text-anchor="middle" class="t sm">仍可回溯</text>
+  <path d="M578 193 H614" stroke="#6f7f97" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <rect x="622" y="147" width="140" height="92" rx="18" fill="#fff4e8" stroke="#e9a06d" stroke-width="2"/>
+  <text x="692" y="182" text-anchor="middle" class="t k">4 策略触发</text><text x="692" y="207" text-anchor="middle" class="t b">体积 / 阶段</text><text x="692" y="226" text-anchor="middle" class="t sm">不是随手总结</text>
+  <path d="M767 193 H803" stroke="#6f7f97" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <rect x="811" y="147" width="140" height="92" rx="18" fill="#eaf8f5" stroke="#58ad9e" stroke-width="2"/>
+  <text x="881" y="182" text-anchor="middle" class="t k">5 Artifact</text><text x="881" y="207" text-anchor="middle" class="t b">结构化字段</text><text x="881" y="226" text-anchor="middle" class="t sm">来源 + locator</text>
+  <path d="M956 193 H992" stroke="#6f7f97" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <rect x="1000" y="147" width="145" height="92" rx="18" fill="#fff4e8" stroke="#e9a06d" stroke-width="2"/>
+  <text x="1072" y="182" text-anchor="middle" class="t k">6 Commit</text><text x="1072" y="207" text-anchor="middle" class="t b">校验后绑定</text><text x="1072" y="226" text-anchor="middle" class="t sm">Checkpoint</text>
+
+  <path d="M1072 245 V325 H930" fill="none" stroke="#6f7f97" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <rect x="777" y="294" width="145" height="92" rx="18" fill="#fff4e8" stroke="#e9a06d" stroke-width="2"/>
+  <text x="849" y="329" text-anchor="middle" class="t k">7 恢复验证</text><text x="849" y="354" text-anchor="middle" class="t b">schema / digest</text><text x="849" y="373" text-anchor="middle" class="t sm">cursor / workspace</text>
+  <path d="M772 340 H718" stroke="#6f7f97" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <rect x="565" y="294" width="145" height="92" rx="18" fill="#eaf8f5" stroke="#58ad9e" stroke-width="2"/>
+  <text x="637" y="329" text-anchor="middle" class="t k">8 Rehydrator</text><text x="637" y="354" text-anchor="middle" class="t b">恢复语义项</text><text x="637" y="373" text-anchor="middle" class="t sm">不凭空补事实</text>
+  <path d="M560 340 H506" stroke="#6f7f97" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <rect x="353" y="294" width="145" height="92" rx="18" fill="#172b5b" stroke="#172b5b" stroke-width="2"/>
+  <text x="425" y="329" text-anchor="middle" font-family="Microsoft YaHei" font-size="17" font-weight="700" fill="#fff">9 ContextPacket</text><text x="425" y="354" text-anchor="middle" font-family="Microsoft YaHei" font-size="14" fill="#dbe6ff">Chapter 5 Builder</text><text x="425" y="373" text-anchor="middle" font-family="Microsoft YaHei" font-size="12" fill="#dbe6ff">Trace + digest</text>
+  <path d="M348 340 H294" stroke="#6f7f97" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <rect x="141" y="294" width="145" height="92" rx="18" fill="#e9f2ff" stroke="#6e9fda" stroke-width="2"/>
+  <text x="213" y="329" text-anchor="middle" class="t k">10 继续运行</text><text x="213" y="354" text-anchor="middle" class="t b">固定决策策略</text><text x="213" y="373" text-anchor="middle" class="t sm">产生新事件</text>
+
+  <path d="M213 392 V455 H314 V247" fill="none" stroke="#3b82f6" stroke-width="3" stroke-dasharray="7 7" marker-end="url(#arrow)"/>
+  <text x="335" y="444" class="t b">运行结果重新追加到 Event Log，形成下一轮生命周期</text>
+
+  <rect x="102" y="510" width="996" height="95" rx="20" fill="#fff" stroke="#cbd5e1"/>
+  <text x="130" y="542" class="t k">提交规则</text>
+  <text x="130" y="570" class="t b">先持久化并校验 Artifact，再让 Checkpoint 引用 artifact_id；恢复时先验边界，后调用 Context Builder。</text>
+  <text x="130" y="592" class="t sm">这样失败会落在明确状态：未提交、已提交待恢复、拒绝恢复，避免“看似有摘要但无法证明来自哪段历史”。</text>
+  <rect x="210" y="624" width="780" height="32" rx="16" fill="#172b5b"/>
+  <text x="600" y="646" text-anchor="middle" font-family="Microsoft YaHei" font-size="14" fill="#fff">连续性来自可验证的状态迁移，不来自一段越来越长的聊天记录</text>
+  </g>
+  <g class="mobile" data-layout="mobile" transform="scale(3.077)">
+    <text x="8" y="14" class="t mobile-core-responsive">Context 生命周期：压缩是可验证的交接</text>
+    <text x="8" y="25" class="t mobile-source-responsive">蓝=事实 · 青=语义 · 橙=提交边界 · 深蓝=下一轮输入</text>
+
+    <g class="t">
+      <rect x="8" y="34" width="66" height="35" rx="5" fill="#e9f2ff" stroke="#6e9fda" stroke-width="0.7"/>
+      <text x="41" y="47" text-anchor="middle" class="mobile-core-responsive">1 观察</text><text x="41" y="60" text-anchor="middle" class="mobile-source-responsive">新事实</text>
+      <text x="77" y="54" class="mobile-core-responsive">→</text>
+      <rect x="85" y="34" width="66" height="35" rx="5" fill="#e9f2ff" stroke="#6e9fda" stroke-width="0.7"/>
+      <text x="118" y="47" text-anchor="middle" class="mobile-core-responsive">2 Log</text><text x="118" y="60" text-anchor="middle" class="mobile-source-responsive">append / cursor</text>
+      <text x="154" y="54" class="mobile-core-responsive">→</text>
+      <rect x="162" y="34" width="66" height="35" rx="5" fill="#eaf8f5" stroke="#58ad9e" stroke-width="0.7"/>
+      <text x="195" y="47" text-anchor="middle" class="mobile-core-responsive">3 Working</text><text x="195" y="60" text-anchor="middle" class="mobile-source-responsive">近期语义</text>
+      <text x="231" y="54" class="mobile-core-responsive">→</text>
+      <rect x="239" y="34" width="66" height="35" rx="5" fill="#fff4e8" stroke="#e9a06d" stroke-width="0.7"/>
+      <text x="272" y="47" text-anchor="middle" class="mobile-core-responsive">4 触发</text><text x="272" y="60" text-anchor="middle" class="mobile-source-responsive">体积 / 阶段</text>
+      <text x="308" y="54" class="mobile-core-responsive">→</text>
+      <rect x="316" y="34" width="66" height="35" rx="5" fill="#eaf8f5" stroke="#58ad9e" stroke-width="0.7"/>
+      <text x="349" y="47" text-anchor="middle" class="mobile-core-responsive">5 Artifact</text><text x="349" y="60" text-anchor="middle" class="mobile-source-responsive">字段 + locator</text>
+
+      <rect x="8" y="82" width="66" height="35" rx="5" fill="#fff4e8" stroke="#e9a06d" stroke-width="0.7"/>
+      <text x="41" y="95" text-anchor="middle" class="mobile-core-responsive">6 Commit</text><text x="41" y="108" text-anchor="middle" class="mobile-source-responsive">绑定 Checkpoint</text>
+      <text x="77" y="102" class="mobile-core-responsive">→</text>
+      <rect x="85" y="82" width="66" height="35" rx="5" fill="#fff4e8" stroke="#e9a06d" stroke-width="0.7"/>
+      <text x="118" y="95" text-anchor="middle" class="mobile-core-responsive">7 恢复验证</text><text x="118" y="108" text-anchor="middle" class="mobile-source-responsive">schema / digest</text>
+      <text x="154" y="102" class="mobile-core-responsive">→</text>
+      <rect x="162" y="82" width="66" height="35" rx="5" fill="#eaf8f5" stroke="#58ad9e" stroke-width="0.7"/>
+      <text x="195" y="95" text-anchor="middle" class="mobile-core-responsive">8 Rehydrate</text><text x="195" y="108" text-anchor="middle" class="mobile-source-responsive">不补造事实</text>
+      <text x="231" y="102" class="mobile-core-responsive">→</text>
+      <rect x="239" y="82" width="66" height="35" rx="5" fill="#172b5b"/>
+      <text x="272" y="95" text-anchor="middle" font-family="Microsoft YaHei" font-size="11" font-weight="700" fill="#fff">9 Packet</text><text x="272" y="108" text-anchor="middle" font-family="Microsoft YaHei" font-size="9" fill="#dbe6ff">Builder + Trace</text>
+      <text x="308" y="102" class="mobile-core-responsive">→</text>
+      <rect x="316" y="82" width="66" height="35" rx="5" fill="#e9f2ff" stroke="#6e9fda" stroke-width="0.7"/>
+      <text x="349" y="95" text-anchor="middle" class="mobile-core-responsive">10 继续</text><text x="349" y="108" text-anchor="middle" class="mobile-source-responsive">产生新事件</text>
+    </g>
+
+    <path d="M349 121 V137 H41 V122" fill="none" stroke="#3b82f6" stroke-width="1.2" stroke-dasharray="3 2"/>
+    <text x="195" y="150" text-anchor="middle" class="t mobile-source-responsive">运行结果重新追加 Event Log，形成下一轮生命周期</text>
+    <rect x="8" y="160" width="374" height="40" rx="6" fill="#fff" stroke="#cbd5e1" stroke-width="0.7"/>
+    <text x="15" y="174" class="t mobile-core-responsive">提交规则</text>
+    <text x="15" y="187" class="t mobile-source-responsive">先校验并持久化 Artifact，再由 Checkpoint 单向引用；恢复先验边界，后调用 Builder。</text>
+    <rect x="54" y="204" width="282" height="11" rx="5.5" fill="#172b5b"/>
+    <text x="195" y="213" text-anchor="middle" font-family="Microsoft YaHei" font-size="9" fill="#fff">连续性来自状态迁移，不来自更长聊天记录</text>
+  </g>
+</svg>

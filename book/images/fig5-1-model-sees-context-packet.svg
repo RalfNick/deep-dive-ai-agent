@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <style>.t{font-family:'Microsoft YaHei',sans-serif;fill:#172033}.h{font-size:32px;font-weight:700}.s{font-size:17px;fill:#5d6b82}.k{font-size:21px;font-weight:700}.b{font-size:16px}.sm{font-size:14px}.mono{font-family:Consolas,'Microsoft YaHei',sans-serif;font-size:14px}</style>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#6f7f97"/></marker>
+  </defs>
+  <rect width="1200" height="675" rx="24" fill="#f8fafc"/>
+  <text x="60" y="64" class="t h">模型看到的不是完整世界，而是一次受控投影</text>
+  <text x="60" y="99" class="t s">Environment 持有真实状态；Context Builder 决定哪些片段进入本轮推理</text>
+
+  <rect x="52" y="137" width="240" height="432" rx="22" fill="#eef2f7" stroke="#a9b5c7" stroke-width="2"/>
+  <text x="82" y="177" class="t k">外部世界</text>
+  <g class="t b">
+    <rect x="78" y="203" width="188" height="52" rx="12" fill="#fff"/><text x="96" y="235">仓库与 Git 状态</text>
+    <rect x="78" y="270" width="188" height="52" rx="12" fill="#fff"/><text x="96" y="302">用户任务与约束</text>
+    <rect x="78" y="337" width="188" height="52" rx="12" fill="#fff"/><text x="96" y="369">工具定义与结果</text>
+    <rect x="78" y="404" width="188" height="52" rx="12" fill="#fff"/><text x="96" y="436">网页、文档、工单</text>
+    <rect x="78" y="471" width="188" height="52" rx="12" fill="#fff"/><text x="96" y="503">权限、密钥、连接</text>
+  </g>
+  <text x="82" y="548" class="t sm" fill="#a34b2a">并非全部都应给模型看</text>
+
+  <path d="M300 352 H382" stroke="#6f7f97" stroke-width="3" marker-end="url(#a)"/>
+  <rect x="394" y="169" width="310" height="365" rx="24" fill="#e9f2ff" stroke="#6e9fda" stroke-width="2"/>
+  <text x="424" y="211" class="t k">Context Builder</text>
+  <text x="424" y="239" class="t s">选择、降权、排除、排序、留痕</text>
+  <g class="t b">
+    <rect x="424" y="270" width="250" height="42" rx="10" fill="#fff"/><text x="446" y="297">1　来源与权威</text>
+    <rect x="424" y="322" width="250" height="42" rx="10" fill="#fff"/><text x="446" y="349">2　敏感度与作用域</text>
+    <rect x="424" y="374" width="250" height="42" rx="10" fill="#fff"/><text x="446" y="401">3　冲突、去重与新鲜度</text>
+    <rect x="424" y="426" width="250" height="42" rx="10" fill="#fff"/><text x="446" y="453">4　必需项优先与预算</text>
+  </g>
+  <text x="424" y="505" class="t mono" fill="#356a9d">packet_digest + build_trace</text>
+
+  <path d="M712 352 H786" stroke="#6f7f97" stroke-width="3" marker-end="url(#a)"/>
+  <rect x="800" y="145" width="348" height="214" rx="22" fill="#eaf8f5" stroke="#58ad9e" stroke-width="2"/>
+  <text x="830" y="188" class="t k">Context Packet</text>
+  <text x="830" y="220" class="t b">规则 · 任务 · 选中证据 · 工具描述</text>
+  <text x="830" y="251" class="t b">缺失主题 · 输出合同 · 来源定位</text>
+  <rect x="830" y="280" width="288" height="50" rx="12" fill="#fff"/>
+  <text x="974" y="311" text-anchor="middle" class="t mono">本次调用的输入快照</text>
+
+  <path d="M974 367 V419" stroke="#6f7f97" stroke-width="3" marker-end="url(#a)"/>
+  <rect x="842" y="432" width="264" height="112" rx="56" fill="#172b5b"/>
+  <text x="974" y="480" text-anchor="middle" font-family="Microsoft YaHei" font-size="24" font-weight="700" fill="#fff">Model</text>
+  <text x="974" y="512" text-anchor="middle" font-family="Microsoft YaHei" font-size="15" fill="#dbe6ff">只能依据 Packet 提出候选</text>
+
+  <rect x="183" y="598" width="834" height="45" rx="22" fill="#172b5b"/>
+  <text x="600" y="627" text-anchor="middle" font-family="Microsoft YaHei" font-size="17" fill="#fff">看不见的事实不会自动进入推理；看见的文字也不会自动获得执行权</text>
+</svg>

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <style>.t{font-family:'Microsoft YaHei',sans-serif;fill:#172033}.h{font-size:34px;font-weight:700}.s{font-size:18px;fill:#5d6b82}.k{font-size:18px;font-weight:700}.b{font-size:15px}</style>
+    <marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 Z" fill="#64748b"/></marker>
+  </defs>
+  <rect width="1200" height="675" rx="24" fill="#f8fafc"/>
+  <text x="70" y="72" class="t h">工具提议如何变成真实副作用</text>
+  <text x="70" y="108" class="t s">本地代码只实现最小参数检查与路径守卫；生产系统还需要真正的 Sandbox</text>
+  <rect x="42" y="210" width="145" height="100" rx="18" fill="#e8edff" stroke="#91a8ed" stroke-width="2"/>
+  <text x="114" y="248" text-anchor="middle" class="t k">Tool Call</text><text x="114" y="278" text-anchor="middle" class="t b">模型提议</text>
+  <rect x="222" y="210" width="165" height="100" rx="18" fill="#edf3ff" stroke="#91a8ed" stroke-width="2"/>
+  <text x="304" y="248" text-anchor="middle" class="t k">Required args</text><text x="304" y="278" text-anchor="middle" class="t b">仅检查必填字段</text>
+  <rect x="422" y="210" width="145" height="100" rx="18" fill="#172b5b"/>
+  <text x="494" y="248" text-anchor="middle" font-family="Microsoft YaHei" font-size="18" font-weight="700" fill="#fff">Policy</text><text x="494" y="278" text-anchor="middle" font-family="Microsoft YaHei" font-size="15" fill="#d6e1f6">deny / ask / allow</text>
+  <rect x="602" y="210" width="145" height="100" rx="18" fill="#fff2e8" stroke="#efaa79" stroke-width="2"/>
+  <text x="674" y="248" text-anchor="middle" class="t k">Approval</text><text x="674" y="278" text-anchor="middle" class="t b">授权此状态版本</text>
+  <rect x="782" y="210" width="190" height="100" rx="18" fill="#eaf8f8" stroke="#72c3cc" stroke-width="2"/>
+  <text x="877" y="248" text-anchor="middle" class="t k">Enforcement</text><text x="877" y="278" text-anchor="middle" class="t b">Path Guard / Sandbox</text>
+  <rect x="1007" y="210" width="150" height="100" rx="18" fill="#dcf5ee" stroke="#57b99d" stroke-width="2"/>
+  <text x="1082" y="248" text-anchor="middle" class="t k">Executor</text><text x="1082" y="278" text-anchor="middle" class="t b">提交副作用</text>
+  <path d="M187 260 H214" stroke="#64748b" stroke-width="3" marker-end="url(#a)"/><path d="M387 260 H414" stroke="#64748b" stroke-width="3" marker-end="url(#a)"/><path d="M567 260 H594" stroke="#64748b" stroke-width="3" marker-end="url(#a)"/><path d="M747 260 H774" stroke="#64748b" stroke-width="3" marker-end="url(#a)"/><path d="M972 260 H999" stroke="#64748b" stroke-width="3" marker-end="url(#a)"/>
+  <rect x="210" y="390" width="215" height="82" rx="16" fill="#fff" stroke="#d65353" stroke-width="2"/><text x="317" y="423" text-anchor="middle" class="t k" fill="#a93232">DENY</text><text x="317" y="449" text-anchor="middle" class="t b">缺必填字段 · 未知工具</text>
+  <rect x="492" y="390" width="215" height="82" rx="16" fill="#fff" stroke="#efaa79" stroke-width="2"/><text x="599" y="423" text-anchor="middle" class="t k" fill="#b85f27">WAIT</text><text x="599" y="449" text-anchor="middle" class="t b">保存检查点 · 等待决定</text>
+  <rect x="774" y="390" width="215" height="82" rx="16" fill="#fff" stroke="#d65353" stroke-width="2"/><text x="881" y="423" text-anchor="middle" class="t k" fill="#a93232">BLOCK</text><text x="881" y="449" text-anchor="middle" class="t b">路径越界 · 系统资源受限</text>
+  <path d="M304 310 V382" stroke="#d65353" stroke-width="3" marker-end="url(#a)"/><path d="M674 310 V350 H599 V382" fill="none" stroke="#d97745" stroke-width="3" marker-end="url(#a)"/><path d="M877 310 V382" stroke="#d65353" stroke-width="3" marker-end="url(#a)"/>
+  <rect x="135" y="530" width="930" height="72" rx="20" fill="#172b5b"/>
+  <text x="600" y="560" text-anchor="middle" font-family="Microsoft YaHei" font-size="17" fill="#fff">Policy 判断“应该”；执行边界限制“能够”</text>
+  <text x="600" y="586" text-anchor="middle" font-family="Microsoft YaHei" font-size="15" fill="#d6e1f6">WorkspacePathGuard 只管路径；OS / 容器 Sandbox 还要管进程、网络与凭据</text>
+</svg>

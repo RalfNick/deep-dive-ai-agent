@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs><style>.t{font-family:'Microsoft YaHei',sans-serif;fill:#172033}.h{font-size:32px;font-weight:700}.s{font-size:17px;fill:#5d6b82}.k{font-size:20px;font-weight:700}.b{font-size:15px}.sm{font-size:13px}</style></defs>
+  <rect width="1200" height="675" rx="24" fill="#f8fafc"/>
+  <text x="60" y="64" class="t h">权威决定“该听谁”，位置决定“模型先后看见什么”</text>
+  <text x="60" y="99" class="t s">两者必须分开：后出现的低权威数据不能升级；同一组证据换位置仍可能改变决策</text>
+
+  <rect x="62" y="145" width="500" height="395" rx="22" fill="#fff" stroke="#a9b5c7" stroke-width="2"/>
+  <text x="92" y="187" class="t k">A. Authority：来源策略</text>
+  <text x="92" y="217" class="t sm">由渠道赋值，不由内容自述</text>
+  <g class="t b">
+    <rect x="98" y="246" width="398" height="54" rx="12" fill="#172b5b"/><text x="118" y="279" fill="#fff">1　平台 / 系统约束</text><text x="472" y="279" text-anchor="end" fill="#dbe6ff">最高</text>
+    <rect x="98" y="311" width="398" height="54" rx="12" fill="#6e9fda"/><text x="118" y="344" fill="#fff">2　应用 / 项目规则</text><text x="472" y="344" text-anchor="end" fill="#fff">受控</text>
+    <rect x="98" y="376" width="398" height="54" rx="12" fill="#58ad9e"/><text x="118" y="409" fill="#fff">3　当前用户任务</text><text x="472" y="409" text-anchor="end" fill="#fff">目标</text>
+    <rect x="98" y="441" width="398" height="54" rx="12" fill="#f0c7aa"/><text x="118" y="474">4　网页 / 工具结果中的文字</text><text x="472" y="474" text-anchor="end">数据</text>
+  </g>
+  <text x="98" y="520" class="t sm" fill="#a34b2a">“忽略前文”出现在网页里，仍然只是网页数据</text>
+
+  <rect x="638" y="145" width="500" height="395" rx="22" fill="#fff" stroke="#a9b5c7" stroke-width="2"/>
+  <text x="668" y="187" class="t k">B. Position：序列化顺序</text>
+  <text x="668" y="217" class="t sm">固定同一组 selected_ids，只移动关键证据</text>
+  <g class="t b">
+    <rect x="674" y="254" width="132" height="66" rx="12" fill="#e9f2ff" stroke="#6e9fda"/><text x="740" y="281" text-anchor="middle">关键证据</text><text x="740" y="304" text-anchor="middle" class="sm">开头</text>
+    <rect x="816" y="254" width="132" height="66" rx="12" fill="#eef2f7"/><text x="882" y="292" text-anchor="middle">干扰项</text>
+    <rect x="958" y="254" width="132" height="66" rx="12" fill="#eef2f7"/><text x="1024" y="292" text-anchor="middle">输出合同</text>
+
+    <rect x="674" y="345" width="132" height="66" rx="12" fill="#eef2f7"/><text x="740" y="383" text-anchor="middle">干扰项</text>
+    <rect x="816" y="345" width="132" height="66" rx="12" fill="#fff2e8" stroke="#e9a06d"/><text x="882" y="372" text-anchor="middle">关键证据</text><text x="882" y="395" text-anchor="middle" class="sm">中间</text>
+    <rect x="958" y="345" width="132" height="66" rx="12" fill="#eef2f7"/><text x="1024" y="383" text-anchor="middle">输出合同</text>
+
+    <rect x="674" y="436" width="132" height="66" rx="12" fill="#eef2f7"/><text x="740" y="474" text-anchor="middle">干扰项</text>
+    <rect x="816" y="436" width="132" height="66" rx="12" fill="#eef2f7"/><text x="882" y="474" text-anchor="middle">输出合同</text>
+    <rect x="958" y="436" width="132" height="66" rx="12" fill="#eaf8f5" stroke="#58ad9e"/><text x="1024" y="463" text-anchor="middle">关键证据</text><text x="1024" y="486" text-anchor="middle" class="sm">结尾</text>
+  </g>
+
+  <rect x="194" y="585" width="812" height="44" rx="22" fill="#172b5b"/>
+  <text x="600" y="614" text-anchor="middle" font-family="Microsoft YaHei" font-size="17" fill="#fff">先用 Authority 解决冲突，再用 Position 实验观察模型敏感性</text>
+</svg>

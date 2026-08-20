@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs><style>.t{font-family:'Microsoft YaHei',sans-serif;fill:#172033}.h{font-size:34px;font-weight:700}.s{font-size:18px;fill:#5d6b82}.k{font-size:16px;font-weight:700}.b{font-size:14px}</style></defs>
+  <rect width="1200" height="675" rx="24" fill="#f8fafc"/>
+  <text x="70" y="72" class="t h">Claude Code 与 Codex：用六维责任看产品</text>
+  <text x="70" y="108" class="t s">核对日期 2026-08-12 · 这是系统映射，不是功能百科或能力排名</text>
+  <rect x="62" y="142" width="1076" height="58" rx="14" fill="#172b5b"/>
+  <text x="170" y="178" text-anchor="middle" font-family="Microsoft YaHei" font-size="17" font-weight="700" fill="#fff">维度</text><text x="500" y="178" text-anchor="middle" font-family="Microsoft YaHei" font-size="18" font-weight="700" fill="#fff">Claude Code</text><text x="890" y="178" text-anchor="middle" font-family="Microsoft YaHei" font-size="18" font-weight="700" fill="#fff">Codex</text>
+  <g class="t b">
+    <rect x="62" y="210" width="1076" height="62" fill="#e8edff"/><text x="170" y="247" text-anchor="middle" class="t k">Model</text><text x="315" y="237">Claude 模型与配置</text><text x="315" y="258">产生候选决策</text><text x="705" y="237">OpenAI 模型与配置</text><text x="705" y="258">产生候选决策</text>
+    <rect x="62" y="272" width="1076" height="62" fill="#fff"/><text x="170" y="309" text-anchor="middle" class="t k">Context</text><text x="315" y="299">CLAUDE.md · Rules · Memory</text><text x="315" y="320">文件、工具结果与 compaction</text><text x="705" y="299">AGENTS.md · Skills · 环境信息</text><text x="705" y="320">线程历史、工具结果与 compaction</text>
+    <rect x="62" y="334" width="1076" height="62" fill="#eaf8f8"/><text x="170" y="371" text-anchor="middle" class="t k">Tools</text><text x="315" y="361">文件、Shell、Web、MCP、Skills</text><text x="315" y="382">Hooks 可在生命周期拦截</text><text x="705" y="361">文件、Shell、Web、MCP、Skills</text><text x="705" y="382">统一工具结果进入下一轮</text>
+    <rect x="62" y="396" width="1076" height="62" fill="#fff"/><text x="170" y="433" text-anchor="middle" class="t k">Runtime</text><text x="315" y="423">CLI / Agent SDK / Session</text><text x="315" y="444">循环、上下文与生命周期事件</text><text x="705" y="423">Codex Core / App Server / Thread</text><text x="705" y="444">循环、持久事件与客户端协议</text>
+    <rect x="62" y="458" width="1076" height="62" fill="#fff2e8"/><text x="170" y="495" text-anchor="middle" class="t k">Safety</text><text x="315" y="485">权限规则 · 审批 · 沙箱</text><text x="315" y="506">文件系统与网络边界</text><text x="705" y="485">Approval policy · Sandbox</text><text x="705" y="506">工作区、命令与网络控制</text>
+    <rect x="62" y="520" width="1076" height="62" fill="#fff"/><text x="170" y="557" text-anchor="middle" class="t k">Evaluation</text><text x="315" y="547">项目测试 · Hooks · 人工审查</text><text x="315" y="568">完成标准仍由项目定义</text><text x="705" y="547">项目测试 · CI · 事件与人工审查</text><text x="705" y="568">完成标准仍由项目定义</text>
+  </g>
+  <line x1="260" y1="142" x2="260" y2="582" stroke="#cbd5e1"/><line x1="650" y1="142" x2="650" y2="582" stroke="#cbd5e1"/>
+  <rect x="180" y="608" width="840" height="38" rx="18" fill="#172b5b"/>
+  <text x="600" y="633" text-anchor="middle" font-family="Microsoft YaHei" font-size="15" fill="#fff">真正可迁移的知识是责任与接口，不是某个版本的命令列表</text>
+</svg>
