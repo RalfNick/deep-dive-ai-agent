@@ -207,7 +207,7 @@
 | `chapter6/experiments/context_growth.py` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 3113 | `f25d91b65ead8c373a2ed9131e646801d7eb8dcfef7d64c3c4658a3872d73dfc` |
 | `chapter6/experiments/failure_matrix.py` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 7227 | `79e660625491656c276951dfbad0f8d8844d7d35610693da03b2896e27ee067a` |
 | `chapter6/experiments/generational_drift.py` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 5799 | `c8050d3459fd141dcd9e1b9cc74d96d814eebf1834acdbbb3453090721e0984d` |
-| `chapter6/experiments/live_probe.py` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 2693 | `ae84e960655bfa6aa6f84c303f2dfcb9770798058f129c415946ab1500bdf6be` |
+| `chapter6/experiments/live_probe.py` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 2704 | `f18b965a503a44962ab375c71236cc67f6c1b370aac8c2022fb6dcf9e12f40c0` |
 | `chapter6/experiments/run_all.py` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 15897 | `ca814ad1a6b7faf384f3834f88223ca839ff43be22b535fdb6d22f0b95807e69` |
 | `chapter6/experiments/sliding_window.py` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 2202 | `b18a9df34b1e95128af39e9c955c4bd145004e445db26c8cfaa5ac264271aae4` |
 | `chapter6/experiments/summary_vs_structured.py` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 3801 | `ed5ae6f1b3920d2ef28273691eba7307394e0efbad06c62310ff046a99f3aa47` |
@@ -224,7 +224,7 @@
 | `chapter6/tests/test_contracts.py` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 3200 | `52dce153a63aabe9335bc985feff4317ba5e7112e8ed78286cbfc83c05efd03c` |
 | `chapter6/tests/test_experiments.py` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 9292 | `9b7236342dd74bff865215afbbafd909027abd4ad07316cab7c5a04bfc629185` |
 | `chapter6/tests/test_graders.py` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 5608 | `4f76b42f4c528bbbf4ddc1543422881e5a1fb4386b5490b9770ebb9974602017` |
-| `chapter6/tests/test_live_probe.py` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 8297 | `03e565ca63cbc90808eedabaeeb94f49ae39c24fdadec7acf75499536460b5f3` |
+| `chapter6/tests/test_live_probe.py` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 8923 | `8402f9b2146e52b00ce3a9f030020a3409b0017b52d266ff4e97ffe7d847d7b6` |
 | `chapter6/tests/test_persistence.py` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 17787 | `c662bf806ca63782eb72a1e75de41597657873baa8224aa4e9f47cb3c215708f` |
 | `chapter6/tests/test_policy.py` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 3370 | `373ed5bdfe2be86c1871a15438e424ec5e2e72cea7ea896f5ddd0a5c570f9b2b` |
 | `chapter6/tests/test_price_repair_fixture.py` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 3083 | `8197a0f99f3694f1fa10fbd7430c016fae791754186ac0a6e6b4b776210d7796` |

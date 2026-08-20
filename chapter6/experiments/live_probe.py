@@ -22,7 +22,7 @@ _CANONICAL_REPORT_NAMES = (
 
 
 def _normalized_resolved(path: Path) -> str:
-    return os.path.normcase(str(path.resolve(strict=False)))
+    return os.path.normcase(str(path.resolve(strict=False))).casefold()
 
 
 def _is_canonical_offline_report(path: Path) -> bool:

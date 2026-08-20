@@ -5,10 +5,11 @@ import tempfile
 import unittest
 from contextlib import redirect_stderr
 from pathlib import Path
+from unittest.mock import patch
 
 from chapter5.probes import CredentialMissing, HttpStatusError
 from chapter6.context_continuity.live_probe import DeepSeekCompactionProbe
-from chapter6.experiments.live_probe import run_cli
+from chapter6.experiments.live_probe import _normalized_resolved, run_cli
 
 
 VALID_KEYS = [
@@ -49,6 +50,19 @@ def provider_response(content, *, model="deepseek-chat"):
 
 
 class DeepSeekCompactionProbeTest(unittest.TestCase):
+    def test_protected_path_key_is_case_insensitive_on_posix_too(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            upper = Path(directory) / "REPORTS" / "RESULT.JSON"
+            lower = Path(directory) / "reports" / "result.json"
+            with patch(
+                "chapter6.experiments.live_probe.os.path.normcase",
+                side_effect=lambda value: value,
+            ):
+                self.assertEqual(
+                    _normalized_resolved(upper),
+                    _normalized_resolved(lower),
+                )
+
     def test_live_cli_rejects_canonical_report_paths_and_aliases_before_provider(self) -> None:
         canonical_paths = (
             Path("chapter6/reports/context-continuity.json"),
