@@ -5,7 +5,6 @@ from __future__ import annotations
 import argparse
 import importlib.metadata
 import json
-import platform
 import sys
 from pathlib import Path
 
@@ -74,7 +73,7 @@ def build_report(generated_at: str | None = None) -> dict[str, object]:
         "report_kind": "deterministic_mechanism_evidence",
         "generated_at": timestamp,
         "environment": {
-            "python": platform.python_version(),
+            "python_contract": ">=3.11,<3.14",
             "numpy": _package_version("numpy"),
             "tiktoken": _package_version("tiktoken"),
         },
@@ -172,6 +171,7 @@ def write_report(
     path.write_text(
         json.dumps(report, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
+        newline="\n",
     )
     return report
 

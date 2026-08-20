@@ -3,7 +3,7 @@
   "report_kind": "deterministic_mechanism_evidence",
   "generated_at": "2026-08-13T00:00:00+08:00",
   "environment": {
-    "python": "3.11.15",
+    "python_contract": ">=3.11,<3.14",
     "numpy": "2.2.6",
     "tiktoken": "0.13.0"
   },

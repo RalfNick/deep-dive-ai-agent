@@ -147,8 +147,10 @@ def write_boundary_failure_matrix(
 ) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
-        json.dumps(report.to_dict(), ensure_ascii=False, indent=2, sort_keys=True),
+        json.dumps(report.to_dict(), ensure_ascii=False, indent=2, sort_keys=True)
+        + "\n",
         encoding="utf-8",
+        newline="\n",
     )
 
 

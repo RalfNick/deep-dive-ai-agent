@@ -69,7 +69,7 @@ def main() -> None:
         print(rendered, end="")
         return
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(rendered, encoding="utf-8")
+    args.output.write_text(rendered, encoding="utf-8", newline="\n")
     print(args.output)
     if report.run_status == "config_error":
         raise SystemExit(2)

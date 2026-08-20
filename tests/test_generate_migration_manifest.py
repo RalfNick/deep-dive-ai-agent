@@ -50,6 +50,21 @@ class GenerateMigrationManifestTests(unittest.TestCase):
         self.assertEqual(len(b"chapter-one"), records[0].size)
         self.assertEqual(hashlib.sha256(b"chapter-one").hexdigest(), records[0].sha256)
 
+    def test_ignores_local_dependency_and_build_directories(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "book" / "node_modules" / "package").mkdir(parents=True)
+            (root / "book" / "node_modules" / "package" / "index.js").write_text(
+                "generated dependency", encoding="utf-8"
+            )
+            (root / "book" / "__pycache__").mkdir()
+            (root / "book" / "__pycache__" / "cache.pyc").write_bytes(b"cache")
+            (root / "book" / "chapter1.md").write_text("chapter", encoding="utf-8")
+
+            records = build_records(root, "a" * 40, "b" * 40)
+
+        self.assertEqual(["book/chapter1.md"], [record.target for record in records])
+
     def test_rendered_rows_use_the_machine_readable_contract(self) -> None:
         with TemporaryDirectory() as directory:
             root = Path(directory)

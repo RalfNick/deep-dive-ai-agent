@@ -313,7 +313,7 @@ def write_svg(curves: dict[str, dict[str, list[tuple[int, float]]]], output: Pat
             "</svg>",
         ]
     )
-    output.write_text("\n".join(parts), encoding="utf-8")
+    output.write_text("\n".join(parts), encoding="utf-8", newline="\n")
 
 
 def parse_args() -> argparse.Namespace:
@@ -424,12 +424,14 @@ def main() -> None:
             {"seed": SEED, "context": CONTEXT, "vocab_size": len(id_to_char), "models": summaries},
             ensure_ascii=False,
             indent=2,
-        ),
+        )
+        + "\n",
         encoding="utf-8",
+        newline="\n",
     )
     csv_path = result_dir / "real_sft_curves.csv"
     with csv_path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.writer(handle)
+        writer = csv.writer(handle, lineterminator="\n")
         writer.writerow(("model", "stage", "metric", "step", "loss"))
         for model_name, model_curves in curves.items():
             for metric, points in model_curves.items():

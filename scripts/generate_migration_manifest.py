@@ -21,6 +21,13 @@ LATER_BOOK_RE = re.compile(
     r"reviews/chapter[56]-|versions/CHAPTER_VERSIONS\.md)"
 )
 BINARY_SUFFIXES = {".gif", ".jpeg", ".jpg", ".pdf", ".png", ".webp"}
+GENERATED_DIRECTORY_NAMES = {
+    "__pycache__",
+    ".venv",
+    "node_modules",
+    "site",
+    "_web",
+}
 
 
 def canonical_payload(path: Path) -> bytes:
@@ -46,7 +53,10 @@ def _iter_migrated_files(root: Path):
         for path in sorted(content_root.rglob("*")):
             if not path.is_file() or path.is_symlink():
                 continue
-            if "__pycache__" in path.parts or path.suffix == ".pyc":
+            if (
+                GENERATED_DIRECTORY_NAMES.intersection(path.parts)
+                or path.suffix == ".pyc"
+            ):
                 continue
             yield path
 

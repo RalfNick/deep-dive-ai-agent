@@ -33,18 +33,18 @@ python chapter2/model_selection_demo.py
 
 | 产物 | SHA-256 |
 | --- | --- |
-| `chapter1/reports/experiment-results.json` | `9e076c3dbfd80fa9aaba8d87c2d14804fa3a35ef63c9f87a2624e62469e182f4` |
-| `chapter2/results/real_sft_summary.json` | `6652e64d004a8dd96d60fa7562a0a78d45fac86172fcff282f1c50b88e23b06a` |
-| `chapter2/results/real_sft_curves.csv` | `fad971bddfc0eca99e2fcaa6a995ecd7572b5abc54838af291202096e64e82d0` |
-| `book/images/fig2-7-real-sft-curves.svg` | `f43edcebf010fb3acd631200ba66113b40f2c5ef985876ce95bf940473dc5fa5` |
-| `chapter3/reports/experiment-results.json` | `84fe812bee9bb30e4a033ba3cbe5f1021e70119debc3d2ccf58496e72dcabef5` |
-| `chapter4/reports/harness-boundary-matrix.json` | `b9f164feb7593debb860fdafc48b3e45b773bd463805c2ced14a056875a136c1` |
-| `chapter5/reports/context-experiments.json` | `1f7b18137b1f3a44188da3fcf5c682370cd47288dfd8114292ff593b759a396e` |
+| `chapter1/reports/experiment-results.json` | `4e1d17e99a22c7bb0f7d67ae94538a8fe6c35e60a7734643f6800175461cd4e5` |
+| `chapter2/results/real_sft_summary.json` | `31cc2dd823137d615e83c2e47691ec8c5e736c87d648e9ee7b94d82e889deb5d` |
+| `chapter2/results/real_sft_curves.csv` | `016f0af5f8838ee7a35ce9dc76a1fe9da2cba1744fbf5ef5e52f403f50bfb545` |
+| `book/images/fig2-7-real-sft-curves.svg` | `0715b12ff1a874c87e9dbe87a0e6bf0e8cc8f591b688e0b75737cad02117a855` |
+| `chapter3/reports/experiment-results.json` | `0f7a6307d332b55ce7c54f8cbe41c4f7eca3d7df4b7a595a265c2ae25d958f6e` |
+| `chapter4/reports/harness-boundary-matrix.json` | `b44c21ce2d9ff2db5b9fa1c85e2edc0241773d922dd8b78481a20d42441b68bb` |
+| `chapter5/reports/context-experiments.json` | `fa41d7e471f01f50e8557ca74df7f6e6d9af62ebd94a81deaf556846963c4c7a` |
 | `chapter6/reports/context-continuity.json` | `50cbbc74c8d938d619dab131f8d37bbb8443162c1fea74233c90fd6eb3686e5e` |
 | `chapter6/reports/context-continuity.md` | `f05fba8f7a4ef7177ea7fe1b1fa18f8cc7528bd9d806d0feeb1aff86f87ce107` |
 | `chapter6/reports/context-continuity-trace.jsonl` | `cbcc12216df02182d9e5b4f64a3a1b29ef9554140877e33cbc986fe69604eb96` |
 
-第 1、3、4、5、6 章的规范离线生成器已连续运行两次；上述产物的第二次哈希与第一次一致。第 5 章 `deepseek-live.example.json` 只是脱敏结构示例，不计入离线规范报告。
+第 1–6 章的规范离线生成器已连续运行两次；上述 10 个产物的第二次哈希与第一次一致。所有规范文本报告显式写入 UTF-8/LF；第 1、3 章只记录 Python 支持范围，不记录操作系统、主机名或 Python 补丁版本。第 2 章的逐字节复现结论仍只限同一已记录数值环境；第 5 章 `deepseek-live.example.json` 只是脱敏结构示例，不计入离线规范报告。
 
 ## 明确不声称
 

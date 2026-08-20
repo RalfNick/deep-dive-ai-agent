@@ -14,13 +14,19 @@ from chapter4.harness.reporting import (  # noqa: E402
 )
 
 
+DEFAULT_OUTPUT = (
+    Path(__file__).resolve().parents[1]
+    / "reports"
+    / "harness-boundary-matrix.json"
+)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output", type=Path)
+    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     args = parser.parse_args()
     report = run_boundary_failure_matrix()
-    if args.output:
-        write_boundary_failure_matrix(args.output, report)
+    write_boundary_failure_matrix(args.output, report)
     print(json.dumps(report.to_dict(), ensure_ascii=False, indent=2))
 
 

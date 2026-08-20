@@ -2,8 +2,7 @@
   "schema_version": 1,
   "generated_at": "2026-08-14T00:00:00Z",
   "runtime": {
-    "python": "3.11.15",
-    "platform": "Windows-10-10.0.19045-SP0"
+    "python_contract": ">=3.11,<3.14"
   },
   "experiments": {
     "one_shot_vs_loop": {

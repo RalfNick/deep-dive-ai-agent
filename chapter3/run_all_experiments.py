@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-import platform
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -58,8 +58,7 @@ def run_all(
         "schema_version": 1,
         "generated_at": generated_at or CANONICAL_GENERATED_AT,
         "runtime": {
-            "python": platform.python_version(),
-            "platform": platform.platform(),
+            "python_contract": ">=3.11,<3.14",
         },
         "experiments": {},
     }
@@ -69,6 +68,7 @@ def run_all(
         completed = subprocess.run(
             command,
             cwd=CHAPTER_DIR,
+            env={**os.environ, "PYTHONDONTWRITEBYTECODE": "1"},
             capture_output=True,
             text=True,
             errors="replace",
@@ -89,6 +89,7 @@ def run_all(
         REPORT_PATH.write_text(
             json.dumps(report, ensure_ascii=False, indent=2) + "\n",
             encoding="utf-8",
+            newline="\n",
         )
     return report
 
