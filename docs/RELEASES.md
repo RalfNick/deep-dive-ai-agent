@@ -19,7 +19,7 @@
 - 来源、链接、Secret、本机路径与可达 Git 历史扫描通过；
 - 80 个允许发布的来源文件经 `mkdocs build --strict` 构建成功。
 
-这些证据只验收当前迁移候选的离线合同和出版边界。GitHub Actions、Pages 与公网仓库状态必须在远端创建后另行验收，不能由本地结果替代。
+远端提交 `921d4fce85035f16f1efe2afb83d085f2548af21` 已完成 GitHub Actions CI 和 Pages 部署验收；首页、第 1 章与第 6 章均通过 HTTPS 公网访问检查。在线阅读地址为 <https://blog.ralf.wang/deep-dive-ai-agent/>，Pages 已强制 HTTPS。远端验收不扩大上述离线实验的证明范围。
 
 ## 后续发布流程
 

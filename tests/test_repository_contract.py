@@ -37,7 +37,7 @@ class RepositoryContractTests(unittest.TestCase):
                 self.assertIn(f"(book/chapter{number}.md)", readme)
                 self.assertIn(f"(chapter{number}/README.md)", readme)
         self.assertIn("18 章", readme)
-        self.assertIn("https://ralfnick.github.io/deep-dive-ai-agent/", readme)
+        self.assertIn("https://blog.ralf.wang/deep-dive-ai-agent/", readme)
 
     def test_book_index_defines_the_published_reading_order(self) -> None:
         index = (ROOT / "book" / "README.md").read_text(encoding="utf-8")

@@ -10,7 +10,7 @@
 - 第 1–6 章都包含配套实验、测试、固定报告或结果，以及参考答案。
 - 第 7–18 章已进入写作规划，尚未发布正文。
 - 英文版状态为 `planned`，当前没有译文章节；暂不建立繁体中文版。
-- 在线阅读地址预留为 <https://ralfnick.github.io/deep-dive-ai-agent/>，GitHub Pages 验收前不标记为已发布。
+- 在线阅读已发布：<https://blog.ralf.wang/deep-dive-ai-agent/>。
 - PDF/EPUB 尚未在本仓库发布，未来只通过 GitHub Releases 提供。
 
 ## 已发布章节与实验
@@ -22,7 +22,7 @@
 | 第 3 章 从一次生成到闭环执行 | [正文](book/chapter3.md) | [实验](chapter3/README.md) | [答案](chapter3/reference-answers.md) | [20 项测试通过](docs/EXPERIMENT_STATUS.md) |
 | 第 4 章 Harness Engineering | [正文](book/chapter4.md) | [实验](chapter4/README.md) | [答案](chapter4/reference-answers.md) | [24 项测试通过](docs/EXPERIMENT_STATUS.md) |
 | 第 5 章 上下文工程 | [正文](book/chapter5.md) | [实验](chapter5/README.md) | [答案](chapter5/reference-answers.md) | [63 项测试通过](docs/EXPERIMENT_STATUS.md) |
-| 第 6 章 长任务中的上下文架构 | [正文](book/chapter6.md) | [实验](chapter6/README.md) | [答案](chapter6/reference-answers.md) | [142 项测试通过](docs/EXPERIMENT_STATUS.md) |
+| 第 6 章 长任务中的上下文架构 | [正文](book/chapter6.md) | [实验](chapter6/README.md) | [答案](chapter6/reference-answers.md) | [143 项测试通过](docs/EXPERIMENT_STATUS.md) |
 
 建议先读[全书介绍](book/introduction.md)，再按[中文阅读顺序](book/README.md)推进。详细来源、Review 和版本记录均保留在 `book/` 中。
 
@@ -74,7 +74,7 @@ python -m unittest discover -s chapter1/tests -v
 python chapter2/real_sft_evidence.py
 ~~~
 
-其余命令见对应 `chapterN/README.md`。仓库级验证、在线阅读构建和 CI 会在后续提交中加入。
+其余命令见对应 `chapterN/README.md`。仓库级验证由 GitHub Actions 执行；只有 CI 成功后，Pages 工作流才会发布允许公开的中文阅读站点。
 
 ## 参与贡献
 
