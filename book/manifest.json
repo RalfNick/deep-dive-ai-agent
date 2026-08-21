@@ -5,7 +5,7 @@
   "description": "从模型、上下文和工具出发，逐步搭建可运行、可验证、可持续改进的 AI Agent 工程体系。",
   "version": "0.6.0",
   "updated": "2026-08-20",
-  "cover": "images/fig0-1-book-roadmap.svg",
+  "cover": "images/deep-dive-ai-agent-cover.webp",
   "repositoryUrl": "https://github.com/RalfNick/deep-dive-ai-agent",
   "totalChapters": 18,
   "introduction": {
