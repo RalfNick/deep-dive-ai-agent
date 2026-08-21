@@ -10,7 +10,7 @@
 - 第 1–6 章都包含配套实验、测试、固定报告或结果，以及参考答案。
 - 第 7–18 章已进入写作规划，尚未发布正文。
 - 英文版状态为 `planned`，当前没有译文章节；暂不建立繁体中文版。
-- 在线阅读已发布：<https://blog.ralf.wang/deep-dive-ai-agent/>。
+- 在线阅读已发布：<https://wlxralf.com/books/deep-dive-ai-agent>。
 - PDF/EPUB 尚未在本仓库发布，未来只通过 GitHub Releases 提供。
 
 ## 已发布章节与实验
