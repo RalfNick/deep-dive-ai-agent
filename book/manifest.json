@@ -1,0 +1,213 @@
+{
+  "slug": "deep-dive-ai-agent",
+  "title": "深入浅出 AI Agent",
+  "subtitle": "从大模型原理到手写 Coding Agent",
+  "description": "从模型、上下文和工具出发，逐步搭建可运行、可验证、可持续改进的 AI Agent 工程体系。",
+  "version": "0.6.0",
+  "updated": "2026-08-20",
+  "cover": "images/fig0-1-book-roadmap.svg",
+  "repositoryUrl": "https://github.com/RalfNick/deep-dive-ai-agent",
+  "totalChapters": 18,
+  "introduction": {
+    "slug": "introduction",
+    "title": "为什么现在还需要一本 AI Agent 的书",
+    "status": "published",
+    "summary": "说明全书的问题意识、演进主线、实验方法，以及为什么从 Coding Agent 切入现代 Agent 工程。",
+    "source": "introduction.md",
+    "updated": "2026-08-20"
+  },
+  "sections": [
+    {
+      "order": 1,
+      "title": "模型是怎样变成 Agent 的",
+      "summary": "先建立模型、Workflow、Agent 与 Harness 的边界，再进入可执行闭环。",
+      "chapters": [
+        {
+          "order": 1,
+          "slug": "chapter-1",
+          "title": "大模型入门：从 Token 到 Transformer",
+          "status": "published",
+          "summary": "从 Token、自注意力和 Transformer 出发，解释下一步预测如何成为 Agent 的模型基础。",
+          "source": "chapter1.md",
+          "experiment": "../chapter1/README.md",
+          "answers": "../chapter1/reference-answers.md",
+          "updated": "2026-08-20"
+        },
+        {
+          "order": 2,
+          "slug": "chapter-2",
+          "title": "大模型的训练、对齐与推理",
+          "status": "published",
+          "summary": "拆解预训练、监督微调、偏好优化、推理预算与模型 API 的工程边界。",
+          "source": "chapter2.md",
+          "experiment": "../chapter2/README.md",
+          "answers": "../chapter2/reference-answers.md",
+          "updated": "2026-08-20"
+        },
+        {
+          "order": 3,
+          "slug": "chapter-3",
+          "title": "AI Agent：从一次生成到闭环执行",
+          "status": "published",
+          "summary": "手写最小 Agent 循环，理解观察、决策、行动与验证如何组成闭环。",
+          "source": "chapter3.md",
+          "experiment": "../chapter3/README.md",
+          "answers": "../chapter3/reference-answers.md",
+          "updated": "2026-08-20"
+        },
+        {
+          "order": 4,
+          "slug": "chapter-4",
+          "title": "Harness Engineering：模型之外，谁在让 Agent 真正工作",
+          "status": "published",
+          "summary": "拆解提示词、工具、权限、沙箱、状态、审批和可观测性组成的 Agent 运行系统。",
+          "source": "chapter4.md",
+          "experiment": "../chapter4/README.md",
+          "answers": "../chapter4/reference-answers.md",
+          "updated": "2026-08-20"
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "title": "上下文、记忆与知识",
+      "summary": "处理 Agent 看见什么、记住什么，以及如何获得可更新的外部知识。",
+      "chapters": [
+        {
+          "order": 5,
+          "slug": "chapter-5",
+          "title": "上下文工程：Agent 真正看到的世界",
+          "status": "published",
+          "summary": "把消息、文件、工具描述、权限和预算装配成可消费、可解释的上下文。",
+          "source": "chapter5.md",
+          "experiment": "../chapter5/README.md",
+          "answers": "../chapter5/reference-answers.md",
+          "updated": "2026-08-20"
+        },
+        {
+          "order": 6,
+          "slug": "chapter-6",
+          "title": "长任务中的上下文架构",
+          "status": "published",
+          "summary": "用压缩、Artifact、Checkpoint 与 Rehydration 维持长任务的连续性和可恢复性。",
+          "source": "chapter6.md",
+          "experiment": "../chapter6/README.md",
+          "answers": "../chapter6/reference-answers.md",
+          "updated": "2026-08-20"
+        },
+        {
+          "order": 7,
+          "slug": "chapter-7",
+          "title": "记忆：不是把聊天记录全部塞回去",
+          "status": "writing",
+          "summary": "区分工作、情景、语义与程序性记忆，设计可写入、检索、遗忘和修正的记忆模块。"
+        },
+        {
+          "order": 8,
+          "slug": "chapter-8",
+          "title": "RAG 与知识库：给 Agent 可更新的外部知识",
+          "status": "planned",
+          "summary": "覆盖混合检索、重排、引用、评估，以及 RAG 与记忆的边界。"
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "title": "工具、MCP 与 Coding Agent",
+      "summary": "从单次工具调用走向大规模工具系统，并手写一个 Coding Agent。",
+      "chapters": [
+        {
+          "order": 9,
+          "slug": "chapter-9",
+          "title": "工具调用与 MCP",
+          "status": "planned",
+          "summary": "从 JSON Schema 与函数调用开始，实现工具循环和 MCP Server。"
+        },
+        {
+          "order": 10,
+          "slug": "chapter-10",
+          "title": "大规模工具集与异步任务",
+          "status": "planned",
+          "summary": "处理工具发现、描述预算、长任务、并发、取消与幂等。"
+        },
+        {
+          "order": 11,
+          "slug": "chapter-11",
+          "title": "Coding Agent：代码库就是它的环境",
+          "status": "planned",
+          "summary": "拆解 Coding Agent 的搜索、编辑、测试、权限控制和会话恢复机制。"
+        },
+        {
+          "order": 12,
+          "slug": "chapter-12",
+          "title": "手写一个 Mini Coding Agent",
+          "status": "planned",
+          "summary": "从模型 API 和基础工具开始，加入计划、补丁、验证、压缩与审批。"
+        }
+      ]
+    },
+    {
+      "order": 4,
+      "title": "评估、可观测与模型选择",
+      "summary": "用任务、轨迹、评分和生产诊断判断 Agent 是否真正可用。",
+      "chapters": [
+        {
+          "order": 13,
+          "slug": "chapter-13",
+          "title": "Agent 评估：答案正确还不够",
+          "status": "planned",
+          "summary": "建立可复现任务集，并同时衡量结果、轨迹、工具、安全和成本。"
+        },
+        {
+          "order": 14,
+          "slug": "chapter-14",
+          "title": "Benchmark、Tracing 与生产诊断",
+          "status": "planned",
+          "summary": "记录 Token、延迟、成本、错误与轨迹，设计消融和回归诊断。"
+        }
+      ]
+    },
+    {
+      "order": 5,
+      "title": "训练、反馈与持续进化",
+      "summary": "明确何时需要后训练，并把真实失败转化为持续改进资产。",
+      "chapters": [
+        {
+          "order": 15,
+          "slug": "chapter-15",
+          "title": "Agent 的后训练",
+          "status": "planned",
+          "summary": "设计轨迹、工具调用和拒绝样本，理解 SFT、偏好优化与强化学习的边界。"
+        },
+        {
+          "order": 16,
+          "slug": "chapter-16",
+          "title": "从失败中学习：持续改进系统",
+          "status": "planned",
+          "summary": "把失败转成回放样本、回归测试、规则、Skill、记忆或训练数据。"
+        }
+      ]
+    },
+    {
+      "order": 6,
+      "title": "多模态、多 Agent 与生产系统",
+      "summary": "扩展到图像、语音、实时交互、多 Agent 协作和完整生产系统。",
+      "chapters": [
+        {
+          "order": 17,
+          "slug": "chapter-17",
+          "title": "多模态与实时 Agent",
+          "status": "planned",
+          "summary": "处理图像、语音、屏幕、文档、Computer Use 与实时事件流。"
+        },
+        {
+          "order": 18,
+          "slug": "chapter-18",
+          "title": "Multi-Agent 与最终系统",
+          "status": "planned",
+          "summary": "讨论委派、并行研究、共享状态、交接、冲突处理与停止条件。"
+        }
+      ]
+    }
+  ]
+}
