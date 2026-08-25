@@ -65,6 +65,24 @@ class GenerateMigrationManifestTests(unittest.TestCase):
 
         self.assertEqual(["book/chapter1.md"], [record.target for record in records])
 
+    def test_excludes_new_repository_book_files_from_historical_migration(self) -> None:
+        with TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "book" / "images").mkdir(parents=True)
+            (root / "book" / "sources").mkdir()
+            (root / "book" / "reviews").mkdir()
+            (root / "book" / "chapter1.md").write_text("migrated", encoding="utf-8")
+            (root / "book" / "chapter7.md").write_text("new", encoding="utf-8")
+            (root / "book" / "images" / "fig7-1.svg").write_text("<svg/>", encoding="utf-8")
+            (root / "book" / "sources" / "chapter7-sources.md").write_text("new", encoding="utf-8")
+            (root / "book" / "reviews" / "chapter7-review.md").write_text("new", encoding="utf-8")
+            (root / "book" / "manifest.json").write_text("{}", encoding="utf-8")
+            (root / "book" / "images" / "deep-dive-ai-agent-cover.webp").write_bytes(b"new")
+
+            records = build_records(root, "a" * 40, "b" * 40)
+
+        self.assertEqual(["book/chapter1.md"], [record.target for record in records])
+
     def test_rendered_rows_use_the_machine_readable_contract(self) -> None:
         with TemporaryDirectory() as directory:
             root = Path(directory)

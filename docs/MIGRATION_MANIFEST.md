@@ -11,14 +11,14 @@
 | target | source | commit | bytes | sha256 |
 | --- | --- | --- | ---: | --- |
 | `book/OUTLINE.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 6755 | `d2056e9f2798a46c8103effbccd74fefa6162213d05990d1030378a5e9541dda` |
-| `book/README.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 5168 | `67720f5f929e5b68235a29b1e3ab38fe0f311bcdae1c8929da29a2a18ba98ddb` |
+| `book/README.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 5753 | `e9eecb18c1306792cc59a2bccf65f19b8ad29afc7e6b08f61e84dcce4f5c52c3` |
 | `book/WRITING_GUIDE.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 4158 | `99fd64fbb7dbce142e309e266dafa2cafad65aca0514f0b17b45727db4c27b1b` |
 | `book/chapter1.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 83701 | `4bdc360ff2ebd91ea59cdd15301db0babfc619af7c54e7a10b8b53b8a7606982` |
 | `book/chapter2.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 73609 | `f6d7686dae9b0a664df31fd8f3ccdf5149def69c963c282bfc72dc6d9bed25f2` |
 | `book/chapter3.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 49763 | `4afd8debd006177d3947aaa3c6943cb28ede4b9d21669c0ebd7a3ebeaae3f622` |
 | `book/chapter4.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 53439 | `a3505ee4235dc43383f14676a652cdeb0fd6eb86a9a076c51f2c57da4d33ab25` |
 | `book/chapter5.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 64530 | `9d11e6d391dc3e517f9534328aec262e1234f3573a958ed1d6ce251f733d2d5e` |
-| `book/chapter6.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 115387 | `5ed9dde43a3c9924dacfda817f9347a7131946ec41747090c711e9120615a44d` |
+| `book/chapter6.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 115394 | `a22493abd801a300737f21741f3973e3221d9bc55bf5e39e9b526610eb3531ee` |
 | `book/images/fig0-1-book-roadmap.svg` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 5336 | `19c6f87985989b86ed6e09f8966d57b33e5b76fba1c842ae4b9851ad989ab8bf` |
 | `book/images/fig1-1-concept-boundaries.svg` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 5491 | `203b312b0c07716c20a1a8eb87e368a76abd5d8df18a2eb4dd30b80d3185bc1a` |
 | `book/images/fig1-2-transformer-flow.svg` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 5746 | `de85e2bb8430ba4ac5de70b6dd878447758ae76f8355ba0249d920d4248b67df` |

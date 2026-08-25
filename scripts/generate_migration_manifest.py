@@ -28,6 +28,16 @@ GENERATED_DIRECTORY_NAMES = {
     "site",
     "_web",
 }
+POST_MIGRATION_BOOK_FILES = {
+    "book/manifest.json",
+    "book/images/deep-dive-ai-agent-cover.webp",
+}
+POST_MIGRATION_CHAPTER_RE = re.compile(
+    r"^book/(?:chapter(?P<chapter>\d+)\.md|"
+    r"images/fig(?P<figure>\d+)-|"
+    r"sources/chapter(?P<source>\d+)-|"
+    r"reviews/chapter(?P<review>\d+)-)"
+)
 
 
 def canonical_payload(path: Path) -> bytes:
@@ -41,6 +51,18 @@ def _source_for(target: str) -> str:
     if LATER_BOOK_RE.match(target) or re.match(r"^chapter[56]/", target):
         return "chapter6-worktree"
     return "current-workspace"
+
+
+def _is_post_migration_book_file(target: str) -> bool:
+    if target in POST_MIGRATION_BOOK_FILES:
+        return True
+    match = POST_MIGRATION_CHAPTER_RE.match(target)
+    if match is None:
+        return False
+    chapter_number = next(
+        int(value) for value in match.groupdict().values() if value is not None
+    )
+    return chapter_number > 6
 
 
 def _iter_migrated_files(root: Path):
@@ -57,6 +79,9 @@ def _iter_migrated_files(root: Path):
                 GENERATED_DIRECTORY_NAMES.intersection(path.parts)
                 or path.suffix == ".pyc"
             ):
+                continue
+            target = path.relative_to(root).as_posix()
+            if _is_post_migration_book_file(target):
                 continue
             yield path
 
