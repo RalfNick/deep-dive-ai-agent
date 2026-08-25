@@ -17,6 +17,9 @@ CANONICAL_TEXT_REPORTS = (
     "chapter6/reports/context-continuity.json",
     "chapter6/reports/context-continuity.md",
     "chapter6/reports/context-continuity-trace.jsonl",
+    "chapter7/reports/memory-engineering.json",
+    "chapter7/reports/memory-engineering.md",
+    "chapter7/reports/memory-engineering-trace.jsonl",
 )
 
 

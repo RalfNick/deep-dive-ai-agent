@@ -267,7 +267,7 @@ def check_chapter_mapping(root: Path) -> tuple[Finding, ...]:
     findings: list[Finding] = []
     readme = root / "README.md"
     readme_text = readme.read_text(encoding="utf-8") if readme.is_file() else ""
-    for number in range(1, 7):
+    for number in range(1, 8):
         required = (
             root / "book" / f"chapter{number}.md",
             root / f"chapter{number}" / "README.md",

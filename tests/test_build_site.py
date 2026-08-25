@@ -41,7 +41,7 @@ class BuildSiteTests(unittest.TestCase):
         write(root / "book" / "sources" / "chapter1-sources.md", "private ledger\n")
         write(root / "book" / "reviews" / "chapter1-review.md", "private review\n")
         write(root / "book" / "images" / "figure.svg", "<svg/>\n")
-        for number in range(1, 7):
+        for number in range(1, 8):
             write(
                 root / "book" / f"chapter{number}.md",
                 f"# Chapter {number}\n![figure](./images/figure.svg)\n",
@@ -72,10 +72,10 @@ class BuildSiteTests(unittest.TestCase):
                 "book/images/figure.svg",
                 "book-en/index.md",
             }
-            required.update(f"book/chapter{number}.md" for number in range(1, 7))
-            required.update(f"chapter{number}/index.md" for number in range(1, 7))
+            required.update(f"book/chapter{number}.md" for number in range(1, 8))
+            required.update(f"chapter{number}/index.md" for number in range(1, 8))
             required.update(
-                f"chapter{number}/reference-answers.md" for number in range(1, 7)
+                f"chapter{number}/reference-answers.md" for number in range(1, 8)
             )
             self.assertEqual(set(), required - set(first))
             self.assertEqual(first, second)

@@ -6,9 +6,9 @@
 
 ## 当前状态
 
-- 简体中文是唯一权威正文，已完成并复审第 1–6 章。
-- 第 1–6 章都包含配套实验、测试、固定报告或结果，以及参考答案。
-- 第 7–18 章已进入写作规划，尚未发布正文。
+- 简体中文是唯一权威正文，已发布第 1–7 章；第 1–6 章已完成复审，第 7 章已完成正文、实验与发布门禁。
+- 第 1–7 章都包含配套实验、测试、固定报告或结果，以及参考答案。
+- 第 8–18 章已进入写作规划，尚未发布正文。
 - 英文版状态为 `planned`，当前没有译文章节；暂不建立繁体中文版。
 - 在线阅读已发布：<https://wlxralf.com/books/deep-dive-ai-agent>。
 - PDF/EPUB 尚未在本仓库发布，未来只通过 GitHub Releases 提供。
@@ -23,6 +23,7 @@
 | 第 4 章 Harness Engineering | [正文](book/chapter4.md) | [实验](chapter4/README.md) | [答案](chapter4/reference-answers.md) | [24 项测试通过](docs/EXPERIMENT_STATUS.md) |
 | 第 5 章 上下文工程 | [正文](book/chapter5.md) | [实验](chapter5/README.md) | [答案](chapter5/reference-answers.md) | [63 项测试通过](docs/EXPERIMENT_STATUS.md) |
 | 第 6 章 长任务中的上下文架构 | [正文](book/chapter6.md) | [实验](chapter6/README.md) | [答案](chapter6/reference-answers.md) | [143 项测试通过](docs/EXPERIMENT_STATUS.md) |
+| 第 7 章 记忆：不是把聊天记录全部塞回去 | [正文](book/chapter7.md) | [实验](chapter7/README.md) | [答案](chapter7/reference-answers.md) | [59 项测试通过](docs/EXPERIMENT_STATUS.md) |
 
 建议先读[全书介绍](book/introduction.md)，再按[中文阅读顺序](book/README.md)推进。详细来源、Review 和版本记录均保留在 `book/` 中。
 

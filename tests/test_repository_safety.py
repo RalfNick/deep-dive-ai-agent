@@ -73,7 +73,7 @@ class RepositorySafetyTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / "book").mkdir()
-            for number in range(1, 7):
+            for number in range(1, 8):
                 (root / "book" / f"chapter{number}.md").write_text(
                     f"chapter {number}", encoding="utf-8"
                 )
@@ -85,15 +85,15 @@ class RepositorySafetyTests(unittest.TestCase):
                 )
             links = [
                 f"[c{number}](book/chapter{number}.md)"
-                for number in range(1, 7)
+                for number in range(1, 8)
             ]
             links.extend(
                 f"[e{number}](chapter{number}/README.md)"
-                for number in range(1, 7)
+                for number in range(1, 8)
             )
             links.append("[duplicate](chapter1/README.md)")
             (root / "README.md").write_text("\n".join(links), encoding="utf-8")
-            (root / "chapter6" / "reference-answers.md").unlink()
+            (root / "chapter7" / "reference-answers.md").unlink()
 
             findings = check_chapter_mapping(root)
 
