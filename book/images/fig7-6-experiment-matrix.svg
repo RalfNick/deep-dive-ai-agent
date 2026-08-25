@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">第 7 章五组确定性实验结果</title>
+  <desc id="desc">展示基线、写入、召回、修正和遗忘五组实验中的独立指标，不提供聚合总分。</desc>
+  <rect width="1200" height="675" rx="28" fill="#081224"/>
+  <text x="55" y="68" fill="#f8fafc" font-size="38" font-weight="700">五组实验看五种边界，不压成一个总分</text>
+  <text x="55" y="108" fill="#94a3b8" font-size="22">固定夹具 · 每案例 sample_count=1 · 不接真实模型</text>
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <rect x="55" y="145" width="345" height="210" rx="22" fill="#172033" stroke="#334155"/>
+    <text x="85" y="187" fill="#60a5fa" font-size="25" font-weight="700">1 · 历史 ≠ Memory</text>
+    <text x="85" y="228" fill="#cbd5e1" font-size="18">无记忆：任务未验收</text><text x="85" y="262" fill="#fb7185" font-size="18">完整历史：一次性规则被使用</text><text x="85" y="296" fill="#34d399" font-size="18">结构化：任务验收通过</text><text x="85" y="328" fill="#94a3b8" font-size="16">只说明固定决策策略</text>
+    <rect x="425" y="145" width="345" height="210" rx="22" fill="#172033" stroke="#334155"/>
+    <text x="455" y="187" fill="#a78bfa" font-size="25" font-weight="700">2 · 写入闸门</text>
+    <text x="455" y="232" fill="#fbbf24" font-size="20">写入精确率</text><text x="630" y="232" fill="#f8fafc" font-size="20">0.50 → 1.00</text><text x="455" y="272" fill="#cbd5e1" font-size="18">Secret 写入：1 → 0</text><text x="455" y="310" fill="#94a3b8" font-size="16">复核补回一条有效推断</text>
+    <rect x="795" y="145" width="350" height="210" rx="22" fill="#172033" stroke="#334155"/>
+    <text x="825" y="187" fill="#f472b6" font-size="25" font-weight="700">3 · 召回管线</text>
+    <text x="825" y="232" fill="#fbbf24" font-size="20">召回精确率</text><text x="1000" y="232" fill="#f8fafc" font-size="20">0.40 / 0.50 / 1.00</text><text x="825" y="272" fill="#cbd5e1" font-size="18">跨作用域泄漏：2 → 0</text><text x="825" y="310" fill="#94a3b8" font-size="16">硬过滤后才排序</text>
+    <rect x="235" y="385" width="345" height="210" rx="22" fill="#172033" stroke="#334155"/>
+    <text x="265" y="427" fill="#34d399" font-size="25" font-weight="700">4 · 修正与并发</text>
+    <text x="265" y="472" fill="#cbd5e1" font-size="18">版本链：不完整 → 完整</text><text x="265" y="510" fill="#cbd5e1" font-size="18">陈旧写入：被拒绝</text><text x="265" y="548" fill="#94a3b8" font-size="16">当前有效记录仍为 1 条</text>
+    <rect x="620" y="385" width="345" height="210" rx="22" fill="#172033" stroke="#334155"/>
+    <text x="650" y="427" fill="#fb7185" font-size="25" font-weight="700">5 · 遗忘与隔离</text>
+    <text x="650" y="472" fill="#cbd5e1" font-size="18">陈旧索引泄漏：1</text><text x="650" y="510" fill="#34d399" font-size="18">Store 解析后泄漏：0</text><text x="650" y="548" fill="#94a3b8" font-size="16">跨租户记录在打分前排除</text>
+  </g>
+  <text x="55" y="645" fill="#64748b" font-size="17">来源：chapter7/reports/memory-engineering.json；serialized bytes 未在本图标为 Token</text>
+</svg>

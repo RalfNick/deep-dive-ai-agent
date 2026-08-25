@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Memory 写入不是复制对话，而是一条受控提交管线</title>
+  <desc id="desc">候选信息经过生命周期、敏感信息、来源权威、价值和冲突五道检查后进入允许、拒绝或人工复核状态。</desc>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#64748b"/></marker></defs>
+  <rect width="1200" height="675" rx="28" fill="#081224"/>
+  <text x="55" y="68" fill="#f8fafc" font-size="38" font-weight="700">Write：模型只能提议，Store 才能提交</text>
+  <text x="55" y="108" fill="#94a3b8" font-size="22">一次性授权和 Secret 应在写入前停止，而不是依赖未来召回时“忽略”</text>
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <rect x="55" y="190" width="180" height="250" rx="22" fill="#172033" stroke="#334155" stroke-width="2"/>
+    <text x="85" y="235" fill="#60a5fa" font-size="25" font-weight="700">原始事件</text>
+    <text x="85" y="280" fill="#cbd5e1" font-size="18">用户表达</text><text x="85" y="315" fill="#cbd5e1" font-size="18">工具观察</text><text x="85" y="350" fill="#cbd5e1" font-size="18">任务结果</text><text x="85" y="385" fill="#cbd5e1" font-size="18">人工修正</text>
+    <path d="M235 315 H285" stroke="#64748b" stroke-width="3" marker-end="url(#a)"/>
+    <rect x="285" y="190" width="190" height="250" rx="22" fill="#172033" stroke="#334155" stroke-width="2"/>
+    <text x="315" y="235" fill="#a78bfa" font-size="25" font-weight="700">Candidate</text>
+    <text x="315" y="280" fill="#cbd5e1" font-size="18">类型与 Subject</text><text x="315" y="315" fill="#cbd5e1" font-size="18">Namespace</text><text x="315" y="350" fill="#cbd5e1" font-size="18">来源与置信度</text><text x="315" y="385" fill="#cbd5e1" font-size="18">生命周期</text>
+    <path d="M475 315 H525" stroke="#64748b" stroke-width="3" marker-end="url(#a)"/>
+    <rect x="525" y="145" width="275" height="340" rx="24" fill="#11263b" stroke="#60a5fa" stroke-width="2"/>
+    <text x="558" y="195" fill="#60a5fa" font-size="28" font-weight="700">五道写入闸门</text>
+    <g font-size="19"><text x="558" y="242" fill="#e2e8f0">1. 是否跨任务仍有价值</text><text x="558" y="286" fill="#e2e8f0">2. 是否含 Secret / 隐私</text><text x="558" y="330" fill="#e2e8f0">3. 来源与权威是否足够</text><text x="558" y="374" fill="#e2e8f0">4. 是否重复或低价值</text><text x="558" y="418" fill="#e2e8f0">5. 是否与当前值冲突</text></g>
+    <path d="M800 230 H870" stroke="#34d399" stroke-width="3" marker-end="url(#a)"/><path d="M800 315 H870" stroke="#fb7185" stroke-width="3" marker-end="url(#a)"/><path d="M800 400 H870" stroke="#fbbf24" stroke-width="3" marker-end="url(#a)"/>
+    <rect x="875" y="175" width="270" height="105" rx="20" fill="#073b32" stroke="#34d399"/><text x="905" y="218" fill="#6ee7b7" font-size="24" font-weight="700">ALLOW</text><text x="905" y="250" fill="#d1fae5" font-size="18">生成版本并追加提交</text>
+    <rect x="875" y="295" width="270" height="105" rx="20" fill="#401b28" stroke="#fb7185"/><text x="905" y="338" fill="#fda4af" font-size="24" font-weight="700">REJECT</text><text x="905" y="370" fill="#ffe4e6" font-size="18">保留 reason，不写正文</text>
+    <rect x="875" y="415" width="270" height="105" rx="20" fill="#42320d" stroke="#fbbf24"/><text x="905" y="458" fill="#fde68a" font-size="24" font-weight="700">REVIEW</text><text x="905" y="490" fill="#fef3c7" font-size="18">等待显式批准或修正</text>
+  </g>
+  <rect x="90" y="555" width="1020" height="70" rx="20" fill="#111c33"/>
+  <text x="135" y="598" fill="#f8fafc" font-size="21">关键边界：Memory Writer 不是事实裁判；高风险推断只能成为待审候选。</text>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">MemoryRecord 的版本化生命周期</title>
+  <desc id="desc">同一逻辑 memory_id 下，Python 偏好由 v1 修正为 TypeScript v2，最后由 v3 Tombstone 删除；旧版本只用于审计，不再召回。</desc>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#64748b"/></marker></defs>
+  <rect width="1200" height="675" rx="28" fill="#081224"/>
+  <text x="55" y="70" fill="#f8fafc" font-size="38" font-weight="700">Correct 不是覆盖；Forget 也不是把列表删一行</text>
+  <text x="55" y="110" fill="#94a3b8" font-size="22">同一个 memory_id，多个不可变版本；当前投影只选择仍有效的一代</text>
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <rect x="70" y="170" width="300" height="270" rx="24" fill="#13243b" stroke="#60a5fa" stroke-width="2"/>
+    <text x="100" y="215" fill="#60a5fa" font-size="25" font-weight="700">v1 · ACTIVE</text>
+    <text x="100" y="260" fill="#f8fafc" font-size="21">偏好：Python</text>
+    <text x="100" y="305" fill="#cbd5e1" font-size="18">record_id = rec-…v1</text>
+    <text x="100" y="342" fill="#cbd5e1" font-size="18">source = 用户显式表达</text>
+    <text x="100" y="379" fill="#cbd5e1" font-size="18">supersedes = null</text>
+    <rect x="100" y="400" width="145" height="30" rx="15" fill="#1e3a8a"/><text x="122" y="421" fill="#dbeafe" font-size="15">当时可召回</text>
+    <path d="M370 305 H445" stroke="#64748b" stroke-width="4" marker-end="url(#a)"/>
+    <text x="383" y="286" fill="#fbbf24" font-size="17">显式修正</text>
+    <rect x="450" y="170" width="300" height="270" rx="24" fill="#10322f" stroke="#34d399" stroke-width="3"/>
+    <text x="480" y="215" fill="#34d399" font-size="25" font-weight="700">v2 · ACTIVE</text>
+    <text x="480" y="260" fill="#f8fafc" font-size="21">偏好：TypeScript</text>
+    <text x="480" y="305" fill="#cbd5e1" font-size="18">record_id = rec-…v2</text>
+    <text x="480" y="342" fill="#cbd5e1" font-size="18">source = 用户新表达</text>
+    <text x="480" y="379" fill="#cbd5e1" font-size="18">supersedes = rec-…v1</text>
+    <rect x="480" y="400" width="145" height="30" rx="15" fill="#065f46"/><text x="502" y="421" fill="#d1fae5" font-size="15">当前可召回</text>
+    <path d="M750 305 H825" stroke="#64748b" stroke-width="4" marker-end="url(#a)"/>
+    <text x="772" y="286" fill="#fb7185" font-size="17">用户删除</text>
+    <rect x="830" y="170" width="300" height="270" rx="24" fill="#3a1b28" stroke="#fb7185" stroke-width="3"/>
+    <text x="860" y="215" fill="#fb7185" font-size="25" font-weight="700">v3 · TOMBSTONE</text>
+    <text x="860" y="260" fill="#f8fafc" font-size="21">正文不再进入召回</text>
+    <text x="860" y="305" fill="#cbd5e1" font-size="18">reason = user_requested</text>
+    <text x="860" y="342" fill="#cbd5e1" font-size="18">删除版本 ID 列表</text>
+    <text x="860" y="379" fill="#cbd5e1" font-size="18">不可逆内容 Digest</text>
+    <rect x="860" y="400" width="165" height="30" rx="15" fill="#7f1d1d"/><text x="882" y="421" fill="#ffe4e6" font-size="15">所有版本不可召回</text>
+  </g>
+  <path d="M210 475 V525 H970 V475" fill="none" stroke="#475569" stroke-width="3"/>
+  <rect x="210" y="535" width="760" height="80" rx="20" fill="#111c33"/>
+  <text x="250" y="571" fill="#e2e8f0" font-size="20">事实主记录保留发生过什么；Current Projection 只暴露当前有效值。</text>
+  <text x="250" y="601" fill="#94a3b8" font-size="18">Tombstone 是召回门禁，不自动证明备份、缓存和外部副本已物理清除。</text>
+</svg>

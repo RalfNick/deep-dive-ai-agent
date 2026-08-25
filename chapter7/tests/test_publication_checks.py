@@ -123,6 +123,16 @@ class PublicationChecksTest(unittest.TestCase):
         self.assertIn("正文中文", stripped)
         self.assertNotIn("围栏中的中文", stripped)
 
+    def test_actual_chapter_bundle_passes_publication_contract(self) -> None:
+        root = Path(__file__).resolve().parents[2]
+        errors = publication_errors(
+            root / "book" / "chapter7.md",
+            root / "chapter7" / "reference-answers.md",
+            root / "book" / "sources" / "chapter7-sources.md",
+            root / "book" / "images",
+        )
+        self.assertEqual(errors, ())
+
 
 if __name__ == "__main__":
     unittest.main()

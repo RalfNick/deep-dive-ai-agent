@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Memory 召回的硬过滤与软排序</title>
+  <desc id="desc">候选记录先经过租户、用户、项目、Agent、状态、有效期、敏感级别硬过滤，再按任务匹配、权威、时效和置信度排序，最后投影进 Context。</desc>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0L0 6L9 3z" fill="#64748b"/></marker></defs>
+  <rect width="1200" height="675" rx="28" fill="#081224"/>
+  <text x="55" y="70" fill="#f8fafc" font-size="38" font-weight="700">Recall：先决定“能不能看”，再决定“值不值得看”</text>
+  <text x="55" y="110" fill="#94a3b8" font-size="22">相似度不能覆盖权限、删除、过期和作用域</text>
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <rect x="55" y="190" width="170" height="275" rx="22" fill="#172033" stroke="#334155"/>
+    <text x="85" y="235" fill="#a78bfa" font-size="25" font-weight="700">候选集合</text>
+    <text x="85" y="282" fill="#cbd5e1" font-size="18">当前用户记录</text><text x="85" y="320" fill="#cbd5e1" font-size="18">其他项目记录</text><text x="85" y="358" fill="#cbd5e1" font-size="18">过期与已删除</text><text x="85" y="396" fill="#cbd5e1" font-size="18">噪声与相关项</text>
+    <path d="M225 330 H275" stroke="#64748b" stroke-width="3" marker-end="url(#a)"/>
+    <rect x="280" y="155" width="260" height="350" rx="22" fill="#331b27" stroke="#fb7185" stroke-width="2"/>
+    <text x="315" y="203" fill="#fb7185" font-size="27" font-weight="700">硬过滤</text>
+    <text x="315" y="250" fill="#f8fafc" font-size="19">Tenant / User</text><text x="315" y="289" fill="#f8fafc" font-size="19">Project / Agent</text><text x="315" y="328" fill="#f8fafc" font-size="19">ACTIVE / Tombstone</text><text x="315" y="367" fill="#f8fafc" font-size="19">有效期 / 敏感级别</text><text x="315" y="406" fill="#f8fafc" font-size="19">类型与访问策略</text>
+    <rect x="315" y="445" width="190" height="36" rx="18" fill="#7f1d1d"/><text x="345" y="469" fill="#ffe4e6" font-size="16">失败即不可见</text>
+    <path d="M540 330 H590" stroke="#64748b" stroke-width="3" marker-end="url(#a)"/>
+    <rect x="595" y="155" width="275" height="350" rx="22" fill="#10283a" stroke="#60a5fa" stroke-width="2"/>
+    <text x="630" y="203" fill="#60a5fa" font-size="27" font-weight="700">软排序</text>
+    <text x="630" y="250" fill="#f8fafc" font-size="19">task_match × 0–4</text><text x="630" y="289" fill="#f8fafc" font-size="19">authority × 0.5–3</text><text x="630" y="328" fill="#f8fafc" font-size="19">recency × 0–2</text><text x="630" y="367" fill="#f8fafc" font-size="19">confidence × 0–1</text><text x="630" y="406" fill="#94a3b8" font-size="18">每个分项都进入 Trace</text>
+    <rect x="630" y="445" width="205" height="36" rx="18" fill="#1e3a8a"/><text x="658" y="469" fill="#dbeafe" font-size="16">稳定排序 + Top-K</text>
+    <path d="M870 330 H920" stroke="#64748b" stroke-width="3" marker-end="url(#a)"/>
+    <rect x="925" y="190" width="220" height="275" rx="22" fill="#10322f" stroke="#34d399" stroke-width="3"/>
+    <text x="960" y="235" fill="#34d399" font-size="27" font-weight="700">Context 投影</text>
+    <text x="960" y="282" fill="#e2e8f0" font-size="18">Content 摘要</text><text x="960" y="320" fill="#e2e8f0" font-size="18">类型与来源</text><text x="960" y="358" fill="#e2e8f0" font-size="18">更新时间</text><text x="960" y="396" fill="#e2e8f0" font-size="18">为什么被选中</text>
+  </g>
+  <rect x="105" y="555" width="990" height="70" rx="20" fill="#111c33"/>
+  <text x="150" y="598" fill="#f8fafc" font-size="21">先全局向量检索、再让模型忽略越权结果，是顺序错误；隔离必须发生在语义排序之前。</text>
+</svg>

@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Context、Session、Checkpoint、Memory 与 RAG 的边界</title>
+  <desc id="desc">按生命周期和主问题区分五种状态表面，Memory 位于跨任务复用区域。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#081224"/><stop offset="1" stop-color="#111827"/></linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748b"/></marker>
+  </defs>
+  <rect width="1200" height="675" rx="28" fill="url(#bg)"/>
+  <text x="60" y="70" fill="#f8fafc" font-size="38" font-weight="700">先按生命周期分配状态，再谈存储技术</text>
+  <text x="60" y="110" fill="#94a3b8" font-size="22">同一句话可以很重要，但未必属于长期 Memory</text>
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <rect x="55" y="160" width="200" height="330" rx="20" fill="#111c33" stroke="#334155" stroke-width="2"/>
+    <text x="85" y="205" fill="#60a5fa" font-size="27" font-weight="700">Context</text>
+    <text x="85" y="243" fill="#e2e8f0" font-size="20">本次调用看见什么</text>
+    <text x="85" y="290" fill="#94a3b8" font-size="18">生命周期：一次调用</text>
+    <text x="85" y="332" fill="#cbd5e1" font-size="18">来源的临时投影</text>
+    <text x="85" y="370" fill="#cbd5e1" font-size="18">不是事实主记录</text>
+
+    <rect x="275" y="160" width="200" height="330" rx="20" fill="#111c33" stroke="#334155" stroke-width="2"/>
+    <text x="305" y="205" fill="#818cf8" font-size="27" font-weight="700">Session</text>
+    <text x="305" y="243" fill="#e2e8f0" font-size="20">这段会话怎么延续</text>
+    <text x="305" y="290" fill="#94a3b8" font-size="18">生命周期：一段会话</text>
+    <text x="305" y="332" fill="#cbd5e1" font-size="18">历史与线程身份</text>
+    <text x="305" y="370" fill="#cbd5e1" font-size="18">不自动成为长期事实</text>
+
+    <rect x="495" y="160" width="200" height="330" rx="20" fill="#111c33" stroke="#334155" stroke-width="2"/>
+    <text x="525" y="205" fill="#fbbf24" font-size="27" font-weight="700">Checkpoint</text>
+    <text x="525" y="243" fill="#e2e8f0" font-size="20">当前运行从哪继续</text>
+    <text x="525" y="290" fill="#94a3b8" font-size="18">生命周期：一个 Run</text>
+    <text x="525" y="332" fill="#cbd5e1" font-size="18">游标、状态、等待项</text>
+    <text x="525" y="370" fill="#cbd5e1" font-size="18">不是用户画像</text>
+
+    <rect x="715" y="145" width="210" height="360" rx="22" fill="#10283a" stroke="#34d399" stroke-width="3"/>
+    <text x="745" y="195" fill="#34d399" font-size="30" font-weight="700">Memory</text>
+    <text x="745" y="235" fill="#f8fafc" font-size="21">未来任务复用什么</text>
+    <text x="745" y="285" fill="#a7f3d0" font-size="18">生命周期：跨任务</text>
+    <text x="745" y="330" fill="#e2e8f0" font-size="18">偏好、经验、规则候选</text>
+    <text x="745" y="370" fill="#e2e8f0" font-size="18">Write / Recall</text>
+    <text x="745" y="410" fill="#e2e8f0" font-size="18">Correct / Forget</text>
+    <rect x="745" y="445" width="150" height="36" rx="18" fill="#064e3b"/>
+    <text x="770" y="470" fill="#d1fae5" font-size="17">本章主角</text>
+
+    <rect x="945" y="160" width="200" height="330" rx="20" fill="#111c33" stroke="#334155" stroke-width="2"/>
+    <text x="975" y="205" fill="#f472b6" font-size="27" font-weight="700">RAG</text>
+    <text x="975" y="243" fill="#e2e8f0" font-size="20">外部知识从哪来</text>
+    <text x="975" y="290" fill="#94a3b8" font-size="18">生命周期：知识源决定</text>
+    <text x="975" y="332" fill="#cbd5e1" font-size="18">文档、索引、引用</text>
+    <text x="975" y="370" fill="#cbd5e1" font-size="18">第 8 章深入</text>
+  </g>
+  <path d="M155 535 H1045" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="60" y="585" fill="#94a3b8" font-size="20">一次调用</text>
+  <text x="1010" y="585" fill="#94a3b8" font-size="20">跨任务 / 外部知识</text>
+  <rect x="300" y="610" width="600" height="42" rx="21" fill="#1e293b"/>
+  <text x="374" y="638" fill="#f8fafc" font-size="20">判断顺序：谁拥有 → 活多久 → 怎样验证 → 如何删除</text>
+</svg>

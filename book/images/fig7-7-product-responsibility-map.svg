@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">LangGraph、Claude Code、OpenAI Agents SDK 与 Codex 的 Memory 责任映射</title>
+  <desc id="desc">按 Session、长期表面、所有者、召回方式和强制边界比较公开责任，不比较产品能力。</desc>
+  <rect width="1200" height="675" rx="28" fill="#081224"/>
+  <text x="55" y="68" fill="#f8fafc" font-size="38" font-weight="700">统一问题，不做产品百科</text>
+  <text x="55" y="108" fill="#94a3b8" font-size="22">Session 历史、持久指令与自动 Memory 必须分栏观察</text>
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <g transform="translate(55 145)">
+      <rect width="265" height="420" rx="22" fill="#172033" stroke="#a78bfa" stroke-width="2"/>
+      <text x="28" y="48" fill="#a78bfa" font-size="26" font-weight="700">LangGraph</text>
+      <text x="28" y="94" fill="#94a3b8" font-size="16">S07 · S08</text>
+      <text x="28" y="137" fill="#e2e8f0" font-size="18">Session：thread state</text>
+      <text x="28" y="174" fill="#e2e8f0" font-size="18">长期：Store / namespace</text>
+      <text x="28" y="211" fill="#e2e8f0" font-size="18">写入：应用逻辑</text>
+      <text x="28" y="248" fill="#e2e8f0" font-size="18">召回：Store search</text>
+      <text x="28" y="298" fill="#fbbf24" font-size="17">Checkpointer ≠ Store</text>
+      <text x="28" y="335" fill="#94a3b8" font-size="16">框架提供接口，策略仍由</text><text x="28" y="361" fill="#94a3b8" font-size="16">应用设计与评估</text>
+    </g>
+    <g transform="translate(340 145)">
+      <rect width="265" height="420" rx="22" fill="#172033" stroke="#60a5fa" stroke-width="2"/>
+      <text x="28" y="48" fill="#60a5fa" font-size="26" font-weight="700">Claude Code</text>
+      <text x="28" y="94" fill="#94a3b8" font-size="16">S09 · S10</text>
+      <text x="28" y="137" fill="#e2e8f0" font-size="18">Session：会话历史</text>
+      <text x="28" y="174" fill="#e2e8f0" font-size="18">人工：CLAUDE.md</text>
+      <text x="28" y="211" fill="#e2e8f0" font-size="18">自动：auto memory</text>
+      <text x="28" y="248" fill="#e2e8f0" font-size="18">表面：普通 Markdown</text>
+      <text x="28" y="298" fill="#fbbf24" font-size="17">Context ≠ 强制配置</text>
+      <text x="28" y="335" fill="#94a3b8" font-size="16">可查看、编辑、删除；</text><text x="28" y="361" fill="#94a3b8" font-size="16">当前阈值属于快变事实</text>
+    </g>
+    <g transform="translate(625 145)">
+      <rect width="265" height="420" rx="22" fill="#172033" stroke="#34d399" stroke-width="2"/>
+      <text x="28" y="48" fill="#34d399" font-size="24" font-weight="700">OpenAI Agents SDK</text>
+      <text x="28" y="94" fill="#94a3b8" font-size="16">S11 · S12</text>
+      <text x="28" y="137" fill="#e2e8f0" font-size="18">Session：消息历史</text>
+      <text x="28" y="174" fill="#e2e8f0" font-size="18">长期：sandbox memory</text>
+      <text x="28" y="211" fill="#e2e8f0" font-size="18">表面：Workspace 文件</text>
+      <text x="28" y="248" fill="#e2e8f0" font-size="18">隔离：Memory layout</text>
+      <text x="28" y="298" fill="#fb7185" font-size="17">长期能力当前为 Beta</text>
+      <text x="28" y="335" fill="#94a3b8" font-size="16">不能把 Beta API 写成</text><text x="28" y="361" fill="#94a3b8" font-size="16">所有 Codex 表面的实现</text>
+    </g>
+    <g transform="translate(910 145)">
+      <rect width="235" height="420" rx="22" fill="#172033" stroke="#f472b6" stroke-width="2"/>
+      <text x="28" y="48" fill="#f472b6" font-size="26" font-weight="700">Codex</text>
+      <text x="28" y="94" fill="#94a3b8" font-size="16">S15</text>
+      <text x="28" y="137" fill="#e2e8f0" font-size="18">公开持久表面</text>
+      <text x="28" y="174" fill="#e2e8f0" font-size="18">AGENTS.md</text>
+      <text x="28" y="211" fill="#e2e8f0" font-size="18">仓库文件 / Git</text>
+      <text x="28" y="248" fill="#e2e8f0" font-size="18">由人和仓库治理</text>
+      <text x="28" y="298" fill="#fbbf24" font-size="17">不推断自动 Memory</text>
+      <text x="28" y="335" fill="#94a3b8" font-size="16">公开指令表面不等于</text><text x="28" y="361" fill="#94a3b8" font-size="16">未公开跨任务学习</text>
+    </g>
+  </g>
+  <rect x="180" y="595" width="840" height="45" rx="22" fill="#111c33"/>
+  <text x="245" y="625" fill="#f8fafc" font-size="19">统一检查：谁写、存在哪、何时加载、如何修正、能否删除、是不是强制边界</text>
+</svg>
