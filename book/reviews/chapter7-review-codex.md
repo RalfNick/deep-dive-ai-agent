@@ -1,7 +1,8 @@
 # 第 7 章 Review：记忆——不是把聊天记录全部塞回去
 
-Review 日期：2026-08-25  
-范围：`book/chapter7.md`、`chapter7/`、7 幅 SVG、14 道练习及答案、来源台账、站点与 CI 接入。  
+Review 日期：2026-08-25
+
+范围：`book/chapter7.md`、`chapter7/`、7 幅 SVG、14 道练习及答案、来源台账、站点与 CI 接入。
 结论：**通过。** 初审发现的 4 项重要问题和 3 项一般问题已经修复；当前没有阻塞发布的 Critical 或 Important 项。
 
 ## 一、读者视角
