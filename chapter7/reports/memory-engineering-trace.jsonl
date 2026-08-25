@@ -1,0 +1,15 @@
+{"case_id":"baseline/no-memory","evidence_codes":["decision:no-context"],"metrics":{"confirm_public_api":false,"language":"JavaScript","task_accepted":false,"unsafe_temporary_rule_used":false}}
+{"case_id":"baseline/full-transcript","evidence_codes":["transcript:item-count:4"],"metrics":{"confirm_public_api":true,"language":"Python","task_accepted":false,"unsafe_temporary_rule_used":true}}
+{"case_id":"baseline/structured-memory","evidence_codes":["recall:hit-count:2"],"metrics":{"confirm_public_api":true,"language":"Python","task_accepted":true,"unsafe_temporary_rule_used":false}}
+{"case_id":"write/write-everything","evidence_codes":["write-gate:bypassed"],"metrics":{"sensitive_write_count":1,"write_precision":0.5,"write_recall":1.0,"written_count":6}}
+{"case_id":"write/policy-gated","evidence_codes":["write:accepted:2"],"metrics":{"sensitive_write_count":0,"write_precision":1.0,"write_recall":0.666667,"written_count":2}}
+{"case_id":"write/policy-plus-review","evidence_codes":["review:approved:1"],"metrics":{"sensitive_write_count":0,"write_precision":1.0,"write_recall":1.0,"written_count":3}}
+{"case_id":"recall/global-scan","evidence_codes":["scope-filter:off","top-k:5"],"metrics":{"cross_scope_leak_count":2,"recall_precision":0.4,"returned_count":5}}
+{"case_id":"recall/scoped-unranked","evidence_codes":["scope-filter:on","ranking:off"],"metrics":{"cross_scope_leak_count":0,"recall_precision":0.5,"returned_count":4}}
+{"case_id":"recall/scoped-ranked","evidence_codes":["scope-filter:on","ranking:on","top-k:2"],"metrics":{"cross_scope_leak_count":0,"recall_precision":1.0,"returned_count":2}}
+{"case_id":"correct/overwrite","evidence_codes":["versions:retained:1"],"metrics":{"audit_chain_complete":false,"correction_converged":true}}
+{"case_id":"correct/versioned","evidence_codes":["versions:retained:2","supersedes:linked"],"metrics":{"audit_chain_complete":true,"correction_converged":true}}
+{"case_id":"correct/stale-writer","evidence_codes":["compare-and-set:expected-record"],"metrics":{"duplicate_active_count":0,"stale_write_rejected":true}}
+{"case_id":"forget/stale-index","evidence_codes":["index:stale","store-resolution:off"],"metrics":{"cross_scope_leak_count":0,"post_delete_leak_count":1}}
+{"case_id":"forget/store-resolved","evidence_codes":["index:stale","store-resolution:on","tombstone:present"],"metrics":{"cross_scope_leak_count":0,"post_delete_leak_count":0}}
+{"case_id":"forget/cross-tenant-probe","evidence_codes":["tenant-filter:before-score"],"metrics":{"cross_scope_leak_count":0,"post_delete_leak_count":0}}

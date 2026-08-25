@@ -1,0 +1,313 @@
+{
+  "experiment_kind": "deterministic_boundary_conformance",
+  "generated_at": "2026-08-25T00:00:00Z",
+  "groups": [
+    {
+      "cases": [
+        {
+          "evidence": [
+            "decision:no-context"
+          ],
+          "metrics": {
+            "confirm_public_api": false,
+            "language": "JavaScript",
+            "task_accepted": false,
+            "unsafe_temporary_rule_used": false
+          },
+          "supported_claims": [
+            "无跨任务信息时固定策略无法恢复偏好与规则"
+          ],
+          "unsupported_claims": [
+            "不代表真实模型质量、生产成功率或厂商能力排名"
+          ],
+          "variant_id": "no-memory"
+        },
+        {
+          "evidence": [
+            "transcript:item-count:4"
+          ],
+          "metrics": {
+            "confirm_public_api": true,
+            "language": "Python",
+            "task_accepted": false,
+            "unsafe_temporary_rule_used": true
+          },
+          "supported_claims": [
+            "完整历史同时携带稳定规则和一次性授权"
+          ],
+          "unsupported_claims": [
+            "不代表真实模型质量、生产成功率或厂商能力排名"
+          ],
+          "variant_id": "full-transcript"
+        },
+        {
+          "evidence": [
+            "recall:hit-count:2"
+          ],
+          "metrics": {
+            "confirm_public_api": true,
+            "language": "Python",
+            "task_accepted": true,
+            "unsafe_temporary_rule_used": false
+          },
+          "supported_claims": [
+            "策略写入与任务召回能排除本夹具的一次性授权"
+          ],
+          "unsupported_claims": [
+            "不代表真实模型质量、生产成功率或厂商能力排名"
+          ],
+          "variant_id": "structured-memory"
+        }
+      ],
+      "group_id": "baseline",
+      "question": "保存更多历史是否等于拥有更好的记忆？"
+    },
+    {
+      "cases": [
+        {
+          "evidence": [
+            "write-gate:bypassed"
+          ],
+          "metrics": {
+            "sensitive_write_count": 1,
+            "write_precision": 0.5,
+            "write_recall": 1.0,
+            "written_count": 6
+          },
+          "supported_claims": [
+            "无闸门写入在固定候选集中保存了 Secret 与一次性内容"
+          ],
+          "unsupported_claims": [
+            "不代表真实模型质量、生产成功率或厂商能力排名"
+          ],
+          "variant_id": "write-everything"
+        },
+        {
+          "evidence": [
+            "write:accepted:2"
+          ],
+          "metrics": {
+            "sensitive_write_count": 0,
+            "write_precision": 1.0,
+            "write_recall": 0.666667,
+            "written_count": 2
+          },
+          "supported_claims": [
+            "确定性闸门在固定候选集中没有写入负样本"
+          ],
+          "unsupported_claims": [
+            "不代表真实模型质量、生产成功率或厂商能力排名"
+          ],
+          "variant_id": "policy-gated"
+        },
+        {
+          "evidence": [
+            "review:approved:1"
+          ],
+          "metrics": {
+            "sensitive_write_count": 0,
+            "write_precision": 1.0,
+            "write_recall": 1.0,
+            "written_count": 3
+          },
+          "supported_claims": [
+            "人工批准补回了固定候选集中的一条有效推断"
+          ],
+          "unsupported_claims": [
+            "不代表真实模型质量、生产成功率或厂商能力排名"
+          ],
+          "variant_id": "policy-plus-review"
+        }
+      ],
+      "group_id": "write",
+      "question": "哪些候选信息值得跨任务保存？"
+    },
+    {
+      "cases": [
+        {
+          "evidence": [
+            "scope-filter:off",
+            "top-k:5"
+          ],
+          "metrics": {
+            "cross_scope_leak_count": 2,
+            "recall_precision": 0.4,
+            "returned_count": 5
+          },
+          "supported_claims": [
+            "全局扫描在固定夹具中产生跨作用域泄漏"
+          ],
+          "unsupported_claims": [
+            "不代表真实模型质量、生产成功率或厂商能力排名"
+          ],
+          "variant_id": "global-scan"
+        },
+        {
+          "evidence": [
+            "scope-filter:on",
+            "ranking:off"
+          ],
+          "metrics": {
+            "cross_scope_leak_count": 0,
+            "recall_precision": 0.5,
+            "returned_count": 4
+          },
+          "supported_claims": [
+            "作用域过滤消除了跨作用域记录但仍保留噪声"
+          ],
+          "unsupported_claims": [
+            "不代表真实模型质量、生产成功率或厂商能力排名"
+          ],
+          "variant_id": "scoped-unranked"
+        },
+        {
+          "evidence": [
+            "scope-filter:on",
+            "ranking:on",
+            "top-k:2"
+          ],
+          "metrics": {
+            "cross_scope_leak_count": 0,
+            "recall_precision": 1.0,
+            "returned_count": 2
+          },
+          "supported_claims": [
+            "硬过滤后排序在固定夹具中只返回两条目标记录"
+          ],
+          "unsupported_claims": [
+            "不代表真实模型质量、生产成功率或厂商能力排名"
+          ],
+          "variant_id": "scoped-ranked"
+        }
+      ],
+      "group_id": "recall",
+      "question": "相似内容是否应该直接进入模型上下文？"
+    },
+    {
+      "cases": [
+        {
+          "evidence": [
+            "versions:retained:1"
+          ],
+          "metrics": {
+            "audit_chain_complete": false,
+            "correction_converged": true
+          },
+          "supported_claims": [
+            "原地覆盖得到新值但丢失旧版本关系"
+          ],
+          "unsupported_claims": [
+            "不代表真实模型质量、生产成功率或厂商能力排名"
+          ],
+          "variant_id": "overwrite"
+        },
+        {
+          "evidence": [
+            "versions:retained:2",
+            "supersedes:linked"
+          ],
+          "metrics": {
+            "audit_chain_complete": true,
+            "correction_converged": true
+          },
+          "supported_claims": [
+            "版本化修正在固定夹具中保留旧值与替代关系"
+          ],
+          "unsupported_claims": [
+            "不代表真实模型质量、生产成功率或厂商能力排名"
+          ],
+          "variant_id": "versioned"
+        },
+        {
+          "evidence": [
+            "compare-and-set:expected-record"
+          ],
+          "metrics": {
+            "duplicate_active_count": 0,
+            "stale_write_rejected": true
+          },
+          "supported_claims": [
+            "预期版本不匹配时陈旧写入被拒绝"
+          ],
+          "unsupported_claims": [
+            "不代表真实模型质量、生产成功率或厂商能力排名"
+          ],
+          "variant_id": "stale-writer"
+        }
+      ],
+      "group_id": "correct",
+      "question": "新偏好与旧记忆冲突时能否解释变化过程？"
+    },
+    {
+      "cases": [
+        {
+          "evidence": [
+            "index:stale",
+            "store-resolution:off"
+          ],
+          "metrics": {
+            "cross_scope_leak_count": 0,
+            "post_delete_leak_count": 1
+          },
+          "supported_claims": [
+            "直接信任陈旧索引会返回已删除记录"
+          ],
+          "unsupported_claims": [
+            "不代表真实模型质量、生产成功率或厂商能力排名"
+          ],
+          "variant_id": "stale-index"
+        },
+        {
+          "evidence": [
+            "index:stale",
+            "store-resolution:on",
+            "tombstone:present"
+          ],
+          "metrics": {
+            "cross_scope_leak_count": 0,
+            "post_delete_leak_count": 0
+          },
+          "supported_claims": [
+            "回到主记录解析使已删除记录在固定夹具中不可召回"
+          ],
+          "unsupported_claims": [
+            "不代表真实模型质量、生产成功率或厂商能力排名"
+          ],
+          "variant_id": "store-resolved"
+        },
+        {
+          "evidence": [
+            "tenant-filter:before-score"
+          ],
+          "metrics": {
+            "cross_scope_leak_count": 0,
+            "post_delete_leak_count": 0
+          },
+          "supported_claims": [
+            "租户过滤在打分前排除了其他租户记录"
+          ],
+          "unsupported_claims": [
+            "不代表真实模型质量、生产成功率或厂商能力排名"
+          ],
+          "variant_id": "cross-tenant-probe"
+        }
+      ],
+      "group_id": "forget",
+      "question": "删除后陈旧索引和其他租户记录会不会重新进入上下文？"
+    }
+  ],
+  "non_claims": [
+    "固定夹具不代表真实模型表现或生产成功率",
+    "serialized_bytes 不是 Token 数",
+    "实验不比较 Claude Code、Codex、LangGraph 或 OpenAI Agents SDK 的整体能力",
+    "内存 Store 与单进程锁不等于分布式事务或合规删除系统"
+  ],
+  "sample_count_per_case": 1,
+  "schema_version": "1.0",
+  "unmeasured": {
+    "model_quality": null,
+    "production_success_rate": null,
+    "provider_latency": null,
+    "token_savings": null
+  }
+}
