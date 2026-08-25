@@ -58,13 +58,14 @@
 | [chapter4.md](./chapter4.md) | 复审稿 | 约 2.7 万中文字符、8 张图、5 组无 API Key 实验、15 道分层练习与 3 道扩展实验；包含过期审批、Receipt 崩溃恢复与单案例边界故障矩阵 |
 | [chapter5.md](./chapter5.md) | 复审修订稿 | 上下文装配、权限与来源身份、冲突消解、预算、注入边界，以及 63 项离线测试 |
 | [chapter6.md](./chapter6.md) | v1.0.1 书稿 | 长任务压缩、Artifact、Checkpoint、Rehydration、恢复与漂移；公共仓库保留 143 项非 PDF 测试 |
-| [chapter7.md](./chapter7.md) | 发布门禁稿 | 约 2.5 万有效中文字符、7 张图、5 组无 API Key 实验、14 道分层练习与 59 项测试 |
+| [chapter7.md](./chapter7.md) | Review 通过稿 | 约 2.5 万有效中文字符、7 张图、5 组无 API Key 实验、14 道分层练习与 64 项测试 |
 | [sources/chapter1-sources.md](./sources/chapter1-sources.md) | 已建立 | 第 1 章资料台账与更新策略 |
 | [sources/chapter2-sources.md](./sources/chapter2-sources.md) | 已建立 | 作者资料页级映射、论文、官方文档、书籍与前沿信息核对台账 |
 | [sources/chapter3-sources.md](./sources/chapter3-sources.md) | 已建立 | Agent 经典论文、OpenAI/Anthropic/LangChain 官方文档与出版前复核清单 |
 | [sources/chapter4-sources.md](./sources/chapter4-sources.md) | 已建立 | Harness、权限、沙箱、检查点、Claude Code 与 Codex 的官方资料台账 |
 | [sources/chapter7-sources.md](./sources/chapter7-sources.md) | 已建立 | Memory 研究、评估与 LangGraph、Claude Code、OpenAI Agents SDK、Codex 官方事实台账 |
 | [reviews/chapter4-review.md](./reviews/chapter4-review.md) | 已完成 | 普通读者与 AI 工程专家双视角问题清单、修订记录和证据边界 |
+| [reviews/chapter7-review-codex.md](./reviews/chapter7-review-codex.md) | 已完成 | 读者、AI Agent 专家、实验与资料时效四视角 Review 及修订证据 |
 | [WRITING_GUIDE.md](./WRITING_GUIDE.md) | 已建立 | 后续章节的篇幅、图表、实验和失败案例标准 |
 
 本目录中的插图均为本书重新绘制的 SVG，便于后续导出 PDF、EPUB 和网页版本；用户提供的旧资料只作为知识线索和结构素材，不直接复用原图或原文。

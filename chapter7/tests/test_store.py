@@ -83,6 +83,25 @@ class MemoryStoreTest(unittest.TestCase):
         store.append(record(expires_at="2026-08-26T00:00:00Z"))
         self.assertIsNone(store.current(NS, "mem-language", now="2026-08-27T00:00:00Z"))
 
+    def test_future_record_is_not_current_before_valid_from(self) -> None:
+        store = MemoryStore()
+        store.append(
+            record(
+                valid_from="2026-09-01T00:00:00Z",
+                created_at="2026-08-25T00:00:00Z",
+            )
+        )
+        self.assertIsNone(
+            store.current(NS, "mem-language", now="2026-08-31T23:59:59Z")
+        )
+        self.assertEqual(
+            record(
+                valid_from="2026-09-01T00:00:00Z",
+                created_at="2026-08-25T00:00:00Z",
+            ),
+            store.current(NS, "mem-language", now="2026-09-01T00:00:00Z"),
+        )
+
     def test_tombstone_hides_all_versions_and_is_idempotent(self) -> None:
         store = MemoryStore()
         store.append(record())

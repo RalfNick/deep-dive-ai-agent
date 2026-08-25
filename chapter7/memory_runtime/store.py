@@ -68,7 +68,7 @@ class MemoryStore:
             return tuple(self._records[record_id] for record_id in ids)
 
     def current(self, namespace: MemoryNamespace, memory_id: str, *, now: str) -> MemoryRecord | None:
-        parse_utc_seconds(now, "invalid_store_time")
+        now_value = parse_utc_seconds(now, "invalid_store_time")
         with self._lock:
             key = self._key(namespace, memory_id)
             if key in self._tombstones:
@@ -77,19 +77,23 @@ class MemoryStore:
             if not chain:
                 return None
             record = self._records[chain[-1]]
-            if record.expires_at is not None and parse_utc_seconds(record.expires_at, "invalid_expires_at") <= parse_utc_seconds(now, "invalid_store_time"):
+            if parse_utc_seconds(record.valid_from, "invalid_valid_from") > now_value:
+                return None
+            if record.expires_at is not None and parse_utc_seconds(record.expires_at, "invalid_expires_at") <= now_value:
                 return None
             return record
 
     def all_current(self, *, now: str) -> tuple[MemoryRecord, ...]:
-        parse_utc_seconds(now, "invalid_store_time")
+        now_value = parse_utc_seconds(now, "invalid_store_time")
         with self._lock:
             records: list[MemoryRecord] = []
             for (namespace_key, memory_id), chain in self._chains.items():
                 if (namespace_key, memory_id) in self._tombstones:
                     continue
                 record = self._records[chain[-1]]
-                if record.expires_at is not None and parse_utc_seconds(record.expires_at, "invalid_expires_at") <= parse_utc_seconds(now, "invalid_store_time"):
+                if parse_utc_seconds(record.valid_from, "invalid_valid_from") > now_value:
+                    continue
+                if record.expires_at is not None and parse_utc_seconds(record.expires_at, "invalid_expires_at") <= now_value:
                     continue
                 records.append(record)
             return tuple(records)
@@ -136,4 +140,3 @@ class MemoryStore:
     def events(self) -> tuple[MemoryRecord | Tombstone, ...]:
         with self._lock:
             return tuple(self._event_order)
-

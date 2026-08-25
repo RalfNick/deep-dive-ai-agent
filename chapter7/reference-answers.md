@@ -28,7 +28,7 @@
 
 - Semantic：`用户级 / preferred_language / Python / user_explicit`。反例是模型仅因用户写过几次 Python 就推断“用户只会 Python”。
 - Episodic：`pricing 项目 / Decimal 归一化失败 / 在 commit 与测试证据下，旧配置是根因`。反例是复制完整终端日志，其中含临时路径、Secret 和已经否定的假设。
-- Procedural：`pricing 项目 / 修改公共 API 前运行兼容性检查并请求评审 / reviewed_rule`。反例是“这一次可以跳过慢测试”，因为它是一次性授权。
+- Procedural：`pricing 项目 / 修改公共 API 前运行兼容性检查并请求评审 / repository_verified`。反例是“这一次可以跳过慢测试”，因为它是一次性授权。
 
 三类名称描述“保存什么”，不是“怎么检索”。Semantic Memory 可以用精确键，Episodic Memory 也可以用向量搜索。
 
@@ -44,7 +44,7 @@
 
 **预期推理**
 
-一种合理设计如下：Namespace 为当前 tenant、user、`pricing` project 和 `coder` agent；类型为 Procedural；Subject 为 `public_api_change_review`；Content 为“修改公共 API 前先向用户确认，并运行兼容性检查”；来源指向用户显式消息或版本化评审规则；Authority 为 `user_explicit` 或 `reviewed_rule`；Sensitivity 为 `internal`；`valid_from` 为确认时间，`expires_at` 为空或绑定规则版本；`version=1`，`supersedes=None`。
+一种合理设计如下：Namespace 为当前 tenant、user、`pricing` project 和 `coder` agent；类型为 Procedural；Subject 为 `public_api_change_review`；Content 为“修改公共 API 前先向用户确认，并运行兼容性检查”；来源指向用户显式消息或版本化评审规则；Authority 为 `user_explicit` 或 `repository_verified`；Sensitivity 为 `internal`；`valid_from` 为确认时间，`expires_at` 为空或绑定规则版本；`version=1`，`supersedes=None`。
 
 若它是团队规则，应优先放进版本化仓库规则文件，Memory Record 只保存 Locator 或审查后的投影。若只是某位用户偏好，Namespace 不应提升到整个组织。
 

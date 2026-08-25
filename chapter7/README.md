@@ -11,7 +11,7 @@
 - Correct：新值形成连续版本，并通过 `supersedes` 指向旧值；
 - Forget：Tombstone 阻止旧版本继续召回，并生成不含正文的删除收据。
 
-它是确定性的教学实现，不包含真实 LLM、Embedding、向量库、分布式事务和合规删除后端。
+它是确定性的教学实现，不包含真实 LLM、Embedding、向量库、分布式事务和合规删除后端；Fixture 直接提供结构化来源与 Authority，不等于生产环境已经认证这些身份。
 
 ## 目录
 

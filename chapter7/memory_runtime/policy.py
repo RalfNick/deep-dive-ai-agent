@@ -51,11 +51,14 @@ class MemoryWritePolicy:
 
         if candidate.authority in {Authority.MODEL_INFERENCE, Authority.USER_INFERRED}:
             return self._decision(candidate, WriteDecisionKind.REVIEW, "inferred_memory_requires_review")
-        if candidate.authority in {Authority.REPOSITORY_VERIFIED, Authority.TOOL_OBSERVED}:
+        if candidate.authority is Authority.TOOL_OBSERVED:
+            return self._decision(candidate, WriteDecisionKind.REVIEW, "observed_memory_requires_review")
+        if candidate.authority is Authority.HUMAN_REVIEWED:
+            return self._decision(candidate, WriteDecisionKind.ALLOW, "human_reviewed_memory")
+        if candidate.authority is Authority.REPOSITORY_VERIFIED:
             return self._decision(candidate, WriteDecisionKind.ALLOW, "verified_cross_task_memory")
         return self._decision(candidate, WriteDecisionKind.ALLOW, "explicit_cross_task_memory")
 
     @staticmethod
     def _decision(candidate: MemoryCandidate, kind: WriteDecisionKind, reason: str) -> WriteDecision:
         return WriteDecision(candidate.candidate_id, kind, reason)
-

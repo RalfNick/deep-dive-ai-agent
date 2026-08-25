@@ -107,6 +107,19 @@ class PublicationChecksTest(unittest.TestCase):
             paths = self._write_bundle(Path(temp_dir), sources=sources)
             self.assertIn("source_record_missing_field:S01:事实使用", publication_errors(*paths, contract=self.contract))
 
+    def test_local_source_evidence_path_must_exist(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            sources = valid_sources().replace(
+                "https://example.com/source-1",
+                "chapter7/missing-evidence.json",
+                1,
+            )
+            paths = self._write_bundle(Path(temp_dir), sources=sources)
+            self.assertIn(
+                "missing_local_source:S01:chapter7/missing-evidence.json",
+                publication_errors(*paths, contract=self.contract),
+            )
+
     def test_safety_scans_reject_absolute_paths_secrets_rankings_and_byte_token_claims(self) -> None:
         unsafe = valid_chapter() + "\nD:\\private\\draft.md\nAPI_KEY=live-secret-value\nCodex 比 Claude Code 更可靠。\n离线报告显示 Token 减少 42%。\n"
         with tempfile.TemporaryDirectory() as temp_dir:

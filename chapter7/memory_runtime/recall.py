@@ -32,6 +32,7 @@ def terms(text: str) -> frozenset[str]:
 
 AUTHORITY_SCORE = {
     Authority.USER_EXPLICIT: 3.0,
+    Authority.HUMAN_REVIEWED: 3.0,
     Authority.REPOSITORY_VERIFIED: 3.0,
     Authority.TOOL_OBSERVED: 2.0,
     Authority.USER_INFERRED: 1.0,
@@ -88,4 +89,3 @@ class MemoryRecall:
         confidence = round(record.confidence, 6)
         total = round(task_match + authority + recency + confidence, 6)
         return ScoreBreakdown(task_match, authority, recency, confidence, total)
-

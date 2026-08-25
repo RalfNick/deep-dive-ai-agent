@@ -133,7 +133,7 @@ def _write_group() -> dict[str, Any]:
         if candidate.candidate_id in gated_ids:
             reviewed_runtime.write(candidate)
         elif candidate in review_candidates:
-            reviewed_runtime.write(replace(candidate, authority=Authority.REPOSITORY_VERIFIED, source_id=candidate.source_id + "#approved"))
+            reviewed_runtime.write(replace(candidate, authority=Authority.HUMAN_REVIEWED, source_id=candidate.source_id + "#approved"))
             reviewed_ids.add(candidate.candidate_id)
 
     return {

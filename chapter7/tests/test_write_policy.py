@@ -89,6 +89,24 @@ class MemoryWritePolicyTest(unittest.TestCase):
         )
         self.assertEqual((decision.kind, decision.reason), (WriteDecisionKind.REVIEW, "inferred_memory_requires_review"))
 
+    def test_unreviewed_tool_observation_requires_review(self) -> None:
+        decision = self.policy.evaluate(
+            candidate(authority=Authority.TOOL_OBSERVED), current=()
+        )
+        self.assertEqual(
+            (decision.kind, decision.reason),
+            (WriteDecisionKind.REVIEW, "observed_memory_requires_review"),
+        )
+
+    def test_human_reviewed_candidate_is_allowed_without_claiming_repository_verification(self) -> None:
+        decision = self.policy.evaluate(
+            candidate(authority=Authority.HUMAN_REVIEWED), current=()
+        )
+        self.assertEqual(
+            (decision.kind, decision.reason),
+            (WriteDecisionKind.ALLOW, "human_reviewed_memory"),
+        )
+
     def test_low_confidence_is_rejected_before_review(self) -> None:
         decision = self.policy.evaluate(
             candidate(authority=Authority.MODEL_INFERENCE, confidence=0.4), current=()

@@ -58,6 +58,7 @@ class MemoryLifetime(str, Enum):
 class Authority(str, Enum):
     USER_EXPLICIT = "user_explicit"
     USER_INFERRED = "user_inferred"
+    HUMAN_REVIEWED = "human_reviewed"
     REPOSITORY_VERIFIED = "repository_verified"
     TOOL_OBSERVED = "tool_observed"
     MODEL_INFERENCE = "model_inference"
@@ -102,7 +103,14 @@ class MemoryNamespace:
 
     @property
     def key(self) -> str:
-        return "/".join((self.tenant_id, self.user_id, self.project_id or "_", self.agent_id))
+        return canonical_json(
+            {
+                "tenant_id": self.tenant_id,
+                "user_id": self.user_id,
+                "project_id": self.project_id,
+                "agent_id": self.agent_id,
+            }
+        )
 
 
 @dataclass(frozen=True)
@@ -251,4 +259,3 @@ class ScoreBreakdown:
 class RecallHit:
     record: MemoryRecord
     score: ScoreBreakdown
-

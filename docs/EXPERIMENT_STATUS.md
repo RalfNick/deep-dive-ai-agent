@@ -12,7 +12,7 @@
 | 第 4 章 | `python -m unittest discover -s chapter4/tests -v` | 24 | 24 通过 | `python -m chapter4.experiments.boundary_matrix_demo` | 固定边界案例，不是样本成功率或 SDK 排名 |
 | 第 5 章 | `python -m unittest discover -s chapter5/tests -v` | 63 | 63 通过 | `python -m chapter5.experiments.run_all --output chapter5/reports/context-experiments.json` | 公共 CI 只运行离线夹具；DeepSeek live probe 与凭据不进入仓库 |
 | 第 6 章 | `python -m unittest discover -s chapter6/tests -v` | 146 | 143 通过 | `python -m chapter6.experiments.run_all --output chapter6/reports` | 原基线中的 4 项 PDF 发布测试随本地 PDF 一并排除；新增 1 项跨平台受保护报告路径测试 |
-| 第 7 章 | `python -m unittest discover -s chapter7/tests -v` | 新增章节 | 59 通过 | `python -m chapter7.experiments.run_all --output chapter7/reports` | 固定 Candidate、时钟与决策策略；验证 Write、Recall、Correct、Forget、隔离和报告合同，不调用真实模型 |
+| 第 7 章 | `python -m unittest discover -s chapter7/tests -v` | 新增章节 | 64 通过 | `python -m chapter7.experiments.run_all --output chapter7/reports` | 固定 Candidate、时钟与决策策略；验证 Write、Recall、Correct、Forget、隔离和报告合同，不调用真实模型 |
 
 第 1、3 章迁移后各多 1 项测试，用于冻结规范报告时间戳。第 6 章排除了 4 项只验证未迁移 PDF 发布物、版本台账和二进制哈希的测试，同时增加 1 项跨平台路径保护回归；Markdown、图表、实验、来源、Claims/Non-claims 与发布门禁仍在公共测试中。
 

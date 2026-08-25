@@ -289,6 +289,8 @@ Candidate 因此必须携带 `source_id`、`authority`、`confidence` 和 `propo
 
 **第三道：来源与权威。** 用户显式声明、经过评审的仓库规则、工具观察和模型推断不是同一等级。低权威推断可以成为 `review`，不应伪装成事实。某条经验即使由工具观察得到，也要附 Workspace 版本和验证结果，否则环境变化后可能失效。
 
+教学 Policy 会把未复核的 `tool_observed` 送入 `review`；批准后标成独立的 `human_reviewed`，而不是冒充 `repository_verified`。后者只表示来源确实是经过治理的仓库规则。Authority 描述证据经过了什么过程，不能只用一个“高可信”标签抹平来源差异。
+
 **第四道：价值与重复。** “谢谢”“好的”“正在读取文件”没有跨任务复用价值。相同 Subject、相同 Content 的重复候选应该成为幂等 no-op，而不是产生几十条近似记录。Collection 规模越大，后续更新、删除和检索越困难。
 
 **第五道：冲突。** 相同 Namespace、类型和 Subject 已存在不同值时，系统不能自动新增第二条 active 记录。它应该进入 `conflict_requires_correction`，由显式 Correct 流程决定替代、并存还是拒绝。
@@ -914,6 +916,7 @@ Trace 不应复制所有 Memory 正文。高敏感记录可以只留不可逆 Di
 7. 不证明固定字节报告能代表 Token、成本、延迟或 Provider Usage；
 8. 不证明一个 Coding Agent Fixture 能代表医疗、金融、客服、多模态或 Multi-Agent 场景；
 9. 不证明 Memory 中的历史经验可以替代当前事实查询、权限审批或 Verifier。
+10. 不证明 Fixture 中的 `source_id` 与 Authority 已完成身份认证；生产系统必须从可信事件元数据派生权威，不能接受 Candidate 自行声明。
 
 ## 本章小结
 
@@ -967,7 +970,7 @@ Memory 不是把聊天记录搬到更大的数据库，而是把跨任务复用�
 [^ch7-openai-session]: OpenAI, [Sessions - OpenAI Agents SDK](https://openai.github.io/openai-agents-python/sessions/)，2026-08-25 核对；资料台账 S12。Session 历史不等于跨任务 Memory。
 [^ch7-openai-agent-memory]: OpenAI, [Agent memory - OpenAI Agents SDK](https://openai.github.io/openai-agents-python/sandbox/memory/)，2026-08-25 核对；资料台账 S11。该能力当前为 Beta，不外推为所有 Codex 表面的内部实现。
 [^ch7-openai-dreaming]: OpenAI, [Dreaming: Better memory for a more helpful ChatGPT](https://openai.com/index/chatgpt-memory-dreaming/)，2026-06-04；资料台账 S13。产品公开评价维度不等于本书 Runtime 的实现规范。
-[^ch7-codex-agents]: OpenAI, [Custom instructions with AGENTS.md](https://developers.openai.com/codex/guides/agents-md/)，2026-08-25 核对；资料台账 S15。`AGENTS.md` 是公开的项目指令表面，不据此推断自动长期 Memory。
+[^ch7-codex-agents]: OpenAI, [Custom instructions with AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md)，2026-08-25 核对；资料台账 S15。`AGENTS.md` 是公开的项目指令表面，不据此推断自动长期 Memory。
 
 **继续阅读**
 

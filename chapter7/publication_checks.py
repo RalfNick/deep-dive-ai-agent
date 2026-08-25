@@ -12,6 +12,7 @@ FIGURE_REF = re.compile(r"!\[[^\]]*\]\((?:\./)?images/(?P<name>fig7-[^)\s]+\.svg
 EXERCISE = re.compile(r"^(?P<number>\d+)\. \*\*[★]+", re.MULTILINE)
 ANSWER = re.compile(r"^## (?P<number>\d+)\.", re.MULTILINE)
 SOURCE_HEADING = re.compile(r"^### \[(?P<id>S\d{2})\] .+$", re.MULTILINE)
+SOURCE_LOCATION = re.compile(r"^- URL / 本地路径：[ \t]*(?P<value>\S.*)$", re.MULTILINE)
 
 
 @dataclass(frozen=True)
@@ -131,6 +132,15 @@ def publication_errors(
         for field in required_fields:
             if not re.search(rf"^- {re.escape(field)}：[ \t]*\S", body, re.MULTILINE):
                 errors.append(f"source_record_missing_field:{source_id}:{field}")
+        location = SOURCE_LOCATION.search(body)
+        if location:
+            for item in re.split(r"[；;]", location.group("value")):
+                relative = item.strip().rstrip("/")
+                if not relative or "://" in relative:
+                    continue
+                repository_root = sources_path.resolve().parents[2]
+                if not (repository_root / relative).exists():
+                    errors.append(f"missing_local_source:{source_id}:{relative}")
 
     if "## Claims：本章证明了什么" not in chapter:
         errors.append("missing_claims_section")

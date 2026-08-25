@@ -1,4 +1,4 @@
-from dataclasses import replace
+from dataclasses import FrozenInstanceError, replace
 import unittest
 
 from chapter7.memory_runtime.contracts import (
@@ -72,8 +72,17 @@ class ContractTest(unittest.TestCase):
             MemoryNamespace("tenant", "user", "project", " ")
 
     def test_namespace_key_is_stable_and_keeps_scope_components(self) -> None:
-        self.assertEqual(namespace().key, "tenant-a/user-1/pricing/coding-agent")
-        self.assertEqual(namespace(project=None).key, "tenant-a/user-1/_/coding-agent")
+        self.assertEqual(
+            namespace().key,
+            '{"agent_id":"coding-agent","project_id":"pricing","tenant_id":"tenant-a","user_id":"user-1"}',
+        )
+        self.assertEqual(
+            namespace(project=None).key,
+            '{"agent_id":"coding-agent","project_id":null,"tenant_id":"tenant-a","user_id":"user-1"}',
+        )
+
+    def test_global_namespace_does_not_collide_with_literal_underscore_project(self) -> None:
+        self.assertNotEqual(namespace(project=None).key, namespace(project="_").key)
 
     def test_candidate_rejects_blank_fields_invalid_confidence_and_bad_time(self) -> None:
         with self.assertRaisesRegex(ValueError, "blank_candidate_content"):
@@ -125,8 +134,9 @@ class ContractTest(unittest.TestCase):
         self.assertIn("user_requested", payload)
 
     def test_records_are_frozen(self) -> None:
-        with self.assertRaises(Exception):
-            replace(record(), memory_id=" ")
+        item = record()
+        with self.assertRaises(FrozenInstanceError):
+            item.memory_id = "mem-replacement"  # type: ignore[misc]
 
 
 if __name__ == "__main__":

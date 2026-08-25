@@ -136,7 +136,7 @@
 
 ### [S15] Custom instructions with AGENTS.md - Codex
 - 类型：OpenAI 官方 Codex 文档，一手资料
-- URL / 本地路径：https://developers.openai.com/codex/guides/agents-md/
+- URL / 本地路径：https://learn.chatgpt.com/docs/agent-configuration/agents-md
 - 事实使用：`AGENTS.md` 是由人和仓库版本控制的持久项目指令表面，Codex 按公开发现规则把它装入任务 Context；用于与自动生成的长期 Memory 划清所有者边界。
 - 明确不声称：不把 `AGENTS.md` 称为 Codex 自动 Memory，不推断 Codex 未公开的跨任务学习机制；发现顺序和限制需出版前复核。
 - 最后核对：2026-08-25
