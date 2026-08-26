@@ -1,6 +1,7 @@
-from pathlib import Path
+import re
 import tempfile
 import unittest
+from pathlib import Path
 
 from chapter7.publication_checks import PublicationContract, publication_errors, strip_fenced_code
 
@@ -146,6 +147,32 @@ class PublicationChecksTest(unittest.TestCase):
         )
         self.assertEqual(errors, ())
 
+    def test_actual_chapter_uses_an_ordered_from_scratch_reader_path(self) -> None:
+        root = Path(__file__).resolve().parents[2]
+        chapter = (root / "book" / "chapter7.md").read_text(encoding="utf-8")
+        version_matches = tuple(
+            re.finditer(r"^### v(?P<version>[0-7])：", chapter, re.MULTILINE)
+        )
+        self.assertEqual(
+            [int(match.group("version")) for match in version_matches],
+            list(range(8)),
+        )
+        for index, match in enumerate(version_matches):
+            end = (
+                version_matches[index + 1].start()
+                if index + 1 < len(version_matches)
+                else chapter.index("## 进阶阅读：Recall")
+            )
+            self.assertIn(
+                "**运行结果：**",
+                chapter[match.start() : end],
+                f"v{index} must show an observable result",
+            )
+        self.assertLess(chapter.index("### v5：Recall"), chapter.index("### v6：Correct"))
+        self.assertLess(chapter.index("### v6：Correct"), chapter.index("### v7：Forget"))
+        self.assertLess(chapter.index("## 本章小结"), chapter.index("## Claims："))
+        self.assertIn("## 进阶阅读：主流实现", chapter)
+        self.assertIn("## 进阶阅读：生产治理", chapter)
 
 if __name__ == "__main__":
     unittest.main()

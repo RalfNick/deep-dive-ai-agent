@@ -39,6 +39,18 @@
 
 **全章短答案是：Memory 是经过策略治理、可被未来独立任务复用的信息，不是对话历史的别名。** 一条信息只有经过作用域、来源、时效、敏感性、冲突和删除策略审查，才可能成为长期 Memory。
 
+为了减少中英文来回切换，后文统一使用下面五个中文说法。英文只在第一次出现或对应代码字段时保留：
+
+| 代码或文档里的词 | 本章优先说法 | 先把它理解成 |
+| --- | --- | --- |
+| Candidate | 候选记忆 | 还没有真正保存的一张建议卡 |
+| Namespace | 作用域 | 这条信息属于谁、哪个项目和哪个 Agent |
+| Authority | 来源权威 | 这条信息是谁说的、经过什么确认 |
+| Current Projection | 当前有效视图 | 此刻允许系统使用的最新版本 |
+| Tombstone | 删除标记 | 明确告诉系统“这条记忆已经停止使用” |
+
+读到代码里的英文名时，把它换回右边的日常问题即可：该不该记、谁能看、现在是否有效、删除后会不会回来。后文仍保留必要英文，是为了让正文能与配套代码一一对应，而不是要求读者先背术语。
+
 ## 先把五个状态表面分开
 
 第 5 章讨论的是一次模型调用前的 Context，第 6 章讨论的是长任务在压缩、重启和恢复之后怎样保持连续。到了第 7 章，任务已经结束，我们才问：这次交互里有没有什么值得未来独立任务复用？
@@ -97,6 +109,8 @@ Memory 通常来自 Agent 与用户、项目或环境的历史交互。问题是
 
 ![图 7-2：从无记忆到受控 Memory Runtime 的七步演进](./images/fig7-2-from-history-to-memory.svg)
 
+下面的代码是同一个实验逐步增加能力时截取的核心片段，后一个版本会沿用前一个版本已经创建的 Fixture 和对象。想独立运行完整流程，可以直接查看并执行 [`chapter7/tests/test_runtime.py`](../chapter7/tests/test_runtime.py)；第一次阅读不必先补齐每个变量的构造。
+
 ### v0：没有 Memory，为什么不是错误
 
 最小 Agent 只处理当前请求：
@@ -107,6 +121,15 @@ def choose_language(current_request: str) -> str:
         return "Python"
     return "JavaScript"
 ~~~
+
+**运行结果：**
+
+~~~text
+当前请求：请给我一个价格修复示例
+选择语言：JavaScript
+~~~
+
+结果并不“笨”，它只是忠实说明：输入里没有昨天那条 Python 偏好。v0 给后续版本提供了一个干净对照。
 
 如果当前请求没提语言，它返回默认值。这不是程序 Bug，而是合同如此：函数只接收当前请求。问题出在产品要求已经变化——用户希望偏好跨任务延续，但系统仍按无状态函数设计。
 
@@ -122,6 +145,15 @@ def choose_language(current_request: str) -> str:
 context = "\n".join(full_transcript)
 decision = scripted_agent(context, current_task)
 ~~~
+
+**运行结果：**
+
+~~~text
+选择语言：Python
+跳过慢速测试：是
+~~~
+
+v1 看起来记住了语言，却也把旧任务的一次性授权带了回来。它解决“看不见历史”，没有解决“历史中的哪一句现在仍然有效”。
 
 现在上下文里同时存在：
 
@@ -184,6 +216,18 @@ class MemoryRecord:
 
 这里有两个 ID。`memory_id` 标识“用户的首选代码语言”这一条逻辑 Memory；`record_id` 标识它的某个不可变版本。偏好从 Python 改成 TypeScript 时，`memory_id` 不变，`record_id` 变成 v2，并通过 `supersedes` 指向 v1。
 
+**运行结果：**
+
+~~~text
+subject    = preferred_language
+content    = 代码示例优先使用 Python
+authority  = user_explicit
+version    = 1
+current    = true
+~~~
+
+现在我们不只保存了一句话，还能回答它属于什么主题、来源是什么、当前是哪一版。下一步才有资格讨论“这张候选卡能不能提交”。
+
 `namespace` 不是一个展示标签，而是隔离边界。本章把 tenant、user、project 和 agent 分开。用户级偏好可以把 project 留空，从而在同一用户的多个项目里复用；项目规则必须绑定项目，不能在另一个仓库被相似度检索出来。
 
 `authority` 和 `confidence` 也不是一回事。用户明确说“记住我偏好 Python”，权威来源清楚，置信度可以是 1；模型根据几次对话推断“用户可能偏好 Python”，即使语言上很确定，仍只是低权威推断。置信度不能把猜测升级成用户声明。
@@ -235,7 +279,7 @@ Procedural Memory 要尤其谨慎。步骤一旦进入未来任务，影响的�
 
 > **到这里先记住：** 一条长期 Memory 至少需要内容、类型、作用域、来源、权威、时间、敏感级别和版本。Profile 是这些记录的可编辑视图，不是另一个不透明真相源。
 
-## Write：记忆写入是一项有副作用的决定
+### v3：Write Gate——先决定该不该记
 
 一旦记录跨任务保存，它就会影响未来回答和行动。错误回答还能在当前会话纠正；错误 Memory 可能在几周后被当作已知事实再次出现。因此，Write 不是“顺手总结一下”，而是一次有持久副作用的提交。
 
@@ -252,9 +296,21 @@ MemoryCandidate(
 )
 ~~~
 
+**运行结果：**
+
+~~~text
+显式长期偏好       -> allow  -> 写入
+本次跳过慢速测试   -> reject -> one_time_content
+模型推断回答风格   -> review -> inferred_memory_requires_review
+包含假凭据的日志   -> reject -> sensitive_content
+重复的 Python 偏好 -> reject -> duplicate_memory
+~~~
+
+同样是自然语言信息，现在已经走向五种不同结果。`allow` 才会进入 Store；`review` 只是等待确认；`reject` 是正常治理结果，不是程序异常。
+
 但模型提出候选，不等于候选应该被执行。这个边界与第 4 章工具调用相同：模型只能提出 `tool_call`，Harness 才能执行真实副作用；在这里，模型只能提出 `MemoryCandidate`，Memory Runtime 才能写 Store。
 
-### 从原始事件到 Candidate，先保留“谁说的”
+#### 从原始事件到候选记忆，先保留“谁说的”
 
 候选提取器最容易犯的错误，是只输出一段归纳后的文字，丢掉来源身份。比较下面两句话：
 
@@ -277,7 +333,7 @@ Candidate 因此必须携带 `source_id`、`authority`、`confidence` 和 `propo
 
 提取质量还要和写入质量分开报告。如果模型漏掉 Candidate，是 extraction recall 问题；如果 Candidate 正确却被 Policy 拒绝，是 policy recall 问题；如果 Policy allow 但 Store 冲突，是提交一致性问题。把三者合成“Memory 写入失败”，团队往往通过放宽所有门槛来补漏，结果同时增加误写。分层指标能让改动只发生在真正出错的位置。
 
-### 五道写入闸门分别拦什么
+#### 五道写入闸门分别拦什么
 
 图 7-3 的读法是从左到右：原始事件产生 Candidate，Candidate 经过五类检查，最后进入 allow、reject 或 review。注意右侧不是二选一；遇到高价值但证据不足的候选，安全状态是等待复核。
 
@@ -343,13 +399,13 @@ Hot path 的优点是新信息马上可用，用户也能立刻看到“保存�
 
 > **实验 7-2 ★★：Write Gate 和人工复核**
 >
-> 查看报告 `write` 组。六个 Candidate 中有三条真实正例：显式语言偏好、经过验证的 API 规则和一条需要人工确认的调试经验。`write-everything` 写入六条，固定集合上的写入精确率为 `0.5`，并写入一条敏感候选；`policy-gated` 只自动提交两条正例；`policy-plus-review` 在人工批准后补回第三条，固定集合上的 write recall 为 `1.0`。
+> 查看报告 `write` 组。先看数量：六个候选里只有三条应该保存。`write-everything` 六条全写，只有三条正确，因此这组固定数据上的写入精确率是 `3/6=0.5`，并且写入了一条敏感候选；`policy-gated` 自动提交两条明确正例；`policy-plus-review` 经人工确认后补回第三条，因此三条正例全部保留，对应本固定集合的 write recall 为 `3/3=1.0`。
 >
 > **本实验支持：** 在标注固定的六条候选里，reject/review 分流能同时观察误写和漏写；人工复核可以补回一条高价值推断。
 >
 > **本实验不支持：** 六条候选不是生产分布，`0.5` 不是通用准确率，也不衡量真实 LLM 提取质量。
 
-## Store：事实历史和当前投影要分开
+### v4：Store——保留历史，同时给出当前值
 
 Write Gate 通过以后，Runtime 要把 Candidate 转成 Record 并提交。这里最容易犯的错误是直接更新一行：
 
@@ -361,7 +417,7 @@ WHERE subject = 'preferred_language';
 
 这个操作能得到当前值，却失去了历史解释。上周某次回答为什么使用 Python？是谁、在什么时候把它改成 TypeScript？如果新值写错，怎样回到上一版？原地覆盖让这些问题只能依赖数据库备份或日志猜测。
 
-### 追加事件是事实，Current Projection 是派生视图
+#### 追加事件是事实，当前有效视图是派生结果
 
 本章的 [`MemoryStore`](../chapter7/memory_runtime/store.py) 保存不可变 Record 和 Tombstone 事件，并维护一个可重建的当前投影。可以把它理解成两层：
 
@@ -369,6 +425,26 @@ WHERE subject = 'preferred_language';
 - Current projection：现在允许 Recall 的最新有效记录。
 
 `versions(namespace, memory_id)` 返回完整版本链；`current(...)` 只返回最新、未删除且未过期的版本。Projection 损坏时可以从事件重建，不能反过来用缓存覆盖事实历史。
+
+配套代码里，v4 的核心调用只有两步：先提交不可变记录，再从当前有效视图读取它。为了让片段保持一屏可读，Candidate 的完整构造沿用 v3。
+
+~~~python
+outcome = runtime.write(candidate)
+current = runtime.store.current(
+    candidate.namespace,
+    outcome.record.memory_id,
+    now="2026-08-26T00:00:00Z",
+)
+~~~
+
+**运行结果：**
+
+~~~text
+store_result = written
+current      = preferred_language / Python / version 1
+~~~
+
+Store 没有把“Python”覆盖进一个可变字段；它追加了 v1，并让当前视图指向 v1。后面修正和删除都只改变当前视图如何解释事件历史。
 
 教学实现还提供 UTF-8 JSONL Event Log。每一行是一个带 `event_type` 的规范 JSON；加载器遇到未知类型、截断 JSON 或不合法版本会显式失败。它不是生产数据库，却能让读者打开文件逐行观察生命周期。
 
@@ -387,10 +463,40 @@ WHERE subject = 'preferred_language';
 逻辑 `memory_id` 由 Namespace、Memory Type 和 Subject 的规范 Digest 派生。这样，同一用户的 `preferred_language` 能稳定定位，不同租户或项目不会因为 Subject 相同碰到一起。
 
 `record_id` 还包含 Candidate ID、内容、来源、时间和版本。它既能保证固定 Fixture 可复现，也避免把“用户偏好 Python”直接写进路径或日志标签。Digest 不是加密：攻击者若知道候选空间，仍可能枚举；因此 Trace 中只放必要标识，访问控制依然不可缺少。
-
 早期 Demo 常用“把中文 Subject 转成 ASCII slug”生成 ID。如果正则只保留 ASCII，两个不同中文 Subject 都可能退化成空串或同一个 fallback，从而发生覆盖。本章不依赖 slug 作为身份，只把可读 Subject 当数据，把规范 Digest 当稳定 ID。可读性由界面提供，不由主键承担。
 
-## Correct：用户改变主意时，旧值怎样退出当前视图
+### v5：Recall——新任务只取该看的两条
+
+第二天，用户提出一个与 Python 和 public API 有关的新任务。他提到 Python 是在描述当前任务，并没有重新声明“以后一直优先使用 Python”；系统仍要回到长期记录确认偏好来源，同时取出当前项目的 API 规则。v4 已经保存记录，但保存不代表每轮都要全部加载。我们先跑通最小召回：作用域不匹配的记录直接淘汰，再从合法候选中选两条。
+
+~~~python
+hits = runtime.recall(
+    RecallQuery(
+        namespace=current_namespace,
+        query="Python public API examples",
+        memory_types=(),
+        top_k=2,
+        now="2026-08-26T00:00:00Z",
+    )
+)
+print([hit.record.subject for hit in hits])
+~~~
+
+**运行结果：**
+
+~~~text
+["public_api", "preferred_language"]
+~~~
+
+这两条分别回答“项目要求什么”和“用户偏好什么”。另一个租户的 Python 偏好、另一个项目的 API 规则以及午饭记录都没有进入结果。此时读者只需记住顺序：
+
+1. 先按作用域、删除状态和有效期判断“有没有资格”；
+2. 再按任务相关性判断“本轮值不值得看”；
+3. 最后把少量结果投影进 Context。
+
+关键词分数、Top-K 和完整 Trace 会在后面的“进阶阅读：Recall”中展开。现在主线已经完成第二天的动作：新任务确实拿到了昨天保存的偏好。
+
+### v6：Correct——用户改变主意时建立新版本
 
 用户后来明确说：
 
@@ -400,9 +506,29 @@ WHERE subject = 'preferred_language';
 
 ![图 7-4：MemoryRecord 的版本化修正与删除生命周期](./images/fig7-4-record-lifecycle.svg)
 
+配套测试不会直接执行 `UPDATE`，而是要求调用者说明自己看见了哪个旧版本：
+
+~~~python
+replacement = runtime.correct(
+    typescript_candidate,
+    expected_record_id=python_v1.record_id,
+    approved=True,
+)
+~~~
+
+**运行结果：**
+
+~~~text
+content    = 代码示例优先使用 TypeScript
+version    = 2
+supersedes = <Python v1 的 record_id>
+~~~
+
+Python v1 仍在历史里解释过去，当前有效视图只返回 TypeScript v2。若另一个 Writer 仍基于 v1 提交 Go，结果不是覆盖 v2，而是 `stale_expected_record`。
+
 图 7-4 中，v1 和 v2 共享 `memory_id`，但 `record_id` 不同。v2 的 `supersedes` 指向 v1。Current Projection 只暴露 v2；v1 保留在 Event History 中，用于解释过去而不是参与当前排序。删除发生后，v3 Tombstone 让整个逻辑 Memory 不再召回。
 
-### 修正要比较预期版本，不能只按 Subject 更新
+#### 修正要比较预期版本，不能只按主题更新
 
 假设两个设备都读到 Python v1。设备 A 把它改成 TypeScript v2；设备 B 稍后把它改成 Go，也声称自己在修正 v1。如果 Store 只按 Subject 更新，B 会静默覆盖 A。
 
@@ -428,13 +554,35 @@ OpenAI 2026 年公开的 ChatGPT Memory 说明把“保留有用 Context、遵�
 >
 > **本实验不支持：** 不证明跨进程、跨地域或数据库故障下的线性一致性，也不证明所有冲突都应使用单值替代。
 
-## Forget：不再召回和物理清除是两个阶段
+### v7：Forget——先让旧值立即停止召回
 
 用户说“忘掉我的代码语言偏好”时，最直接的实现是从当前列表删除一行。可向量索引、缓存、摘要、事件日志、备份和派生 Profile 可能仍有副本。下一次检索若直接信任陈旧索引，旧内容又会出现。
 
 本章先实现逻辑遗忘：为同一 `memory_id` 追加 Tombstone。Recall 从索引拿到候选 ID 后，必须回到主 Store 解析当前状态；遇到 Tombstone 就丢弃。删除收据包含被删除的 record IDs、时间、原因和内容 Digest，但不复制正文。
 
-### Tombstone 解决什么，又没有解决什么
+最小删除调用也保持可见。它不返回 Memory 正文，只返回可审计的删除收据：
+
+~~~python
+receipt = runtime.forget(
+    namespace=current_namespace,
+    memory_id=typescript_v2.memory_id,
+    deleted_at="2026-09-02T00:00:00Z",
+    source_id="conversation-010#message-1",
+    reason="user_requested",
+)
+hits = runtime.recall(query)
+~~~
+
+**运行结果：**
+
+~~~text
+receipt.reason = user_requested
+recall_hits    = []
+~~~
+
+到这里，贯穿案例已经完整走完：v3 决定写不写，v4 保存 v1，v5 在新任务召回，v6 修正成 v2，v7 用删除标记阻止未来召回。后面讨论的索引、备份和清理 Job，都是在这条最小生命周期之上增加的生产责任。
+
+#### 删除标记解决什么，又没有解决什么
 
 Tombstone 解决三件事：
 
@@ -477,7 +625,7 @@ JSONL 教学 Store 无法提供数据库事务，但测试仍能冻结语义合�
 
 还要区分“用户删除了值”和“系统删除了证据”。用户删除偏好后，在线系统应停止个性化；但为了防止陈旧 Writer 复活，可能仍需保留不可逆的 Memory ID、Tombstone generation 和删除时间。这里保留的是最小控制元数据，不是可恢复的偏好正文。是否允许、保留多久由产品政策和适用法规决定，本章只给出技术分层，不替代法律判断。
 
-## Recall：存着不等于本轮应该看见
+## 进阶阅读：Recall 为什么必须先过滤再排序
 
 Write 决定未来可能复用什么，Recall 决定当前任务实际看见什么。两者的错误方向不同：Writer 太宽会长期污染，Recall 太宽会把无关或越权内容带进 Context；Writer 太严会丢失有价值经验，Recall 太严会让已保存信息形同虚设。
 
@@ -718,7 +866,7 @@ Memory 的语义合同确定后，才轮到存储技术。教学阶段常见的�
 
 单用户本地 Coding Agent 可以采用更轻的方案：版本控制内的人类规则文件，加一个用户可见、可编辑的主题 Memory 目录，再配短索引和删除测试。不要因为没有分布式数据库就放弃作用域、来源和版本；也不要因为企业架构听起来完整，就在个人工具上引入无法维护的队列与索引。复杂度应跟数据规模、风险和并发一起增长。
 
-## 主流实现：用同一组问题做责任映射
+## 进阶阅读：主流实现怎样分配 Memory 责任
 
 产品和框架术语经常都叫 Memory，但公开责任不同。与其记 API 名，不如对每个系统问六个问题：
 
@@ -810,7 +958,7 @@ Memory 也不一定要自动。许多高价值场景可以先使用“建议保�
 
 决策时还可估算错误方向。没有 Memory 的代价通常是重复询问和个性化不足；错误 Memory 的代价可能是越权、歧视性推断、错误操作或隐私事故。如果后一类代价明显更高，就先采用用户可见、人工确认、窄 Scope 和短 TTL。自动化不是成熟度的唯一标志，能清楚地不记、少记和请求确认同样重要。
 
-## 生产治理：安全、隐私、成本和可观测性
+## 进阶阅读：生产治理中的安全、隐私、成本和可观测性
 
 教学 Runtime 让边界可见，生产系统还要把这些边界变成可运营能力。
 
@@ -889,6 +1037,14 @@ Trace 不应复制所有 Memory 正文。高敏感记录可以只留不可逆 Di
 
 当准备把代码用于自己的项目时，先替换 Namespace 与 Subject Schema，而不是先换数据库。列出你的租户、用户、项目和 Agent 隔离维度；列出哪些 Subject 单值、哪些多值；定义显式来源与推断来源；给每类信息设置默认生命周期和敏感级别。只有这些合同稳定后，才选择 SQL、向量索引、文件或框架 Store。否则新存储只是更快地保存未定义状态。
 
+## 本章小结
+
+如果只沿 v0–v7 主线阅读，本章实际完成了一件事：把“希望 Agent 记住 Python 偏好”从一句模糊愿望，变成一条可以写入、召回、修正和删除的记录。v0 证明无状态函数没有做错；v1 证明完整历史并不会自动理解生命周期；v2–v4 建立候选、写入闸门和版本化 Store；v5–v7 让新任务只召回合法记录，并处理改变主意和删除。
+
+最值得记住的不是字段名，而是四个日常问题：谁让系统记住这件事？为什么本轮能看见它？新证据怎样替换旧值？用户要求遗忘后，什么机制阻止它回来？如果答案仍然只是“模型应该能理解”，系统就还没有真正实现可靠 Memory。
+
+第一次阅读到这里已经足够。下面的 Claims / Non-claims 是实验审计边界，适合需要复现实验或评审技术结论的读者；后面的四天状态重放、练习和第 8 章衔接，可以用来检查自己是否真正掌握。
+
 ## Claims：本章证明了什么
 
 在本仓库固定 Candidate、固定记录、固定时钟、固定决策策略和 `sample_count_per_case=1` 的范围内，本章实验支持以下结论：
@@ -918,7 +1074,7 @@ Trace 不应复制所有 Memory 正文。高敏感记录可以只留不可逆 Di
 9. 不证明 Memory 中的历史经验可以替代当前事实查询、权限审批或 Verifier。
 10. 不证明 Fixture 中的 `source_id` 与 Authority 已完成身份认证；生产系统必须从可信事件元数据派生权威，不能接受 Candidate 自行声明。
 
-## 本章小结
+## 回到贯穿案例：把四天状态重放一遍
 
 Memory 不是把聊天记录搬到更大的数据库，而是把跨任务复用变成一套可治理协议。Write 决定哪些候选能成为长期记录；Store 保存不可变版本与删除事件；Recall 先做作用域和状态硬过滤，再做相关性排序；Correct 用版本关系处理变化；Forget 让已删除记录立即退出当前投影，并启动派生清理。
 

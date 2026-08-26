@@ -11,7 +11,7 @@
 | target | source | commit | bytes | sha256 |
 | --- | --- | --- | ---: | --- |
 | `book/OUTLINE.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 6755 | `d2056e9f2798a46c8103effbccd74fefa6162213d05990d1030378a5e9541dda` |
-| `book/README.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 5753 | `e9eecb18c1306792cc59a2bccf65f19b8ad29afc7e6b08f61e84dcce4f5c52c3` |
+| `book/README.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 5753 | `78748dcb8b792cd5b5e276114661c0569d1c536e57f99b9acc6205de7822b34e` |
 | `book/WRITING_GUIDE.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 4158 | `99fd64fbb7dbce142e309e266dafa2cafad65aca0514f0b17b45727db4c27b1b` |
 | `book/chapter1.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 83701 | `4bdc360ff2ebd91ea59cdd15301db0babfc619af7c54e7a10b8b53b8a7606982` |
 | `book/chapter2.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 73609 | `f6d7686dae9b0a664df31fd8f3ccdf5149def69c963c282bfc72dc6d9bed25f2` |
