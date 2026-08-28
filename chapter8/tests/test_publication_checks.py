@@ -1,3 +1,4 @@
+import re
 import tempfile
 import unittest
 from pathlib import Path
@@ -123,6 +124,31 @@ class PublicationChecksTest(unittest.TestCase):
         stripped = strip_fenced_code(text)
         self.assertIn("\u6b63\u6587\u4e2d\u6587", stripped)
         self.assertNotIn("\u56f4\u680f\u4e2d\u7684\u4e2d\u6587", stripped)
+
+    def test_actual_chapter_bundle_passes_publication_contract(self) -> None:
+        root = Path(__file__).resolve().parents[2]
+        errors = publication_errors(
+            root / "book" / "chapter8.md",
+            root / "chapter8" / "reference-answers.md",
+            root / "book" / "sources" / "chapter8-sources.md",
+            root / "book" / "images",
+        )
+        self.assertEqual(errors, ())
+
+    def test_actual_chapter_uses_ordered_v0_to_v7_reader_path(self) -> None:
+        root = Path(__file__).resolve().parents[2]
+        chapter = (root / "book" / "chapter8.md").read_text(encoding="utf-8")
+        matches = tuple(re.finditer(r"^### v(?P<version>[0-7])\uff1a", chapter, re.MULTILINE))
+        self.assertEqual([int(match.group("version")) for match in matches], list(range(8)))
+        for index, match in enumerate(matches):
+            end = matches[index + 1].start() if index + 1 < len(matches) else chapter.index("## \u8fdb\u9636\u9605\u8bfb")
+            self.assertIn("**\u8fd0\u884c\u7ed3\u679c\uff1a**", chapter[match.start():end])
+        self.assertLess(chapter.index("### v4\uff1a"), chapter.index("### v5\uff1a"))
+        self.assertLess(chapter.index("### v5\uff1a"), chapter.index("### v6\uff1a"))
+        self.assertLess(chapter.index("### v6\uff1a"), chapter.index("### v7\uff1a"))
+        self.assertIn("## \u8fdb\u9636\u9605\u8bfb\uff1a\u4e3b\u6d41\u6846\u67b6\u5982\u4f55\u6620\u5c04\u8fd9\u6761\u7ba1\u9053", chapter)
+        self.assertIn("## \u8fdb\u9636\u9605\u8bfb\uff1a\u751f\u4ea7\u77e5\u8bc6\u5e93\u7684\u6cbb\u7406\u8fb9\u754c", chapter)
+        self.assertLess(chapter.index("## \u672c\u7ae0\u5c0f\u7ed3"), chapter.index("## Claims\uff1a"))
 
 
 if __name__ == "__main__":
