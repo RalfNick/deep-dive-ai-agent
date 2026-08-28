@@ -10,8 +10,8 @@
 
 | target | source | commit | bytes | sha256 |
 | --- | --- | --- | ---: | --- |
-| `book/OUTLINE.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 6755 | `d2056e9f2798a46c8103effbccd74fefa6162213d05990d1030378a5e9541dda` |
-| `book/README.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 5753 | `78748dcb8b792cd5b5e276114661c0569d1c536e57f99b9acc6205de7822b34e` |
+| `book/OUTLINE.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 6929 | `c46a818b2f563230e28b519e9eb7432d23b40c345a417b79f59bd87e16e2f298` |
+| `book/README.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 6377 | `f8789134238d857383de3f2ebd4a0f8a8b8d0f46737b5901cb130dda14f0451d` |
 | `book/WRITING_GUIDE.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 4158 | `99fd64fbb7dbce142e309e266dafa2cafad65aca0514f0b17b45727db4c27b1b` |
 | `book/chapter1.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 83701 | `4bdc360ff2ebd91ea59cdd15301db0babfc619af7c54e7a10b8b53b8a7606982` |
 | `book/chapter2.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 73609 | `f6d7686dae9b0a664df31fd8f3ccdf5149def69c963c282bfc72dc6d9bed25f2` |
@@ -236,6 +236,7 @@
 | `docs/author-sources/codex-tutorial/assets/from-ai-coding-to-digital-employee-agent-system-boundary.png` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 488562 | `d40fdf444897d54b3cabab5aa29e79915888ab62dc2b3d2dc4e64dc1d8ffc81d` |
 | `docs/author-sources/codex-tutorial/assets/from-ai-coding-to-digital-employee-ai-work-evolution.png` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 458338 | `44bc3863b938f82b26d2fc9713bd86928b1ea68aa4d5dd2bf1d42a2522fcfc3e` |
 | `docs/author-sources/codex-tutorial/assets/from-ai-coding-to-digital-employee-book-18-chapter-map.png` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 772092 | `44b8f3353cd2982af7ba732a9ce7a33e34a5f9349f393240bf7796b006d45e7c` |
+| `docs/author-sources/phase-2/chapter8-rag-reading-notes.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 2024 | `60aa3d1d2e37886bfee7aad9782659c8eb4539b925e579daa76a009b51745f86` |
 | `docs/author-sources/phase-4/03-agent-memory-system.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 27315 | `9f542c20258165268dfdb749df4568586d35f82f0d93a99e63a331d23889de55` |
 | `docs/author-sources/phase-4/05-agent-runtime-integration.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 15819 | `ee2dace629f08a1e31c356f33650ec73a27cf4ecddc660897989e3cd0bfbe893` |
 | `docs/author-sources/phase-4/diagram/agent-memory/memory-boundary-map.svg` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 4540 | `8edcb1967b1a3567a34482e7a6332ce8a4e1040aaa3ae79c0e3f8dd8621c7ec0` |

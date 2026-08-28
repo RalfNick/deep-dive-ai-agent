@@ -1132,4 +1132,4 @@ Memory 不是把聊天记录搬到更大的数据库，而是把跨任务复用�
 
 - [运行第 7 章配套实验](../chapter7/README.md)
 - [查看第 7 章参考答案](../chapter7/reference-answers.md)
-- [下一章规划：RAG 与知识库](./OUTLINE.md)
+- [继续第 8 章：RAG 与知识库——让 Agent 先查证，再回答](./chapter8.md)

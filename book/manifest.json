@@ -3,8 +3,8 @@
   "title": "深入浅出 AI Agent",
   "subtitle": "从大模型原理到手写 Coding Agent",
   "description": "从模型、上下文和工具出发，逐步搭建可运行、可验证、可持续改进的 AI Agent 工程体系。",
-  "version": "0.7.0",
-  "updated": "2026-08-25",
+  "version": "0.8.0",
+  "updated": "2026-08-28",
   "cover": "images/deep-dive-ai-agent-cover.webp",
   "repositoryUrl": "https://github.com/RalfNick/deep-dive-ai-agent",
   "totalChapters": 18,
@@ -109,9 +109,13 @@
         {
           "order": 8,
           "slug": "chapter-8",
-          "title": "RAG 与知识库：给 Agent 可更新的外部知识",
-          "status": "planned",
-          "summary": "覆盖混合检索、重排、引用、评估，以及 RAG 与记忆的边界。"
+          "title": "RAG 与知识库：让 Agent 先查证，再回答",
+          "status": "published",
+          "summary": "以 18 篇受版本、权限和时效约束的知识文档，完成切块、混合召回、重排、证据、引用、拒答和分层评估。",
+          "source": "chapter8.md",
+          "experiment": "../chapter8/README.md",
+          "answers": "../chapter8/reference-answers.md",
+          "updated": "2026-08-28"
         }
       ]
     },

@@ -10,7 +10,7 @@ LINK_RE = re.compile(r"\[[^\]]+\]\((?P<target>[^)]+)\)")
 class ExperimentInventoryTests(unittest.TestCase):
     def test_each_chapter_has_reader_contract_files(self) -> None:
         missing = []
-        for number in range(1, 8):
+        for number in range(1, 9):
             chapter = ROOT / f"chapter{number}"
             for name in ("README.md", "requirements.txt", "reference-answers.md"):
                 if not (chapter / name).is_file():
@@ -19,7 +19,7 @@ class ExperimentInventoryTests(unittest.TestCase):
 
     def test_experiment_tree_has_no_private_or_generated_artifacts(self) -> None:
         forbidden = []
-        for number in range(1, 8):
+        for number in range(1, 9):
             chapter = ROOT / f"chapter{number}"
             if not chapter.exists():
                 continue
@@ -33,7 +33,7 @@ class ExperimentInventoryTests(unittest.TestCase):
 
     def test_chapter_readme_local_links_resolve(self) -> None:
         broken = []
-        for number in range(1, 8):
+        for number in range(1, 9):
             readme = ROOT / f"chapter{number}" / "README.md"
             if not readme.is_file():
                 continue

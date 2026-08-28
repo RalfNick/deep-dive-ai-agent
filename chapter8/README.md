@@ -86,4 +86,4 @@ python -m chapter8.experiments.run_all --output chapter8/reports
 4. 沿 `retrieve.py` 跟踪一次 Query 的分项和 Return Gate；
 5. 最后读 `evidence.py` 与 `evaluation.py`，区分命中、引用和支持。
 
-正文见 `book/chapter8.md`，来源边界见 `book/sources/chapter8-sources.md`。
+[返回第 8 章正文](../book/chapter8.md)，并可继续查看[来源与非声明边界](../book/sources/chapter8-sources.md)和[14 道练习参考答案](./reference-answers.md)。

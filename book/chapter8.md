@@ -1682,3 +1682,9 @@ RAG 的一句话定义是：先从外部知识源取回证据，再让模型基�
 RAG 让 Agent 获得可更新的外部知识，但它主要是“读”。当用户问“当前计划规则是什么”，文档证据适合 RAG；当用户说“把我们的计划升级到 Enterprise”，系统必须调用真实业务 Tool，并处理权限、审批、幂等、超时和回执。
 
 下一章会从这个边界出发：模型输出的 Tool Call 只是提议，不等于副作用已经发生。我们将手写工具协议，再引入 MCP，比较 Function Calling、MCP、Skills 与插件怎样连接 Agent 和外部世界。第 8 章的 Evidence Packet 会成为工具决策的输入，但不会越权成为执行授权。
+
+**继续阅读**
+
+- [运行第 8 章配套实验](../chapter8/README.md)
+- [查看第 8 章参考答案](../chapter8/reference-answers.md)
+- [查看第 9 章“工具调用与 MCP”规划](./OUTLINE.md)
