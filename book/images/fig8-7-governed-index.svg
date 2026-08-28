@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">受治理知识索引的双重边界</title>
+  <desc id="desc">索引前按状态、版本、时效、角色过滤，返回前再用当前目录状态复核。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071426"/><stop offset="1" stop-color="#111827"/></linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#60a5fa"/></marker>
+  </defs>
+  <rect width="1200" height="675" rx="28" fill="url(#bg)"/>
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <text x="56" y="65" fill="#f8fafc" font-size="36" font-weight="700">索引可能过期，事实目录必须仍然在线</text>
+    <rect x="55" y="150" width="250" height="350" rx="24" fill="#111c33" stroke="#60a5fa" stroke-width="2"/>
+    <text x="95" y="205" fill="#60a5fa" font-size="28" font-weight="700">Source Catalog</text>
+    <text x="90" y="260" fill="#cbd5e1" font-size="20">status / version</text><text x="90" y="302" fill="#cbd5e1" font-size="20">valid_from / valid_to</text><text x="90" y="344" fill="#cbd5e1" font-size="20">visibility / roles</text><text x="90" y="386" fill="#cbd5e1" font-size="20">digest / withdrawal</text>
+    <path d="M305 325 H390" stroke="#60a5fa" stroke-width="3" marker-end="url(#arrow)"/>
+    <rect x="400" y="185" width="260" height="280" rx="24" fill="#0f3b46" stroke="#22d3ee" stroke-width="2"/>
+    <text x="445" y="240" fill="#22d3ee" font-size="28" font-weight="700">Search Index</text>
+    <text x="445" y="295" fill="#cbd5e1" font-size="20">BM25 postings</text><text x="445" y="337" fill="#cbd5e1" font-size="20">semantic vectors</text><text x="445" y="379" fill="#cbd5e1" font-size="20">可能落后于目录</text>
+    <path d="M660 325 H745" stroke="#60a5fa" stroke-width="3" marker-end="url(#arrow)"/>
+    <rect x="755" y="150" width="390" height="350" rx="24" fill="#10283a" stroke="#34d399" stroke-width="2"/>
+    <text x="805" y="205" fill="#34d399" font-size="28" font-weight="700">Return Gate</text>
+    <text x="805" y="260" fill="#e2e8f0" font-size="21">1. 重新读取当前目录记录</text><text x="805" y="305" fill="#e2e8f0" font-size="21">2. 校验摘要、状态与权限</text><text x="805" y="350" fill="#e2e8f0" font-size="21">3. 丢弃已撤回的旧候选</text><text x="805" y="395" fill="#e2e8f0" font-size="21">4. 只把合法证据交给生成</text>
+    <path d="M180 520 V565 H950 V505" fill="none" stroke="#fbbf24" stroke-width="3" marker-end="url(#arrow)"/>
+    <text x="56" y="625" fill="#94a3b8" font-size="20">来源：S11、S15｜相关性排序不能替代授权与新鲜度判断</text>
+  </g>
+</svg>

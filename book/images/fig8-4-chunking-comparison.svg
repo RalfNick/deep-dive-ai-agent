@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">三种切块策略的边界比较</title>
+  <desc id="desc">比较固定字符、结构感知和带上下文前缀的切块方式。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071426"/><stop offset="1" stop-color="#111827"/></linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#60a5fa"/></marker>
+  </defs>
+  <rect width="1200" height="675" rx="28" fill="url(#bg)"/>
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <text x="56" y="65" fill="#f8fafc" font-size="36" font-weight="700">切块不是切得越小越好，而是让证据保持完整</text>
+    <rect x="55" y="135" width="340" height="400" rx="24" fill="#111c33" stroke="#f97316" stroke-width="2"/>
+    <text x="85" y="190" fill="#fb923c" font-size="28" font-weight="700">固定字符</text>
+    <text x="85" y="240" fill="#e2e8f0" font-size="21">优点：简单、确定</text><text x="85" y="282" fill="#e2e8f0" font-size="21">风险：切断表格与条件</text>
+    <rect x="85" y="335" width="260" height="55" rx="12" fill="#431407"/><text x="110" y="370" fill="#fed7aa" font-size="20">90 字符 + 15 重叠</text>
+    <rect x="430" y="135" width="340" height="400" rx="24" fill="#111c33" stroke="#34d399" stroke-width="2"/>
+    <text x="460" y="190" fill="#34d399" font-size="28" font-weight="700">结构感知</text>
+    <text x="460" y="240" fill="#e2e8f0" font-size="21">按标题、段落、表格切</text><text x="460" y="282" fill="#e2e8f0" font-size="21">保留章节与证据边界</text>
+    <rect x="460" y="335" width="260" height="55" rx="12" fill="#064e3b"/><text x="505" y="370" fill="#d1fae5" font-size="20">4 个完整结构块</text>
+    <rect x="805" y="135" width="340" height="400" rx="24" fill="#111c33" stroke="#60a5fa" stroke-width="2"/>
+    <text x="835" y="190" fill="#60a5fa" font-size="28" font-weight="700">上下文前缀</text>
+    <text x="835" y="240" fill="#e2e8f0" font-size="21">补充文档、版本、章节</text><text x="835" y="282" fill="#e2e8f0" font-size="21">不改写原始证据内容</text>
+    <rect x="835" y="335" width="260" height="55" rx="12" fill="#172554"/><text x="875" y="370" fill="#dbeafe" font-size="20">4 个前缀，摘要不变</text>
+    <text x="56" y="610" fill="#94a3b8" font-size="20">来源：S08、S15｜字符数不是 Token，固定夹具不证明通用最优块大小</text>
+  </g>
+</svg>

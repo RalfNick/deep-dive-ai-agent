@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">从知识目录到最终证据的检索漏斗</title>
+  <desc id="desc">展示固定治理案例中过滤、召回、重排和证据选择的数量与指标。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071426"/><stop offset="1" stop-color="#111827"/></linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#60a5fa"/></marker>
+  </defs>
+  <rect width="1200" height="675" rx="28" fill="url(#bg)"/>
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <text x="56" y="65" fill="#f8fafc" font-size="36" font-weight="700">先缩小合法空间，再在合法空间里相关性排序</text>
+    <polygon points="120,145 1080,145 950,260 250,260" fill="#172554" stroke="#60a5fa" stroke-width="2"/>
+    <text x="600" y="210" text-anchor="middle" fill="#dbeafe" font-size="25">18 篇知识文档进入 Catalog</text>
+    <polygon points="250,285 950,285 835,400 365,400" fill="#0f3b46" stroke="#22d3ee" stroke-width="2"/>
+    <text x="600" y="350" text-anchor="middle" fill="#cffafe" font-size="25">9 篇在评分前被过滤</text>
+    <polygon points="365,425 835,425 735,540 465,540" fill="#064e3b" stroke="#34d399" stroke-width="2"/>
+    <text x="600" y="492" text-anchor="middle" fill="#d1fae5" font-size="25">3 个最终 Chunk</text>
+    <rect x="820" y="445" width="285" height="95" rx="18" fill="#111c33" stroke="#334155"/>
+    <text x="850" y="485" fill="#f8fafc" font-size="22">MRR 1.00</text><text x="850" y="520" fill="#f8fafc" font-size="22">Recall@3 0.67</text>
+    <text x="56" y="615" fill="#94a3b8" font-size="20">来源：S15｜案例 governance-compound-upgrade，sample_count = 1</text>
+  </g>
+</svg>

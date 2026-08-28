@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">本章 v0 到 v7 的递进路线</title>
+  <desc id="desc">从无证据猜测逐步加入目录、切块、检索、治理和证据协议。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071426"/><stop offset="1" stop-color="#111827"/></linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#60a5fa"/></marker>
+  </defs>
+  <rect width="1200" height="675" rx="28" fill="url(#bg)"/>
+  <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
+    <text x="56" y="65" fill="#f8fafc" font-size="36" font-weight="700">每次只加一层能力，观察失败怎样变化</text>
+    <path d="M95 325 H1100" stroke="#334155" stroke-width="8"/>
+    <g fill="#111c33" stroke-width="3">
+      <circle cx="105" cy="325" r="48" stroke="#ef4444"/><circle cx="245" cy="325" r="48" stroke="#f97316"/>
+      <circle cx="385" cy="325" r="48" stroke="#fbbf24"/><circle cx="525" cy="325" r="48" stroke="#a3e635"/>
+      <circle cx="665" cy="325" r="48" stroke="#34d399"/><circle cx="805" cy="325" r="48" stroke="#22d3ee"/>
+      <circle cx="945" cy="325" r="48" stroke="#60a5fa"/><circle cx="1085" cy="325" r="48" stroke="#a78bfa"/>
+    </g>
+    <g fill="#f8fafc" font-size="24" font-weight="700" text-anchor="middle">
+      <text x="105" y="333">v0</text><text x="245" y="333">v1</text><text x="385" y="333">v2</text><text x="525" y="333">v3</text>
+      <text x="665" y="333">v4</text><text x="805" y="333">v5</text><text x="945" y="333">v6</text><text x="1085" y="333">v7</text>
+    </g>
+    <g fill="#cbd5e1" font-size="20" text-anchor="middle">
+      <text x="105" y="420">直接猜</text><text x="245" y="235">全量塞入</text><text x="385" y="420">固定切块</text><text x="525" y="235">结构切块</text>
+      <text x="665" y="420">混合检索</text><text x="805" y="235">融合重排</text><text x="945" y="420">目录治理</text><text x="1085" y="235">证据协议</text>
+    </g>
+    <text x="56" y="600" fill="#94a3b8" font-size="20">来源：S15｜递进路线用于定位边界，不构成真实模型能力曲线</text>
+  </g>
+</svg>
