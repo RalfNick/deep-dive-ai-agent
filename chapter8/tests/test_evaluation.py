@@ -26,6 +26,10 @@ class EvaluationTests(unittest.TestCase):
         self.assertIsNone(mean_reciprocal_rank(("a",), set()))
         self.assertIsNone(ndcg_at_k(("a",), set(), 1))
 
+    def test_precision_at_k_uses_k_as_the_denominator_even_with_fewer_results(self) -> None:
+        self.assertAlmostEqual(1 / 3, precision_at_k(("a", "noise"), {"a"}, 3))
+        self.assertEqual(0.0, precision_at_k((), {"a"}, 3))
+
     def test_wrong_citation_counts_as_neither_precise_nor_recalled(self) -> None:
         expected = {"claim-sso": {"C1"}, "claim-members": {"C2"}}
         actual = {"claim-sso": {"C1"}, "claim-members": {"C3"}}

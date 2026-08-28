@@ -2,20 +2,25 @@
 
 核对日期：2026-08-28
 初审基线：`3e3da5f`（`docs: write chapter 8 rag and knowledge base`）
+复审基线：`19569c5`（`build: publish chapter 8 in the book site`）
 审阅范围：`book/chapter8.md`、`chapter8/` 实验、8 幅插图、练习与答案、资料台账和规范报告。
 
 ## 结论
 
-通过，综合评价 **9.1/10**。本章已经达到“可以独立阅读、可以复现实验、可以核对证据”的出版状态。
+通过，综合评价 **9.3/10**。本章已经达到“可以独立阅读、可以复现实验、可以核对证据”的出版状态。
 
 它最重要的优点不是列出了多少 RAG 术语，而是让同一个复合问题沿 v0—v7 逐步暴露失败：从无证据回答、全量塞入、无身份切块，演进到权限与时效前置过滤、混合召回、重排、Evidence Packet、引用、拒答和索引回查。读者能够看见每一层解决什么问题，也能看见它没有解决什么问题。
 
-本轮未发现 P1。三个 P2 已修复；保留的 P3 都是明确写进正文的适用边界，不阻塞发布。
+复审发现的 P1 已全部修复：原报告有 5 个 `expected_status` 与 `answer_status` 不一致，其中 2 个是无答案夹具合同不完整导致的错误回答，另外 3 个是正文承认、报告却未显式分类的假阴性。v1.1 修复前者，并把后者标为 `failure_probe / false_abstain`；所有符合性案例现在都匹配预期，意外状态偏差和错误放行均为 0。检索指标也统一为“唯一文档 + 固定 K 分母”。旧版不改写，由 `book-chapter8-v1.0` 保存。
 
 ## 发现与处理
 
 | 优先级 | 视角 | 发现 | 证据 | 处理 |
 | --- | --- | --- | --- | --- |
+| P1 | 工程/专家 | 11 个同时含预期与实际状态的案例中有 5 个不一致，报告却没有通过/失败语义；正文还把部分相反结果写成“证明” | `chapter8/reports/rag-evidence.json`；`chapter8/experiments/run_all.py` | fixed：新增逐案例 `outcome`、`expectation_mode`、`classification` 与 `outcome_summary`；10 个符合性案例全部通过，3 个失败探针明确暴露假阴性 |
+| P1 | 工程 | `retrieval-noise` 与 `evidence-correct-abstain` 没有 required fact，任意无关 Citation 都会触发 `answer`；`evidence-missing-members` 只声明缺失事实，因此无法进入 `partial` | `chapter8/fixtures/questions.json`；`evidence.py`；原报告 | fixed：为两个无答案问题声明语料不存在的待验证 fact；Partial 案例同时声明 SSO 与成员事实；新增回归测试 |
+| P2 | 专家/读者 | 指标以唯一文档计算，但 Precision@K 曾除以实际返回数；正文公式却以 K 为分母，图 8-8 因而显示 1.00 | `evaluation.py`；`run_all.py`；`book/chapter8.md`；图 8-8 | fixed：Precision@K 固定除以 K，空缺位置视为不相关；报告加入 `metric_contract`，正文解释 Chunk 数与文档数差异，图中值改为 0.33 |
+| P2 | 来源/排版 | LangChain Retrieval 旧 URL 已跳转；BM25 参数仍用普通圆括号而非行内数学 | [S09]；`book/chapter8.md` | fixed：更新到当前官方 canonical URL，并统一 `\(...\)` 数学排版 |
 | P2 | 读者 | 少量行内代码带有字面反斜杠，且候选预算段有一处“增大”错字，都会影响精读体验 | `book/chapter8.md`；发布合同测试 | fixed：清理 Markdown 转义和错字，并重新运行排版合同 |
 | P2 | 读者/工程 | 实现阅读顺序只写 `catalog.py` 等短文件名，脱离当前目录后定位不够清楚 | `book/chapter8.md`“实验复现” | fixed：改为 `chapter8/knowledge_runtime/...` 和 `chapter8/experiments/run_all.py` |
 | P2 | 来源 | RAG 原始论文、本地确定性实验、作者资料和 RAGAS 原始论文虽已入台账，但正文中的用途落点不够直接 | `book/chapter8.md`；`book/sources/chapter8-sources.md` | fixed：补入 [S01]、[S07]、[S15]、[S16]，同时保留“不复刻论文结果、不沿用旧产品事实”的限制 |
@@ -62,17 +67,18 @@ BM25、向量、RRF、重排和 Ragas 集中在进阶层，第一次不应逐公
 - Trace 只记录 ID、摘要和因果关系，不写文档正文；
 - 报告使用固定时钟、稳定排序和规范序列化；
 - Live Probe 与公共规范报告隔离，dry-run 不需要 API Key；
-- `python -m unittest discover -s chapter8/tests -v`：56 项通过；
+- `python -m unittest discover -s chapter8/tests -v`：60 项通过；
 - `python scripts/check_repository.py --root . --git-history`：退出码 0；
-- 发布合同：有效中文 25,256 字，二/三级标题 42 个，插图 8 幅，练习 14 道，答案 14 道，来源 17 条。
+- 发布合同：有效中文 25,645 字，二/三级标题 42 个，插图 8 幅，练习 14 道，答案 14 道，来源 17 条。
+- 状态合同：13 个可比较案例中，10 个符合性案例匹配预期，3 个失败探针均暴露假阴性，意外状态偏差 0，错误放行 0；这些计数不是统计准确率。
 
 规范报告 SHA-256：
 
 | 文件 | SHA-256 |
 | --- | --- |
-| `chapter8/reports/rag-evidence.json` | `372A55D7D902724C0A8AE89F06EB881E10E04A6F9FF339A364C84C4FAE62C0EE` |
-| `chapter8/reports/rag-evidence.md` | `4A7581A97A84D84B5B47D836AFA7508BCA7F927B2F800915C98AEAB46AF8B445` |
-| `chapter8/reports/rag-trace.jsonl` | `35851AA2CD99D973771E5EDB89C21056BB026BD353AA4E980AD6815CFAB1AD35` |
+| `chapter8/reports/rag-evidence.json` | `FA711B9F6203D97602612C8A017B82FC6B275E5CF02083F4981837D2236317EB` |
+| `chapter8/reports/rag-evidence.md` | `2D53AE220A48466701D9DFA2B507E3D6339DB6AACEB8CDC588CE1927C099259A` |
+| `chapter8/reports/rag-trace.jsonl` | `A6C6BA9F668173A1C3A9DBFC4246A2402ACA127D261C6B2D1C80EB9B38F18C9C` |
 
 这些证据支持 Harness 边界、治理顺序、拒答行为、Catalog 回查和报告复现，不支持真实模型效果、厂商排名、生产吞吐或成本结论。
 
@@ -87,11 +93,11 @@ BM25、向量、RRF、重排和 Ragas 集中在进阶层，第一次不应逐公
 | 维度 | 分数 | 说明 |
 | --- | ---: | --- |
 | 通俗性与阅读路径 | 9.0 | 具体问题驱动，主线清楚；进阶层仍有一定密度 |
-| 技术准确性与边界 | 9.3 | 治理、检索、证据、评估边界完整，Non-claims 充分 |
-| 实验与可复现性 | 9.4 | 真实代码、失败注入、稳定报告和脱敏 Trace 形成闭环 |
+| 技术准确性与边界 | 9.5 | 治理、检索、证据、评估边界完整；状态与指标口径已显式化，Non-claims 充分 |
+| 实验与可复现性 | 9.6 | 真实代码、失败探针、状态分类、稳定报告和脱敏 Trace 形成闭环 |
 | 来源质量与时效 | 9.0 | 一手来源为主，用途和限制明确；快变页面需出版前复核 |
 | 练习与教学闭环 | 9.0 | 分层练习覆盖理解、实现、诊断和设计 |
 
-综合评价：**9.1/10，建议发布。**
+综合评价：**9.3/10，建议发布 v1.1。**
 
 发布时应继续保留两条醒目边界：第一，固定实验比较的是 Harness 与知识治理边界，不是模型或供应商能力；第二，任何真实业务上线仍需用本组织语料、权限模型、查询分布和风险等级重新评估。

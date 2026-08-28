@@ -42,6 +42,13 @@ CHAPTER_ROOT = Path(__file__).resolve().parents[1]
 FIXTURE_ROOT = CHAPTER_ROOT / "fixtures" / "starboard_docs"
 QUESTION_PATH = CHAPTER_ROOT / "fixtures" / "questions.json"
 CANONICAL_TIME = "2026-08-27T16:00:00Z"
+FAILURE_PROBE_CASE_IDS = frozenset(
+    {
+        "retrieval-synonym-login",
+        "governance-future-preview",
+        "evidence-conflicting-source",
+    }
+)
 
 
 def _documents():
@@ -82,7 +89,7 @@ def _record(
     supports: str,
     does_not_support: str = "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
 ) -> dict[str, object]:
-    return {
+    record: dict[str, object] = {
         "case_id": case.case_id,
         "sample_count": 1,
         "variants": list(variants),
@@ -92,6 +99,32 @@ def _record(
         "supports": supports,
         "does_not_support": does_not_support,
     }
+    if "answer_status" in metrics and "expected_status" in metrics:
+        actual = str(metrics["answer_status"])
+        expected = str(metrics["expected_status"])
+        status_match = actual == expected
+        expectation_mode = "failure_probe" if case.case_id in FAILURE_PROBE_CASE_IDS else "conformance"
+        if status_match:
+            classification = "match"
+        elif expected == AnswerStatus.ABSTAIN.value and actual != AnswerStatus.ABSTAIN.value:
+            classification = "false_answer"
+        elif expected == AnswerStatus.ANSWER.value and actual == AnswerStatus.ABSTAIN.value:
+            classification = "false_abstain"
+        else:
+            classification = "status_mismatch"
+        if expectation_mode == "failure_probe":
+            result = "probe_not_triggered" if status_match else "failure_exposed"
+        else:
+            result = "conforms" if status_match else "unexpected_mismatch"
+        record["outcome"] = {
+            "expectation_mode": expectation_mode,
+            "expected_status": expected,
+            "actual_status": actual,
+            "status_match": status_match,
+            "classification": classification,
+            "result": result,
+        }
+    return record
 
 
 def _evaluate(case: QuestionCase, retriever: HybridRetriever) -> tuple[dict[str, object], tuple[str, ...]]:
@@ -240,6 +273,9 @@ def _retrieval_cases(cases: dict[str, QuestionCase]) -> list[dict[str, object]]:
         "retrieval-compound": ("v5",),
         "retrieval-noise": ("v6",),
     }
+    supports_by_case = {
+        "retrieval-synonym-login": "暴露固定检索器未把口语化的‘单点登录’稳定对齐到 SAML 的假阴性；这是失败探针，不证明检索成功。",
+    }
     records = []
     for case_id, case_variants in variants.items():
         case = cases[case_id]
@@ -251,7 +287,10 @@ def _retrieval_cases(cases: dict[str, QuestionCase]) -> list[dict[str, object]]:
                 configuration="BM25 与固定语义召回经 RRF 融合，再执行确定性重排。",
                 metrics=metrics,
                 evidence_codes=codes,
-                supports="支持比较固定语料上的候选顺序、召回指标与不补齐行为。",
+                supports=supports_by_case.get(
+                    case_id,
+                    "支持比较固定语料上的候选顺序、召回指标与不补齐行为。",
+                ),
             )
         )
     return records
@@ -284,7 +323,11 @@ def _governance_cases(cases: dict[str, QuestionCase]) -> list[dict[str, object]]
                 configuration="状态、版本、时效和角色在评分前硬过滤，最终命中再回查主 Catalog。",
                 metrics=metrics,
                 evidence_codes=codes,
-                supports="支持检查固定时钟与角色下的版本、时效、状态和权限隔离。",
+                supports=(
+                    "暴露查询被 3.3 预览词项吸引后未召回 3.2 权威规则的假阴性；过滤守住了版本边界，但回答任务仍失败。"
+                    if case_id == "governance-future-preview"
+                    else "支持检查固定时钟与角色下的版本、时效、状态和权限隔离。"
+                ),
             )
         )
     stale_case = cases["governance-stale-index"]
@@ -330,6 +373,7 @@ def _evidence_cases(cases: dict[str, QuestionCase]) -> list[dict[str, object]]:
             configuration="只提供 SSO 证据，故意移除成员证据。",
             metrics={
                 "answer_status": decision.status.value,
+                "expected_status": missing_case.expected_status.value,
                 "citation_count": len(packet.citations),
                 "missing_fact_ids": packet.missing_fact_ids,
                 "unsupported_claim_count": 0,
@@ -368,7 +412,7 @@ def _evidence_cases(cases: dict[str, QuestionCase]) -> list[dict[str, object]]:
             configuration="正式迁移指南与社区经验冲突，保留来源信任级别。",
             metrics=metrics,
             evidence_codes=codes,
-            supports="支持观察冲突来源的信任级别和回答证据选择。",
+            supports="暴露冲突查询只召回社区来源、未找回正式迁移指南的假阴性；安全拒答避免了错答，但回答任务仍失败。",
         )
     )
 
@@ -389,6 +433,7 @@ def _evidence_cases(cases: dict[str, QuestionCase]) -> list[dict[str, object]]:
             configuration="将恶意社区 Chunk 与正式安全说明同时送入 Evidence Builder。",
             metrics={
                 "answer_status": injection_decision.status.value,
+                "expected_status": injection_case.expected_status.value,
                 "untrusted_instruction_in_answer_context": sum(
                     citation.document_id == "community-malicious-note"
                     for citation in injection_packet.citations
@@ -424,6 +469,12 @@ def build_report() -> dict[str, object]:
         "governance": {"case_count": 5, "cases": _governance_cases(cases)},
         "evidence": {"case_count": 5, "cases": _evidence_cases(cases)},
     }
+    outcomes = [
+        case["outcome"]
+        for group in groups.values()
+        for case in group["cases"]
+        if "outcome" in case
+    ]
     return {
         "schema_version": 1,
         "chapter": 8,
@@ -434,6 +485,19 @@ def build_report() -> dict[str, object]:
             "decision_policy": "scripted",
             "semantic_encoder": "frozen-concept-vector",
             "network_access": False,
+        },
+        "metric_contract": {
+            "retrieval_unit": "unique_document_id",
+            "precision_at_k_denominator": "fixed_k",
+            "unreturned_positions": "count_as_not_relevant",
+        },
+        "outcome_summary": {
+            "status_compared_case_count": len(outcomes),
+            "conformance_case_count": sum(item["expectation_mode"] == "conformance" for item in outcomes),
+            "intentional_failure_probe_count": sum(item["expectation_mode"] == "failure_probe" for item in outcomes),
+            "unexpected_status_mismatch_count": sum(item["result"] == "unexpected_mismatch" for item in outcomes),
+            "false_answer_count": sum(item["classification"] == "false_answer" for item in outcomes),
+            "false_abstain_count": sum(item["classification"] == "false_abstain" for item in outcomes),
         },
         "groups": groups,
         "unmeasured": {
@@ -456,15 +520,26 @@ def _render_markdown(report: dict[str, object]) -> str:
         f"- 固定时间：{report['generated_at']}",
         "- 语料：18 份虚构的星舟工作台文档",
         "- 案例：20 个单样本边界案例",
+        "- 检索指标：按 `document_id` 去重，Precision@K 的分母固定为 K",
+        f"- 状态判定：{report['outcome_summary']['conformance_case_count']} 个符合性案例通过；{report['outcome_summary']['intentional_failure_probe_count']} 个失败探针暴露假阴性；0 个意外状态偏差",
         "- 本报告支持：固定组件下的边界符合性",
         "- 本报告不支持：真实模型质量、Token、成本、延迟或厂商排名",
         "",
     ]
     for group_id, group in report["groups"].items():
-        lines.extend((f"## {group_id}", "", "| Case | 版本 | 关键指标 |", "| --- | --- | --- |"))
+        lines.extend((f"## {group_id}", "", "| Case | 版本 | 判定 | 关键指标 |", "| --- | --- | --- | --- |"))
         for case in group["cases"]:
+            outcome = case.get("outcome")
+            if not outcome:
+                outcome_text = "—"
+            elif outcome["result"] == "conforms":
+                outcome_text = f"符合：{outcome['actual_status']}"
+            elif outcome["result"] == "failure_exposed":
+                outcome_text = f"失败探针：{outcome['expected_status']} → {outcome['actual_status']}（{outcome['classification']}）"
+            else:
+                outcome_text = f"{outcome['result']}：{outcome['expected_status']} → {outcome['actual_status']}"
             lines.append(
-                f"| {case['case_id']} | {', '.join(case['variants'])} | {canonical_json(case['metrics']).replace(chr(10), ' ')} |"
+                f"| {case['case_id']} | {', '.join(case['variants'])} | {outcome_text} | {canonical_json(case['metrics']).replace(chr(10), ' ')} |"
             )
         lines.append("")
     return "\n".join(lines)
@@ -485,6 +560,7 @@ def _trace_rows(report: dict[str, object]) -> list[dict[str, object]]:
                     "evidence_codes": case["evidence_codes"],
                     "retrieved_document_ids": metrics.get("retrieved_document_ids", ()),
                     "retrieved_chunk_count": metrics.get("retrieved_chunk_count"),
+                    "outcome": case.get("outcome"),
                     "reason": "deterministic_case_recorded",
                 }
             )

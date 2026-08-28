@@ -58,6 +58,13 @@ git diff book-chapter1-v1.0 book-chapter1-v1.1 -- book/chapter1.md chapter1
 | v1.0 | 2026-08-17 | `book-chapter6-v1.0` | 首个正式发布版；包含 Event Log、Working Set、CompactionArtifact、RunCheckpoint、Context Rehydration、五组确定性实验、失败矩阵、7 张原创图、14 道分层练习与四视角 Review；保留 `chapter6-v1.0-draft`。后续复核发现第 23 页独立粗体段首、第 45 页小结孤行，以及 PDF 内 16 个作者本机文件链接，已由 v1.0.1 修复；本版标记为 superseded，历史文件与 tag 不改写 | 第 4/5/6 章分别 24/63/140 项 Python 测试及 5 项渲染门禁通过；15-case JSON、Markdown、JSONL Trace 两次生成 SHA-256 一致，分别为 `50CBBC74C8D938D619DAB131F8D37BBB8443162C1FEA74233C90FD6EB3686E5E`、`F05FBA8F7A4EF7177EA7FE1B1FA18F8CC7528BD9D806D0FEEB1AFF86F87CE107`、`CBCC12216DF02182D9E5B4F64A3A1B29EF9554140877E33CBC986FE69604EB96`；7 SVG 的 XML、安全、桌面与 390px 响应式门禁通过；47 页 PDF 全页目检通过 | `output/pdf/versions/chapter6/chapter6-v1.0.pdf`，47 页，SHA-256 `211B722B74715C0C139BE4E70266327348DCF2833C61648E055AB8B30D072C1E` |
 | v1.0.1 | 2026-08-17 | `book-chapter6-v1.0.1` | 当前发布版；合并第 23 页独立粗体段首，收束小结以消除第 45 页孤行；发布 HTML 不再嵌入 `<base>`、作者本机样式或脚本路径，仓库内链接改为不可点击的可移植引用，图片使用相对路径；PDF 只保留 10 个外部 HTTPS URI，作者本机 URI 为 0 | 第 4/5/6 章分别 24/63/143 项 Python 测试及 5 项 Node 渲染门禁通过；新增 HTML 搬迁语义、PDF annotation URI 和历史 PDF 保留测试；15-case JSON、Markdown、JSONL Trace 两次生成及 canonical SHA-256 仍分别为 `50CBBC74C8D938D619DAB131F8D37BBB8443162C1FEA74233C90FD6EB3686E5E`、`F05FBA8F7A4EF7177EA7FE1B1FA18F8CC7528BD9D806D0FEEB1AFF86F87CE107`、`CBCC12216DF02182D9E5B4F64A3A1B29EF9554140877E33CBC986FE69604EB96`；47 页替代 PDF 全页目检通过，最终渲染与已目检页面逐页像素一致 | `output/pdf/versions/chapter6/chapter6-v1.0.1.pdf`，47 页，SHA-256 `15B08A2679710CE06E0115C46A9457648F782215448F8B03BC28FADF42C73000`；稳定预览与版本 PDF 字节一致 |
 
+## 第 8 章：RAG 与知识库
+
+| 版本 | 日期 | Git tag | 状态与主要变化 | 自动验证 | PDF |
+| --- | --- | --- | --- | --- | --- |
+| v1.0 | 2026-08-28 | `book-chapter8-v1.0` | 首个网站发布版；包含 v0—v7 主线、18 篇虚构文档、20 个确定性案例、8 张原创图、14 道练习与四视角 Review；后续复审发现状态预期与实际结果未分流、两条拒答夹具合同不完整、Precision@K 口径不一致，由 v1.1 修复 | 56 项第 8 章测试通过；三份规范报告可重复生成；CI 与 Pages 发布成功 | 未生成独立 PDF；历史正文、代码与网站源文件由 Git tag 固定 |
+| v1.1 | 2026-08-28 | `book-chapter8-v1.1` | 当前优化版；补齐无答案 fact 合同和 Partial 事实集合，区分 10 个符合性案例与 3 个失败探针，新增状态分类与摘要，统一唯一文档/固定 K 指标口径，同步报告、Trace、图 8-8、正文、来源和 Review | 60 项第 8 章测试通过；JSON、Markdown、JSONL SHA-256 分别为 `FA711B9F6203D97602612C8A017B82FC6B275E5CF02083F4981837D2236317EB`、`2D53AE220A48466701D9DFA2B507E3D6339DB6AACEB8CDC588CE1927C099259A`、`A6C6BA9F668173A1C3A9DBFC4246A2402ACA127D261C6B2D1C80EB9B38F18C9C` | 未生成独立 PDF；网站为本章当前发布载体 |
+
 ## 后续章节发布规则
 
 其他章节首次纳入版本管理时，先按当时状态建立 `v1.0` 基线并生成版本化 PDF，再开始 Review 修订。任何正文、配套代码、练习答案、资料台账或图示发生实质变化，都必须在本文件新增版本记录；不能先覆盖旧版、事后再猜测历史内容。

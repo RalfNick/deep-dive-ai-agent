@@ -60,7 +60,7 @@
 | [chapter5.md](./chapter5.md) | 复审修订稿 | 上下文装配、权限与来源身份、冲突消解、预算、注入边界，以及 63 项离线测试 |
 | [chapter6.md](./chapter6.md) | v1.0.1 书稿 | 长任务压缩、Artifact、Checkpoint、Rehydration、恢复与漂移；公共仓库保留 143 项非 PDF 测试 |
 | [chapter7.md](./chapter7.md) | Review 通过稿 | 约 2.6 万有效中文字符、7 张图、5 组无 API Key 实验、14 道分层练习与 65 项测试 |
-| [chapter8.md](./chapter8.md) | Review 通过稿 | 约 2.5 万有效中文字符、8 张图、5 组 20 个无 API Key 案例、14 道分层练习与 56 项测试 |
+| [chapter8.md](./chapter8.md) | v1.1 复审优化稿 | 约 2.56 万有效中文字符、8 张图、5 组 20 个无 API Key 案例、14 道分层练习与 60 项测试；区分 10 个符合性案例与 3 个失败探针，统一文档级固定 K 指标口径 |
 | [sources/chapter1-sources.md](./sources/chapter1-sources.md) | 已建立 | 第 1 章资料台账与更新策略 |
 | [sources/chapter2-sources.md](./sources/chapter2-sources.md) | 已建立 | 作者资料页级映射、论文、官方文档、书籍与前沿信息核对台账 |
 | [sources/chapter3-sources.md](./sources/chapter3-sources.md) | 已建立 | Agent 经典论文、OpenAI/Anthropic/LangChain 官方文档与出版前复核清单 |

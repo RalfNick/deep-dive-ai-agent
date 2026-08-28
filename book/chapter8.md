@@ -175,7 +175,7 @@ RAG 常被演示成“对一份 PDF 提问”。那种案例适合跑通流程�
 - 18 篇虚构文档能够代表生产知识库的分布；
 - 固定阈值可以不经评估直接用于别的业务。
 
-因此报告中的每个案例 `sample_count=1`，未测量的 Provider 成本、延迟、Token 与真实模型质量都是 `null`。我们不把 20 个异质案例压成一个“成功率”。
+因此报告中的每个案例 `sample_count=1`，未测量的 Provider 成本、延迟、Token 与真实模型质量都是 `null`。我们不把 20 个异质案例压成一个“成功率”。报告把 13 个可比较的 Answer 状态再分为两类：10 个符合性案例必须与预期一致；3 个故意保留的失败探针用于暴露假阴性。当前结果中前者全部符合，后者都暴露了 `false_abstain`，意外状态偏差与 `false_answer` 都是 0。这里报告的是案例分类，不是总体准确率。
 
 下面这张图把离线和在线两条生命周期分开。左边解决“知识怎样成为可检索对象”，右边解决“这次问题怎样获得合法证据”。更新文档目录和处理一次用户请求，不应被混成一段不可重放的代码。
 
@@ -346,7 +346,7 @@ BM25 也不是“旧式搜索”。它对产品版本、错误码、类名、函
 
 **中间状态：** BM25 保留词频、文档频率和长度归一化后的分数；语义通道保留余弦相似度；两类原始分数不直接相加。
 
-**运行结果：** `retrieval-exact-version` 在固定候选中把当前计划与 FAQ 召回，MRR 为 1.00、Recall@3 为 1.00；另一条口语化登录案例在完整门槛下没有返回足够证据并选择拒答。这个失败很重要：概念向量能在单元测试中建立同义关系，不代表端到端阈值、过滤与事实覆盖一定满足回答条件。
+**运行结果：** `retrieval-exact-version` 在固定候选中把当前计划与 FAQ 召回，MRR 为 1.00、Recall@3 为 1.00；另一条口语化登录案例的标注答案本应是 `answer`，但完整门槛下没有返回足够证据并选择了 `abstain`。报告把它明确记为 `failure_probe / false_abstain`，而不是把“安全拒答”冒充检索成功。这个失败很重要：概念向量能在单元测试中建立同义关系，不代表端到端阈值、过滤与事实覆盖一定满足回答条件。
 
 v3 修复了 v2 的“只能存、不能找”：现在精确词项和语义近邻都有独立召回通道，而且每条通道可单独测试。
 
@@ -533,7 +533,7 @@ Evidence Builder 还要把检索到的文档当作数据，而不是指令。社
 
 **中间状态：** Evidence Builder 过滤不可信指令，建立 fact_id 到 Citation 的映射，计算缺失事实，生成只含证据与定位信息的稳定摘要。
 
-**运行结果：** 完整证据案例输出 `answer`，引用指向对应的 3.2 计划与迁移片段；移除成员处理证据后，`evidence-missing-members` 的 `missing_fact_ids` 包含 `members-preserved-32`，系统不补写该结论。恶意社区 Chunk 没有进入 Answer Context，`untrusted_instruction_in_answer_context=0`。另一项故意挂错引用的实验得到引用 Precision、Recall 与支持声明比例各 0.5，证明“引用数量正常”掩盖不了引用错位。
+**运行结果：** 完整证据案例输出 `answer`，引用指向对应的 3.2 计划与迁移片段；移除成员处理证据后，`evidence-missing-members` 只覆盖 SSO 事实，`missing_fact_ids` 包含 `members-preserved-32`，状态为 `partial`，系统不补写成员结论。量子加密登录与桌面客户端颜色两个无答案案例都声明了待验证但语料不存在的 fact_id，因此检索到无关引用也只能 `abstain`。恶意社区 Chunk 没有进入 Answer Context，`untrusted_instruction_in_answer_context=0`。另一项故意挂错引用的实验得到引用 Precision、Recall 与支持声明比例各 0.5，证明“引用数量正常”掩盖不了引用错位。
 
 v6 修复了 v5 的最后一公里：Retriever 的输出不再直接等于 Prompt，回答中的每个事实要先经过证据覆盖和引用映射；拒答成为正确结果的一种，而不是异常。
 
@@ -619,7 +619,7 @@ IDF(q_i)
 {f(q_i,D)+k_1(1-b+b\frac{|D|}{avgdl})}
 \]
 
-其中 (f(q_i,D)) 是词在文档中的出现次数，(|D|) 是文档长度，(avgdl) 是平均文档长度，(k_1) 控制词频饱和，(b) 控制长度归一化[S03]。
+其中 \(f(q_i,D)\) 是词在文档中的出现次数，\(|D|\) 是文档长度，\(avgdl\) 是平均文档长度，\(k_1\) 控制词频饱和，\(b\) 控制长度归一化[S03]。
 
 读者不必先背公式。把它拆开看：
 
@@ -753,7 +753,7 @@ Reranker 分数同样不是事实概率。若模型在训练中偏好措辞相�
 
 如果只用“最终答案得分”，四种问题会被混在一起。开发者不知道该改 Chunk、Retriever、Reranker、Evidence Builder 还是 Prompt。
 
-检索层常见指标包括：
+检索层常见指标包括。本章先按 `document_id` 去重，以文档而不是 Chunk 作为评估单元；`Precision@K` 的分母固定为 K，实际不足 K 个结果时，空缺位置按“不相关”计算。这样 `retrieved_chunk_count=3`、唯一文档数为 2 与 `Precision@3=2/3` 可以同时成立，不会混用 Chunk 数和文档数。
 
 \[
 Precision@K=\frac{\text{Top-K 中相关项数}}{K}
@@ -788,7 +788,7 @@ NDCG 进一步考虑多个相关等级和位置折损。若没有任何标注相
 
 ![图 8-8 RAG 评估必须分层而不是压成总分](./images/fig8-8-evaluation-matrix.svg)
 
-图中的 Precision@3 和 NDCG@3 1.00 来自 `governance-public-internal` 单案例；“MRR = null”来自一个没有相关项的拒答案例。它们用来解释数据结构，不是 Benchmark。底部“不要压成一个总分”是本章评估的核心：若把召回、引用、安全和拒答平均成 0.86，一个严重权限泄漏可能被其他高分抵消。
+图中的 Precision@3 0.33 和 NDCG@3 1.00 来自 `governance-public-internal` 单案例：它只返回 1 个相关文档，所以首个相关项排序理想，但固定 K 分母下 Precision@3 是 \(1/3\)。“MRR = null”来自一个没有标注相关项的拒答案例。它们用来解释数据结构，不是 Benchmark。底部“不要压成一个总分”是本章评估的核心：若把召回、引用、安全和拒答平均成 0.86，一个严重权限泄漏可能被其他高分抵消。
 
 RAGAS 原始论文把上下文相关性、忠实性和答案相关性拆开讨论，为“不能只看最终答案”提供了早期评估框架[S07]。Ragas 当前文档进一步提供 Context Precision、Context Recall 等多类指标，并按检索、生成和 Agent 任务组织[S12][S13][S14]。使用时要读清每个指标需要哪些输入、是否使用参考答案、是否依赖评审模型。名字相近不代表计算相同。例如本章简单 Precision@K 是基于人工相关标签，不能冒充 Ragas 的 Context Precision 变体。
 
@@ -1524,7 +1524,19 @@ python -m chapter8.experiments.run_all --output chapter8/reports
 }
 ~~~
 
-这几项限定了证据范围。再看 `unmeasured`：
+这几项限定了证据范围。再看 `metric_contract`：
+
+~~~json
+{
+  "retrieval_unit": "unique_document_id",
+  "precision_at_k_denominator": "fixed_k",
+  "unreturned_positions": "count_as_not_relevant"
+}
+~~~
+
+检索指标按唯一文档计算，未返回的位置不会悄悄缩小 Precision@K 的分母。`outcome_summary` 另行记录 10 个符合性案例、3 个故意失败探针、0 个意外状态偏差、0 个错误放行和 3 个假阴性。读单案例时还要检查 `outcome.expectation_mode`：`conformance` 必须匹配预期，`failure_probe` 的不匹配才是实验要暴露的失败。
+
+再看 `unmeasured`：
 
 ~~~json
 {

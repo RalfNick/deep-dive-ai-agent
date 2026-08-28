@@ -209,7 +209,9 @@
       },
       "relevant_document_ids": [],
       "relevant_chunk_ids": [],
-      "required_fact_ids": [],
+      "required_fact_ids": [
+        "desktop-client-color-32"
+      ],
       "expected_claims": [],
       "expected_status": "abstain"
     },
@@ -342,6 +344,7 @@
       ],
       "relevant_chunk_ids": [],
       "required_fact_ids": [
+        "sso-team-32",
         "members-preserved-32"
       ],
       "expected_claims": [
@@ -427,7 +430,9 @@
       },
       "relevant_document_ids": [],
       "relevant_chunk_ids": [],
-      "required_fact_ids": [],
+      "required_fact_ids": [
+        "quantum-login-32"
+      ],
       "expected_claims": [],
       "expected_status": "abstain"
     }

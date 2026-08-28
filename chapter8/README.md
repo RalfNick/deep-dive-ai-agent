@@ -76,7 +76,7 @@ python -m chapter8.experiments.run_all --output chapter8/reports
 | governance | 5 | 版本、权限、未来、撤回、陈旧索引 |
 | evidence | 5 | 缺失事实、错引、冲突、注入与拒答 |
 
-每个案例 `sample_count=1`。报告不提供聚合“RAG 成功率”；未测 Provider Token、费用、延迟与真实模型质量保持 `null`。
+每个案例 `sample_count=1`。报告不提供聚合“RAG 成功率”；未测 Provider Token、费用、延迟与真实模型质量保持 `null`。检索指标按唯一 `document_id` 计算，Precision@K 使用固定 K 分母。13 个可比较状态中，10 个符合性案例必须通过，3 个失败探针明确暴露假阴性；它们不会被混写成同一个“通过率”。
 
 ## 建议阅读顺序
 

@@ -10,7 +10,7 @@
     <text x="56" y="65" fill="#f8fafc" font-size="36" font-weight="700">坏答案从哪里坏，要靠分层指标回答</text>
     <g font-size="22">
       <rect x="55" y="130" width="330" height="160" rx="22" fill="#111c33" stroke="#60a5fa" stroke-width="2"/>
-      <text x="85" y="180" fill="#60a5fa" font-size="27" font-weight="700">检索</text><text x="85" y="225" fill="#e2e8f0">Precision@3 1.00</text><text x="85" y="263" fill="#e2e8f0">NDCG@3 1.00</text>
+      <text x="85" y="180" fill="#60a5fa" font-size="27" font-weight="700">检索</text><text x="85" y="225" fill="#e2e8f0">Precision@3 0.33</text><text x="85" y="263" fill="#e2e8f0">NDCG@3 1.00</text>
       <rect x="435" y="130" width="330" height="160" rx="22" fill="#111c33" stroke="#a78bfa" stroke-width="2"/>
       <text x="465" y="180" fill="#a78bfa" font-size="27" font-weight="700">引用</text><text x="465" y="225" fill="#e2e8f0">引用精确率 / 召回率</text><text x="465" y="263" fill="#e2e8f0">声明—来源映射</text>
       <rect x="815" y="130" width="330" height="160" rx="22" fill="#111c33" stroke="#34d399" stroke-width="2"/>

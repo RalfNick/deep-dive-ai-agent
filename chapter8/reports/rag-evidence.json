@@ -142,12 +142,21 @@
             "citation:9fadddfcd7b3"
           ],
           "metrics": {
-            "answer_status": "abstain",
+            "answer_status": "partial",
             "citation_count": 1,
+            "expected_status": "partial",
             "missing_fact_ids": [
               "members-preserved-32"
             ],
             "unsupported_claim_count": 0
+          },
+          "outcome": {
+            "actual_status": "partial",
+            "classification": "match",
+            "expectation_mode": "conformance",
+            "expected_status": "partial",
+            "result": "conforms",
+            "status_match": true
           },
           "sample_count": 1,
           "supports": "支持证明复合问题缺一类证据时只能部分回答。",
@@ -203,8 +212,16 @@
             "supported_fact_ratio": 0.0,
             "unsupported_claim_count": 0
           },
+          "outcome": {
+            "actual_status": "abstain",
+            "classification": "false_abstain",
+            "expectation_mode": "failure_probe",
+            "expected_status": "answer",
+            "result": "failure_exposed",
+            "status_match": false
+          },
           "sample_count": 1,
-          "supports": "支持观察冲突来源的信任级别和回答证据选择。",
+          "supports": "暴露冲突查询只召回社区来源、未找回正式迁移指南的假阴性；安全拒答避免了错答，但回答任务仍失败。",
           "variants": [
             "v7"
           ]
@@ -219,7 +236,16 @@
           "metrics": {
             "answer_status": "answer",
             "citation_count": 1,
+            "expected_status": "answer",
             "untrusted_instruction_in_answer_context": 0
+          },
+          "outcome": {
+            "actual_status": "answer",
+            "classification": "match",
+            "expectation_mode": "conformance",
+            "expected_status": "answer",
+            "result": "conforms",
+            "status_match": true
           },
           "sample_count": 1,
           "supports": "支持证明不可信指令被保留为检索风险，但不会进入最终 Answer Context。",
@@ -238,11 +264,13 @@
             "document:80f20e692ca4"
           ],
           "metrics": {
-            "answer_status": "answer",
+            "answer_status": "abstain",
             "catalog_recheck_rejected_count": 0,
             "expected_status": "abstain",
             "filtered_before_score_count": 9,
-            "missing_fact_ids": [],
+            "missing_fact_ids": [
+              "quantum-login-32"
+            ],
             "mrr": null,
             "ndcg_at_3": null,
             "precision_at_3": 0.0,
@@ -252,8 +280,16 @@
               "plans-3.2",
               "faq-3.2-sso"
             ],
-            "supported_fact_ratio": null,
+            "supported_fact_ratio": 0.0,
             "unsupported_claim_count": 0
+          },
+          "outcome": {
+            "actual_status": "abstain",
+            "classification": "match",
+            "expectation_mode": "conformance",
+            "expected_status": "abstain",
+            "result": "conforms",
+            "status_match": true
           },
           "sample_count": 1,
           "supports": "支持证明无足够证据时返回拒答，而不是填满 top_k 后猜测。",
@@ -285,7 +321,7 @@
             "mrr": 1.0,
             "ndcg_at_3": 0.7653606369886217,
             "policy_violation_count": 0,
-            "precision_at_3": 1.0,
+            "precision_at_3": 0.6666666666666666,
             "recall_at_3": 0.6666666666666666,
             "retrieved_chunk_count": 3,
             "retrieved_document_ids": [
@@ -294,6 +330,14 @@
             ],
             "supported_fact_ratio": 1.0,
             "unsupported_claim_count": 0
+          },
+          "outcome": {
+            "actual_status": "answer",
+            "classification": "match",
+            "expectation_mode": "conformance",
+            "expected_status": "answer",
+            "result": "conforms",
+            "status_match": true
           },
           "sample_count": 1,
           "supports": "支持检查固定时钟与角色下的版本、时效、状态和权限隔离。",
@@ -318,7 +362,7 @@
             "mrr": 1.0,
             "ndcg_at_3": 1.0,
             "policy_violation_count": 0,
-            "precision_at_3": 1.0,
+            "precision_at_3": 0.3333333333333333,
             "recall_at_3": 1.0,
             "retrieved_chunk_count": 1,
             "retrieved_document_ids": [
@@ -326,6 +370,14 @@
             ],
             "supported_fact_ratio": 1.0,
             "unsupported_claim_count": 0
+          },
+          "outcome": {
+            "actual_status": "answer",
+            "classification": "match",
+            "expectation_mode": "conformance",
+            "expected_status": "answer",
+            "result": "conforms",
+            "status_match": true
           },
           "sample_count": 1,
           "supports": "支持检查固定时钟与角色下的版本、时效、状态和权限隔离。",
@@ -361,8 +413,16 @@
             "supported_fact_ratio": 0.0,
             "unsupported_claim_count": 0
           },
+          "outcome": {
+            "actual_status": "abstain",
+            "classification": "false_abstain",
+            "expectation_mode": "failure_probe",
+            "expected_status": "answer",
+            "result": "failure_exposed",
+            "status_match": false
+          },
           "sample_count": 1,
-          "supports": "支持检查固定时钟与角色下的版本、时效、状态和权限隔离。",
+          "supports": "暴露查询被 3.3 预览词项吸引后未召回 3.2 权威规则的假阴性；过滤守住了版本边界，但回答任务仍失败。",
           "variants": [
             "v6"
           ]
@@ -386,7 +446,7 @@
             "mrr": 1.0,
             "ndcg_at_3": 0.6131471927654584,
             "policy_violation_count": 0,
-            "precision_at_3": 0.5,
+            "precision_at_3": 0.3333333333333333,
             "recall_at_3": 0.5,
             "retrieved_chunk_count": 3,
             "retrieved_document_ids": [
@@ -395,6 +455,14 @@
             ],
             "supported_fact_ratio": 1.0,
             "unsupported_claim_count": 0
+          },
+          "outcome": {
+            "actual_status": "answer",
+            "classification": "match",
+            "expectation_mode": "conformance",
+            "expected_status": "answer",
+            "result": "conforms",
+            "status_match": true
           },
           "sample_count": 1,
           "supports": "支持检查固定时钟与角色下的版本、时效、状态和权限隔离。",
@@ -418,7 +486,7 @@
             "missing_fact_ids": [],
             "mrr": 1.0,
             "ndcg_at_3": 1.0,
-            "precision_at_3": 1.0,
+            "precision_at_3": 0.3333333333333333,
             "recall_at_3": 1.0,
             "retrieved_chunk_count": 1,
             "retrieved_document_ids": [
@@ -426,6 +494,14 @@
             ],
             "supported_fact_ratio": 1.0,
             "unsupported_claim_count": 0
+          },
+          "outcome": {
+            "actual_status": "answer",
+            "classification": "match",
+            "expectation_mode": "conformance",
+            "expected_status": "answer",
+            "result": "conforms",
+            "status_match": true
           },
           "sample_count": 1,
           "supports": "支持证明索引是派生物，撤回后的来源不会因陈旧候选重新进入答案。",
@@ -457,7 +533,7 @@
             "missing_fact_ids": [],
             "mrr": 1.0,
             "ndcg_at_3": 1.0,
-            "precision_at_3": 0.5,
+            "precision_at_3": 0.3333333333333333,
             "recall_at_3": 1.0,
             "retrieved_chunk_count": 3,
             "retrieved_document_ids": [
@@ -466,6 +542,14 @@
             ],
             "supported_fact_ratio": 1.0,
             "unsupported_claim_count": 0
+          },
+          "outcome": {
+            "actual_status": "answer",
+            "classification": "match",
+            "expectation_mode": "conformance",
+            "expected_status": "answer",
+            "result": "conforms",
+            "status_match": true
           },
           "sample_count": 1,
           "supports": "支持比较固定语料上的候选顺序、召回指标与不补齐行为。",
@@ -490,15 +574,23 @@
             ],
             "mrr": 0.0,
             "ndcg_at_3": 0.0,
-            "precision_at_3": null,
+            "precision_at_3": 0.0,
             "recall_at_3": 0.0,
             "retrieved_chunk_count": 0,
             "retrieved_document_ids": [],
             "supported_fact_ratio": 0.0,
             "unsupported_claim_count": 0
           },
+          "outcome": {
+            "actual_status": "abstain",
+            "classification": "false_abstain",
+            "expectation_mode": "failure_probe",
+            "expected_status": "answer",
+            "result": "failure_exposed",
+            "status_match": false
+          },
           "sample_count": 1,
-          "supports": "支持比较固定语料上的候选顺序、召回指标与不补齐行为。",
+          "supports": "暴露固定检索器未把口语化的‘单点登录’稳定对齐到 SAML 的假阴性；这是失败探针，不证明检索成功。",
           "variants": [
             "v4"
           ]
@@ -532,6 +624,14 @@
             "supported_fact_ratio": 1.0,
             "unsupported_claim_count": 0
           },
+          "outcome": {
+            "actual_status": "answer",
+            "classification": "match",
+            "expectation_mode": "conformance",
+            "expected_status": "answer",
+            "result": "conforms",
+            "status_match": true
+          },
           "sample_count": 1,
           "supports": "支持比较固定语料上的候选顺序、召回指标与不补齐行为。",
           "variants": [
@@ -549,11 +649,13 @@
             "document:777d4cda1f8f"
           ],
           "metrics": {
-            "answer_status": "answer",
+            "answer_status": "abstain",
             "catalog_recheck_rejected_count": 0,
             "expected_status": "abstain",
             "filtered_before_score_count": 9,
-            "missing_fact_ids": [],
+            "missing_fact_ids": [
+              "desktop-client-color-32"
+            ],
             "mrr": null,
             "ndcg_at_3": null,
             "precision_at_3": 0.0,
@@ -563,8 +665,16 @@
               "api-auth",
               "install-3.2"
             ],
-            "supported_fact_ratio": null,
+            "supported_fact_ratio": 0.0,
             "unsupported_claim_count": 0
+          },
+          "outcome": {
+            "actual_status": "abstain",
+            "classification": "match",
+            "expectation_mode": "conformance",
+            "expected_status": "abstain",
+            "result": "conforms",
+            "status_match": true
           },
           "sample_count": 1,
           "supports": "支持比较固定语料上的候选顺序、召回指标与不补齐行为。",
@@ -574,6 +684,19 @@
         }
       ]
     }
+  },
+  "metric_contract": {
+    "precision_at_k_denominator": "fixed_k",
+    "retrieval_unit": "unique_document_id",
+    "unreturned_positions": "count_as_not_relevant"
+  },
+  "outcome_summary": {
+    "conformance_case_count": 10,
+    "false_abstain_count": 3,
+    "false_answer_count": 0,
+    "intentional_failure_probe_count": 3,
+    "status_compared_case_count": 13,
+    "unexpected_status_mismatch_count": 0
   },
   "schema_version": 1,
   "scope": {

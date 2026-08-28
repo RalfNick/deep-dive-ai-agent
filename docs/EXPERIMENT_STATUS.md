@@ -13,7 +13,7 @@
 | 第 5 章 | `python -m unittest discover -s chapter5/tests -v` | 63 | 63 通过 | `python -m chapter5.experiments.run_all --output chapter5/reports/context-experiments.json` | 公共 CI 只运行离线夹具；DeepSeek live probe 与凭据不进入仓库 |
 | 第 6 章 | `python -m unittest discover -s chapter6/tests -v` | 146 | 143 通过 | `python -m chapter6.experiments.run_all --output chapter6/reports` | 原基线中的 4 项 PDF 发布测试随本地 PDF 一并排除；新增 1 项跨平台受保护报告路径测试 |
 | 第 7 章 | `python -m unittest discover -s chapter7/tests -v` | 新增章节 | 65 通过 | `python -m chapter7.experiments.run_all --output chapter7/reports` | 固定 Candidate、时钟与决策策略；验证 Write、Recall、Correct、Forget、隔离和报告合同，不调用真实模型 |
-| 第 8 章 | `python -m unittest discover -s chapter8/tests -v` | 新增章节 | 56 通过 | `python -m chapter8.experiments.run_all --output chapter8/reports` | 18 篇虚构文档、20 个固定问题和确定性检索策略；验证治理、召回、证据、拒答与索引回查，不比较真实模型或供应商 |
+| 第 8 章 | `python -m unittest discover -s chapter8/tests -v` | v1.1 复审优化 | 60 通过 | `python -m chapter8.experiments.run_all --output chapter8/reports` | 18 篇虚构文档、20 个固定问题和确定性检索策略；验证治理、召回、证据、拒答与索引回查；状态结果区分符合性案例与失败探针，不比较真实模型或供应商 |
 
 第 1、3 章迁移后各多 1 项测试，用于冻结规范报告时间戳。第 6 章排除了 4 项只验证未迁移 PDF 发布物、版本台账和二进制哈希的测试，同时增加 1 项跨平台路径保护回归；Markdown、图表、实验、来源、Claims/Non-claims 与发布门禁仍在公共测试中。
 
@@ -48,9 +48,9 @@ python chapter2/model_selection_demo.py
 | `chapter7/reports/memory-engineering.json` | `7a9feb8f9253ee2f1c409c710658daf23b9b0b609d2114e1b38a6e65dacea0a3` |
 | `chapter7/reports/memory-engineering.md` | `06eb7ee156b4acd50b48a42564dd99405eaeaa53f984c3e19ed431d8746bd781` |
 | `chapter7/reports/memory-engineering-trace.jsonl` | `8d25258e75c8b9670875d6ae5e2466d1c3922ad20cf343031f75b8434e1da0ea` |
-| `chapter8/reports/rag-evidence.json` | `372a55d7d902724c0a8ae89f06eb881e10e04a6f9ff339a364c84c4fae62c0ee` |
-| `chapter8/reports/rag-evidence.md` | `4a7581a97a84d84b5b47d836afa7508bca7f927b2f800915c98aeab46af8b445` |
-| `chapter8/reports/rag-trace.jsonl` | `35851aa2cd99d973771e5edb89c21056bb026bd353aa4e980ad6815cfab1ad35` |
+| `chapter8/reports/rag-evidence.json` | `fa711b9f6203d97602612c8a017b82fc6b275e5cf02083f4981837d2236317eb` |
+| `chapter8/reports/rag-evidence.md` | `2d53ae220a48466701d9dfa2b507e3d6339db6aaceb8cdc588ce1927c099259a` |
+| `chapter8/reports/rag-trace.jsonl` | `a6c6ba9f668173a1c3a9dbfc4246a2402aca127d261c6b2d1c80eb9b38f18c9c` |
 
 第 1–8 章的规范离线生成器已连续运行两次；上述 16 个产物的第二次哈希与第一次一致。所有规范文本报告显式写入 UTF-8/LF；第 1、3、7、8 章只记录稳定运行合同，不记录操作系统、主机名或 Python 补丁版本。第 2 章的逐字节复现结论仍只限同一已记录数值环境；第 5 章 `deepseek-live.example.json` 只是脱敏结构示例，不计入离线规范报告。
 

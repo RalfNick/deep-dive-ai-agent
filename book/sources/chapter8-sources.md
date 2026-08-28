@@ -81,7 +81,7 @@
 
 ### [S09] LangChain Retrieval
 - 类型：LangChain 官方文档
-- URL / 本地路径：https://docs.langchain.com/oss/python/langchain/retrieval
+- URL / 本地路径：https://docs.langchain.com/oss/python/deepagents/retrieval
 - 事实使用：当前文档把 RAG 组件拆为加载、切分、Embedding、向量存储和 Retriever，并区分 2-Step、Agentic 与 Hybrid RAG。
 - 明确不声称：这些类别不是唯一标准；本章无依赖实现不等同于 LangChain API，也不固化当前类名。
 - 最后核对：2026-08-28

@@ -27,9 +27,7 @@ def _positive_k(k: int) -> None:
 def precision_at_k(retrieved: Sequence[str], relevant: Set[str], k: int) -> float | None:
     _positive_k(k)
     window = tuple(retrieved[:k])
-    if not window:
-        return None
-    return sum(item in relevant for item in window) / len(window)
+    return sum(item in relevant for item in window) / k
 
 
 def recall_at_k(retrieved: Sequence[str], relevant: Set[str], k: int) -> float | None:
