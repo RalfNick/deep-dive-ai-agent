@@ -16,7 +16,7 @@
 - 两个事实只找到一个时，怎样部分回答或拒答；
 - 文档撤回而索引尚未更新时，怎样避免继续引用旧内容。
 
-这正是本章要解决的问题。RAG（Retrieval-Augmented Generation，检索增强生成）不是一个神奇的“知识库按钮”，而是一条把外部事实变成可检查证据的工程管道。
+这正是本章要解决的问题。RAG（Retrieval-Augmented Generation，检索增强生成）的历史起点，是把参数化生成模型与可检索的非参数化外部记忆结合起来；本章不复刻原论文架构，而把这个思想展开成一条将外部事实转为可检查证据的工程管道[S01]。
 
 ## 先看失败：答案很像真的，证据却不存在
 
@@ -68,7 +68,7 @@
 
 读完 v7，你已经能设计一条边界清楚的 RAG 管道。后面的“进阶阅读”再解释 BM25 公式、Embedding、RRF、Reranker、Ragas、LangChain、LangGraph 和托管检索服务。这样安排是为了让术语服务于问题，而不是让问题淹没在术语里。
 
-实验代码位于 `chapter8/`。核心运行时只使用 Python 标准库，不需要下载模型，也不需要 API Key。可选的 Live Probe 可以调用真实模型，但它不进入公共固定报告。
+实验代码位于 `chapter8/`。核心运行时只使用 Python 标准库，不需要下载模型，也不需要 API Key。可选的 Live Probe 可以调用真实模型，但它不进入公共固定报告。本章涉及固定语料和确定性策略的实验结论，都以这套本地实现、测试与规范报告为证据[S15]。
 
 ## 一张边界图：RAG 到底改变了什么
 
@@ -107,7 +107,7 @@ RAG 常被演示成“对一份 PDF 提问”。那种案例适合跑通流程�
 
 因此，本章构造了 18 篇虚构的“星舟工作台”文档。它们不是从真实公司复制的资料，不包含真实商业秘密，却保留了知识工程中最关键的冲突：2.8 与 3.2 版本冲突、public 与 internal 权限隔离、未来预告尚未生效、撤回草稿仍在索引、社区内容信任较低，以及一篇把“忽略系统规则”伪装成正文的恶意问答。
 
-使用问答和领域知识文档还有一个好处：读者不需要先懂某套 API，也能判断答案是否有依据。我们讨论的是通用 RAG 边界，不是某个接口的使用说明。
+使用问答和领域知识文档还有一个好处：读者不需要先懂某套 API，也能判断答案是否有依据。我们讨论的是通用 RAG 边界，不是某个接口的使用说明。这种“先看具体问题，再拆离线与在线管道，最后用分项评估回查”的教学顺序，也吸收了作者既有 RAG 文章和扫描资料中的可用经验；旧资料里的产品事实和历史分数没有直接沿用[S16]。
 
 ## 中文术语表：先知道每个组件负责什么
 
@@ -790,7 +790,7 @@ NDCG 进一步考虑多个相关等级和位置折损。若没有任何标注相
 
 图中的 Precision@3 和 NDCG@3 1.00 来自 `governance-public-internal` 单案例；“MRR = null”来自一个没有相关项的拒答案例。它们用来解释数据结构，不是 Benchmark。底部“不要压成一个总分”是本章评估的核心：若把召回、引用、安全和拒答平均成 0.86，一个严重权限泄漏可能被其他高分抵消。
 
-Ragas 当前文档提供了 Context Precision、Context Recall 等多类指标，并按检索、生成和 Agent 任务组织[S12][S13][S14]。使用时要读清每个指标需要哪些输入、是否使用参考答案、是否依赖评审模型。名字相近不代表计算相同。例如本章简单 Precision@K 是基于人工相关标签，不能冒充 Ragas 的 Context Precision 变体。
+RAGAS 原始论文把上下文相关性、忠实性和答案相关性拆开讨论，为“不能只看最终答案”提供了早期评估框架[S07]。Ragas 当前文档进一步提供 Context Precision、Context Recall 等多类指标，并按检索、生成和 Agent 任务组织[S12][S13][S14]。使用时要读清每个指标需要哪些输入、是否使用参考答案、是否依赖评审模型。名字相近不代表计算相同。例如本章简单 Precision@K 是基于人工相关标签，不能冒充 Ragas 的 Context Precision 变体。
 
 评估集应来自多种来源：
 
@@ -998,7 +998,7 @@ PDF 可能是扫描件，OCR 把“3.2”识别成“32”；网页导航、页�
 
 每一步都要有输入摘要、输出摘要、状态和失败 reason。原始文件、规范化 Document、Chunk、Embedding 与 Index Manifest 应能通过版本关系关联。
 
-一个实用的 \`IndexManifest\` 可以包含：
+一个实用的 `IndexManifest` 可以包含：
 
 ~~~python
 @dataclass(frozen=True)
@@ -1038,7 +1038,7 @@ class IndexManifest:
 
 ### 权限与租户隔离必须是强约束
 
-把 \`tenant_id\` 写进 metadata，再在 Prompt 里说“不要泄漏别的租户”并不构成隔离。模型只能处理已经交给它的内容；一旦越权 Chunk 进入 Context，机密已经离开原边界。
+把 `tenant_id` 写进 metadata，再在 Prompt 里说“不要泄漏别的租户”并不构成隔离。模型只能处理已经交给它的内容；一旦越权 Chunk 进入 Context，机密已经离开原边界。
 
 生产设计通常组合多层措施：
 
@@ -1125,7 +1125,7 @@ RAG 把外部文本带进模型，因此网页、工单、邮件和社区文档�
 
 每次回答应能观察到：
 
-- \`query_id\`、actor scope digest 与策略版本；
+- `query_id`、actor scope digest 与策略版本；
 - Catalog snapshot 或查询时间；
 - Query 改写链和每轮停止 reason；
 - 各通道候选 ID、名次和分项；
@@ -1183,13 +1183,13 @@ RAG 的价值来自“外部知识可更新、可选择、可引用”。如果�
 
 现在把开头的问题重放一遍。
 
-第一步，应用从认证层获得 actor：\`tenant=acme\`、\`roles=(public_user,)\`。用户文本不能把自己改成 maintainer。Query Planner 提取目标版本 3.2、来源版本 2.8 和两个必需事实：SSO 迁移、超额成员处理。
+第一步，应用从认证层获得 actor：`tenant=acme`、`roles=(public_user,)`。用户文本不能把自己改成 maintainer。Query Planner 提取目标版本 3.2、来源版本 2.8 和两个必需事实：SSO 迁移、超额成员处理。
 
 第二步，Catalog 在固定时刻检查 18 篇文档。2.8 旧 FAQ、3.3 未来预告、withdrawn 草稿和 internal 事故记录不进入评分；合法迁移指南、3.2 计划页、公开 FAQ 与发布说明进入候选空间。
 
 第三步，BM25 命中“2.8”“3.2”“Team”“SAML”等精确词。固定语义通道补充“公司登录”“旧登录方式”表达。RRF 融合名次，教学 Reranker 对 Query—Chunk 做分项判断。
 
-第四步，Return Gate 再读 Catalog。若候选快照中的某篇文档刚刚撤回，它在这里被拒绝，并在 Trace 中记录 \`status_changed\`，不会进入 Evidence。
+第四步，Return Gate 再读 Catalog。若候选快照中的某篇文档刚刚撤回，它在这里被拒绝，并在 Trace 中记录 `status_changed`，不会进入 Evidence。
 
 第五步，Evidence Builder 去重相邻 Chunk，检查来源信任和注入风险，建立：
 
@@ -1219,7 +1219,7 @@ RAG 的价值来自“外部知识可更新、可选择、可引用”。如果�
 >
 > 关于超额成员：当前检索证据不足，无法确认是否会删除或限制邀请。
 
-这不是“回答能力变差”，而是把不确定性变得诚实、可定位。运营人员看到 \`missing_fact_ids=members-preserved-32\`，就知道应该补文档或改检索，而不是笼统地“调一调 Prompt”。
+这不是“回答能力变差”，而是把不确定性变得诚实、可定位。运营人员看到 `missing_fact_ids=members-preserved-32`，就知道应该补文档或改检索，而不是笼统地“调一调 Prompt”。
 
 **查询规划不是把一句话改写得更漂亮**
 
@@ -1239,7 +1239,7 @@ RAG 的价值来自“外部知识可更新、可选择、可引用”。如果�
 }
 ~~~
 
-\`original_question\` 始终保留，避免多轮改写偏离用户意图；版本和 actor 来自应用状态，不能由改写模型决定；required facts 提供停止条件；每个子查询只负责一项证据。
+`original_question` 始终保留，避免多轮改写偏离用户意图；版本和 actor 来自应用状态，不能由改写模型决定；required facts 提供停止条件；每个子查询只负责一项证据。
 
 Query 改写可以扩展同义词、拆分复合问题或加入领域术语，但每次改写都要保存 parent_query_id 和 reason。若改写加入了用户没问的实体，应被 Planner Verifier 拒绝。比如模型把“公司登录”扩成“管理员绕过 SSO”，就改变了安全含义。
 
@@ -1269,7 +1269,7 @@ Evidence Packet 应记录冲突，而不是只留下胜者：
 
 **Citation 是用户界面，也是审计接口**
 
-开发者常把 Citation 实现成段尾的 \`[1]\`，却没有设计点击后用户看到什么。一个可用引用至少展示：
+开发者常把 Citation 实现成段尾的 `[1]`，却没有设计点击后用户看到什么。一个可用引用至少展示：
 
 - 文档标题与版本；
 - 支持声明的短片段，并高亮关键句；
@@ -1342,7 +1342,7 @@ Chunk 参数可以通过分布诊断：
 - 看表格、代码和列表完整率，而不只看平均字符数；
 - 按文档类型分开统计，FAQ、手册和事故复盘不必使用同一策略。
 
-候选预算要区分 \`candidate_k\` 与 \`final_k\`。前者服务 Recall，后者控制 Evidence 噪声和生成成本。若 Recall 随 candidate_k 从 10 增到 30 明显提高，而 30 到 60 几乎不变，继续扩大通常只增加 Rerank 成本。若 final_k 墫大后支持事实不变、错误引用增加，应改 Evidence 选择而不是继续塞 Context。
+候选预算要区分 `candidate_k` 与 `final_k`。前者服务 Recall，后者控制 Evidence 噪声和生成成本。若 Recall 随 candidate_k 从 10 增到 30 明显提高，而 30 到 60 几乎不变，继续扩大通常只增加 Rerank 成本。若 final_k 增大后支持事实不变、错误引用增加，应改 Evidence 选择而不是继续塞 Context。
 
 阈值要看错误代价。帮助中心可以允许较宽检索并展示多个来源；法律、财务和权限政策应更偏向拒答。选择阈值时画出错误放行与错误拒答的变化，再由业务负责人决定风险点。开发者不能只选让平均分最高的值。
 
@@ -1374,25 +1374,25 @@ RRF 的平滑常数、通道权重和 Rerank 阈值也应进入版本化配置�
 
 **现象二：正确文档出现了，却排在错误文档之后。**
 
-检查两条原始排序。若 BM25 正确、Dense 错误，问题可能是领域缩写或向量表达；若 Dense 正确、BM25 错误，可能是词面重复与长度；若两条都正确而 RRF 错，检查候选截断、名次起点、并列和 \`k\`；若融合正确而 Rerank 颠倒，检查 Reranker 是否把措辞相似当成事实适用。
+检查两条原始排序。若 BM25 正确、Dense 错误，问题可能是领域缩写或向量表达；若 Dense 正确、BM25 错误，可能是词面重复与长度；若两条都正确而 RRF 错，检查候选截断、名次起点、并列和 `k`；若融合正确而 Rerank 颠倒，检查 Reranker 是否把措辞相似当成事实适用。
 
-此时最有用的不是一个 final_score，而是 \`ScoreBreakdown\`。把一个候选的 lexical、semantic、fusion、authority、version、injection risk 和 rerank 并排显示，工程师才知道哪一项改变了顺序。分项仍不能解释为概率，但能支持因果调试。
+此时最有用的不是一个 final_score，而是 `ScoreBreakdown`。把一个候选的 lexical、semantic、fusion、authority、version、injection risk 和 rerank 并排显示，工程师才知道哪一项改变了顺序。分项仍不能解释为概率，但能支持因果调试。
 
 **现象三：检索和排序都正确，回答却漏掉第二个条件。**
 
-先看 Evidence Packet。若 \`supported_fact_ids\` 已包含两个事实，而答案只表达一个，问题在 Answer Prompt、Context 位置或生成模型；若 Packet 只包含一个，问题在 Evidence Builder 的事实—Chunk 映射；若 Query Planner 根本只生成一个 required_fact_id，问题更早，属于需求分解。
+先看 Evidence Packet。若 `supported_fact_ids` 已包含两个事实，而答案只表达一个，问题在 Answer Prompt、Context 位置或生成模型；若 Packet 只包含一个，问题在 Evidence Builder 的事实—Chunk 映射；若 Query Planner 根本只生成一个 required_fact_id，问题更早，属于需求分解。
 
 复合问题应在进入检索前显式拆解验收项。不能等模型生成完再凭文字相似度猜它是否回答全面。对开放问题无法穷举全部事实时，也可以先定义最小充分条件，例如“至少包含适用版本、结论和例外”。
 
 **现象四：答案有两个引用，但其中一个引用不支持对应句子。**
 
-Citation Count 看起来是 2，仍可能完全错误。要把回答拆成事实声明，建立 \`claim_id → citation_id[]\`。Verifier 逐条检查引用 Chunk 是否蕴含声明，以及 Citation 的父摘要是否与当前 Catalog 一致。
+Citation Count 看起来是 2，仍可能完全错误。要把回答拆成事实声明，建立 `claim_id → citation_id[]`。Verifier 逐条检查引用 Chunk 是否蕴含声明，以及 Citation 的父摘要是否与当前 Catalog 一致。
 
 还要防止“引用洗白”：模型先说一个无依据结论，再在段落末尾挂一篇主题相关文档。主题相关不等于声明支持。对于高风险回答，可以使用抽取式短句或模板，把每个字段直接绑定到结构化证据；自然语言润色放在最后，且不得增加事实。
 
 **现象五：系统拒答，但知识库明明有答案。**
 
-拒答不自动等于安全，也可能是召回失败。看 \`missing_fact_ids\` 只是起点，还要问答案文档是否存在、是否在当前版本生效、调用者是否有权、是否进入合法候选、是否被阈值删除、是否在重排后落出 final_k、是否因 Locator 失效被 Return Gate 拦截。
+拒答不自动等于安全，也可能是召回失败。看 `missing_fact_ids` 只是起点，还要问答案文档是否存在、是否在当前版本生效、调用者是否有权、是否进入合法候选、是否被阈值删除、是否在重排后落出 final_k、是否因 Locator 失效被 Return Gate 拦截。
 
 运营面板应把拒答分成“事实确实不存在”“无权访问”“索引落后”“检索未命中”“证据冲突”“服务降级”“预算耗尽”等 reason。只有这样，内容团队才知道补文档，平台团队才知道修索引，安全团队才知道权限策略生效。
 
@@ -1498,9 +1498,9 @@ python -m chapter8.experiments.run_all --output chapter8/reports
 
 运行时不需要网络、模型下载和 API Key。核心代码使用 Python 标准库。规范输出有三份：
 
-- \`rag-evidence.json\`：机器可读的五组 20 个案例、独立指标和 Claims；
-- \`rag-evidence.md\`：便于读者浏览的实验表；
-- \`rag-trace.jsonl\`：按事件顺序记录的脱敏 Trace。
+- `rag-evidence.json`：机器可读的五组 20 个案例、独立指标和 Claims；
+- `rag-evidence.md`：便于读者浏览的实验表；
+- `rag-trace.jsonl`：按事件顺序记录的脱敏 Trace。
 
 五组实验不是五个“分数段”，而是五类问题：
 
@@ -1512,7 +1512,7 @@ python -m chapter8.experiments.run_all --output chapter8/reports
 | governance | 版本、权限、未来、撤回、陈旧索引 | 评分前过滤、Return Gate、策略违规 |
 | evidence | 缺一项事实、错引、冲突、注入、无答案 | Citation、支持比例、Answer 状态 |
 
-先打开 JSON 的 \`scope\`：
+先打开 JSON 的 `scope`：
 
 ~~~json
 {
@@ -1524,7 +1524,7 @@ python -m chapter8.experiments.run_all --output chapter8/reports
 }
 ~~~
 
-这几项限定了证据范围。再看 \`unmeasured\`：
+这几项限定了证据范围。再看 `unmeasured`：
 
 ~~~json
 {
@@ -1549,17 +1549,17 @@ null 不是漏填，而是诚实地表示公共实验没有测。若有人把 JS
 
 阅读实现的推荐顺序是：
 
-1. \`contracts.py\`：Document、Chunk、Query、Hit、Citation 与 Evidence 的类型边界；
-2. \`catalog.py\`：元数据加载、状态/时间/版本/角色硬过滤；
-3. \`chunking.py\`：三种切块与稳定 ID；
-4. \`sparse.py\`、\`dense.py\`、\`fusion.py\`：两路召回与 RRF；
-5. \`rerank.py\`、\`retrieve.py\`：分项精排和 Catalog 重查；
-6. \`evidence.py\`、\`evaluation.py\`：证据、拒答与指标；
-7. \`experiments/run_all.py\`：报告怎样由真实代码路径生成。
+1. `chapter8/knowledge_runtime/contracts.py`：Document、Chunk、Query、Hit、Citation 与 Evidence 的类型边界；
+2. `chapter8/knowledge_runtime/catalog.py`：元数据加载、状态/时间/版本/角色硬过滤；
+3. `chapter8/knowledge_runtime/chunking.py`：三种切块与稳定 ID；
+4. `chapter8/knowledge_runtime/sparse.py`、`dense.py`、`fusion.py`：两路召回与 RRF；
+5. `chapter8/knowledge_runtime/rerank.py`、`retrieve.py`：分项精排和 Catalog 重查；
+6. `chapter8/knowledge_runtime/evidence.py`、`evaluation.py`：证据、拒答与指标；
+7. `chapter8/experiments/run_all.py`：报告怎样由真实代码路径生成。
 
 不要先修改报告。报告是运行结果，不是配置文件。正确的实验流程是：先写失败测试，修改 Runtime 或 Fixture，再重新生成报告，最后解释差异。
 
-\`chapter8/live/live_probe.py\` 提供可选真实模型探针。它默认 dry-run，不读取凭据；只有显式选择 Live 模式并在环境中配置 Provider 凭据才会发起调用。Live 输出进入忽略目录，不覆盖规范报告。真实模型结果可以帮助观察生成表达，却不能替代固定边界测试。
+`chapter8/live/live_probe.py` 提供可选真实模型探针。它默认 dry-run，不读取凭据；只有显式选择 Live 模式并在环境中配置 Provider 凭据才会发起调用。Live 输出进入忽略目录，不覆盖规范报告。真实模型结果可以帮助观察生成表达，却不能替代固定边界测试。
 
 ## 本章小结
 
@@ -1617,15 +1617,15 @@ RAG 的一句话定义是：先从外部知识源取回证据，再让模型基�
 
 ## 分层练习与参考答案
 
-以下练习按 ★ 到 ★★★★ 分层。不要只提交一段解释；工程题应包含失败测试、实现变化、运行命令、可观察输出和结论边界。参考答案在 \`chapter8/reference-answers.md\`。
+以下练习按 ★ 到 ★★★★ 分层。不要只提交一段解释；工程题应包含失败测试、实现变化、运行命令、可观察输出和结论边界。参考答案在 `chapter8/reference-answers.md`。
 
 1. **★ 边界分类**：把“用户上传的一份临时合同”“公司当前退款政策”“用户偏好简体中文”“等待人工审批的 action_id”“实时账户余额”分别放入 Context、Session/Artifact、Memory、RAG Source 或 Tool 事实源。允许同一内容被投影到 Context，但必须写出权威所有者、生命周期、更新入口和一个错误归类的后果。验收时，随机修改任一事实，系统只能有一个权威更新点。
 
-2. **★ 设计 KnowledgeDocument**：为一篇“星舟工作台 3.2 数据保留政策”设计完整元数据，至少包含稳定 ID、来源、版本、生效/失效时间、状态、可见性、角色、信任级别、更新时间和内容摘要。再构造三条非法记录：时间窗口倒置、摘要不匹配、internal 却无 allowed_roles。先写测试断言加载器拒绝，再实现校验。验收不允许只靠 \`metadata: dict\` 和运行时报错。
+2. **★ 设计 KnowledgeDocument**：为一篇“星舟工作台 3.2 数据保留政策”设计完整元数据，至少包含稳定 ID、来源、版本、生效/失效时间、状态、可见性、角色、信任级别、更新时间和内容摘要。再构造三条非法记录：时间窗口倒置、摘要不匹配、internal 却无 allowed_roles。先写测试断言加载器拒绝，再实现校验。验收不允许只靠 `metadata: dict` 和运行时报错。
 
 3. **★★ 比较三种切块**：新增一篇同时包含二级标题、跨行表格、列表和 fenced code 的文档。分别运行固定字符、结构感知和上下文前缀切块，记录 Chunk 数、完整表格/代码块数、标题路径和父摘要。解释哪一种更适合 Citation，哪一种仍可能漏掉跨章节条件。验收必须证明上下文前缀没有改写原始 Chunk 内容。
 
-4. **★★ 手算 BM25**：使用三篇短文和查询“3.2 Team SAML”，列出分词、每个词的文档频率、平均文档长度，并选定 \(k_1\) 与 \(b\) 手算至少两篇文档的分数。再与 \`sparse.py\` 输出比较。若不同，要定位是 IDF 公式、分词、长度还是浮点格式造成。验收时不能只给最终排名。
+4. **★★ 手算 BM25**：使用三篇短文和查询“3.2 Team SAML”，列出分词、每个词的文档频率、平均文档长度，并选定 \(k_1\) 与 \(b\) 手算至少两篇文档的分数。再与 `sparse.py` 输出比较。若不同，要定位是 IDF 公式、分词、长度还是浮点格式造成。验收时不能只给最终排名。
 
 5. **★★ 手算 RRF 并制造并列**：构造两条各含四个 Chunk 的排序，让两个 Chunk 的 RRF 分数完全相同。写测试证明实现使用稳定 Chunk ID 打破并列；调换输入列表顺序，输出仍应一致。随后删除一条召回通道，说明名次怎样变化，以及为什么 RRF 分数不能解释成概率。
 
@@ -1633,11 +1633,11 @@ RAG 的一句话定义是：先从外部知识源取回证据，再让模型基�
 
 7. **★★★ 文档注入实验**：在社区问答中加入一段不包含“忽略”关键词、但试图让系统提升角色并引用内部事故的改写指令。新增测试断言 actor、allowed_roles、required_fact_ids 不变，恶意 Chunk 不进入 Answer Context。比较“关键词删除”“来源信任策略”“结构化 Evidence Gate”三种防护的作用和盲区。验收必须保留文档作为数据，而不是为了过测试直接删除 Fixture。
 
-8. **★★★ 陈旧索引故障注入**：让 Retriever 先取得 published 文档快照，在 Rerank 后把对应 Catalog 记录改为 withdrawn。测试缺少 Return Gate 时旧 Chunk 被返回，恢复 Gate 后 \`catalog_recheck_rejected_count\` 增加且 Citation 不包含旧 Chunk。再讨论内容摘要改变但状态仍 published 的处理。验收不能声称这等同于索引强一致或物理删除。
+8. **★★★ 陈旧索引故障注入**：让 Retriever 先取得 published 文档快照，在 Rerank 后把对应 Catalog 记录改为 withdrawn。测试缺少 Return Gate 时旧 Chunk 被返回，恢复 Gate 后 `catalog_recheck_rejected_count` 增加且 Citation 不包含旧 Chunk。再讨论内容摘要改变但状态仍 published 的处理。验收不能声称这等同于索引强一致或物理删除。
 
 9. **★★★ 评估无答案问题**：新增三个案例：知识库确实无答案、相关文档存在但无权访问、相关文档因版本条件被排除。分别定义 expected Answer 状态，并说明 Precision@K、Recall@K、MRR 哪些有定义、哪些应为 null。写测试阻止 null 被序列化成 0。验收还要比较“正确拒答”和“检索失败”为什么不能只看最终文字。
 
-10. **★★★ 替换真实 Embedding**：实现 \`EmbeddingModel\` 的可选适配器，使用你可访问的本地或托管模型，但不得改变 Catalog、Evidence 与评估接口。建立至少 30 个中文查询的小型黄金集，记录模型 ID、维度、归一化方式和索引 Manifest。与 FrozenSemanticEncoder 比较 Recall@K 和失败类型，不做产品排名。公共测试仍须在没有网络和凭据时通过。
+10. **★★★ 替换真实 Embedding**：实现 `EmbeddingModel` 的可选适配器，使用你可访问的本地或托管模型，但不得改变 Catalog、Evidence 与评估接口。建立至少 30 个中文查询的小型黄金集，记录模型 ID、维度、归一化方式和索引 Manifest。与 FrozenSemanticEncoder 比较 Recall@K 和失败类型，不做产品排名。公共测试仍须在没有网络和凭据时通过。
 
 11. **★★★ 映射 LangChain 2-Step RAG**：用 LangChain Retriever 重构在线召回，但保留本章的评分前过滤、Catalog 重查、Evidence Packet 和 Answer Policy。画出框架对象到本章合同的映射表。故意移除一次后过滤，证明越权候选会挤占合法 Top-K。验收重点是责任是否保留，不是代码行数是否减少。
 
