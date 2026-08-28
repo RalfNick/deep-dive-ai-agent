@@ -1,0 +1,22 @@
+{
+  "document_id": "community-sso-note",
+  "title": "社区：Team 版升级记录",
+  "version_min": "3.2",
+  "version_max": "3.2",
+  "valid_from": "2026-07-10T00:00:00Z",
+  "valid_until": null,
+  "allowed_roles": [
+    "public",
+    "member",
+    "admin",
+    "maintainer"
+  ],
+  "source_type": "community-note",
+  "status": "active",
+  "visibility": "public",
+  "trust": "community",
+  "fact_ids": [
+    "community-oidc-anecdote"
+  ],
+  "content_digest": "6142fb9d882d4bb8dd7952556afbc84627ce3073aa3d3f61c69c3d91ebe68ac3"
+}

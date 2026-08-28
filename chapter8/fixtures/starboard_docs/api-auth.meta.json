@@ -1,0 +1,23 @@
+{
+  "document_id": "api-auth",
+  "title": "API 身份验证",
+  "version_min": "3.0",
+  "version_max": null,
+  "valid_from": "2026-01-01T00:00:00Z",
+  "valid_until": null,
+  "allowed_roles": [
+    "public",
+    "member",
+    "admin",
+    "maintainer"
+  ],
+  "source_type": "api-guide",
+  "status": "active",
+  "visibility": "public",
+  "trust": "authoritative",
+  "fact_ids": [
+    "short-lived-token",
+    "token-not-in-trace"
+  ],
+  "content_digest": "caf1f55bca7a28987641f43797f74819bb158315eaf4ca300aa304ac5b77fe9d"
+}

@@ -1,0 +1,23 @@
+{
+  "document_id": "install-3.2",
+  "title": "安装星舟工作台 3.2",
+  "version_min": "3.2",
+  "version_max": "3.2",
+  "valid_from": "2026-07-01T00:00:00Z",
+  "valid_until": null,
+  "allowed_roles": [
+    "public",
+    "member",
+    "admin",
+    "maintainer"
+  ],
+  "source_type": "install-guide",
+  "status": "active",
+  "visibility": "public",
+  "trust": "curated",
+  "fact_ids": [
+    "oidc-prerequisite",
+    "no-secret-in-config"
+  ],
+  "content_digest": "777d4cda1f8f07d8a64c3442a076b8649538b78cd1eccc2e2b6cf6acb00dd629"
+}

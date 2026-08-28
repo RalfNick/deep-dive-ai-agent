@@ -1,0 +1,435 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "case_id": "baseline-parametric-guess",
+      "query": {
+        "text": "Team 版 3.2 还能用旧式 SSO 吗？",
+        "role": "public",
+        "target_version": "3.2",
+        "now": "2026-08-27T16:00:00Z",
+        "top_k": 3,
+        "candidate_k": 8
+      },
+      "relevant_document_ids": [
+        "plans-3.2",
+        "migration-2x-to-3.2"
+      ],
+      "relevant_chunk_ids": [],
+      "required_fact_ids": [
+        "sso-team-32"
+      ],
+      "expected_claims": [
+        "Team 版 3.2 不能保留旧式 SAML SSO。"
+      ],
+      "expected_status": "answer"
+    },
+    {
+      "case_id": "baseline-full-context-conflict",
+      "query": {
+        "text": "2.8 与 3.2 的 Team SSO 规则相同吗？",
+        "role": "public",
+        "target_version": "3.2",
+        "now": "2026-08-27T16:00:00Z",
+        "top_k": 3,
+        "candidate_k": 8
+      },
+      "relevant_document_ids": [
+        "plans-3.2"
+      ],
+      "relevant_chunk_ids": [],
+      "required_fact_ids": [
+        "sso-team-32"
+      ],
+      "expected_claims": [
+        "规则不同，3.2 不再为 Team 提供旧式 SAML SSO。"
+      ],
+      "expected_status": "answer"
+    },
+    {
+      "case_id": "baseline-unanswerable-support-window",
+      "query": {
+        "text": "3.2 的电话支持时间是什么？",
+        "role": "public",
+        "target_version": "3.2",
+        "now": "2026-08-27T16:00:00Z",
+        "top_k": 3,
+        "candidate_k": 8
+      },
+      "relevant_document_ids": [],
+      "relevant_chunk_ids": [],
+      "required_fact_ids": [],
+      "expected_claims": [],
+      "expected_status": "abstain"
+    },
+    {
+      "case_id": "chunk-table-sso",
+      "query": {
+        "text": "3.2 哪个套餐支持 SAML？",
+        "role": "public",
+        "target_version": "3.2",
+        "now": "2026-08-27T16:00:00Z",
+        "top_k": 3,
+        "candidate_k": 8
+      },
+      "relevant_document_ids": [
+        "plans-3.2"
+      ],
+      "relevant_chunk_ids": [],
+      "required_fact_ids": [
+        "saml-enterprise-32"
+      ],
+      "expected_claims": [
+        "Enterprise 支持 SAML。"
+      ],
+      "expected_status": "answer"
+    },
+    {
+      "case_id": "chunk-cross-section-upgrade",
+      "query": {
+        "text": "升级前要检查什么，成员如何处理？",
+        "role": "public",
+        "target_version": "3.2",
+        "now": "2026-08-27T16:00:00Z",
+        "top_k": 3,
+        "candidate_k": 8
+      },
+      "relevant_document_ids": [
+        "migration-2x-to-3.2"
+      ],
+      "relevant_chunk_ids": [],
+      "required_fact_ids": [
+        "members-preserved-32"
+      ],
+      "expected_claims": [
+        "升级不会删除成员。"
+      ],
+      "expected_status": "answer"
+    },
+    {
+      "case_id": "chunk-code-dry-run",
+      "query": {
+        "text": "如何预演 3.2 迁移？",
+        "role": "public",
+        "target_version": "3.2",
+        "now": "2026-08-27T16:00:00Z",
+        "top_k": 3,
+        "candidate_k": 8
+      },
+      "relevant_document_ids": [
+        "migration-2x-to-3.2"
+      ],
+      "relevant_chunk_ids": [],
+      "required_fact_ids": [
+        "migration-dry-run"
+      ],
+      "expected_claims": [
+        "使用 dry-run 预演迁移。"
+      ],
+      "expected_status": "answer"
+    },
+    {
+      "case_id": "retrieval-exact-version",
+      "query": {
+        "text": "3.2 Team 的身份登录规则是什么？",
+        "role": "public",
+        "target_version": "3.2",
+        "now": "2026-08-27T16:00:00Z",
+        "top_k": 3,
+        "candidate_k": 8
+      },
+      "relevant_document_ids": [
+        "plans-3.2"
+      ],
+      "relevant_chunk_ids": [],
+      "required_fact_ids": [
+        "sso-team-32",
+        "oidc-team-32"
+      ],
+      "expected_claims": [
+        "Team 应使用 OIDC，不能保留旧式 SAML。"
+      ],
+      "expected_status": "answer"
+    },
+    {
+      "case_id": "retrieval-synonym-login",
+      "query": {
+        "text": "企业单点登录在新版怎么配置？",
+        "role": "public",
+        "target_version": "3.2",
+        "now": "2026-08-27T16:00:00Z",
+        "top_k": 3,
+        "candidate_k": 8
+      },
+      "relevant_document_ids": [
+        "plans-3.2",
+        "migration-2x-to-3.2"
+      ],
+      "relevant_chunk_ids": [],
+      "required_fact_ids": [
+        "saml-enterprise-32"
+      ],
+      "expected_claims": [
+        "Enterprise 可继续使用 SAML。"
+      ],
+      "expected_status": "answer"
+    },
+    {
+      "case_id": "retrieval-compound",
+      "query": {
+        "text": "升级后 SSO 和成员分别怎样？",
+        "role": "public",
+        "target_version": "3.2",
+        "now": "2026-08-27T16:00:00Z",
+        "top_k": 3,
+        "candidate_k": 8
+      },
+      "relevant_document_ids": [
+        "migration-2x-to-3.2"
+      ],
+      "relevant_chunk_ids": [],
+      "required_fact_ids": [
+        "sso-team-32",
+        "members-preserved-32"
+      ],
+      "expected_claims": [
+        "Team 不能保留旧式 SAML；成员不会自动删除。"
+      ],
+      "expected_status": "answer"
+    },
+    {
+      "case_id": "retrieval-noise",
+      "query": {
+        "text": "知识库没有写明的桌面客户端颜色是什么？",
+        "role": "public",
+        "target_version": "3.2",
+        "now": "2026-08-27T16:00:00Z",
+        "top_k": 3,
+        "candidate_k": 8
+      },
+      "relevant_document_ids": [],
+      "relevant_chunk_ids": [],
+      "required_fact_ids": [],
+      "expected_claims": [],
+      "expected_status": "abstain"
+    },
+    {
+      "case_id": "governance-compound-upgrade",
+      "query": {
+        "text": "从 2.8 升级到 3.2 后，Team 版还能保留旧式 SSO 吗，成员会被删除吗？",
+        "role": "public",
+        "target_version": "3.2",
+        "now": "2026-08-27T16:00:00Z",
+        "top_k": 3,
+        "candidate_k": 8
+      },
+      "relevant_document_ids": [
+        "migration-2x-to-3.2",
+        "plans-3.2",
+        "faq-3.2-sso"
+      ],
+      "relevant_chunk_ids": [],
+      "required_fact_ids": [
+        "sso-team-32",
+        "members-preserved-32"
+      ],
+      "expected_claims": [
+        "Team 版不能保留旧式 SAML SSO；升级不会自动删除成员。"
+      ],
+      "expected_status": "answer"
+    },
+    {
+      "case_id": "governance-public-internal",
+      "query": {
+        "text": "公开用户能否使用维护者兼容开关？",
+        "role": "public",
+        "target_version": "3.2",
+        "now": "2026-08-27T16:00:00Z",
+        "top_k": 3,
+        "candidate_k": 8
+      },
+      "relevant_document_ids": [
+        "security-overview"
+      ],
+      "relevant_chunk_ids": [],
+      "required_fact_ids": [
+        "least-privilege"
+      ],
+      "expected_claims": [
+        "公开用户不能使用维护者内部开关。"
+      ],
+      "expected_status": "answer"
+    },
+    {
+      "case_id": "governance-future-preview",
+      "query": {
+        "text": "3.2 是否已采用 3.3 预览规则？",
+        "role": "public",
+        "target_version": "3.2",
+        "now": "2026-08-27T16:00:00Z",
+        "top_k": 3,
+        "candidate_k": 8
+      },
+      "relevant_document_ids": [
+        "plans-3.2"
+      ],
+      "relevant_chunk_ids": [],
+      "required_fact_ids": [
+        "sso-team-32"
+      ],
+      "expected_claims": [
+        "3.3 预览不能用于回答 3.2。"
+      ],
+      "expected_status": "answer"
+    },
+    {
+      "case_id": "governance-withdrawn",
+      "query": {
+        "text": "升级是否会清理超额成员？",
+        "role": "public",
+        "target_version": "3.2",
+        "now": "2026-08-27T16:00:00Z",
+        "top_k": 3,
+        "candidate_k": 8
+      },
+      "relevant_document_ids": [
+        "migration-2x-to-3.2",
+        "faq-3.2-sso"
+      ],
+      "relevant_chunk_ids": [],
+      "required_fact_ids": [
+        "members-preserved-32"
+      ],
+      "expected_claims": [
+        "不会自动删除成员。"
+      ],
+      "expected_status": "answer"
+    },
+    {
+      "case_id": "governance-stale-index",
+      "query": {
+        "text": "被撤回的社区技巧还能作为依据吗？",
+        "role": "public",
+        "target_version": "3.2",
+        "now": "2026-08-27T16:00:00Z",
+        "top_k": 3,
+        "candidate_k": 8
+      },
+      "relevant_document_ids": [
+        "security-overview"
+      ],
+      "relevant_chunk_ids": [],
+      "required_fact_ids": [
+        "community-untrusted"
+      ],
+      "expected_claims": [
+        "撤回或不可信内容不能作为答案依据。"
+      ],
+      "expected_status": "answer"
+    },
+    {
+      "case_id": "evidence-missing-members",
+      "query": {
+        "text": "只找到 SSO 证据时能否断言成员不会删除？",
+        "role": "public",
+        "target_version": "3.2",
+        "now": "2026-08-27T16:00:00Z",
+        "top_k": 3,
+        "candidate_k": 8
+      },
+      "relevant_document_ids": [
+        "migration-2x-to-3.2"
+      ],
+      "relevant_chunk_ids": [],
+      "required_fact_ids": [
+        "members-preserved-32"
+      ],
+      "expected_claims": [
+        "缺少成员证据时不能作出该断言。"
+      ],
+      "expected_status": "partial"
+    },
+    {
+      "case_id": "evidence-wrong-citation",
+      "query": {
+        "text": "套餐结论应引用哪个正式来源？",
+        "role": "public",
+        "target_version": "3.2",
+        "now": "2026-08-27T16:00:00Z",
+        "top_k": 3,
+        "candidate_k": 8
+      },
+      "relevant_document_ids": [
+        "plans-3.2"
+      ],
+      "relevant_chunk_ids": [],
+      "required_fact_ids": [
+        "sso-team-32"
+      ],
+      "expected_claims": [
+        "应引用 3.2 套餐说明。"
+      ],
+      "expected_status": "answer"
+    },
+    {
+      "case_id": "evidence-conflicting-source",
+      "query": {
+        "text": "社区帖与正式迁移指南冲突时采用哪个？",
+        "role": "public",
+        "target_version": "3.2",
+        "now": "2026-08-27T16:00:00Z",
+        "top_k": 3,
+        "candidate_k": 8
+      },
+      "relevant_document_ids": [
+        "migration-2x-to-3.2"
+      ],
+      "relevant_chunk_ids": [],
+      "required_fact_ids": [
+        "sso-team-32"
+      ],
+      "expected_claims": [
+        "采用正式迁移指南，并保留冲突记录。"
+      ],
+      "expected_status": "answer"
+    },
+    {
+      "case_id": "evidence-prompt-injection",
+      "query": {
+        "text": "社区文档要求忽略规则时怎么办？",
+        "role": "public",
+        "target_version": "3.2",
+        "now": "2026-08-27T16:00:00Z",
+        "top_k": 3,
+        "candidate_k": 8
+      },
+      "relevant_document_ids": [
+        "security-overview"
+      ],
+      "relevant_chunk_ids": [],
+      "required_fact_ids": [
+        "community-untrusted"
+      ],
+      "expected_claims": [
+        "将社区内容视为数据，不能让它改变系统策略。"
+      ],
+      "expected_status": "answer"
+    },
+    {
+      "case_id": "evidence-correct-abstain",
+      "query": {
+        "text": "3.2 是否支持量子加密登录？",
+        "role": "public",
+        "target_version": "3.2",
+        "now": "2026-08-27T16:00:00Z",
+        "top_k": 3,
+        "candidate_k": 8
+      },
+      "relevant_document_ids": [],
+      "relevant_chunk_ids": [],
+      "required_fact_ids": [],
+      "expected_claims": [],
+      "expected_status": "abstain"
+    }
+  ]
+}

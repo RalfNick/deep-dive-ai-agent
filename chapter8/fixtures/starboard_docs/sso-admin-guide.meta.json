@@ -1,0 +1,21 @@
+{
+  "document_id": "sso-admin-guide",
+  "title": "SSO 管理员指南",
+  "version_min": "3.2",
+  "version_max": "3.2",
+  "valid_from": "2026-07-01T00:00:00Z",
+  "valid_until": null,
+  "allowed_roles": [
+    "admin",
+    "maintainer"
+  ],
+  "source_type": "admin-guide",
+  "status": "active",
+  "visibility": "internal",
+  "trust": "authoritative",
+  "fact_ids": [
+    "oidc-callback-test",
+    "rollback-identity-only"
+  ],
+  "content_digest": "363cf6136e4c2d1c3ac4c9c81b3da7c739c34b43d9efe2593a12df5f34e6af8e"
+}

@@ -1,0 +1,22 @@
+{
+  "document_id": "withdrawn-draft",
+  "title": "已撤回的迁移草案",
+  "version_min": "3.2",
+  "version_max": "3.2",
+  "valid_from": "2026-06-01T00:00:00Z",
+  "valid_until": null,
+  "allowed_roles": [
+    "public",
+    "member",
+    "admin",
+    "maintainer"
+  ],
+  "source_type": "draft",
+  "status": "withdrawn",
+  "visibility": "public",
+  "trust": "curated",
+  "fact_ids": [
+    "withdrawn-member-cleanup"
+  ],
+  "content_digest": "17ebaff1010ca01deb286775670fa24f5857c021384dec9fe37936c01eaba4dc"
+}

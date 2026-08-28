@@ -1,0 +1,19 @@
+{
+  "document_id": "maintainer-sso-bypass",
+  "title": "维护者内部测试开关",
+  "version_min": "3.2",
+  "version_max": "3.2",
+  "valid_from": "2026-07-01T00:00:00Z",
+  "valid_until": null,
+  "allowed_roles": [
+    "maintainer"
+  ],
+  "source_type": "maintainer-note",
+  "status": "active",
+  "visibility": "internal",
+  "trust": "curated",
+  "fact_ids": [
+    "internal-test-switch"
+  ],
+  "content_digest": "6fd847b1ef06a75bbc50bb0b8882b30cf9a90d9730e6236335d4f2686860b9e6"
+}

@@ -1,0 +1,24 @@
+{
+  "document_id": "plans-3.2",
+  "title": "星舟工作台 3.2 套餐说明",
+  "version_min": "3.2",
+  "version_max": "3.2",
+  "valid_from": "2026-07-01T00:00:00Z",
+  "valid_until": null,
+  "allowed_roles": [
+    "public",
+    "member",
+    "admin",
+    "maintainer"
+  ],
+  "source_type": "product-doc",
+  "status": "active",
+  "visibility": "public",
+  "trust": "authoritative",
+  "fact_ids": [
+    "sso-team-32",
+    "oidc-team-32",
+    "saml-enterprise-32"
+  ],
+  "content_digest": "16c680eed279bfc124bbdb395d7d287f5bfc1ce2ef069a5eb46da61cf4ebd486"
+}

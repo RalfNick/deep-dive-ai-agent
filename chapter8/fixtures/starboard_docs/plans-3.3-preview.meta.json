@@ -1,0 +1,22 @@
+{
+  "document_id": "plans-3.3-preview",
+  "title": "星舟工作台 3.3 预览",
+  "version_min": "3.3",
+  "version_max": "3.3",
+  "valid_from": "2026-10-01T00:00:00Z",
+  "valid_until": null,
+  "allowed_roles": [
+    "public",
+    "member",
+    "admin",
+    "maintainer"
+  ],
+  "source_type": "product-preview",
+  "status": "active",
+  "visibility": "public",
+  "trust": "authoritative",
+  "fact_ids": [
+    "preview-team-identity"
+  ],
+  "content_digest": "9b9b9b9ba722a920b8164bfb60e385cc09fbf88b52a78966338e036488630d03"
+}

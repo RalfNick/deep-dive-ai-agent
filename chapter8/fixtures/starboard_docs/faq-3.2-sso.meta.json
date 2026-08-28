@@ -1,0 +1,24 @@
+{
+  "document_id": "faq-3.2-sso",
+  "title": "3.2 身份登录常见问题",
+  "version_min": "3.2",
+  "version_max": "3.2",
+  "valid_from": "2026-07-01T00:00:00Z",
+  "valid_until": null,
+  "allowed_roles": [
+    "public",
+    "member",
+    "admin",
+    "maintainer"
+  ],
+  "source_type": "faq",
+  "status": "active",
+  "visibility": "public",
+  "trust": "curated",
+  "fact_ids": [
+    "members-preserved-32",
+    "new-invites-blocked-32",
+    "sso-team-32"
+  ],
+  "content_digest": "80f20e692ca4dd032bb9f90650eb522dcc4cc2979e355cebef2b4ce0b69cc7e3"
+}

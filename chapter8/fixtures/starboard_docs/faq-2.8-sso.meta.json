@@ -1,0 +1,22 @@
+{
+  "document_id": "faq-2.8-sso",
+  "title": "2.8 旧式 SSO 常见问题",
+  "version_min": "2.8",
+  "version_max": "2.8",
+  "valid_from": "2025-01-01T00:00:00Z",
+  "valid_until": "2026-07-01T00:00:00Z",
+  "allowed_roles": [
+    "public",
+    "member",
+    "admin",
+    "maintainer"
+  ],
+  "source_type": "faq",
+  "status": "retired",
+  "visibility": "public",
+  "trust": "curated",
+  "fact_ids": [
+    "sso-team-28"
+  ],
+  "content_digest": "afcf7c82cde7d93f88f681c6dadd3904e374599fedd24cb1aa8002189a86fe72"
+}

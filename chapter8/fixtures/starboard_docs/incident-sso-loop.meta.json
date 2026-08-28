@@ -1,0 +1,20 @@
+{
+  "document_id": "incident-sso-loop",
+  "title": "SSO 重定向循环事件复盘",
+  "version_min": "3.2",
+  "version_max": "3.2",
+  "valid_from": "2026-07-15T00:00:00Z",
+  "valid_until": null,
+  "allowed_roles": [
+    "admin",
+    "maintainer"
+  ],
+  "source_type": "incident",
+  "status": "active",
+  "visibility": "internal",
+  "trust": "curated",
+  "fact_ids": [
+    "oidc-callback-incident"
+  ],
+  "content_digest": "aff77f150e8d9c0b300016cb1e5cb1306fe2ce648e7c8aafc6c506cfb9de8c63"
+}

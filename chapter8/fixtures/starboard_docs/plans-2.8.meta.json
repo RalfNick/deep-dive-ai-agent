@@ -1,0 +1,23 @@
+{
+  "document_id": "plans-2.8",
+  "title": "星舟工作台 2.8 套餐说明",
+  "version_min": "2.8",
+  "version_max": "2.8",
+  "valid_from": "2025-01-01T00:00:00Z",
+  "valid_until": "2026-07-01T00:00:00Z",
+  "allowed_roles": [
+    "public",
+    "member",
+    "admin",
+    "maintainer"
+  ],
+  "source_type": "product-doc",
+  "status": "retired",
+  "visibility": "public",
+  "trust": "authoritative",
+  "fact_ids": [
+    "sso-team-28",
+    "member-limit-28"
+  ],
+  "content_digest": "0e202fc3080a44ceb88105838373e874f1b3551e2a01d393164de5a65ec6cf4b"
+}

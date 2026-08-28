@@ -1,0 +1,20 @@
+{
+  "document_id": "incident-member-sync",
+  "title": "成员同步延迟事件复盘",
+  "version_min": "3.2",
+  "version_max": "3.2",
+  "valid_from": "2026-07-16T00:00:00Z",
+  "valid_until": null,
+  "allowed_roles": [
+    "admin",
+    "maintainer"
+  ],
+  "source_type": "incident",
+  "status": "active",
+  "visibility": "internal",
+  "trust": "curated",
+  "fact_ids": [
+    "members-preserved-32"
+  ],
+  "content_digest": "50aa0540ebbda82c613e63697850b1c260cd15d39b20dd090f73547d5376477f"
+}

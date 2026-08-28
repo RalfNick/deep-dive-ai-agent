@@ -1,0 +1,25 @@
+{
+  "document_id": "migration-2x-to-3.2",
+  "title": "从 2.x 升级到 3.2",
+  "version_min": "3.2",
+  "version_max": "3.2",
+  "valid_from": "2026-07-01T00:00:00Z",
+  "valid_until": null,
+  "allowed_roles": [
+    "public",
+    "member",
+    "admin",
+    "maintainer"
+  ],
+  "source_type": "migration-guide",
+  "status": "active",
+  "visibility": "public",
+  "trust": "authoritative",
+  "fact_ids": [
+    "sso-team-32",
+    "members-preserved-32",
+    "new-invites-blocked-32",
+    "migration-dry-run"
+  ],
+  "content_digest": "0e7f2ccae0b19fe61206a9824003b8a87aad3fa61ba9936d0360fe44cd5e767f"
+}

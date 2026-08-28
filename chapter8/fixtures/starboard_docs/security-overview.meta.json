@@ -1,0 +1,23 @@
+{
+  "document_id": "security-overview",
+  "title": "安全概览",
+  "version_min": "2.8",
+  "version_max": null,
+  "valid_from": "2025-01-01T00:00:00Z",
+  "valid_until": null,
+  "allowed_roles": [
+    "public",
+    "member",
+    "admin",
+    "maintainer"
+  ],
+  "source_type": "security-guide",
+  "status": "active",
+  "visibility": "public",
+  "trust": "authoritative",
+  "fact_ids": [
+    "least-privilege",
+    "community-untrusted"
+  ],
+  "content_digest": "64aa29ac3f241e7c37f3e4701305ec53ce2ad6b4dca057133aefaf2a0975119b"
+}

@@ -1,0 +1,22 @@
+{
+  "document_id": "membership-backup",
+  "title": "成员备份与恢复",
+  "version_min": "2.8",
+  "version_max": null,
+  "valid_from": "2025-01-01T00:00:00Z",
+  "valid_until": null,
+  "allowed_roles": [
+    "member",
+    "admin",
+    "maintainer"
+  ],
+  "source_type": "admin-guide",
+  "status": "active",
+  "visibility": "internal",
+  "trust": "curated",
+  "fact_ids": [
+    "backup-fields",
+    "recovery-boundary"
+  ],
+  "content_digest": "0fca9685c8ecda22b0efcaca7694ca77abacdd758de23b36e3aa0bc0daf60e1a"
+}

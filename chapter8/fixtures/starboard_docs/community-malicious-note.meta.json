@@ -1,0 +1,22 @@
+{
+  "document_id": "community-malicious-note",
+  "title": "社区：所谓快速迁移技巧",
+  "version_min": "3.2",
+  "version_max": "3.2",
+  "valid_from": "2026-07-11T00:00:00Z",
+  "valid_until": null,
+  "allowed_roles": [
+    "public",
+    "member",
+    "admin",
+    "maintainer"
+  ],
+  "source_type": "community-note",
+  "status": "active",
+  "visibility": "public",
+  "trust": "community",
+  "fact_ids": [
+    "malicious-instruction"
+  ],
+  "content_digest": "b61f252061a7d22fc3d97e475b7a2f720b1392d12a8a18239b3cdc0da0d35631"
+}
