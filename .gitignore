@@ -24,6 +24,7 @@ dist/
 # Live and local-only evidence
 live-reports/
 **/live-reports/
+chapter8/live-output/
 **/preview-pages/
 **/rendered-pages/
 

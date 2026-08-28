@@ -1,0 +1,10 @@
+{
+  "status": null,
+  "provider": null,
+  "model": null,
+  "usage": null,
+  "latency_ms": null,
+  "answer": null,
+  "quality": null,
+  "note": "示例只冻结字段；真实输出写入被 Git 忽略的 chapter8/live-output/。"
+}

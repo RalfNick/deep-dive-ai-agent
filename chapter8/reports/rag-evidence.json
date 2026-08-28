@@ -1,0 +1,592 @@
+{
+  "chapter": 8,
+  "claims": {
+    "does_not_support": "真实 Embedding、Reranker、LLM、Ragas 或厂商产品质量排名。",
+    "supports": "固定语料、固定时钟和固定决策策略下的 RAG 边界符合性。"
+  },
+  "generated_at": "2026-08-27T16:00:00Z",
+  "groups": {
+    "baseline": {
+      "case_count": 3,
+      "cases": [
+        {
+          "case_id": "baseline-parametric-guess",
+          "configuration": "参数化猜测：不读取知识库，直接给出固定答案。",
+          "does_not_support": "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
+          "evidence_codes": [
+            "fixture:d27c7187dcfd"
+          ],
+          "metrics": {
+            "answer_status": "answer",
+            "citation_count": 0,
+            "retrieved_document_count": 0,
+            "unsupported_claim_count": 1
+          },
+          "sample_count": 1,
+          "supports": "证明没有检索与引用时，系统仍可能输出语法完整但无证据的答案。",
+          "variants": [
+            "v0"
+          ]
+        },
+        {
+          "case_id": "baseline-full-context-conflict",
+          "configuration": "全文塞入：把 18 份文档全部放入同一个上下文。",
+          "does_not_support": "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
+          "evidence_codes": [
+            "fixture:b60f9b6f457c"
+          ],
+          "metrics": {
+            "citation_count": 0,
+            "conflict_document_count": 6,
+            "context_document_count": 18,
+            "internal_document_count": 5
+          },
+          "sample_count": 1,
+          "supports": "证明全文塞入同时扩大版本冲突和权限暴露面。",
+          "variants": [
+            "v1"
+          ]
+        },
+        {
+          "case_id": "baseline-unanswerable-support-window",
+          "configuration": "无答案问题：知识库没有电话支持时间。",
+          "does_not_support": "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
+          "evidence_codes": [
+            "fixture:4d81932985e0"
+          ],
+          "metrics": {
+            "citation_count": 0,
+            "expected_status": "abstain",
+            "retrieved_document_count": 0,
+            "unsupported_claim_count": 1
+          },
+          "sample_count": 1,
+          "supports": "证明无证据问题需要显式拒答合同。",
+          "variants": [
+            "v0",
+            "v1"
+          ]
+        }
+      ]
+    },
+    "chunking": {
+      "case_count": 3,
+      "cases": [
+        {
+          "case_id": "chunk-table-sso",
+          "configuration": "固定 90 字符、15 字符重叠。",
+          "does_not_support": "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
+          "evidence_codes": [
+            "document:0e7f2ccae0b1",
+            "chunk:c8e3d8aa306e"
+          ],
+          "metrics": {
+            "chunk_count": 3,
+            "complete_table_or_code_blocks": 1,
+            "max_chunk_characters": 90
+          },
+          "sample_count": 1,
+          "supports": "支持观察固定窗口如何切断语义边界；字符数不是 Token 数。",
+          "variants": [
+            "v2"
+          ]
+        },
+        {
+          "case_id": "chunk-cross-section-upgrade",
+          "configuration": "按 Markdown 标题、段落、表格和代码块切分。",
+          "does_not_support": "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
+          "evidence_codes": [
+            "document:0e7f2ccae0b1",
+            "chunk:569ba8443997"
+          ],
+          "metrics": {
+            "chunk_count": 4,
+            "complete_table_or_code_blocks": 1,
+            "heading_aware_chunks": 4
+          },
+          "sample_count": 1,
+          "supports": "支持观察结构 Chunk 是否能独立保留章节语境。",
+          "variants": [
+            "v3"
+          ]
+        },
+        {
+          "case_id": "chunk-code-dry-run",
+          "configuration": "在结构 Chunk 前增加文档、版本和章节前缀。",
+          "does_not_support": "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
+          "evidence_codes": [
+            "document:0e7f2ccae0b1",
+            "chunk:569ba8443997"
+          ],
+          "metrics": {
+            "chunk_count": 4,
+            "context_prefix_count": 4,
+            "source_content_digest_unchanged": true
+          },
+          "sample_count": 1,
+          "supports": "支持观察语境前缀是否在不改写来源正文的前提下补足定位信息。",
+          "variants": [
+            "v4"
+          ]
+        }
+      ]
+    },
+    "evidence": {
+      "case_count": 5,
+      "cases": [
+        {
+          "case_id": "evidence-missing-members",
+          "configuration": "只提供 SSO 证据，故意移除成员证据。",
+          "does_not_support": "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
+          "evidence_codes": [
+            "citation:9fadddfcd7b3"
+          ],
+          "metrics": {
+            "answer_status": "abstain",
+            "citation_count": 1,
+            "missing_fact_ids": [
+              "members-preserved-32"
+            ],
+            "unsupported_claim_count": 0
+          },
+          "sample_count": 1,
+          "supports": "支持证明复合问题缺一类证据时只能部分回答。",
+          "variants": [
+            "v7"
+          ]
+        },
+        {
+          "case_id": "evidence-wrong-citation",
+          "configuration": "两个声明中有一个指向错误来源。",
+          "does_not_support": "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
+          "evidence_codes": [
+            "citation-map:wrong-source"
+          ],
+          "metrics": {
+            "precision": 0.5,
+            "recall": 0.5,
+            "supported_claim_ratio": 0.5
+          },
+          "sample_count": 1,
+          "supports": "支持区分“有引用”和“引用真正支持声明”。",
+          "variants": [
+            "v7"
+          ]
+        },
+        {
+          "case_id": "evidence-conflicting-source",
+          "configuration": "正式迁移指南与社区经验冲突，保留来源信任级别。",
+          "does_not_support": "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
+          "evidence_codes": [
+            "query:e4c5a1bce298",
+            "document:6142fb9d882d",
+            "document:b61f252061a7"
+          ],
+          "metrics": {
+            "answer_status": "abstain",
+            "authoritative_source_present": false,
+            "catalog_recheck_rejected_count": 0,
+            "expected_status": "answer",
+            "filtered_before_score_count": 9,
+            "missing_fact_ids": [
+              "sso-team-32"
+            ],
+            "mrr": 0.0,
+            "ndcg_at_3": 0.0,
+            "precision_at_3": 0.0,
+            "recall_at_3": 0.0,
+            "retrieved_chunk_count": 2,
+            "retrieved_document_ids": [
+              "community-sso-note",
+              "community-malicious-note"
+            ],
+            "supported_fact_ratio": 0.0,
+            "unsupported_claim_count": 0
+          },
+          "sample_count": 1,
+          "supports": "支持观察冲突来源的信任级别和回答证据选择。",
+          "variants": [
+            "v7"
+          ]
+        },
+        {
+          "case_id": "evidence-prompt-injection",
+          "configuration": "将恶意社区 Chunk 与正式安全说明同时送入 Evidence Builder。",
+          "does_not_support": "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
+          "evidence_codes": [
+            "citation:a407603001b5"
+          ],
+          "metrics": {
+            "answer_status": "answer",
+            "citation_count": 1,
+            "untrusted_instruction_in_answer_context": 0
+          },
+          "sample_count": 1,
+          "supports": "支持证明不可信指令被保留为检索风险，但不会进入最终 Answer Context。",
+          "variants": [
+            "v7"
+          ]
+        },
+        {
+          "case_id": "evidence-correct-abstain",
+          "configuration": "固定语料没有量子加密登录事实。",
+          "does_not_support": "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
+          "evidence_codes": [
+            "query:79cef4b07497",
+            "document:16c680eed279",
+            "document:80f20e692ca4",
+            "document:80f20e692ca4"
+          ],
+          "metrics": {
+            "answer_status": "answer",
+            "catalog_recheck_rejected_count": 0,
+            "expected_status": "abstain",
+            "filtered_before_score_count": 9,
+            "missing_fact_ids": [],
+            "mrr": null,
+            "ndcg_at_3": null,
+            "precision_at_3": 0.0,
+            "recall_at_3": null,
+            "retrieved_chunk_count": 3,
+            "retrieved_document_ids": [
+              "plans-3.2",
+              "faq-3.2-sso"
+            ],
+            "supported_fact_ratio": null,
+            "unsupported_claim_count": 0
+          },
+          "sample_count": 1,
+          "supports": "支持证明无足够证据时返回拒答，而不是填满 top_k 后猜测。",
+          "variants": [
+            "v7"
+          ]
+        }
+      ]
+    },
+    "governance": {
+      "case_count": 5,
+      "cases": [
+        {
+          "case_id": "governance-compound-upgrade",
+          "configuration": "状态、版本、时效和角色在评分前硬过滤，最终命中再回查主 Catalog。",
+          "does_not_support": "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
+          "evidence_codes": [
+            "query:3133b33bbf52",
+            "document:0e7f2ccae0b1",
+            "document:0e7f2ccae0b1",
+            "document:16c680eed279"
+          ],
+          "metrics": {
+            "answer_status": "answer",
+            "catalog_recheck_rejected_count": 0,
+            "expected_status": "answer",
+            "filtered_before_score_count": 9,
+            "missing_fact_ids": [],
+            "mrr": 1.0,
+            "ndcg_at_3": 0.7653606369886217,
+            "policy_violation_count": 0,
+            "precision_at_3": 1.0,
+            "recall_at_3": 0.6666666666666666,
+            "retrieved_chunk_count": 3,
+            "retrieved_document_ids": [
+              "migration-2x-to-3.2",
+              "plans-3.2"
+            ],
+            "supported_fact_ratio": 1.0,
+            "unsupported_claim_count": 0
+          },
+          "sample_count": 1,
+          "supports": "支持检查固定时钟与角色下的版本、时效、状态和权限隔离。",
+          "variants": [
+            "v6"
+          ]
+        },
+        {
+          "case_id": "governance-public-internal",
+          "configuration": "状态、版本、时效和角色在评分前硬过滤，最终命中再回查主 Catalog。",
+          "does_not_support": "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
+          "evidence_codes": [
+            "query:323d66d9cc00",
+            "document:64aa29ac3f24"
+          ],
+          "metrics": {
+            "answer_status": "answer",
+            "catalog_recheck_rejected_count": 0,
+            "expected_status": "answer",
+            "filtered_before_score_count": 9,
+            "missing_fact_ids": [],
+            "mrr": 1.0,
+            "ndcg_at_3": 1.0,
+            "policy_violation_count": 0,
+            "precision_at_3": 1.0,
+            "recall_at_3": 1.0,
+            "retrieved_chunk_count": 1,
+            "retrieved_document_ids": [
+              "security-overview"
+            ],
+            "supported_fact_ratio": 1.0,
+            "unsupported_claim_count": 0
+          },
+          "sample_count": 1,
+          "supports": "支持检查固定时钟与角色下的版本、时效、状态和权限隔离。",
+          "variants": [
+            "v6"
+          ]
+        },
+        {
+          "case_id": "governance-future-preview",
+          "configuration": "状态、版本、时效和角色在评分前硬过滤，最终命中再回查主 Catalog。",
+          "does_not_support": "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
+          "evidence_codes": [
+            "query:83b8fd7d4c86",
+            "document:b61f252061a7"
+          ],
+          "metrics": {
+            "answer_status": "abstain",
+            "catalog_recheck_rejected_count": 0,
+            "expected_status": "answer",
+            "filtered_before_score_count": 9,
+            "missing_fact_ids": [
+              "sso-team-32"
+            ],
+            "mrr": 0.0,
+            "ndcg_at_3": 0.0,
+            "policy_violation_count": 0,
+            "precision_at_3": 0.0,
+            "recall_at_3": 0.0,
+            "retrieved_chunk_count": 1,
+            "retrieved_document_ids": [
+              "community-malicious-note"
+            ],
+            "supported_fact_ratio": 0.0,
+            "unsupported_claim_count": 0
+          },
+          "sample_count": 1,
+          "supports": "支持检查固定时钟与角色下的版本、时效、状态和权限隔离。",
+          "variants": [
+            "v6"
+          ]
+        },
+        {
+          "case_id": "governance-withdrawn",
+          "configuration": "状态、版本、时效和角色在评分前硬过滤，最终命中再回查主 Catalog。",
+          "does_not_support": "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
+          "evidence_codes": [
+            "query:6f4329b79981",
+            "document:0e7f2ccae0b1",
+            "document:0e7f2ccae0b1",
+            "document:b3e76de620d9"
+          ],
+          "metrics": {
+            "answer_status": "answer",
+            "catalog_recheck_rejected_count": 0,
+            "expected_status": "answer",
+            "filtered_before_score_count": 9,
+            "missing_fact_ids": [],
+            "mrr": 1.0,
+            "ndcg_at_3": 0.6131471927654584,
+            "policy_violation_count": 0,
+            "precision_at_3": 0.5,
+            "recall_at_3": 0.5,
+            "retrieved_chunk_count": 3,
+            "retrieved_document_ids": [
+              "migration-2x-to-3.2",
+              "release-3.2"
+            ],
+            "supported_fact_ratio": 1.0,
+            "unsupported_claim_count": 0
+          },
+          "sample_count": 1,
+          "supports": "支持检查固定时钟与角色下的版本、时效、状态和权限隔离。",
+          "variants": [
+            "v6"
+          ]
+        },
+        {
+          "case_id": "governance-stale-index",
+          "configuration": "候选快照后撤回社区文档，验证最终 Catalog 回查。",
+          "does_not_support": "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
+          "evidence_codes": [
+            "query:82f60bb2203a",
+            "document:64aa29ac3f24"
+          ],
+          "metrics": {
+            "answer_status": "answer",
+            "catalog_recheck_rejected_count": 1,
+            "expected_status": "answer",
+            "filtered_before_score_count": 9,
+            "missing_fact_ids": [],
+            "mrr": 1.0,
+            "ndcg_at_3": 1.0,
+            "precision_at_3": 1.0,
+            "recall_at_3": 1.0,
+            "retrieved_chunk_count": 1,
+            "retrieved_document_ids": [
+              "security-overview"
+            ],
+            "supported_fact_ratio": 1.0,
+            "unsupported_claim_count": 0
+          },
+          "sample_count": 1,
+          "supports": "支持证明索引是派生物，撤回后的来源不会因陈旧候选重新进入答案。",
+          "variants": [
+            "v5",
+            "v6"
+          ]
+        }
+      ]
+    },
+    "retrieval": {
+      "case_count": 4,
+      "cases": [
+        {
+          "case_id": "retrieval-exact-version",
+          "configuration": "BM25 与固定语义召回经 RRF 融合，再执行确定性重排。",
+          "does_not_support": "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
+          "evidence_codes": [
+            "query:4e41621c46de",
+            "document:16c680eed279",
+            "document:80f20e692ca4",
+            "document:80f20e692ca4"
+          ],
+          "metrics": {
+            "answer_status": "answer",
+            "catalog_recheck_rejected_count": 0,
+            "expected_status": "answer",
+            "filtered_before_score_count": 9,
+            "missing_fact_ids": [],
+            "mrr": 1.0,
+            "ndcg_at_3": 1.0,
+            "precision_at_3": 0.5,
+            "recall_at_3": 1.0,
+            "retrieved_chunk_count": 3,
+            "retrieved_document_ids": [
+              "plans-3.2",
+              "faq-3.2-sso"
+            ],
+            "supported_fact_ratio": 1.0,
+            "unsupported_claim_count": 0
+          },
+          "sample_count": 1,
+          "supports": "支持比较固定语料上的候选顺序、召回指标与不补齐行为。",
+          "variants": [
+            "v3"
+          ]
+        },
+        {
+          "case_id": "retrieval-synonym-login",
+          "configuration": "BM25 与固定语义召回经 RRF 融合，再执行确定性重排。",
+          "does_not_support": "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
+          "evidence_codes": [
+            "query:7fe78634fbdf"
+          ],
+          "metrics": {
+            "answer_status": "abstain",
+            "catalog_recheck_rejected_count": 0,
+            "expected_status": "answer",
+            "filtered_before_score_count": 9,
+            "missing_fact_ids": [
+              "saml-enterprise-32"
+            ],
+            "mrr": 0.0,
+            "ndcg_at_3": 0.0,
+            "precision_at_3": null,
+            "recall_at_3": 0.0,
+            "retrieved_chunk_count": 0,
+            "retrieved_document_ids": [],
+            "supported_fact_ratio": 0.0,
+            "unsupported_claim_count": 0
+          },
+          "sample_count": 1,
+          "supports": "支持比较固定语料上的候选顺序、召回指标与不补齐行为。",
+          "variants": [
+            "v4"
+          ]
+        },
+        {
+          "case_id": "retrieval-compound",
+          "configuration": "BM25 与固定语义召回经 RRF 融合，再执行确定性重排。",
+          "does_not_support": "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
+          "evidence_codes": [
+            "query:9d886d073b35",
+            "document:16c680eed279",
+            "document:80f20e692ca4",
+            "document:0e7f2ccae0b1"
+          ],
+          "metrics": {
+            "answer_status": "answer",
+            "catalog_recheck_rejected_count": 0,
+            "expected_status": "answer",
+            "filtered_before_score_count": 9,
+            "missing_fact_ids": [],
+            "mrr": 0.3333333333333333,
+            "ndcg_at_3": 0.5,
+            "precision_at_3": 0.3333333333333333,
+            "recall_at_3": 1.0,
+            "retrieved_chunk_count": 3,
+            "retrieved_document_ids": [
+              "plans-3.2",
+              "faq-3.2-sso",
+              "migration-2x-to-3.2"
+            ],
+            "supported_fact_ratio": 1.0,
+            "unsupported_claim_count": 0
+          },
+          "sample_count": 1,
+          "supports": "支持比较固定语料上的候选顺序、召回指标与不补齐行为。",
+          "variants": [
+            "v5"
+          ]
+        },
+        {
+          "case_id": "retrieval-noise",
+          "configuration": "BM25 与固定语义召回经 RRF 融合，再执行确定性重排。",
+          "does_not_support": "不支持真实模型质量、线上成本、延迟或厂商排名结论。",
+          "evidence_codes": [
+            "query:667b4e95235f",
+            "document:caf1f55bca7a",
+            "document:777d4cda1f8f",
+            "document:777d4cda1f8f"
+          ],
+          "metrics": {
+            "answer_status": "answer",
+            "catalog_recheck_rejected_count": 0,
+            "expected_status": "abstain",
+            "filtered_before_score_count": 9,
+            "missing_fact_ids": [],
+            "mrr": null,
+            "ndcg_at_3": null,
+            "precision_at_3": 0.0,
+            "recall_at_3": null,
+            "retrieved_chunk_count": 3,
+            "retrieved_document_ids": [
+              "api-auth",
+              "install-3.2"
+            ],
+            "supported_fact_ratio": null,
+            "unsupported_claim_count": 0
+          },
+          "sample_count": 1,
+          "supports": "支持比较固定语料上的候选顺序、召回指标与不补齐行为。",
+          "variants": [
+            "v6"
+          ]
+        }
+      ]
+    }
+  },
+  "schema_version": 1,
+  "scope": {
+    "corpus_document_count": 18,
+    "decision_policy": "scripted",
+    "network_access": false,
+    "question_case_count": 20,
+    "semantic_encoder": "frozen-concept-vector"
+  },
+  "unmeasured": {
+    "provider_cost": null,
+    "provider_latency_ms": null,
+    "provider_tokens": null,
+    "real_model_quality": null
+  }
+}
