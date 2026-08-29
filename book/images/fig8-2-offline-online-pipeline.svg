@@ -1,30 +1,84 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
-  <title id="title">RAG 的离线索引与在线回答</title>
-  <desc id="desc">左侧整理知识并建索引，右侧查询、检索、验证并形成带引用回答。</desc>
+  <title id="title">RAG 的离线知识加工与在线证据回答</title>
+  <desc id="desc">上方离线路径把来源解析为可追踪的源片段，经过去重、版本和治理处理后建立稀疏与稠密索引；下方在线路径先按身份、版本和时间过滤，再召回、重排、回查目录并形成证据包，最后回答、部分回答或拒答。</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#071426"/><stop offset="1" stop-color="#111827"/></linearGradient>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#60a5fa"/></marker>
+    <linearGradient id="offlineLane" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#0f2138"/><stop offset="1" stop-color="#102640"/></linearGradient>
+    <linearGradient id="onlineLane" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#0d2a2a"/><stop offset="1" stop-color="#102d36"/></linearGradient>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#60a5fa"/></marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#34d399"/></marker>
   </defs>
   <rect width="1200" height="675" rx="28" fill="url(#bg)"/>
   <g font-family="Microsoft YaHei, PingFang SC, sans-serif">
-    <text x="56" y="65" fill="#f8fafc" font-size="36" font-weight="700">一条 RAG 管道，其实是两条生命周期</text>
-    <rect x="55" y="120" width="500" height="455" rx="24" fill="#0f2138" stroke="#2563eb" stroke-width="2"/>
-    <text x="85" y="170" fill="#60a5fa" font-size="28" font-weight="700">离线：把知识变成可检索对象</text>
-    <rect x="90" y="220" width="180" height="72" rx="16" fill="#172554"/><text x="125" y="265" fill="#e2e8f0" font-size="22">文档目录</text>
-    <path d="M270 256 H335" stroke="#60a5fa" stroke-width="3" marker-end="url(#arrow)"/>
-    <rect x="345" y="220" width="165" height="72" rx="16" fill="#172554"/><text x="385" y="265" fill="#e2e8f0" font-size="22">清洗切块</text>
-    <path d="M425 302 V365" stroke="#60a5fa" stroke-width="3" marker-end="url(#arrow)"/>
-    <rect x="345" y="375" width="165" height="72" rx="16" fill="#172554"/><text x="380" y="420" fill="#e2e8f0" font-size="22">索引与元数据</text>
-    <text x="90" y="515" fill="#94a3b8" font-size="20">状态、版本、可见性、有效期一起入目录</text>
-    <rect x="645" y="120" width="500" height="455" rx="24" fill="#10283a" stroke="#34d399" stroke-width="2"/>
-    <text x="675" y="170" fill="#34d399" font-size="28" font-weight="700">在线：把问题变成可核对回答</text>
-    <rect x="680" y="220" width="170" height="72" rx="16" fill="#064e3b"/><text x="725" y="265" fill="#e2e8f0" font-size="22">问题与权限</text>
-    <path d="M850 256 H920" stroke="#60a5fa" stroke-width="3" marker-end="url(#arrow)"/>
-    <rect x="930" y="220" width="170" height="72" rx="16" fill="#064e3b"/><text x="970" y="265" fill="#e2e8f0" font-size="22">过滤与召回</text>
-    <path d="M1015 302 V365" stroke="#60a5fa" stroke-width="3" marker-end="url(#arrow)"/>
-    <rect x="930" y="375" width="170" height="72" rx="16" fill="#064e3b"/><text x="965" y="420" fill="#e2e8f0" font-size="22">证据与引用</text>
-    <path d="M930 411 H860" stroke="#60a5fa" stroke-width="3" marker-end="url(#arrow)"/>
-    <rect x="680" y="375" width="170" height="72" rx="16" fill="#064e3b"/><text x="725" y="420" fill="#e2e8f0" font-size="22">回答或拒答</text>
-    <text x="56" y="625" fill="#94a3b8" font-size="20">来源：S01、S09、S15｜更新索引与处理一次查询不是同一事务</text>
+    <text x="54" y="58" fill="#f8fafc" font-size="34" font-weight="700">RAG 不是“文档 → 向量库 → LLM”</text>
+    <text x="1145" y="56" fill="#94a3b8" font-size="20" text-anchor="end">两条生命周期，三道责任边界</text>
+
+    <rect x="48" y="88" width="1104" height="238" rx="22" fill="url(#offlineLane)" stroke="#2563eb" stroke-width="2"/>
+    <rect x="70" y="108" width="120" height="34" rx="17" fill="#1d4ed8"/>
+    <text x="130" y="132" fill="#eff6ff" font-size="20" font-weight="700" text-anchor="middle">离线加工</text>
+    <text x="210" y="132" fill="#93c5fd" font-size="20">决定“什么对象有资格进入索引”</text>
+
+    <rect x="72" y="165" width="170" height="92" rx="16" fill="#172554" stroke="#3b82f6"/>
+    <text x="157" y="202" fill="#e2e8f0" font-size="22" font-weight="700" text-anchor="middle">来源与 Catalog</text>
+    <text x="157" y="232" fill="#94a3b8" font-size="20" text-anchor="middle">状态 · 版本 · 权限</text>
+    <path d="M242 211 H278" stroke="#60a5fa" stroke-width="3" marker-end="url(#arrowBlue)"/>
+
+    <rect x="288" y="165" width="170" height="92" rx="16" fill="#172554" stroke="#3b82f6"/>
+    <text x="373" y="202" fill="#e2e8f0" font-size="22" font-weight="700" text-anchor="middle">解析结构</text>
+    <text x="373" y="232" fill="#94a3b8" font-size="20" text-anchor="middle">Source Chunk</text>
+    <path d="M458 211 H494" stroke="#60a5fa" stroke-width="3" marker-end="url(#arrowBlue)"/>
+
+    <rect x="504" y="153" width="198" height="116" rx="16" fill="#172554" stroke="#3b82f6"/>
+    <text x="603" y="191" fill="#e2e8f0" font-size="22" font-weight="700" text-anchor="middle">检索前知识加工</text>
+    <text x="603" y="222" fill="#94a3b8" font-size="20" text-anchor="middle">去重 · 版本归并 · 治理</text>
+    <text x="603" y="249" fill="#93c5fd" font-size="20" text-anchor="middle">派生问答 / 事实卡（可选）</text>
+    <path d="M702 211 H738" stroke="#60a5fa" stroke-width="3" marker-end="url(#arrowBlue)"/>
+
+    <rect x="748" y="165" width="170" height="92" rx="16" fill="#172554" stroke="#3b82f6"/>
+    <text x="833" y="202" fill="#e2e8f0" font-size="22" font-weight="700" text-anchor="middle">生成表示</text>
+    <text x="833" y="232" fill="#94a3b8" font-size="20" text-anchor="middle">词项 · 浮点 / 二值向量</text>
+    <path d="M918 211 H954" stroke="#60a5fa" stroke-width="3" marker-end="url(#arrowBlue)"/>
+
+    <rect x="964" y="165" width="164" height="92" rx="16" fill="#172554" stroke="#3b82f6"/>
+    <text x="1046" y="202" fill="#e2e8f0" font-size="22" font-weight="700" text-anchor="middle">双索引</text>
+    <text x="1046" y="232" fill="#94a3b8" font-size="20" text-anchor="middle">BM25 · Vector</text>
+    <text x="72" y="300" fill="#93c5fd" font-size="20">原则：派生单元帮助召回，但 Citation 必须回到当前有效的 Source Chunk</text>
+
+    <rect x="48" y="350" width="1104" height="238" rx="22" fill="url(#onlineLane)" stroke="#10b981" stroke-width="2"/>
+    <rect x="70" y="370" width="120" height="34" rx="17" fill="#047857"/>
+    <text x="130" y="394" fill="#ecfdf5" font-size="20" font-weight="700" text-anchor="middle">在线回答</text>
+    <text x="210" y="394" fill="#6ee7b7" font-size="20">决定“这次请求能用哪些证据、可以回答到哪里”</text>
+
+    <rect x="70" y="427" width="154" height="92" rx="16" fill="#064e3b" stroke="#10b981"/>
+    <text x="147" y="464" fill="#e2e8f0" font-size="22" font-weight="700" text-anchor="middle">问题与范围</text>
+    <text x="147" y="494" fill="#a7f3d0" font-size="20" text-anchor="middle">Actor · 版本 · 时间</text>
+    <path d="M224 473 H254" stroke="#34d399" stroke-width="3" marker-end="url(#arrowGreen)"/>
+
+    <rect x="264" y="427" width="154" height="92" rx="16" fill="#064e3b" stroke="#10b981"/>
+    <text x="341" y="464" fill="#e2e8f0" font-size="22" font-weight="700" text-anchor="middle">评分前过滤</text>
+    <text x="341" y="494" fill="#a7f3d0" font-size="20" text-anchor="middle">Catalog Policy</text>
+    <path d="M418 473 H448" stroke="#34d399" stroke-width="3" marker-end="url(#arrowGreen)"/>
+
+    <rect x="458" y="427" width="154" height="92" rx="16" fill="#064e3b" stroke="#10b981"/>
+    <text x="535" y="464" fill="#e2e8f0" font-size="22" font-weight="700" text-anchor="middle">混合召回</text>
+    <text x="535" y="494" fill="#a7f3d0" font-size="20" text-anchor="middle">Sparse · Dense</text>
+    <path d="M612 473 H642" stroke="#34d399" stroke-width="3" marker-end="url(#arrowGreen)"/>
+
+    <rect x="652" y="415" width="174" height="116" rx="16" fill="#064e3b" stroke="#10b981"/>
+    <text x="739" y="454" fill="#e2e8f0" font-size="22" font-weight="700" text-anchor="middle">融合与精排</text>
+    <text x="739" y="485" fill="#a7f3d0" font-size="20" text-anchor="middle">RRF · Reranker</text>
+    <text x="739" y="512" fill="#6ee7b7" font-size="20" text-anchor="middle">Return Gate</text>
+    <path d="M826 473 H846" stroke="#34d399" stroke-width="3" marker-end="url(#arrowGreen)"/>
+
+    <rect x="856" y="427" width="154" height="92" rx="16" fill="#064e3b" stroke="#10b981"/>
+    <text x="933" y="464" fill="#e2e8f0" font-size="20" font-weight="700" text-anchor="middle">Evidence Packet</text>
+    <text x="933" y="494" fill="#a7f3d0" font-size="20" text-anchor="middle">事实 · 冲突 · 引用</text>
+    <path d="M1010 473 H1030" stroke="#34d399" stroke-width="3" marker-end="url(#arrowGreen)"/>
+
+    <rect x="1040" y="427" width="90" height="92" rx="16" fill="#065f46" stroke="#34d399"/>
+    <text x="1085" y="458" fill="#ecfdf5" font-size="20" font-weight="700" text-anchor="middle">回答</text>
+    <text x="1085" y="484" fill="#ecfdf5" font-size="20" font-weight="700" text-anchor="middle">部分</text>
+    <text x="1085" y="510" fill="#ecfdf5" font-size="20" font-weight="700" text-anchor="middle">拒答</text>
+    <text x="54" y="634" fill="#94a3b8" font-size="20">来源：S15、S18、S20｜上游加工、在线治理与证据验收分别解决不同失败</text>
   </g>
 </svg>

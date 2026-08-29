@@ -9,6 +9,7 @@
 - 本章确定性语义编码器不是训练得到的 Embedding，不把它的排序结果外推到真实模型；
 - 报告里的字符数、字节数都不是 Token；每个固定案例的 sample_count 为 1，不给出统计成功率；
 - 文档是数据，不是指令；权限、状态、版本、时效和撤回必须在模型外强制执行；
+- 社交媒体文章只用于发现工程问题和改进讲解，倍数、产品效果与内部案例必须回到官方资料或本地实验；
 - 作者旧文与扫描资料只帮助教学编排，快变事实仍以一手来源为准。
 
 ## 原始研究与算法
@@ -153,9 +154,43 @@
 - 最后核对：2026-08-28
 - 出版前复核：是
 
+## 补充工程资料与编辑来源
+
+### [S18] Sentence Transformers Embedding Quantization
+- 类型：Sentence Transformers 官方文档
+- URL / 本地路径：https://www.sbert.net/examples/sentence_transformer/applications/embedding-quantization/README.html
+- 事实使用：支持 Embedding Quantization 与模型权重量化的边界；说明 float32 Embedding 可按阈值转成打包二值表示，使用 Hamming Distance 召回，并可对扩大后的候选集做重评分。
+- 明确不声称：文档中的 32 倍只作为 32 bit/维到 1 bit/维的原始表示比例；不外推为完整索引、端到端服务、任意模型召回或延迟的固定收益。
+- 最后核对：2026-08-28
+- 出版前复核：是
+
+### [S19] Milvus Binary Vector 与索引说明
+- 类型：Milvus 官方文档
+- URL / 本地路径：https://milvus.io/docs/binary-vector.md；https://milvus.io/docs/index.md?tab=binary
+- 事实使用：支持 Binary Vector 的 bit/byte 表示、维度约束、Hamming/Jaccard 距离，以及浮点、二值和稀疏向量使用不同索引与距离家族。
+- 明确不声称：不推断托管版本内部实现，不把支持某种字段或索引类型写成对本章语料的质量保证，也不固化所有版本的索引清单。
+- 最后核对：2026-08-28
+- 出版前复核：是
+
+### [S20] Akshay Pachaar：检索前的结构化知识单元
+- 类型：第三方 X 长文，编辑与问题发现来源
+- URL / 本地路径：https://x.com/akshay_pachaar/status/2052743644411765230
+- 事实使用：用于补强“检索失败可能起源于索引之前”的讲解，并引出 Source Chunk、派生问答/事实卡、去重、版本归并和治理字段之间的边界。
+- 明确不声称：不采用文章中的专有命名作为行业标准，不复刻厂商内部语料、效果倍数或商业产品结论；派生知识单元不能替代可审计原文。
+- 最后核对：2026-08-28
+- 出版前复核：是
+
+### [S21] Avi Chawla：Binary Quantization RAG 流程
+- 类型：第三方 X 长文，编辑与问题发现来源
+- URL / 本地路径：https://x.com/_avichawla/status/2040326889928356122
+- 事实使用：用于引出“文档 Embedding 与 Query Embedding 采用一致二值转换，再进入二值检索”的教学流程，以及表示压缩与完整 RAG 指标必须分开报告的问题。
+- 明确不声称：不复用文章的吞吐、延迟、语料规模或产品效果数字；技术边界以 S18、S19 为准，真实收益必须在本业务语料上消融评估。
+- 最后核对：2026-08-28
+- 出版前复核：是
+
 ## 出版前复核清单
 
-1. 重新打开 S08—S14，核对页面标题、API 字段、类别与版本状态；
+1. 重新打开 S08—S14、S18—S21，核对页面标题、API 字段、类别与版本状态；
 2. 检查正文没有把 FrozenSemanticEncoder 写成真实 Embedding，也没有把确定性 rerank 写成 Cross-Encoder；
 3. 检查所有图中实验数字都能回到 rag-evidence.json，null 没被改写成 0；
 4. 检查版本、状态、时效、权限和撤回过滤都发生在评分前，返回前还有 Catalog 重查；
@@ -163,3 +198,4 @@
 6. 检查没有 Secret、作者机器绝对路径、产品排名、单案例成功率或 byte-as-Token 表述；
 7. 重新运行 Chapter 8 全部测试并连续生成报告两次，确认字节一致；
 8. 核对 Agentic RAG 只是编排选择，不被写成质量保证或最新必选架构。
+9. 核对派生知识单元仍能回到 Source Chunk；二值量化的 32 倍没有被写成完整索引、端到端延迟或答案质量承诺。

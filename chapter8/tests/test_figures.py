@@ -46,6 +46,18 @@ class FigureContractTest(unittest.TestCase):
             self.assertTrue(sizes, path.name)
             self.assertGreaterEqual(min(sizes), 20, path.name)
 
+    def test_offline_online_figure_keeps_upstream_and_evidence_boundaries(self) -> None:
+        figure = FIGURES[1].read_text(encoding="utf-8")
+        for label in (
+            "Source Chunk",
+            "检索前知识加工",
+            "派生问答 / 事实卡（可选）",
+            "评分前过滤",
+            "Return Gate",
+            "Evidence Packet",
+        ):
+            self.assertIn(label, figure)
+
     def test_retrieval_funnel_uses_canonical_report_values(self) -> None:
         metrics = report_cases()["governance-compound-upgrade"]
         figure = FIGURES[4].read_text(encoding="utf-8")
