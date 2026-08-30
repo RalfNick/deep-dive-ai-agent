@@ -36,6 +36,7 @@ git diff book-chapter1-v1.0 book-chapter1-v1.1 -- book/chapter1.md chapter1
 | --- | --- | --- | --- | --- | --- |
 | v1.0 | 2026-08-13 | `book-chapter1-v1.0` | Review 前基线；保留原正文、6 张图、5 个实验与参考答案 | 5 个脚本与编译检查通过；独立测试 `0 discovered` | `output/pdf/versions/chapter1/chapter1-v1.0.pdf`，42 页，SHA-256 `64778C17C2601EC6B15508EBCB9B9B633524943FDBDB866B210A1E18C0FE437A` |
 | v1.1 | 2026-08-13 | `book-chapter1-v1.1` | 按 Codex Review 完成证据收口、技术纠错、实验报告、独立测试、引用与练习答案增强 | 9 项独立测试通过；5 个实验与报告生成通过；SVG、链接和脚注静态检查通过 | `output/pdf/versions/chapter1/chapter1-v1.1.pdf`，43 页，SHA-256 `CC2DA449EA45ABED88921E91E0A7B0E06658954C2BEC0218EBD73394B9252113` |
+| v1.2 | 2026-08-30 | `book-chapter1-v1.2` | 新增中文原创“大模型如何工作”主信息图，用四阶段视觉主线解释 Token、Transformer、概率生成与自回归循环；原 6 张 SVG 技术图和正文机制说明全部保留 | 第 1 章 10 项测试、仓库 41 项合同测试、4 项渲染测试与 MkDocs strict 构建通过；WebP 主图约 224 KiB | 未生成独立 PDF；网站与 Git tag 为本次发布载体 |
 
 ## 第 3 章：从生成到闭环执行
 
@@ -64,6 +65,8 @@ git diff book-chapter1-v1.0 book-chapter1-v1.1 -- book/chapter1.md chapter1
 | --- | --- | --- | --- | --- | --- |
 | v1.0 | 2026-08-28 | `book-chapter8-v1.0` | 首个网站发布版；包含 v0—v7 主线、18 篇虚构文档、20 个确定性案例、8 张原创图、14 道练习与四视角 Review；后续复审发现状态预期与实际结果未分流、两条拒答夹具合同不完整、Precision@K 口径不一致，由 v1.1 修复 | 56 项第 8 章测试通过；三份规范报告可重复生成；CI 与 Pages 发布成功 | 未生成独立 PDF；历史正文、代码与网站源文件由 Git tag 固定 |
 | v1.1 | 2026-08-28 | `book-chapter8-v1.1` | 当前优化版；补齐无答案 fact 合同和 Partial 事实集合，区分 10 个符合性案例与 3 个失败探针，新增状态分类与摘要，统一唯一文档/固定 K 指标口径，同步报告、Trace、图 8-8、正文、来源和 Review | 60 项第 8 章测试通过；JSON、Markdown、JSONL SHA-256 分别为 `FA711B9F6203D97602612C8A017B82FC6B275E5CF02083F4981837D2236317EB`、`2D53AE220A48466701D9DFA2B507E3D6339DB6AACEB8CDC588CE1927C099259A`、`A6C6BA9F668173A1C3A9DBFC4246A2402ACA127D261C6B2D1C80EB9B38F18C9C` | 未生成独立 PDF；网站为本章当前发布载体 |
+| v1.2 | 2026-08-29 | `book-chapter8-v1.2` | 加入检索前知识加工、派生问答与 Source Chunk 的来源边界，补充二值量化适用条件，并据此优化主流程、实验边界与图 8-2 | 第 8 章 61 项测试与规范报告复现通过；GitHub CI、Pages 和 `wlxralf.com` 发布成功 | 未生成独立 PDF；历史正文、代码与网站源文件由 Git tag 固定 |
+| v1.3 | 2026-08-30 | `book-chapter8-v1.3` | 新增中文原创“RAG 如何工作”主信息图，用离线知识加工、在线证据回答和四道责任边界建立第一遍阅读路线；原 8 张 SVG 技术图全部保留 | 第 8 章 61 项测试、仓库 41 项合同测试、4 项渲染测试与 MkDocs strict 构建通过；WebP 主图约 206 KiB | 未生成独立 PDF；网站与 Git tag 为本次发布载体 |
 
 ## 后续章节发布规则
 

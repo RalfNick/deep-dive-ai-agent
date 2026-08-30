@@ -33,3 +33,6 @@ chapter8/live-output/
 .vscode/
 .DS_Store
 Thumbs.db
+
+# Local visual references may be copyrighted; keep analysis and prompts, not source media
+infographic/*/refs/

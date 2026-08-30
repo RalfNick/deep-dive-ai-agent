@@ -3,8 +3,8 @@
   "title": "深入浅出 AI Agent",
   "subtitle": "从大模型原理到手写 Coding Agent",
   "description": "从模型、上下文和工具出发，逐步搭建可运行、可验证、可持续改进的 AI Agent 工程体系。",
-  "version": "0.8.0",
-  "updated": "2026-08-28",
+  "version": "0.8.1",
+  "updated": "2026-08-30",
   "cover": "images/deep-dive-ai-agent-cover.webp",
   "repositoryUrl": "https://github.com/RalfNick/deep-dive-ai-agent",
   "totalChapters": 18,
@@ -31,7 +31,7 @@
           "source": "chapter1.md",
           "experiment": "../chapter1/README.md",
           "answers": "../chapter1/reference-answers.md",
-          "updated": "2026-08-20"
+          "updated": "2026-08-30"
         },
         {
           "order": 2,
@@ -115,7 +115,7 @@
           "source": "chapter8.md",
           "experiment": "../chapter8/README.md",
           "answers": "../chapter8/reference-answers.md",
-          "updated": "2026-08-28"
+          "updated": "2026-08-30"
         }
       ]
     },
