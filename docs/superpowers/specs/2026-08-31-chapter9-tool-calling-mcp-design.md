@@ -31,7 +31,7 @@
 这句话包含三个不能混淆的责任层：
 
 1. 模型根据上下文选择工具并生成参数，但不会因为输出了 Tool Call 就自动产生现实副作用；
-2. Harness 或应用运行时校验、授权、执行、回传并决定是否继续循环；
+2. Harness 或应用运行时校验、授权、派发、回传并决定是否继续循环；普通本地工具可由运行时直接执行，MCP Tool 则由 Host 决定是否发起调用、由 Server 执行业务代码；
 3. MCP 规范 Host、Client 和 Server 之间怎样发现及调用能力，不替代业务 API、权限系统、沙箱、审批或验收。
 
 ## 当前协议基线
@@ -184,9 +184,12 @@ chapter9/
 ├─ experiments/
 │  ├─ run_v0_free_text.py
 │  ├─ run_v1_schema.py
-│  ├─ run_v2_tool_loop.py
-│  ├─ run_v3_mcp.py
-│  ├─ run_v4_failures.py
+│  ├─ run_v2_contracts.py
+│  ├─ run_v3_tool_loop.py
+│  ├─ run_v4_receipts.py
+│  ├─ run_v5_mcp_server.py
+│  ├─ run_v6_mcp_client.py
+│  ├─ run_failure_matrix.py
 │  └─ run_all.py
 ├─ reports/
 └─ tests/
@@ -297,7 +300,7 @@ Live Probe 缺少依赖或凭据时必须显式跳过；输出写入 Git 忽略�
 
 - 最小权限和显式用户同意；
 - 读操作与副作用操作分级；
-- Host 策略与 Server 业务授权的双重边界；
+- Host 决定是否向 Server 发起调用，Server 仍需执行自身业务授权，二者构成双重边界；
 - Resource 或 Tool Result 中的 Prompt Injection；
 - 恶意工具描述、同名工具和结果欺骗；
 - 本地 `stdio` Server 的进程权限与环境变量；
