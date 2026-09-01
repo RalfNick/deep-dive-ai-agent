@@ -74,6 +74,25 @@ class ChapterMainlineTests(unittest.TestCase):
         ):
             self.assertIn(distinction, chapter)
 
+    def test_mcp_sections_preserve_modern_and_legacy_boundaries(self):
+        chapter = CHAPTER.read_text(encoding="utf-8")
+        for text in (
+            "2026-07-28",
+            "server/discover",
+            "每个请求",
+            "2025-11-25",
+            "Host",
+            "Client",
+            "Server",
+            "Tools",
+            "Resources",
+            "Prompts",
+            "stdio",
+            "Streamable HTTP",
+        ):
+            self.assertIn(text, chapter)
+        self.assertNotIn("MCP 会自动保证工具安全", chapter)
+
 
 if __name__ == "__main__":
     unittest.main()
