@@ -63,6 +63,8 @@ MCP，即 Model Context Protocol，是 Host、Client 和 Server 之间的标准�
 | Tool | 模型可见的能力合同 | Tool Result | Tool Runtime / Server | 查询状态、创建工单 |
 | MCP | Host–Client–Server 消息 | 发现、调用与内容结果 | Host 与 Server 共同约束 | 发现三种 Tool 和 Runbook Resource |
 
+如果这些名词仍然抽象，**可以把它们想成三张单据**。Tool Definition 像服务目录，写着“能办理什么、需要哪些材料”；Tool Call 像填写好的申请单，表达“这次想办什么”；Tool Result 像窗口给出的办理结果，说明成功、失败或还缺什么。写操作成功后，Execution Receipt 更像带流水号的回执，它把这次调用与外部对象关联起来。申请单不能代替办理结果，模型写出的流水号也不能代替窗口回执。
+
 ![Function Calling、Tool Runtime 与 MCP 的边界对照](images/fig9-2-boundary-map.png)
 
 **读图顺序：** 先看左侧模型如何提出 Function Call，再看中间 Runtime 如何把提议变成受控执行，最后看右侧 MCP 如何连接 Host 与多个 Server。
@@ -338,7 +340,7 @@ final_answer    → completed
 
 **还没有解决什么：** Runtime 仍需要回答最重要的问题：谁允许写入，怎样阻止伪造回执，以及怎样证明外部工单真正存在。
 
-### v4：授权与回执让副作用可证明
+### v4：授权与回执让副作用可核对
 
 **输入：** 模型在已有状态与部署证据后，提出创建 P1 工单：
 
@@ -369,7 +371,7 @@ Runtime 按固定顺序处理这条提议：
 
 顺序很重要。如果先执行再校验，拒绝已经太晚；如果先相信模型提供的 `approved` 字段，调用者就能自我授权；如果处理器失败后仍生成 Receipt，系统又回到了 v0 的“文字冒充事实”。
 
-本章策略把读工具直接标为 `allow`。写工具根据严重级别计算 Scope，例如 P1 需要 `incident:create:p1`。没有 Grant 时，策略结果是 `ask`，Runtime 对外返回：
+本章策略把读工具直接标为 `allow`。这里的 `allow` 是教学简化：假设 Host 已在连接 Server、展示工具范围或启动任务时取得了**预先建立的用户同意**，而且 Fixture 不含敏感数据；它不表示真实产品可以在用户不知情时任意读取。写工具根据严重级别计算 Scope，例如 P1 需要 `incident:create:p1`。没有 Grant 时，策略结果是 `ask`，Runtime 对外返回：
 
 ```json
 {
@@ -397,6 +399,8 @@ receipt = ExecutionReceipt(
 ```
 
 这句话值得单独记住：**Execution Receipt 来自执行边界**。模型可以提出标题和严重级别，却不能提供 `external_id`、`occurred_at` 或 `action_id`。Schema 使用封闭对象，因此在参数里加入 `receipt` 会得到 `/receipt additionalProperties`，处理器根本不会运行。
+
+还要给“可信”加上边界：**本章 Receipt 证明的是** Runtime 观察到受信 Handler 成功返回，并把已验证参数与 `INC-0001` 关联起来；它**不是外部系统的密码学签名**，也不独立证明工单内容符合所有业务规则。教学版的 Handler 与 `TicketStore` 位于同一信任域，所以这份证据足够完成边界实验。生产系统若跨服务写入，应考虑按外部 ID 回查、验证响应签名或在独立 Verifier 中重新验收。
 
 为什么还要 `arguments_digest`？因为回执不仅要说“某个工具执行过”，还要把证据绑定到那一组已验证参数。摘要不是加密，也不会隐藏低熵信息；它只是稳定关联手段。敏感参数仍不应直接写入公开 Trace。
 
@@ -632,6 +636,8 @@ Prompt 则适合“让用户选一种开始方式”。用户选择“排查支�
 JSON-RPC 2.0 定义了轻量 RPC 的基本消息：`jsonrpc`、`method`、`params`、`id`、`result` 和 `error`。请求与响应通过 `id` 关联，Notification 没有响应。它与传输无关，可以跑在同一进程、标准输入输出或 HTTP 上。
 
 MCP 在这个底座上定义了更具体的语言：谁是 Host、Client、Server；怎样声明和发现能力；`tools/list`、`tools/call`、`resources/read`、`prompts/get` 分别是什么意思；怎样携带协议版本、Client 信息与能力；哪些传输和授权规则适用。
+
+本地 Runtime 的 `ResultStatus` 不能与 MCP 线上错误一一对应。本章为了教学，把路由、业务和执行失败压进一个较小的状态集合，再用 `failure.code` 区分细节；而按 `2026-07-28` 规范，**Unknown Tool 在 MCP 线上属于协议错误**，畸形请求和 Server 级错误也走 JSON-RPC Error。工具已经被正确找到和调用，但 API 失败、输入需要修正等可行动失败，才适合表示为 **Tool Execution Error**。官方 SDK 的便利 Client 可能把两类失败包装成相似对象，Host 仍应保留线上错误来源，不能用同一重试策略处理。
 
 因此，“我们的接口使用 JSON-RPC”不等于“我们的接口是 MCP”。同样，“消息长得像 `tools/call`”也不证明兼容。协议兼容还涉及版本、Schema、错误语义、能力声明、结果类型和传输要求。本章坚持使用官方 SDK，就是为了不把格式相似误写成协议实现。
 

@@ -51,6 +51,14 @@ class ChapterFigureTests(unittest.TestCase):
             self.assertIn("**读图顺序：**", following, match.group("name"))
             self.assertIn("**这张图要说明：**", following, match.group("name"))
 
+    def test_failure_map_v2_ends_in_a_decision_not_a_second_receipt(self):
+        prompt = (
+            ROOT
+            / "infographic/chapter9-failure-map/prompts/infographic-v2.md"
+        ).read_text(encoding="utf-8")
+        self.assertIn("继续 / 停止", prompt)
+        self.assertIn("never show another receipt after model context", prompt.casefold())
+
 
 if __name__ == "__main__":
     unittest.main()

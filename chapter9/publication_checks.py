@@ -46,9 +46,11 @@ def publication_errors(
     sources_path = root / "book/sources/chapter9-sources.md"
     answers_path = root / "chapter9/reference-answers.md"
     readme_path = root / "chapter9/README.md"
+    review_path = root / "book/reviews/chapter9-review-codex.md"
     chapter = _read(chapter_path)
     sources = _read(sources_path)
     answers = _read(answers_path)
+    review = _read(review_path)
     errors: list[str] = []
 
     if not chapter:
@@ -57,6 +59,10 @@ def publication_errors(
         errors.append("missing_reader_file:chapter9/README.md")
     if not answers_path.is_file():
         errors.append("missing_reader_file:chapter9/reference-answers.md")
+    if not review_path.is_file():
+        errors.append("missing_review_report:book/reviews/chapter9-review-codex.md")
+    elif "没有未处理的 P0 或 P1" not in review:
+        errors.append("open_priority_review_finding:chapter9")
 
     prose = _prose_only(chapter)
     cjk_count = len(re.findall(r"[\u3400-\u9fff]", prose))
@@ -102,7 +108,7 @@ def publication_errors(
     if source_count < contract.source_count:
         errors.append(f"source_count_below_minimum:{source_count}")
 
-    bundle_text = "\n".join((chapter, sources, answers, _read(readme_path)))
+    bundle_text = "\n".join((chapter, sources, answers, _read(readme_path), review))
     if re.search(r"\bsk-[A-Za-z0-9_-]{24,}\b", bundle_text) or re.search(
         r"\b[A-Z][A-Z0-9_]*(?:API_KEY|TOKEN|SECRET)\s*=\s*[\"']?[A-Za-z0-9._~+/=-]{16,}",
         bundle_text,

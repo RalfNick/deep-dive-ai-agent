@@ -78,8 +78,8 @@
 
 - 类型：官方规范
 - 地址：https://modelcontextprotocol.io/specification/2026-07-28/server/tools
-- 用于：确认 `tools/list`、`tools/call`、输入输出 Schema、Tool Error 与人类同意建议。
-- 不用于证明：不把 Tool 描述和 annotation 当成可信的强制安全边界。
+- 用于：确认 `tools/list`、`tools/call`、输入输出 Schema、人类在环建议，以及协议错误与 Tool Execution Error 的区分。
+- 不用于证明：不把 Tool 描述和 annotation 当成可信的强制安全边界，也不把教学版读 Tool 的自动 `allow` 解释为可以绕开用户知情和控制。
 - 最后核对：2026-09-01
 - 出版前复核：是
 
@@ -176,7 +176,7 @@
 ### [S20] OpenAI Function Calling
 
 - 类型：官方产品文档
-- 地址：https://platform.openai.com/docs/guides/function-calling
+- 地址：https://developers.openai.com/api/docs/guides/function-calling
 - 用于：说明模型返回函数名、`call_id` 与 JSON 字符串参数，应用负责真正执行并回传结果。
 - 不用于证明：不保证所有模型、接口与 Provider 返回完全相同的事件形态。
 - 最后核对：2026-09-01
@@ -194,7 +194,7 @@
 ### [S22] Anthropic Tool Use
 
 - 类型：官方产品文档
-- 地址：https://docs.anthropic.com/en/docs/agents-and-tools/tool-use/overview
+- 地址：https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview
 - 用于：说明 `tool_use`、`tool_result` 与 object 形式的 `input`。
 - 不用于证明：不保证未来 Claude API 的所有工具类型都沿用同一字段集合。
 - 最后核对：2026-09-01
@@ -253,4 +253,3 @@
 - 不用于证明：不包含原始参数、Runbook 正文、调用者身份或授权集合。
 - 最后核对：2026-09-01
 - 出版前复核：是
-

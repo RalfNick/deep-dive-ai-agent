@@ -54,6 +54,7 @@ class PublicationChecksTests(unittest.TestCase):
         for expected in (
             "cjk_count_out_of_range",
             "heading_count_out_of_range",
+            "missing_review_report",
             "missing_version",
             "figure_set_mismatch",
             "exercise_numbers_invalid",

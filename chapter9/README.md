@@ -2,6 +2,8 @@
 
 本目录对应《深入浅出 AI Agent》第 9 章。实验从“模型用自然语言声称已创建故障单”开始，逐步加入 JSON、Schema、Tool Contract、Tool Loop、授权、Execution Receipt 和 MCP。所有默认实验都离线运行，不需要 API Key。
 
+第一次运行前只需记住：Definition 是能力目录，Call 是申请，Result 是办理结果，Receipt 是写操作成功后由执行边界记录的关联回执。Receipt 不是模型生成的文字，也不是外部系统的密码学签名；生产环境仍可能需要按外部 ID 回查。
+
 > 证据边界：这里固定模型决策、Fixture 与时钟，只比较外围系统是否守住合同。它不是模型质量测试，也不构成 OpenAI、Anthropic、DeepSeek 或任何 Agent 产品的能力排名。
 
 ## 环境
@@ -98,5 +100,6 @@ python -m chapter9.live.live_probe --provider anthropic
 
 本目录没有证明：某个真实模型更强；任意第三方 MCP 实现都兼容；进程内测试等价于公网部署；内存 TicketStore 提供生产级幂等和灾难恢复；单次实时探针能代表长期质量；字符数或 JSON 长度可以代替 Provider Token 计量。
 
-继续扩展时，请先新增失败案例，再修改 Runtime；不要通过放宽 Schema、把授权字段塞进模型 Arguments，或让 Handler 伪造成功结果来“修复”测试。
+教学版 `ResultStatus` 也是有意缩小的应用内分类。不要把它直接当作 MCP 线上错误码：Unknown Tool 和畸形 MCP 请求属于协议错误，已经进入具体 Tool 后的可行动失败才属于 Tool Execution Error。
 
+继续扩展时，请先新增失败案例，再修改 Runtime；不要通过放宽 Schema、把授权字段塞进模型 Arguments，或让 Handler 伪造成功结果来“修复”测试。

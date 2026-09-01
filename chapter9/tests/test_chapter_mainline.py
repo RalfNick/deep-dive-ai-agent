@@ -93,6 +93,18 @@ class ChapterMainlineTests(unittest.TestCase):
             self.assertIn(text, chapter)
         self.assertNotIn("MCP 会自动保证工具安全", chapter)
 
+    def test_review_closes_reader_trust_consent_and_error_taxonomy_gaps(self):
+        chapter = CHAPTER.read_text(encoding="utf-8")
+        for marker in (
+            "可以把它们想成三张单据",
+            "预先建立的用户同意",
+            "本章 Receipt 证明的是",
+            "不是外部系统的密码学签名",
+            "Unknown Tool 在 MCP 线上属于协议错误",
+            "Tool Execution Error",
+        ):
+            self.assertIn(marker, chapter)
+
 
 if __name__ == "__main__":
     unittest.main()
