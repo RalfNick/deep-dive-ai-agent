@@ -1,0 +1,12 @@
+{
+  "observed_at": "2026-09-01T00:00:00Z",
+  "services": {
+    "payments": {
+      "error_rate": 0.182,
+      "failed_checkout_ratio": 0.21,
+      "p95_latency_ms": 4200,
+      "window_minutes": 5
+    }
+  }
+}
+

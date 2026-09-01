@@ -1,0 +1,15 @@
+[
+  {
+    "deployed_at": "2026-08-31T23:42:00Z",
+    "deployment_id": "deploy-payments-0042",
+    "service": "payments",
+    "version": "payments-3.7.0"
+  },
+  {
+    "deployed_at": "2026-08-30T10:15:00Z",
+    "deployment_id": "deploy-payments-0041",
+    "service": "payments",
+    "version": "payments-3.6.4"
+  }
+]
+
