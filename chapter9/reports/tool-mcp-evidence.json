@@ -1,0 +1,244 @@
+{
+  "claims": [
+    "固定 Tool Runtime 能阻止无合同、无授权和无回执的副作用被计为完成。",
+    "官方 MCP SDK 能以统一发现接口暴露 Tool、Resource 与 Prompt。"
+  ],
+  "fixed_clock": "2026-09-01T00:00:00Z",
+  "groups": {
+    "compatibility": {
+      "cases": [
+        {
+          "case_id": "compat-modern-protocol",
+          "evidence_kind": "runtime_observation",
+          "observed": "protocol:2026-07-28",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
+            6
+          ]
+        },
+        {
+          "case_id": "compat-legacy-mode",
+          "evidence_kind": "runtime_observation",
+          "observed": "protocol:2025-11-25:read_error_False",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
+            6
+          ]
+        },
+        {
+          "case_id": "compat-unsupported-version",
+          "evidence_kind": "specification_fixture",
+          "observed": "unsupported_version_requires_explicit_negotiation_failure",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
+            6
+          ]
+        }
+      ]
+    },
+    "contract": {
+      "cases": [
+        {
+          "case_id": "contract-free-text",
+          "evidence_kind": "runtime_observation",
+          "observed": "completion_claim_without_action_evidence",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
+            0
+          ]
+        },
+        {
+          "case_id": "contract-malformed-json",
+          "evidence_kind": "runtime_observation",
+          "observed": "json_parse_rejected",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
+            1
+          ]
+        },
+        {
+          "case_id": "contract-schema-violation",
+          "evidence_kind": "runtime_observation",
+          "observed": "schema_rejected:/window_minutes",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
+            1,
+            2
+          ]
+        },
+        {
+          "case_id": "contract-valid-call",
+          "evidence_kind": "runtime_observation",
+          "observed": "result:succeeded",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
+            2
+          ]
+        }
+      ]
+    },
+    "loop": {
+      "cases": [
+        {
+          "case_id": "loop-result-correlation",
+          "evidence_kind": "runtime_observation",
+          "observed": "matched:True",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
+            2,
+            3
+          ]
+        },
+        {
+          "case_id": "loop-three-calls",
+          "evidence_kind": "runtime_observation",
+          "observed": "completed:1_side_effect",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
+            3
+          ]
+        },
+        {
+          "case_id": "loop-mismatched-call-id",
+          "evidence_kind": "runtime_observation",
+          "observed": "mismatch_detected:True",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
+            3
+          ]
+        },
+        {
+          "case_id": "loop-step-exhaustion",
+          "evidence_kind": "runtime_observation",
+          "observed": "blocked:step_limit",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
+            3
+          ]
+        }
+      ]
+    },
+    "mcp_primitives": {
+      "cases": [
+        {
+          "case_id": "mcp-tool",
+          "evidence_kind": "runtime_observation",
+          "observed": "discovered:3",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
+            5
+          ]
+        },
+        {
+          "case_id": "mcp-resource",
+          "evidence_kind": "runtime_observation",
+          "observed": "discovered:1:read_True",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
+            5
+          ]
+        },
+        {
+          "case_id": "mcp-prompt",
+          "evidence_kind": "runtime_observation",
+          "observed": "discovered:1:rendered_True",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
+            5
+          ]
+        },
+        {
+          "case_id": "mcp-host-isolation",
+          "evidence_kind": "runtime_observation",
+          "observed": "approval_required:0_writes",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
+            5
+          ]
+        }
+      ]
+    },
+    "safety": {
+      "cases": [
+        {
+          "case_id": "safety-approval-required",
+          "evidence_kind": "runtime_observation",
+          "observed": "approval_required:0_writes",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
+            4
+          ]
+        },
+        {
+          "case_id": "safety-allowed-write",
+          "evidence_kind": "runtime_observation",
+          "observed": "receipt:INC-0001:1_write",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
+            4
+          ]
+        },
+        {
+          "case_id": "safety-forged-receipt",
+          "evidence_kind": "runtime_observation",
+          "observed": "invalid_arguments:0_writes",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
+            4
+          ]
+        },
+        {
+          "case_id": "safety-temporary-error",
+          "evidence_kind": "runtime_observation",
+          "observed": "temporary_unavailable:retryable_True",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
+            4
+          ]
+        },
+        {
+          "case_id": "safety-permanent-business-error",
+          "evidence_kind": "runtime_observation",
+          "observed": "record_not_found:retryable_False",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
+            4
+          ]
+        }
+      ]
+    }
+  },
+  "non_claims": [
+    "本实验不评价真实模型推理质量。",
+    "本实验不比较 Claude Code、Codex 或任何 Provider 的产品能力。"
+  ],
+  "protocol_revision": "2026-07-28",
+  "report_id": "chapter9-tool-mcp-evidence-v1",
+  "sdk": "mcp==2.1.1",
+  "unmeasured": {
+    "provider_cost": null,
+    "provider_latency_ms": null,
+    "provider_tokens": null,
+    "real_model_quality": null
+  }
+}

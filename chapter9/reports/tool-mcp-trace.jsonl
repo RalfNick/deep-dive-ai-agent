@@ -1,0 +1,10 @@
+{"argument_digest":"58600894470e5cbd9b7ec44903978a15e4ee3bcdc22cb6198a21c7bd4e2091eb","call_id":"call-status-001","event_id":1,"event_type":"tool_call","step_id":"step-1","tool_name":"get_service_status"}
+{"call_id":"call-status-001","event_id":2,"event_type":"tool_result","result_status":"succeeded","step_id":"step-1","tool_name":"get_service_status"}
+{"argument_digest":"b9f43578c8e0cf6e6069da79e9215f2b2b6e8a15a04c6d1cea826b35abd6b8e1","call_id":"call-deploy-002","event_id":3,"event_type":"tool_call","step_id":"step-2","tool_name":"list_recent_deployments"}
+{"call_id":"call-deploy-002","event_id":4,"event_type":"tool_result","result_status":"succeeded","step_id":"step-2","tool_name":"list_recent_deployments"}
+{"argument_digest":"53ad3b3df33c60ff5cf5f9d85da13634b23a4a3e91f0fe61aad89deceef8b92c","call_id":"call-ticket-003","event_id":5,"event_type":"tool_call","step_id":"step-3","tool_name":"create_incident_ticket"}
+{"action_id":"action-4e8dd705d62f18e9","call_id":"call-ticket-003","event_id":6,"event_type":"tool_result","result_status":"succeeded","step_id":"step-3","tool_name":"create_incident_ticket"}
+{"event_id":7,"event_type":"final_answer","reason":"verified_receipt","result_status":"completed"}
+{"event_id":8,"event_type":"mcp_discovery","primitive_type":"tool","protocol_version":"2026-07-28","reason":"official_sdk_inventory"}
+{"event_id":9,"event_type":"mcp_discovery","primitive_type":"resource","protocol_version":"2026-07-28","reason":"official_sdk_inventory"}
+{"event_id":10,"event_type":"mcp_discovery","primitive_type":"prompt","protocol_version":"2026-07-28","reason":"official_sdk_inventory"}
