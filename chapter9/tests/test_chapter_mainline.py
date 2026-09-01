@@ -51,6 +51,29 @@ class ChapterMainlineTests(unittest.TestCase):
         ):
             self.assertIn(link, chapter)
 
+    def test_v0_through_v4_follow_the_same_evidence_rhythm(self):
+        chapter = CHAPTER.read_text(encoding="utf-8")
+        markers = (
+            "**输入：**",
+            "**关键代码：**",
+            "**运行结果：**",
+            "**解决了什么：**",
+            "**还没有解决什么：**",
+        )
+        for version in range(5):
+            start = chapter.index(f"### v{version}：")
+            end_marker = f"### v{version + 1}：" if version < 4 else "### v5："
+            section = chapter[start:chapter.index(end_marker)]
+            for marker in markers:
+                self.assertIn(marker, section, f"v{version} missing {marker}")
+
+        for distinction in (
+            "JSON 语法正确 ≠ Tool Call 合法",
+            "Tool Call 是提议",
+            "Execution Receipt 来自执行边界",
+        ):
+            self.assertIn(distinction, chapter)
+
 
 if __name__ == "__main__":
     unittest.main()
