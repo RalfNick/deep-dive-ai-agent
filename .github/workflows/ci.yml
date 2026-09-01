@@ -35,6 +35,7 @@ jobs:
             requirements-docs.txt
             chapter1/requirements.txt
             chapter2/requirements.txt
+            chapter9/requirements.txt
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -49,6 +50,7 @@ jobs:
           -r requirements-docs.txt
           -r chapter1/requirements.txt
           -r chapter2/requirements.txt
+          -r chapter9/requirements.txt
 
       - name: Install book renderer dependencies
         run: npm ci --prefix book
@@ -70,7 +72,7 @@ jobs:
           python chapter2/structured_output_demo.py
           python chapter2/model_selection_demo.py
 
-      - name: Run Chapter 3 through Chapter 8 tests
+      - name: Run Chapter 3 through Chapter 9 tests
         run: |
           python -m unittest discover -s chapter3/tests -v
           python -m unittest discover -s chapter4/tests -v
@@ -78,6 +80,7 @@ jobs:
           python -m unittest discover -s chapter6/tests -v
           python -m unittest discover -s chapter7/tests -v
           python -m unittest discover -s chapter8/tests -v
+          python -m unittest discover -s chapter9/tests -v
 
       - name: Regenerate deterministic teaching reports
         run: |
@@ -88,6 +91,7 @@ jobs:
           python -m chapter6.experiments.run_all --output chapter6/reports
           python -m chapter7.experiments.run_all --output chapter7/reports
           python -m chapter8.experiments.run_all --output chapter8/reports
+          python -m chapter9.experiments.run_all --output chapter9/reports
 
       - name: Run book renderer contracts
         run: npm test --prefix book

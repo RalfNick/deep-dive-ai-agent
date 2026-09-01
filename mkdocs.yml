@@ -69,6 +69,7 @@ nav:
       - 第 6 章 长任务中的上下文架构: book/chapter6.md
       - 第 7 章 记忆工程: book/chapter7.md
       - 第 8 章 RAG 与知识库: book/chapter8.md
+      - 第 9 章 工具调用与 MCP: book/chapter9.md
       - 18 章写作地图: book/OUTLINE.md
   - 配套实验:
       - 第 1 章实验: chapter1/index.md
@@ -79,6 +80,7 @@ nav:
       - 第 6 章实验: chapter6/index.md
       - 第 7 章实验: chapter7/index.md
       - 第 8 章实验: chapter8/index.md
+      - 第 9 章实验: chapter9/index.md
   - 验证与贡献:
       - 实验状态: docs/EXPERIMENT_STATUS.md
       - 发布规则: docs/RELEASES.md

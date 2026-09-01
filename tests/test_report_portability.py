@@ -20,6 +20,9 @@ CANONICAL_TEXT_REPORTS = (
     "chapter7/reports/memory-engineering.json",
     "chapter7/reports/memory-engineering.md",
     "chapter7/reports/memory-engineering-trace.jsonl",
+    "chapter9/reports/tool-mcp-evidence.json",
+    "chapter9/reports/tool-mcp-evidence.md",
+    "chapter9/reports/tool-mcp-trace.jsonl",
 )
 
 

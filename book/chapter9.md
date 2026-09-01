@@ -1297,3 +1297,9 @@ Input Required 是多轮请求机制，允许 Server 在一次 Tool Call 中请�
 ## 与第 10 章“工具系统进阶”的衔接
 
 当单个工具合同和 MCP 边界清晰之后，下一章再讨论大规模工具发现、并发、异步、取消、超时和结果治理。
+
+**继续阅读**
+
+- [运行第 9 章配套实验](../chapter9/README.md)
+- [查看第 9 章参考答案](../chapter9/reference-answers.md)
+- [查看第 10 章及后续写作规划](./OUTLINE.md)

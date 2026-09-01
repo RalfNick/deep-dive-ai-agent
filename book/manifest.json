@@ -3,8 +3,8 @@
   "title": "深入浅出 AI Agent",
   "subtitle": "从大模型原理到手写 Coding Agent",
   "description": "从模型、上下文和工具出发，逐步搭建可运行、可验证、可持续改进的 AI Agent 工程体系。",
-  "version": "0.8.1",
-  "updated": "2026-08-30",
+  "version": "0.9.0",
+  "updated": "2026-09-01",
   "cover": "images/deep-dive-ai-agent-cover.webp",
   "repositoryUrl": "https://github.com/RalfNick/deep-dive-ai-agent",
   "totalChapters": 18,
@@ -127,9 +127,13 @@
         {
           "order": 9,
           "slug": "chapter-9",
-          "title": "工具调用与 MCP",
-          "status": "planned",
-          "summary": "从 JSON Schema 与函数调用开始，实现工具循环和 MCP Server。"
+          "title": "工具调用与 MCP：从‘模型想做’到‘系统真的做了’",
+          "status": "published",
+          "summary": "从四份工具合同、执行门禁与可信回执出发，实现确定性 Tool Loop，并用官方 SDK 映射 MCP 的 Tool、Resource 与 Prompt。",
+          "source": "chapter9.md",
+          "experiment": "../chapter9/README.md",
+          "answers": "../chapter9/reference-answers.md",
+          "updated": "2026-09-01"
         },
         {
           "order": 10,

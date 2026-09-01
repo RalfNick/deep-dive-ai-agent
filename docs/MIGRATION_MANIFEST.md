@@ -11,7 +11,7 @@
 | target | source | commit | bytes | sha256 |
 | --- | --- | --- | ---: | --- |
 | `book/OUTLINE.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 6929 | `c46a818b2f563230e28b519e9eb7432d23b40c345a417b79f59bd87e16e2f298` |
-| `book/README.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 6473 | `d9b9c0184d9bdd741414683d8608b3239781e59a7b44f49fc7fe5429292ea3a1` |
+| `book/README.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 7241 | `8260590cc2ce61e91ab38128747e39e55de8b9643fdeda1f2e5cb9daad09c90c` |
 | `book/WRITING_GUIDE.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 4158 | `99fd64fbb7dbce142e309e266dafa2cafad65aca0514f0b17b45727db4c27b1b` |
 | `book/chapter1.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 84332 | `fd4fa7c5fd4f2b80267ed73ad73c81fdd1ae30c612ce2812dcf17a355d450598` |
 | `book/chapter2.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 73609 | `f6d7686dae9b0a664df31fd8f3ccdf5149def69c963c282bfc72dc6d9bed25f2` |
@@ -20,6 +20,7 @@
 | `book/chapter5.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 64530 | `9d11e6d391dc3e517f9534328aec262e1234f3573a958ed1d6ce251f733d2d5e` |
 | `book/chapter6.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 115394 | `a22493abd801a300737f21741f3973e3221d9bc55bf5e39e9b526610eb3531ee` |
 | `book/images/fig0-1-book-roadmap.svg` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 5336 | `19c6f87985989b86ed6e09f8966d57b33e5b76fba1c842ae4b9851ad989ab8bf` |
+| `book/images/fig1-0-how-llms-work.webp` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 229740 | `acb411d7d13eb8d2c590ba461e82aded71476155160bcbdc933394a28ccb416e` |
 | `book/images/fig1-1-concept-boundaries.svg` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 5491 | `203b312b0c07716c20a1a8eb87e368a76abd5d8df18a2eb4dd30b80d3185bc1a` |
 | `book/images/fig1-2-transformer-flow.svg` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 5746 | `de85e2bb8430ba4ac5de70b6dd878447758ae76f8355ba0249d920d4248b67df` |
 | `book/images/fig1-3-training-inference-agent.svg` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 6405 | `2fec7392555870aa2185b152d09ac0a1aa10d28a9b9254ffff3f7dfab37cefc2` |

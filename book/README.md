@@ -34,8 +34,9 @@
 7. [第 6 章：长任务中的上下文架构](./chapter6.md)
 8. [第 7 章：记忆——不是把聊天记录全部塞回去](./chapter7.md)
 9. [第 8 章：RAG 与知识库——让 Agent 先查证，再回答](./chapter8.md)
+10. [第 9 章：工具调用与 MCP——从“模型想做”到“系统真的做了”](./chapter9.md)
 
-每章末尾都连接正文、配套实验、参考答案和下一阅读位置。第 9–18 章只有[写作规划](./OUTLINE.md)，不把规划标题计为已发布章节。
+每章末尾都连接正文、配套实验、参考答案和下一阅读位置。第 10–18 章只有[写作规划](./OUTLINE.md)，不把规划标题计为已发布章节。
 
 ## 阅读路径
 
@@ -61,17 +62,20 @@
 | [chapter6.md](./chapter6.md) | v1.0.1 书稿 | 长任务压缩、Artifact、Checkpoint、Rehydration、恢复与漂移；公共仓库保留 143 项非 PDF 测试 |
 | [chapter7.md](./chapter7.md) | Review 通过稿 | 约 2.6 万有效中文字符、7 张图、5 组无 API Key 实验、14 道分层练习与 65 项测试 |
 | [chapter8.md](./chapter8.md) | v1.1 复审优化稿 | 约 2.56 万有效中文字符、8 张图、5 组 20 个无 API Key 案例、14 道分层练习与 60 项测试；区分 10 个符合性案例与 3 个失败探针，统一文档级固定 K 指标口径 |
+| [chapter9.md](./chapter9.md) | v1.0 Review 通过稿 | 约 2.55 万有效中文字符、8 幅原创手绘图、5 组 20 个无 API Key 案例、14 道分层练习与 46 项测试；实现四份工具合同、执行门禁、可信回执、确定性 Tool Loop 与官方 MCP SDK 映射 |
 | [sources/chapter1-sources.md](./sources/chapter1-sources.md) | 已建立 | 第 1 章资料台账与更新策略 |
 | [sources/chapter2-sources.md](./sources/chapter2-sources.md) | 已建立 | 作者资料页级映射、论文、官方文档、书籍与前沿信息核对台账 |
 | [sources/chapter3-sources.md](./sources/chapter3-sources.md) | 已建立 | Agent 经典论文、OpenAI/Anthropic/LangChain 官方文档与出版前复核清单 |
 | [sources/chapter4-sources.md](./sources/chapter4-sources.md) | 已建立 | Harness、权限、沙箱、检查点、Claude Code 与 Codex 的官方资料台账 |
 | [sources/chapter7-sources.md](./sources/chapter7-sources.md) | 已建立 | Memory 研究、评估与 LangGraph、Claude Code、OpenAI Agents SDK、Codex 官方事实台账 |
 | [sources/chapter8-sources.md](./sources/chapter8-sources.md) | 已建立 | RAG 原始研究、检索算法、LangChain/LangGraph、OpenAI、Anthropic 与 Ragas 官方资料台账 |
+| [sources/chapter9-sources.md](./sources/chapter9-sources.md) | 已建立 | MCP 2026-07-28 规范、官方 Python SDK、Provider Tool Use 与本地工程证据台账 |
 | [reviews/chapter4-review.md](./reviews/chapter4-review.md) | 已完成 | 普通读者与 AI 工程专家双视角问题清单、修订记录和证据边界 |
 | [reviews/chapter7-review-codex.md](./reviews/chapter7-review-codex.md) | 已完成 | 读者、AI Agent 专家、实验与资料时效四视角 Review 及修订证据 |
 | [reviews/chapter8-review-codex.md](./reviews/chapter8-review-codex.md) | 已完成 | 读者、AI 专家、工程证据与资料时效四视角 Review，包含发现处置与报告哈希 |
+| [reviews/chapter9-review-codex.md](./reviews/chapter9-review-codex.md) | 已完成 | 读者、AI 专家、工程证据、资料时效与视觉语义 Review；没有未处理的 P0 或 P1 |
 | [WRITING_GUIDE.md](./WRITING_GUIDE.md) | 已建立 | 后续章节的篇幅、图表、实验和失败案例标准 |
 
-本目录中的插图均为本书重新绘制的 SVG，便于后续导出 PDF、EPUB 和网页版本；用户提供的旧资料只作为知识线索和结构素材，不直接复用原图或原文。
+本目录中的插图均为本书重新绘制或生成的 SVG/PNG，便于后续导出 PDF、EPUB 和网页版本；用户提供的旧资料只作为知识线索和结构素材，不直接复用原图或原文。
 
 后续核心章节的篇幅、插图、实验和失败案例密度统一遵守 [WRITING_GUIDE.md](./WRITING_GUIDE.md)。

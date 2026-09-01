@@ -1739,4 +1739,4 @@ RAG 让 Agent 获得可更新的外部知识，但它主要是“读”。当用
 
 - [运行第 8 章配套实验](../chapter8/README.md)
 - [查看第 8 章参考答案](../chapter8/reference-answers.md)
-- [查看第 9 章“工具调用与 MCP”规划](./OUTLINE.md)
+- [继续阅读第 9 章“工具调用与 MCP”](./chapter9.md)
