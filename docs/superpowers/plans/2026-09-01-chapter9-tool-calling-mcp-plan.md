@@ -280,7 +280,7 @@ Expected: FAIL because `schema.py` and `registry.py` do not exist.
 
 - [ ] **Step 3: Implement the documented JSON Schema subset**
 
-Support only `type`, `properties`, `required`, `additionalProperties`, `enum`, `minimum`, `maximum`, and nested object/array values. Sort issues by `(path, keyword)`. Reject a Schema keyword outside that set with `ValueError("unsupported teaching schema keyword: <name>")`; this prevents the chapter from implying that the small validator implements all of JSON Schema 2020-12.
+Support only `type`, `properties`, `required`, `additionalProperties`, `items`, `enum`, `minimum`, `maximum`, and nested object/array values. Sort issues by `(path, keyword)`. Reject a Schema keyword outside that set with `ValueError("unsupported teaching schema keyword: <name>")`; this prevents the chapter from implying that the small validator implements all of JSON Schema 2020-12. `items` is required here because the incident-ticket contract carries an array of evidence identifiers.
 
 ```python
 def validate_arguments(schema: Mapping[str, object], arguments: Mapping[str, object]) -> tuple[ValidationIssue, ...]:
