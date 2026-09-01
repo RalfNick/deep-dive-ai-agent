@@ -1,0 +1,5 @@
+{
+  "network_access": false,
+  "provider": "deepseek",
+  "status": "dry_run"
+}
