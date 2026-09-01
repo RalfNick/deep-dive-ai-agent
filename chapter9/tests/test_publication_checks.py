@@ -19,11 +19,8 @@ FIGURES = (
 
 
 class PublicationChecksTests(unittest.TestCase):
-    def test_real_bundle_only_waits_for_the_eight_named_figures(self):
-        self.assertEqual(
-            tuple(f"missing_figure:{name}" for name in FIGURES),
-            publication_errors(ROOT),
-        )
+    def test_real_bundle_meets_every_publication_gate(self):
+        self.assertEqual((), publication_errors(ROOT))
 
     def test_synthetic_bundle_exposes_every_publication_gate(self):
         with tempfile.TemporaryDirectory() as directory:
