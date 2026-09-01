@@ -30,6 +30,7 @@ TEXT_SUFFIXES = {
 TEXT_NAMES = {".gitattributes", ".gitignore", "LICENSE"}
 SKIP_DIRECTORIES = {
     ".git",
+    ".worktrees",  # safety-fixture: allow
     ".mypy_cache",
     ".pytest_cache",
     ".venv",

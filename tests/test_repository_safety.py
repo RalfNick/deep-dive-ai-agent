@@ -69,6 +69,25 @@ class RepositorySafetyTests(unittest.TestCase):
 
         self.assertEqual((), findings)
 
+    def test_local_worktree_directories_are_not_publishable(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            nested = root / ".worktrees" / "chapter-draft"  # safety-fixture: allow
+            nested.mkdir(parents=True)
+            secret = "sk-" + "0123456789abcdef" * 2
+            (nested / "README.md").write_text(
+                f"{secret}\n[missing](./does-not-exist.png)\n",
+                encoding="utf-8",
+            )
+
+            findings = (
+                *check_local_links(root),
+                *check_secrets(root),
+                *check_author_paths(root),
+            )
+
+        self.assertEqual((), findings)
+
     def test_chapter_mapping_rejects_missing_and_duplicate_readme_links(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
