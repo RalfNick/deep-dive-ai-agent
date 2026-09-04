@@ -23,7 +23,8 @@ def write_markdown(path: Path, report: Mapping[str, object]) -> Path:
         f"- 固定时钟：`{report['fixed_clock']}`",
         f"- MCP 协议基线：`{report['protocol_revision']}`",
         f"- 教学 SDK：`{report['sdk']}`",
-        "- 样本：20 个确定性单样本案例",
+        "- 样本：21 个确定性单样本案例",
+        "- 证据构成：20 个运行观察 + 1 个规范 Fixture",
         "",
     ]
     for group_name, group in groups.items():
@@ -62,4 +63,3 @@ def write_jsonl(path: Path, rows: Iterable[Mapping[str, object]]) -> Path:
     )
     path.write_text(text, encoding="utf-8", newline="\n")
     return path
-

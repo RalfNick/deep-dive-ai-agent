@@ -68,6 +68,14 @@ git diff book-chapter1-v1.0 book-chapter1-v1.1 -- book/chapter1.md chapter1
 | v1.2 | 2026-08-29 | `book-chapter8-v1.2` | 加入检索前知识加工、派生问答与 Source Chunk 的来源边界，补充二值量化适用条件，并据此优化主流程、实验边界与图 8-2 | 第 8 章 61 项测试与规范报告复现通过；GitHub CI、Pages 和 `wlxralf.com` 发布成功 | 未生成独立 PDF；历史正文、代码与网站源文件由 Git tag 固定 |
 | v1.3 | 2026-08-30 | `book-chapter8-v1.3` | 新增中文原创“RAG 如何工作”主信息图，用离线知识加工、在线证据回答和四道责任边界建立第一遍阅读路线；原 8 张 SVG 技术图全部保留 | 第 8 章 61 项测试、仓库 41 项合同测试、4 项渲染测试与 MkDocs strict 构建通过；WebP 主图约 206 KiB | 未生成独立 PDF；网站与 Git tag 为本次发布载体 |
 
+## 第 9 章：工具调用与 MCP
+
+| 版本 | 日期 | Git tag | 状态与主要变化 | 自动验证 | PDF |
+| --- | --- | --- | --- | --- | --- |
+| v1.0 | 2026-09-01 | `book-chapter9-v1.0` | 首个正式发布版；包含 v0–v6 渐进主线、8 幅原创手绘图、5 组 20 个确定性案例、14 道练习、来源台账与双视角 Review | 第 9 章 46 项测试、仓库发布检查与 MkDocs strict 构建通过 | 未生成独立 PDF；网站与 Git tag 为本章发布载体 |
+| v1.0.1 | 2026-09-01 | `book-chapter9-v1.0.1` | 发布扫描热修版；仓库级安全检查忽略本地 Worktree，避免把工程工作目录误判为待发布内容；正文和实验结论不变 | 新增 Worktree 扫描回归测试；标签与 v1.0 指向同一最终发布提交 | 未生成独立 PDF；历史由 Git tag 固定 |
+| v1.0.2 | 2026-09-04 | `book-chapter9-v1.0.2` | 当前复审优化版；修正旧版 MCP 握手方向和 Function Calling / Runtime / MCP 架构关系；统一“三份调用合同 + 一份写操作回执”的语义；为三个 Tool 落实 Output Schema 及运行时验证；增加阅读路线、版本冻结点和一个输出合同失败实验；旧图、旧 Review 与旧 tag 均保留 | 第 9 章 47 项测试；规范报告 21 个 Case，其中 20 个 Runtime Observation、1 个 Specification Fixture；仓库发布检查与 MkDocs strict 构建通过 | 未生成独立 PDF；网站与 Git tag 为本章发布载体 |
+
 ## 后续章节发布规则
 
 其他章节首次纳入版本管理时，先按当时状态建立 `v1.0` 基线并生成版本化 PDF，再开始 Review 修订。任何正文、配套代码、练习答案、资料台账或图示发生实质变化，都必须在本文件新增版本记录；不能先覆盖旧版、事后再猜测历史内容。

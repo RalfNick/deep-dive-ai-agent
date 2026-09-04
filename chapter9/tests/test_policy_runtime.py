@@ -4,8 +4,15 @@ import unittest
 from chapter9.incident_domain.factory import build_incident_registry
 from chapter9.incident_domain.queries import FixtureRepository, IncidentService
 from chapter9.incident_domain.tickets import TicketStore
-from chapter9.tool_runtime.contracts import CallerContext, ResultStatus, ToolCall
+from chapter9.tool_runtime.contracts import (
+    CallerContext,
+    ResultStatus,
+    RiskLevel,
+    ToolCall,
+    ToolDefinition,
+)
 from chapter9.tool_runtime.policy import PolicyEngine
+from chapter9.tool_runtime.registry import ToolRegistry
 from chapter9.tool_runtime.runtime import ToolRuntime
 
 
@@ -36,6 +43,37 @@ class PolicyRuntimeTests(unittest.TestCase):
         self.assertEqual(ResultStatus.INVALID_ARGUMENTS, result.status)
         self.assertEqual("/window_minutes", result.failure.issues[0].path)
         self.assertEqual((), self.tickets.all())
+
+    def test_invalid_handler_output_is_rejected_before_it_reaches_the_loop(self):
+        registry = ToolRegistry()
+        registry.register(
+            ToolDefinition(
+                name="read_error_rate",
+                description="Return a numeric error rate.",
+                input_schema={
+                    "type": "object",
+                    "additionalProperties": False,
+                },
+                output_schema={
+                    "type": "object",
+                    "properties": {"error_rate": {"type": "number"}},
+                    "required": ["error_rate"],
+                    "additionalProperties": False,
+                },
+                risk_level=RiskLevel.READ,
+            ),
+            lambda arguments: {"error_rate": "0.182"},
+        )
+        runtime = ToolRuntime(registry, PolicyEngine())
+
+        result = runtime.execute(
+            ToolCall("call-output-1", "read_error_rate", {}, "step-output-1"),
+            CallerContext("reader", frozenset(), NOW),
+        )
+
+        self.assertEqual(ResultStatus.EXECUTION_ERROR, result.status)
+        self.assertEqual("invalid_tool_output", result.failure.code)
+        self.assertEqual("/error_rate", result.failure.issues[0].path)
 
     def test_p1_write_requires_host_grant(self):
         call = ToolCall(

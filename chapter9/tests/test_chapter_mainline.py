@@ -33,7 +33,7 @@ class ChapterMainlineTests(unittest.TestCase):
         for record in records:
             for field in ("- 类型：", "- 地址：", "- 用于：", "- 不用于证明：", "- 最后核对：", "- 出版前复核："):
                 self.assertIn(field, record)
-            self.assertIn("2026-09-01", record)
+            self.assertRegex(record, r"最后核对：2026-09-(?:01|04)")
             self.assertIn("出版前复核：是", record)
 
     def test_chapter_shell_orders_mainline_before_advanced_material(self):
@@ -96,7 +96,7 @@ class ChapterMainlineTests(unittest.TestCase):
     def test_review_closes_reader_trust_consent_and_error_taxonomy_gaps(self):
         chapter = CHAPTER.read_text(encoding="utf-8")
         for marker in (
-            "可以把它们想成三张单据",
+            "三份基础单据，再加一份写操作回执",
             "预先建立的用户同意",
             "本章 Receipt 证明的是",
             "不是外部系统的密码学签名",

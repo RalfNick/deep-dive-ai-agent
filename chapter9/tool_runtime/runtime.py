@@ -70,6 +70,18 @@ class ToolRuntime:
         result = self._registry.invoke(call)
         if result.status is not ResultStatus.SUCCEEDED:
             return result
+
+        if definition.output_schema is not None:
+            output_issues = validate_arguments(definition.output_schema, result.data)
+            if output_issues:
+                return ToolResult.failed(
+                    call.call_id,
+                    ResultStatus.EXECUTION_ERROR,
+                    "invalid_tool_output",
+                    "工具结果不符合声明的输出合同。",
+                    issues=output_issues,
+                )
+
         if definition.risk_level is RiskLevel.READ:
             return result
 

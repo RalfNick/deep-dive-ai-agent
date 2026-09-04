@@ -6,13 +6,13 @@ import re
 
 
 FIGURES = (
-    "fig9-1-tool-call-journey.png",
-    "fig9-2-boundary-map.png",
-    "fig9-3-tool-contract.png",
+    "fig9-1-tool-call-journey-v2.png",
+    "fig9-2-boundary-map-v2.png",
+    "fig9-3-tool-contract-v2.png",
     "fig9-4-tool-loop.png",
     "fig9-5-mcp-architecture.png",
     "fig9-6-mcp-primitives.png",
-    "fig9-7-protocol-eras.png",
+    "fig9-7-protocol-eras-v2.png",
     "fig9-8-failure-map.png",
 )
 
@@ -46,7 +46,7 @@ def publication_errors(
     sources_path = root / "book/sources/chapter9-sources.md"
     answers_path = root / "chapter9/reference-answers.md"
     readme_path = root / "chapter9/README.md"
-    review_path = root / "book/reviews/chapter9-review-codex.md"
+    review_path = root / "book/reviews/chapter9-review-codex-v2.md"
     chapter = _read(chapter_path)
     sources = _read(sources_path)
     answers = _read(answers_path)
@@ -60,7 +60,7 @@ def publication_errors(
     if not answers_path.is_file():
         errors.append("missing_reader_file:chapter9/reference-answers.md")
     if not review_path.is_file():
-        errors.append("missing_review_report:book/reviews/chapter9-review-codex.md")
+        errors.append("missing_review_report:book/reviews/chapter9-review-codex-v2.md")
     elif "没有未处理的 P0 或 P1" not in review:
         errors.append("open_priority_review_finding:chapter9")
 

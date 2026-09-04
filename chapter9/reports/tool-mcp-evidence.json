@@ -1,8 +1,13 @@
 {
   "claims": [
     "固定 Tool Runtime 能阻止无合同、无授权和无回执的副作用被计为完成。",
+    "固定 Tool Runtime 能在结果进入 Loop 前拒绝不符合 Output Schema 的数据。",
     "官方 MCP SDK 能以统一发现接口暴露 Tool、Resource 与 Prompt。"
   ],
+  "evidence_counts": {
+    "runtime_observation": 20,
+    "specification_fixture": 1
+  },
   "fixed_clock": "2026-09-01T00:00:00Z",
   "groups": {
     "compatibility": {
@@ -69,6 +74,16 @@
           "sample_count": 1,
           "versions": [
             1,
+            2
+          ]
+        },
+        {
+          "case_id": "contract-output-schema-violation",
+          "evidence_kind": "runtime_observation",
+          "observed": "invalid_tool_output:/error_rate",
+          "passed": true,
+          "sample_count": 1,
+          "versions": [
             2
           ]
         },
@@ -233,7 +248,7 @@
     "本实验不比较 Claude Code、Codex 或任何 Provider 的产品能力。"
   ],
   "protocol_revision": "2026-07-28",
-  "report_id": "chapter9-tool-mcp-evidence-v1",
+  "report_id": "chapter9-tool-mcp-evidence-v2",
   "sdk": "mcp==2.1.1",
   "unmeasured": {
     "provider_cost": null,

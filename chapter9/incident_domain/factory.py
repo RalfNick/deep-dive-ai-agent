@@ -29,6 +29,36 @@ def build_incident_registry(
                 "required": ["service", "window_minutes"],
                 "additionalProperties": False,
             },
+            output_schema={
+                "type": "object",
+                "properties": {
+                    "evidence_id": {"type": "string"},
+                    "service": {"type": "string", "enum": ["payments"]},
+                    "observed_at": {"type": "string"},
+                    "error_rate": {"type": "number", "minimum": 0, "maximum": 1},
+                    "failed_checkout_ratio": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1,
+                    },
+                    "p95_latency_ms": {"type": "integer", "minimum": 0},
+                    "window_minutes": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 30,
+                    },
+                },
+                "required": [
+                    "evidence_id",
+                    "service",
+                    "observed_at",
+                    "error_rate",
+                    "failed_checkout_ratio",
+                    "p95_latency_ms",
+                    "window_minutes",
+                ],
+                "additionalProperties": False,
+            },
             risk_level=RiskLevel.READ,
         ),
         lambda arguments: service.get_service_status(
@@ -46,6 +76,35 @@ def build_incident_registry(
                     "since": {"type": "string"},
                 },
                 "required": ["service", "since"],
+                "additionalProperties": False,
+            },
+            output_schema={
+                "type": "object",
+                "properties": {
+                    "deployments": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "deployed_at": {"type": "string"},
+                                "deployment_id": {"type": "string"},
+                                "service": {
+                                    "type": "string",
+                                    "enum": ["payments"],
+                                },
+                                "version": {"type": "string"},
+                            },
+                            "required": [
+                                "deployed_at",
+                                "deployment_id",
+                                "service",
+                                "version",
+                            ],
+                            "additionalProperties": False,
+                        },
+                    }
+                },
+                "required": ["deployments"],
                 "additionalProperties": False,
             },
             risk_level=RiskLevel.READ,
@@ -71,6 +130,27 @@ def build_incident_registry(
                     },
                 },
                 "required": ["title", "severity", "evidence_ids"],
+                "additionalProperties": False,
+            },
+            output_schema={
+                "type": "object",
+                "properties": {
+                    "ticket_id": {"type": "string"},
+                    "title": {"type": "string"},
+                    "severity": {"type": "string", "enum": ["P1", "P2", "P3"]},
+                    "evidence_ids": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                    },
+                    "created_at": {"type": "string"},
+                },
+                "required": [
+                    "ticket_id",
+                    "title",
+                    "severity",
+                    "evidence_ids",
+                    "created_at",
+                ],
                 "additionalProperties": False,
             },
             risk_level=RiskLevel.WRITE,

@@ -7,13 +7,13 @@ from chapter9.publication_checks import PublicationContract, publication_errors
 
 ROOT = Path(__file__).resolve().parents[2]
 FIGURES = (
-    "fig9-1-tool-call-journey.png",
-    "fig9-2-boundary-map.png",
-    "fig9-3-tool-contract.png",
+    "fig9-1-tool-call-journey-v2.png",
+    "fig9-2-boundary-map-v2.png",
+    "fig9-3-tool-contract-v2.png",
     "fig9-4-tool-loop.png",
     "fig9-5-mcp-architecture.png",
     "fig9-6-mcp-primitives.png",
-    "fig9-7-protocol-eras.png",
+    "fig9-7-protocol-eras-v2.png",
     "fig9-8-failure-map.png",
 )
 

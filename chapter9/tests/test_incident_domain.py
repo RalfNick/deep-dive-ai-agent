@@ -78,6 +78,9 @@ class IncidentDomainTests(unittest.TestCase):
                 for definition in definitions
             )
         )
+        self.assertTrue(
+            all(definition.output_schema is not None for definition in definitions)
+        )
 
 
 if __name__ == "__main__":

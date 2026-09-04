@@ -8,13 +8,13 @@ ROOT = Path(__file__).resolve().parents[2]
 CHAPTER = ROOT / "book/chapter9.md"
 IMAGES = ROOT / "book/images"
 EXPECTED = {
-    "fig9-1-tool-call-journey.png": (1024, 1536),
-    "fig9-2-boundary-map.png": (1536, 864),
-    "fig9-3-tool-contract.png": (1536, 864),
+    "fig9-1-tool-call-journey-v2.png": (1024, 1536),
+    "fig9-2-boundary-map-v2.png": (1536, 864),
+    "fig9-3-tool-contract-v2.png": (1536, 864),
     "fig9-4-tool-loop.png": (1536, 864),
     "fig9-5-mcp-architecture.png": (1536, 864),
     "fig9-6-mcp-primitives.png": (1536, 864),
-    "fig9-7-protocol-eras.png": (1536, 864),
+    "fig9-7-protocol-eras-v2.png": (1536, 864),
     "fig9-8-failure-map.png": (1536, 864),
 }
 

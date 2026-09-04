@@ -88,6 +88,32 @@ def _contract_cases() -> list[dict[str, object]]:
         malformed_observed = "unexpectedly_accepted"
     except json.JSONDecodeError:
         malformed_observed = "json_parse_rejected"
+
+    output_registry = ToolRegistry()
+    output_registry.register(
+        ToolDefinition(
+            name="read_error_rate",
+            description="Return a numeric error rate.",
+            input_schema={"type": "object", "additionalProperties": False},
+            output_schema={
+                "type": "object",
+                "properties": {"error_rate": {"type": "number"}},
+                "required": ["error_rate"],
+                "additionalProperties": False,
+            },
+            risk_level=RiskLevel.READ,
+        ),
+        lambda _: {"error_rate": "0.182"},
+    )
+    invalid_output = ToolRuntime(output_registry, PolicyEngine()).execute(
+        ToolCall(
+            "case-contract-invalid-output",
+            "read_error_rate",
+            {},
+            "contract-output-step",
+        ),
+        caller,
+    )
     return [
         _case("contract-free-text", [0], "completion_claim_without_action_evidence"),
         _case("contract-malformed-json", [1], malformed_observed),
@@ -95,6 +121,11 @@ def _contract_cases() -> list[dict[str, object]]:
             "contract-schema-violation",
             [1, 2],
             f"schema_rejected:{schema_issues[0].path}",
+        ),
+        _case(
+            "contract-output-schema-violation",
+            [2],
+            f"{invalid_output.failure.code}:{invalid_output.failure.issues[0].path}",
         ),
         _case("contract-valid-call", [2], f"result:{valid.status.value}"),
     ]
@@ -289,25 +320,34 @@ async def _mcp_cases() -> tuple[list[dict[str, object]], list[dict[str, object]]
 
 def build_report() -> dict[str, object]:
     primitive_cases, compatibility_cases = asyncio.run(_mcp_cases())
+    groups = {
+        "contract": {"cases": _contract_cases()},
+        "loop": {"cases": _loop_cases()},
+        "safety": {"cases": _safety_cases()},
+        "mcp_primitives": {"cases": primitive_cases},
+        "compatibility": {"cases": compatibility_cases},
+    }
+    evidence_counts: dict[str, int] = {}
+    for group in groups.values():
+        for case in group["cases"]:
+            evidence_kind = str(case["evidence_kind"])
+            evidence_counts[evidence_kind] = evidence_counts.get(evidence_kind, 0) + 1
+
     return {
         "claims": [
             "固定 Tool Runtime 能阻止无合同、无授权和无回执的副作用被计为完成。",
+            "固定 Tool Runtime 能在结果进入 Loop 前拒绝不符合 Output Schema 的数据。",
             "官方 MCP SDK 能以统一发现接口暴露 Tool、Resource 与 Prompt。",
         ],
         "fixed_clock": NOW,
-        "groups": {
-            "contract": {"cases": _contract_cases()},
-            "loop": {"cases": _loop_cases()},
-            "safety": {"cases": _safety_cases()},
-            "mcp_primitives": {"cases": primitive_cases},
-            "compatibility": {"cases": compatibility_cases},
-        },
+        "evidence_counts": evidence_counts,
+        "groups": groups,
         "non_claims": [
             "本实验不评价真实模型推理质量。",
             "本实验不比较 Claude Code、Codex 或任何 Provider 的产品能力。",
         ],
         "protocol_revision": "2026-07-28",
-        "report_id": "chapter9-tool-mcp-evidence-v1",
+        "report_id": "chapter9-tool-mcp-evidence-v2",
         "sdk": "mcp==2.1.1",
         "unmeasured": {
             "provider_cost": None,
@@ -358,7 +398,13 @@ def main(argv: list[str] | None = None) -> int:
     paths = generate_to(arguments.output)
     print(
         json.dumps(
-            {"case_count": 20, "files": [path.name for path in paths], "sample_count": 1},
+            {
+                "case_count": 21,
+                "files": [path.name for path in paths],
+                "runtime_observation_count": 20,
+                "sample_count": 1,
+                "specification_fixture_count": 1,
+            },
             ensure_ascii=False,
             sort_keys=True,
         )

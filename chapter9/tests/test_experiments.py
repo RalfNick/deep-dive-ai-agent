@@ -5,7 +5,7 @@ from chapter9.experiments.run_all import build_report
 
 
 class ExperimentTests(unittest.TestCase):
-    def test_report_has_five_groups_twenty_cases_and_v0_through_v6(self):
+    def test_report_has_five_groups_twenty_one_cases_and_v0_through_v6(self):
         report = build_report()
 
         self.assertEqual(
@@ -17,18 +17,27 @@ class ExperimentTests(unittest.TestCase):
             for group in report["groups"].values()
             for case in group["cases"]
         ]
-        self.assertEqual(20, len(cases))
+        self.assertEqual(21, len(cases))
         self.assertEqual(
             set(range(7)),
             {version for case in cases for version in case["versions"]},
         )
         self.assertTrue(all(case["sample_count"] == 1 for case in cases))
+        self.assertEqual(
+            {"runtime_observation": 20, "specification_fixture": 1},
+            {
+                evidence_kind: sum(
+                    case["evidence_kind"] == evidence_kind for case in cases
+                )
+                for evidence_kind in {case["evidence_kind"] for case in cases}
+            },
+        )
 
     def test_group_sizes_and_required_boundary_cases_are_explicit(self):
         report = build_report()
         self.assertEqual(
             {
-                "contract": 4,
+                "contract": 5,
                 "loop": 4,
                 "safety": 5,
                 "mcp_primitives": 4,
@@ -43,6 +52,7 @@ class ExperimentTests(unittest.TestCase):
         }
         for required in (
             "contract-free-text",
+            "contract-output-schema-violation",
             "loop-three-calls",
             "safety-forged-receipt",
             "mcp-resource",

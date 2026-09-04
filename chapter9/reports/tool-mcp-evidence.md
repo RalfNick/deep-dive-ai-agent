@@ -5,7 +5,8 @@
 - 固定时钟：`2026-09-01T00:00:00Z`
 - MCP 协议基线：`2026-07-28`
 - 教学 SDK：`mcp==2.1.1`
-- 样本：20 个确定性单样本案例
+- 样本：21 个确定性单样本案例
+- 证据构成：20 个运行观察 + 1 个规范 Fixture
 
 ## contract
 
@@ -14,6 +15,7 @@
 | `contract-free-text` | v0 | completion_claim_without_action_evidence | runtime_observation |
 | `contract-malformed-json` | v1 | json_parse_rejected | runtime_observation |
 | `contract-schema-violation` | v1, v2 | schema_rejected:/window_minutes | runtime_observation |
+| `contract-output-schema-violation` | v2 | invalid_tool_output:/error_rate | runtime_observation |
 | `contract-valid-call` | v2 | result:succeeded | runtime_observation |
 
 ## loop

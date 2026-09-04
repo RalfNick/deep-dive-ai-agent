@@ -5,7 +5,7 @@
 - [返回第 9 章正文](../book/chapter9.md)
 - [查看分层练习参考答案](./reference-answers.md)
 
-第一次运行前只需记住：Definition 是能力目录，Call 是申请，Result 是办理结果，Receipt 是写操作成功后由执行边界记录的关联回执。Receipt 不是模型生成的文字，也不是外部系统的密码学签名；生产环境仍可能需要按外部 ID 回查。
+第一次运行前只需记住：每次调用都有 Definition、Call 和 Result；只有写操作还需要 Receipt。Definition 是能力目录，Call 是申请，Result 是办理结果，Receipt 是写操作成功后由执行边界记录的关联回执。Receipt 不是模型生成的文字，也不是外部系统的密码学签名；生产环境仍可能需要按外部 ID 回查。
 
 > 证据边界：这里固定模型决策、Fixture 与时钟，只比较外围系统是否守住合同。它不是模型质量测试，也不构成 OpenAI、Anthropic、DeepSeek 或任何 Agent 产品的能力排名。
 
@@ -15,6 +15,7 @@
 - 教学依赖：`mcp==2.1.1`
 - 协议基线：MCP `2026-07-28`
 - 旧版兼容路径：MCP `2025-11-25`
+- 版本最后核对：`2026-09-04`
 - 固定时钟：`2026-09-01T00:00:00Z`
 
 在仓库根目录执行：
@@ -57,7 +58,7 @@ python -m chapter9.experiments.run_failure_matrix
 
 规范输出有三份：
 
-- `reports/tool-mcp-evidence.json`：机器可读的 5 组 20 个案例；
+- `reports/tool-mcp-evidence.json`：机器可读的 5 组 21 个案例（20 个运行观察 + 1 个规范 Fixture）；
 - `reports/tool-mcp-evidence.md`：供读者阅读的表格；
 - `reports/tool-mcp-trace.jsonl`：脱敏事件流。
 
@@ -65,7 +66,7 @@ python -m chapter9.experiments.run_failure_matrix
 
 | 实验组 | 案例数 | 主要问题 |
 | --- | ---: | --- |
-| contract | 4 | 自由文本、JSON、Schema 与合法调用的边界 |
+| contract | 5 | 自由文本、JSON、输入/输出 Schema 与合法调用的边界 |
 | loop | 4 | 结果关联、三步循环、错配与步数耗尽 |
 | safety | 5 | 同意、授权、伪造回执、暂时与永久错误 |
 | mcp_primitives | 4 | Tool、Resource、Prompt 与 Host 隔离 |
@@ -83,11 +84,11 @@ python -m chapter9.live.live_probe --provider anthropic
 
 只有读者显式增加 `--execute`，并在当前进程环境中配置对应凭据，探针才会请求 Provider。实时结果写到未纳入版本控制的 `chapter9/live-reports/`，只保留规范化调用信息，不保存凭据。详细限制见 `live/README.md`。
 
-真实探针只能回答“这个 Provider 当前是否产生了可适配的工具提议”，不能替代 20 个确定性边界案例，也不能把一次响应推广成模型成功率、稳定性、成本或延迟结论。
+真实探针只能回答“这个 Provider 当前是否产生了可适配的工具提议”，不能替代规范报告中的 20 个 Runtime Observation，也不能把一次响应推广成模型成功率、稳定性、成本或延迟结论。另一个 Specification Fixture 只表达版本不兼容时应显式失败的预期，不是假装执行过一次协议互操作。
 
 ## 代码阅读顺序
 
-1. `tool_runtime/contracts.py`：四份核心合同和错误状态。
+1. `tool_runtime/contracts.py`：三份调用合同、写操作回执和错误状态。
 2. `tool_runtime/schema.py`：教学用 JSON Schema 子集与稳定问题路径。
 3. `tool_runtime/registry.py`：Definition 与 Handler 的注册关系。
 4. `tool_runtime/policy.py`、`runtime.py`：校验、策略、执行与回执边界。
@@ -99,7 +100,7 @@ python -m chapter9.live.live_probe --provider anthropic
 
 ## 已证明与未证明
 
-本目录证明：固定输入下，非法参数在 Handler 前被拒绝；未获授权的写入不产生副作用；成功写入产生由执行边界构造的 Receipt；`call_id` 能关联结果；三种 MCP 原语保持不同控制权；官方 SDK 的现代与 legacy 教学路径按锁定版本工作；规范报告可重复生成。
+本目录证明：固定输入下，非法参数在 Handler 前被拒绝；不符合 Output Schema 的结果在进入 Loop 前被拒绝；未获授权的写入不产生副作用；成功写入产生由执行边界构造的 Receipt；`call_id` 能关联结果；三种 MCP 原语保持不同控制权；官方 SDK 的现代与 legacy 教学路径按锁定版本工作；规范报告可重复生成。
 
 本目录没有证明：某个真实模型更强；任意第三方 MCP 实现都兼容；进程内测试等价于公网部署；内存 TicketStore 提供生产级幂等和灾难恢复；单次实时探针能代表长期质量；字符数或 JSON 长度可以代替 Provider Token 计量。
 

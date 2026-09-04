@@ -2,6 +2,8 @@
 
 > 模型提出工具调用，只代表它想做一件事；只有 Runtime 校验、授权、执行并返回可关联的结果，这件事才真正发生。
 
+> **本章版本冻结点：** MCP `2026-07-28`；官方 Python SDK `mcp==2.1.1`。协议首页与 SDK 发布状态最后核对于 `2026-09-04`。这里记录的是本章实际验证过的组合，不承诺它们永远是最新版本。
+
 ## 开场：一句“故障单已创建”，为什么可能什么都没发生
 
 凌晨 00:03，虚构公司“星舟科技”的支付告警群里出现了一条消息：
@@ -34,9 +36,11 @@
 2. **谁判断参数合法？** 应该是应用 Runtime，而不是相信模型“觉得没问题”。
 3. **谁允许动作？** 应该是 Host 的用户同意和 Server 的业务授权共同决定。
 4. **谁产生副作用？** 是工具处理器或外部系统，不是模型文本。
-5. **谁证明动作完成？** 是执行结果、外部对象 ID 和可信回执，而不是一句“已完成”。
+5. **谁提供完成证据？** 是执行结果、外部对象 ID 和可核对回执，而不是一句“已完成”。证据能证明到哪一步，取决于它由哪个边界签发、是否能回查。
 
 这五问就是全章的阅读索引。遇到新术语时，不妨先把它放回其中一个位置。比如 JSON Schema 主要回答第二问，授权策略回答第三问，`TicketStore` 回答第四问，Execution Receipt 回答第五问。MCP 则把这些能力如何跨应用连接标准化，但不会替业务系统自动回答全部五问。
+
+如果你是第一次接触工具调用，建议先读“短答案”和 v0–v6，再看本章小结；如果你正在实现 Agent Runtime，可以直接沿“合同 → Loop → 权限 → Receipt → 实验复现”阅读；如果你关心生产落地，则重点看进阶阅读、生产迁移、FAQ 和 Non-claims。三条路线最终会回到同一组责任边界。
 
 本章代码位于 `chapter9/`。你不需要 API Key 就能运行主实验。模型决策由 `ScriptedIncidentPolicy` 固定下来，因此实验结论只涉及合同、循环、权限、回执和协议边界，不涉及哪个模型更聪明。
 
@@ -63,13 +67,13 @@ MCP，即 Model Context Protocol，是 Host、Client 和 Server 之间的标准�
 | Tool | 模型可见的能力合同 | Tool Result | Tool Runtime / Server | 查询状态、创建工单 |
 | MCP | Host–Client–Server 消息 | 发现、调用与内容结果 | Host 与 Server 共同约束 | 发现三种 Tool 和 Runbook Resource |
 
-如果这些名词仍然抽象，**可以把它们想成三张单据**。Tool Definition 像服务目录，写着“能办理什么、需要哪些材料”；Tool Call 像填写好的申请单，表达“这次想办什么”；Tool Result 像窗口给出的办理结果，说明成功、失败或还缺什么。写操作成功后，Execution Receipt 更像带流水号的回执，它把这次调用与外部对象关联起来。申请单不能代替办理结果，模型写出的流水号也不能代替窗口回执。
+如果这些名词仍然抽象，可以把它们想成**三份基础单据，再加一份写操作回执**。Tool Definition 像服务目录，写着“能办理什么、需要哪些材料”；Tool Call 像填写好的申请单，表达“这次想办什么”；Tool Result 像窗口给出的办理结果，说明成功、失败或还缺什么。这三份合同适用于每次工具调用。只有当工具产生真实副作用时，Execution Receipt 才像一张带流水号的写入回执，把这次调用与外部对象关联起来。申请单不能代替办理结果，模型写出的流水号也不能代替执行边界签发的回执。
 
-![Function Calling、Tool Runtime 与 MCP 的边界对照](images/fig9-2-boundary-map.png)
+![Function Calling、Tool Runtime 与 MCP 两条执行路径的边界对照](images/fig9-2-boundary-map-v2.png)
 
-**读图顺序：** 先看左侧模型如何提出 Function Call，再看中间 Runtime 如何把提议变成受控执行，最后看右侧 MCP 如何连接 Host 与多个 Server。
+**读图顺序：** 先看左侧模型如何提出 Function Call，再看中间 Host / Agent Runtime 如何校验与控制；随后比较两条可选执行路径：向下调用本地 Handler，或向右经 MCP Client 连接 MCP Server。两条路径的 Result 最终都回到 Runtime。
 
-**这张图要说明：** Function Calling 描述一次调用，MCP 标准化能力连接；中间仍需要应用自己的执行与安全边界。
+**这张图要说明：** Function Calling 产生提议，Runtime 负责控制，MCP 负责连接。MCP 不是“本地工具执行完之后的下一步”，而是 Runtime 可选择的一条外部能力通道。
 
 请特别记住：**JSON 语法正确 ≠ Tool Call 合法**。合法 JSON 可能缺字段、类型错误、调用未注册工具，甚至携带模型伪造的 `receipt`。结构化只是可靠执行的起点。
 
@@ -93,11 +97,11 @@ ToolResult / ExecutionReceipt
 
 此时还不需要 MCP。模型和 Runtime 可以在同一 Python 进程里，工具处理器也可以只是一个普通函数。先把本地边界写对，之后再把相同能力接到 MCP Server，读者就能看清协议增加了什么，而不是把所有可靠性都误归功于 MCP。
 
-![从提议到回执的工具调用旅程](images/fig9-1-tool-call-journey.png)
+![从提议到执行证据的工具调用旅程](images/fig9-1-tool-call-journey-v2.png)
 
 **读图顺序：** 从左上角的用户目标开始，沿编号依次经过模型提议、Runtime 门禁、真实执行和结果回传。
 
-**这张图要说明：** 模型提出动作，系统执行动作，回执证明动作；三者缺一不可。
+**这张图要说明：** 模型提出动作，系统执行动作，回执提供可核对的执行证据。证据强度取决于签发边界与后端语义；跨服务写入还可能需要按外部 ID 回查或独立验证。
 
 等到 v5，我们再把本地 Runtime 放入更大的 Host–Client–Server 图中。那时 Host 负责用户体验、上下文和同意，Client 负责一对一连接，Server 负责暴露聚焦的能力。这个角色划分不是为了增加层次，而是为了让安全责任不被一段 SDK 调用隐藏。
 
@@ -242,7 +246,7 @@ class ToolResult:
     receipt: ExecutionReceipt | None = None
 ```
 
-`ToolDefinition` 是能力提供方的合同。它说明工具叫什么、做什么、接受哪些字段以及是读还是写。`ToolCall` 是模型或工作流提出的请求。`ToolResult` 是执行边界产生的事实。
+`ToolDefinition` 是能力提供方的合同。它说明工具叫什么、做什么、接受哪些输入、承诺返回什么形状，以及是读还是写。`ToolCall` 是模型或工作流提出的请求。`ToolResult` 是执行边界产生的事实。
 
 因此，**Tool Call 是提议**。它不能证明工具存在，不能证明参数合法，不能证明当前用户有权限，更不能证明调用成功。把 `ToolCall` 直接当作函数调用，只是省略了 Runtime，并没有消除 Runtime 应承担的责任。
 
@@ -262,19 +266,40 @@ registry.register(
 
 Registry 还做两件小而重要的事。第一，拒绝重复工具名，避免后注册的处理器悄悄覆盖前者。第二，把领域错误转换成结构化 `business_error`，把意外异常转换成不泄露内部堆栈的 `execution_error`。
 
+输入通过并不代表输出一定守约。Handler 或后端升级后，可能把 `error_rate` 从数字改成字符串。于是 Runtime 在结果进入 Loop 之前还要验证 Output Schema：
+
+```python
+result = self._registry.invoke(call)
+if result.status is not ResultStatus.SUCCEEDED:
+    return result
+
+if definition.output_schema is not None:
+    output_issues = validate_arguments(definition.output_schema, result.data)
+    if output_issues:
+        return ToolResult.failed(
+            call.call_id,
+            ResultStatus.EXECUTION_ERROR,
+            "invalid_tool_output",
+            "工具结果不符合声明的输出合同。",
+            issues=output_issues,
+        )
+```
+
+输入 Schema 保护 Handler，Output Schema 保护 Loop 与调用者。后者只能验证结构，不能证明数字真实；真实性仍需要领域查询、外部回查或 Verifier。还要注意，输出校验发生在 Handler 返回之后：若写操作已经落地，`invalid_tool_output` 不会自动回滚副作用。生产系统需要幂等键、按外部 ID 对账或补偿流程处理这种“不知道是否已经写成”的状态。
+
 ```powershell
 python -m chapter9.experiments.run_v2_contracts
 ```
 
 **运行结果：** 有效查询得到 `ResultStatus.SUCCEEDED`；未知工具得到 `unknown_tool`；领域错误保留 `code` 和 `retryable`；意外异常只向模型返回通用消息，原始异常细节不进入规范报告。
 
-![工具定义、调用、结果与回执四份合同](images/fig9-3-tool-contract.png)
+![三份调用合同与一份写操作回执](images/fig9-3-tool-contract-v2.png)
 
-**读图顺序：** 先看 Definition 定义能力，再看 Call 表达提议，随后看 Result 表达执行事实，最后看 Receipt 证明写入落地。
+**读图顺序：** 先看每次调用都需要的 Definition、Call 与 Result，再看仅在写操作成功时出现的 Receipt。注意 Definition 同时约束 Input Schema 与 Output Schema。
 
-**这张图要说明：** 合法调用需要定义、请求、结果和回执四份合同，任何一份都不能由另一份替代。
+**这张图要说明：** 每次调用需要定义、请求与结果三份合同；写操作还需要可核对的执行回执。Receipt 不是所有只读调用的必填项，也不能由模型自行补写。
 
-**解决了什么：** 工具、提议和结果拥有不同类型；调用可以关联；错误分类不再依赖自然语言猜测；异常细节不会直接泄露给模型。
+**解决了什么：** 工具、提议和结果拥有不同类型；调用可以关联；输入错误与输出合同漂移都会在边界处显式失败；异常细节不会直接泄露给模型。
 
 **还没有解决什么：** 单次调用仍是孤立的。模型看不到工具结果后如何继续，也没有授权策略和可信写入回执。
 
@@ -603,9 +628,9 @@ python -m chapter9.experiments.run_v6_mcp_client
 
 运行结果同时记录现代协议、旧模式和一个“不支持版本”的规范 Fixture。后者不是手写传输实现，而是用于讲清预期：协议不匹配应成为显式兼容性事件。
 
-![现代 MCP 与旧版握手模式对照](images/fig9-7-protocol-eras.png)
+![现代 MCP 与旧版握手模式对照](images/fig9-7-protocol-eras-v2.png)
 
-**读图顺序：** 先看左侧现代请求携带版本和能力，再看右侧旧版先初始化、后调用的时序，最后比较两边的应用状态位置。
+**读图顺序：** 先看左侧现代请求携带版本和能力；再按右侧四步读取旧流程：Client 发出 `initialize`，Server 返回初始化结果，Client 再发送 `notifications/initialized`，之后双方才进入正常消息流；最后比较两边的应用状态位置。
 
 **这张图要说明：** 现代 MCP 每次请求自描述，旧版靠初始化握手；无协议 Session 不等于业务无状态。
 
@@ -1016,7 +1041,7 @@ MCP 规范与 SDK 会继续演进。书中所有当前事实必须带版本，�
 
 为什么还要单独写实验，而不是只展示几段成功代码？因为工具系统最容易在“正常路径能跑”时给人错觉。真正决定可靠性的，是无效参数、未授权调用、错误关联、重复 ID、伪造回执和版本冲突出现时，系统能否进入正确状态。
 
-本章采用一个控制变量实验：固定任务、Fixture、时钟和决策策略，只替换外围边界。规范报告包含五组二十个案例，每个案例只运行一次确定性样本。单样本在这里不是统计缺陷，因为目标不是估计模型成功率，而是验证同一输入是否触发约定的边界。只要代码和 Fixture 不变，结果字节就应相同。
+本章采用一个控制变量实验：固定任务、Fixture、时钟和决策策略，只替换外围边界。规范报告共含五组二十一个 Case：其中二十个是代码实际运行得到的 Runtime Observation，一个是专门表达“不支持协议版本”预期的 Specification Fixture。每个案例只运行一次确定性样本。单样本在这里不是统计缺陷，因为目标不是估计模型成功率，而是验证同一输入是否触发约定的边界。只要代码和 Fixture 不变，结果字节就应相同。
 
 安装与运行：
 
@@ -1030,7 +1055,7 @@ python -m chapter9.experiments.run_all --output chapter9/reports
 
 ### 实验组一：合同——从文字到合法调用
 
-合同组有四个案例。
+合同组有五个案例。
 
 `contract-free-text` 对应 v0。它观察到完成声明，却找不到动作证据。这个案例不是断言所有模型都会误报，而是证明：当应用只接收文本时，系统没有足够信息区分“模型描述完成”和“外部动作完成”。
 
@@ -1038,9 +1063,11 @@ python -m chapter9.experiments.run_all --output chapter9/reports
 
 `contract-schema-violation` 提供语法正确但缺少 `window_minutes` 的对象。验证器返回 `/window_minutes required`。这证明语法门和合同门是两层：前者回答“能不能读”，后者回答“是否符合这个工具的约定”。
 
+`contract-output-schema-violation` 让一个已注册 Handler 返回字符串形式的 `error_rate`。输入、授权和执行都已通过，但 Runtime 在结果进入 Loop 前返回 `invalid_tool_output:/error_rate`。这说明 Output Schema 不是 Definition 上的装饰字段，而是一道真实的结果门禁。
+
 `contract-valid-call` 使用同一 Definition、合法参数和已注册 Handler，得到 `succeeded`。它并不证明外部服务永远成功，只证明在固定 Fixture 下，合法调用能穿过前两道门。
 
-合同组最重要的输出不是“通过率 100%”，而是每个失败停在哪一层。若把四种情况折叠成一个布尔 `success`，读者仍然不知道应该让模型改 JSON、补参数，还是让工程师修 Registry。
+合同组最重要的输出不是“通过率 100%”，而是每个失败停在哪一层。若把五种情况折叠成一个布尔 `success`，读者仍然不知道应该让模型改 JSON、补参数，还是让工程师修 Registry 或 Handler。
 
 你可以修改测试，把 `window_minutes` 从 `5` 改成字符串 `"5"`。教学验证器不会自动做隐式转换，而是返回 `type` 问题。这是有意设计：模型参数的宽松转换经常掩盖合同漂移。若业务确实接受字符串，应该明确写入 Schema 或适配层，而不是让 Handler 随机猜测。
 
@@ -1209,7 +1236,7 @@ Strict 模式能显著提高模型输出符合所声明 Schema 的概率，但�
 
 **13. 有输入 Schema，为什么还要 Output Schema？**
 
-输入 Schema 保护 Handler，输出 Schema 保护调用者。若状态 Tool 某次把 `error_rate` 从数字改成字符串，模型可能仍能读懂，确定性策略却会失败。写 Tool 若不保证返回外部 ID，Runtime 无法安全构造 Receipt。Output Schema 能在结果进入 Loop 前暴露合同漂移。它仍不能证明数据真实，只能证明形状符合约定；真实性需要领域查询或 Verifier。
+输入 Schema 保护 Handler，输出 Schema 保护调用者。若状态 Tool 某次把 `error_rate` 从数字改成字符串，模型可能仍能读懂，确定性策略却会失败。写 Tool 若不保证返回外部 ID，Runtime 无法安全构造 Receipt。本章三个 Tool 都声明了 Output Schema，Runtime 会在结果进入 Loop 前验证；`contract-output-schema-violation` 则专门证明这道门确实生效。Output Schema 仍不能证明数据真实，只能证明形状符合约定；真实性需要领域查询或 Verifier。
 
 **14. DomainError 与普通 Exception 为什么分开？**
 
@@ -1245,7 +1272,7 @@ Input Required 是多轮请求机制，允许 Server 在一次 Tool Call 中请�
 
 **22. 怎样判断本章实验结论有没有被夸大？**
 
-先看输入是否固定，再看样本是什么，再看未测量字段。二十个 Case 是边界一致性案例，不是二十次模型采样；SDK 进程内测试不是远程生产测试；Specification Fixture 不是实现互操作；Null 不是零。只要结论严格落在证据能支持的范围内，实验就有价值。超出范围的产品优劣、成本和模型成功率都必须另做测量。
+先看输入是否固定，再看样本是什么，再看未测量字段。二十一个 Case 由二十个 Runtime Observation 和一个 Specification Fixture 组成，不是二十一次模型采样；SDK 进程内测试不是远程生产测试；Specification Fixture 不是实现互操作；Null 不是零。只要结论严格落在证据能支持的范围内，实验就有价值。超出范围的产品优劣、成本和模型成功率都必须另做测量。
 
 ## 本章小结
 
@@ -1254,6 +1281,7 @@ Input Required 是多轮请求机制，允许 Server 在一次 Tool Call 中请�
 ## Claims：本章已经证明什么
 
 - 固定 Tool Runtime 可以拒绝无效参数、未授权写入和伪造回执。
+- Runtime 可以在 Handler 成功后、结果进入 Loop 前拒绝不符合 Output Schema 的数据。
 - 官方 MCP SDK 可以发现并调用 Tool、Resource 与 Prompt。
 
 ## Non-claims：本章没有证明什么
@@ -1302,4 +1330,5 @@ Input Required 是多轮请求机制，允许 Server 在一次 Tool Call 中请�
 
 - [运行第 9 章配套实验](../chapter9/README.md)
 - [查看第 9 章参考答案](../chapter9/reference-answers.md)
+- [查看第 9 章来源台账](./sources/chapter9-sources.md)
 - [查看第 10 章及后续写作规划](./OUTLINE.md)
