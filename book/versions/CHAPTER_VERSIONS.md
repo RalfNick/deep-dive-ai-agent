@@ -74,7 +74,8 @@ git diff book-chapter1-v1.0 book-chapter1-v1.1 -- book/chapter1.md chapter1
 | --- | --- | --- | --- | --- | --- |
 | v1.0 | 2026-09-01 | `book-chapter9-v1.0` | 首个正式发布版；包含 v0–v6 渐进主线、8 幅原创手绘图、5 组 20 个确定性案例、14 道练习、来源台账与双视角 Review | 第 9 章 46 项测试、仓库发布检查与 MkDocs strict 构建通过 | 未生成独立 PDF；网站与 Git tag 为本章发布载体 |
 | v1.0.1 | 2026-09-01 | `book-chapter9-v1.0.1` | 发布扫描热修版；仓库级安全检查忽略本地 Worktree，避免把工程工作目录误判为待发布内容；正文和实验结论不变 | 新增 Worktree 扫描回归测试；标签与 v1.0 指向同一最终发布提交 | 未生成独立 PDF；历史由 Git tag 固定 |
-| v1.0.2 | 2026-09-04 | `book-chapter9-v1.0.2` | 当前复审优化版；修正旧版 MCP 握手方向和 Function Calling / Runtime / MCP 架构关系；统一“三份调用合同 + 一份写操作回执”的语义；为三个 Tool 落实 Output Schema 及运行时验证；增加阅读路线、版本冻结点和一个输出合同失败实验；旧图、旧 Review 与旧 tag 均保留 | 第 9 章 47 项测试；规范报告 21 个 Case，其中 20 个 Runtime Observation、1 个 Specification Fixture；仓库发布检查与 MkDocs strict 构建通过 | 未生成独立 PDF；网站与 Git tag 为本章发布载体 |
+| v1.0.2 | 2026-09-04 | `book-chapter9-v1.0.2` | 复审优化版；修正旧版 MCP 握手方向和 Function Calling / Runtime / MCP 架构关系；统一“三份调用合同 + 一份写操作回执”的语义；为三个 Tool 落实 Output Schema 及运行时验证；增加阅读路线、版本冻结点和一个输出合同失败实验；旧图、旧 Review 与旧 tag 均保留 | 第 9 章 47 项测试；规范报告 21 个 Case，其中 20 个 Runtime Observation、1 个 Specification Fixture；仓库发布检查与 MkDocs strict 构建通过 | 未生成独立 PDF；网站与 Git tag 为本章发布载体 |
+| v1.0.3 | 2026-09-04 | `book-chapter9-v1.0.3` | 当前发布元数据热修版；正文、代码、报告和插图与 v1.0.2 相同；修正 `book/manifest.json` 中全书更新时间、第 9 章更新时间和仍写作“四份工具合同”的旧摘要，增加回归断言，确保独立博客同步后不会继续显示旧口径 | 第 9 章 47 项测试；仓库 42 项合同测试；发布安全检查与 MkDocs strict 构建通过 | 未生成独立 PDF；网站与 Git tag 为本章发布载体 |
 
 ## 后续章节发布规则
 

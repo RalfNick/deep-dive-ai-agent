@@ -22,6 +22,12 @@ class BookManifestTest(unittest.TestCase):
         self.assertEqual("published", chapters[8]["status"])
         self.assertTrue(all(chapter["status"] == "planned" for chapter in chapters[9:]))
 
+        chapter9 = chapters[8]
+        self.assertEqual("2026-09-04", manifest["updated"])
+        self.assertEqual("2026-09-04", chapter9["updated"])
+        self.assertIn("三份调用合同", chapter9["summary"])
+        self.assertNotIn("四份工具合同", chapter9["summary"])
+
     def test_every_published_entry_has_reachable_publication_files(self):
         manifest = validate_manifest(ROOT)
         entries = [manifest["introduction"]] + [

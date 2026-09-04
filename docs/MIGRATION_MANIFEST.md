@@ -11,7 +11,7 @@
 | target | source | commit | bytes | sha256 |
 | --- | --- | --- | ---: | --- |
 | `book/OUTLINE.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 6929 | `c46a818b2f563230e28b519e9eb7432d23b40c345a417b79f59bd87e16e2f298` |
-| `book/README.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 7466 | `b8391bf28dfbc8925de3370c17a1202fbdb720108050f2379c5fcd45cd403e02` |
+| `book/README.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 7476 | `780f0ed1dc173c5f7a442583aafbd6089d5665037d627f8fcb517c72de8f07d8` |
 | `book/WRITING_GUIDE.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 4158 | `99fd64fbb7dbce142e309e266dafa2cafad65aca0514f0b17b45727db4c27b1b` |
 | `book/chapter1.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 84332 | `fd4fa7c5fd4f2b80267ed73ad73c81fdd1ae30c612ce2812dcf17a355d450598` |
 | `book/chapter2.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 73609 | `f6d7686dae9b0a664df31fd8f3ccdf5149def69c963c282bfc72dc6d9bed25f2` |
@@ -86,7 +86,7 @@
 | `book/sources/chapter5-sources.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 16912 | `573d0007d6a61513bb1e7c193f2617f50f0fad2554e35c486776a73fe720958f` |
 | `book/sources/chapter6-sources.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 15077 | `2e85a167dfef71813214274deaa996b384a1a0a1006530bd4555b2255fee5ac5` |
 | `book/tests/render_checks.test.mjs` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 1390 | `922496b3f6f386f665729877649c94b1c1bcc7f3572319ad3f3d5e5cbf67e3ca` |
-| `book/versions/CHAPTER_VERSIONS.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 10830 | `5d62720c5a3fcf6b66ad8265030c042cafb53b081cf50f11bd8159c8d5645399` |
+| `book/versions/CHAPTER_VERSIONS.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 11329 | `aeaa4af3fd30d17752b31e78181b72c6dbb57aca802782adfaeba6f35b690714` |
 | `chapter1/README.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 3255 | `8514edc8758aa046214b81a9a40e4d78c813b505e8da6f9c0719076b9fa1bd36` |
 | `chapter1/attention_demo.py` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 1891 | `b6ba5e462adb1f522c43d7fd3b5b4afe5363257675f6e16a24486b3e1501ed46` |
 | `chapter1/bigram_lm.py` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 2431 | `9eb969dfc5e9052e573d693b1ca74be999de14324117ced3795cd2b77acf3ad7` |
