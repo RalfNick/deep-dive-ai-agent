@@ -20,5 +20,19 @@
     "oidc-team-32",
     "saml-enterprise-32"
   ],
-  "content_digest": "16c680eed279bfc124bbdb395d7d287f5bfc1ce2ef069a5eb46da61cf4ebd486"
+  "content_digest": "16c680eed279bfc124bbdb395d7d287f5bfc1ce2ef069a5eb46da61cf4ebd486",
+  "fact_annotations": [
+    {
+      "fact_id": "sso-team-32",
+      "quote": "Team 版在 3.2 不再提供旧式 SAML SSO。需要继续使用 SAML 的组织应升级到 Enterprise，或在迁移窗口内切换到 OIDC。"
+    },
+    {
+      "fact_id": "oidc-team-32",
+      "quote": "| 套餐 | 成员上限 | 身份登录 |\n| --- | ---: | --- |\n| Team | 50 | OIDC |"
+    },
+    {
+      "fact_id": "saml-enterprise-32",
+      "quote": "| 套餐 | 成员上限 | 身份登录 |\n| --- | ---: | --- |\n| Team | 50 | OIDC |\n| Enterprise | 不限 | OIDC 与 SAML |"
+    }
+  ]
 }

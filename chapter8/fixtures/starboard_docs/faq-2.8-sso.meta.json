@@ -18,5 +18,11 @@
   "fact_ids": [
     "sso-team-28"
   ],
-  "content_digest": "afcf7c82cde7d93f88f681c6dadd3904e374599fedd24cb1aa8002189a86fe72"
+  "content_digest": "afcf7c82cde7d93f88f681c6dadd3904e374599fedd24cb1aa8002189a86fe72",
+  "fact_annotations": [
+    {
+      "fact_id": "sso-team-28",
+      "quote": "2.8 的 Team 版可以启用旧式 SAML SSO。此答案不适用于 3.x。"
+    }
+  ]
 }

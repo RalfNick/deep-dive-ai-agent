@@ -26,7 +26,7 @@
 
 **预期推理**
 
-合法记录示例：`document_id=retention-3.2`，来源为版本化政策页，`product_version=3.2`，状态 published，生效时间早于失效时间，visibility internal，`allowed_roles=(admin,auditor)`，trust 为 authoritative，并用规范 UTF-8 内容计算摘要。
+合法记录示例：`document_id=retention-3.2`，来源为版本化政策页，`version_min=version_max=3.2`，状态 active，生效时间早于失效时间，visibility internal，`allowed_roles=(admin,auditor)`，trust 为 authoritative。摘要使用本章的 `stable_digest(content)`。事实还需人工 `FactAnnotation(fact_id, quote)`；引句完整出现在片段中才允许该片段支持对应事实。
 
 先加三个失败测试：
 
@@ -58,7 +58,7 @@ Citation 更适合结构块或带语境的结构块，因为 Locator 与证据�
 
 **可检查验收**
 
-报告三种策略的 Chunk 数、完整结构数、heading_path 与 digest；连续运行 ID 稳定。修改父文档一个字符后，相关摘要与 Chunk ID 改变。
+报告三种策略的 Chunk 数、完整结构数、heading_path 与 digest；连续运行 ID 稳定。修改父文档一个字符后，父摘要改变；只有片段正文、标题路径或顺序改变时，当前实现的 Chunk ID 才改变。最终回查必须另外比较父摘要，不能只比较 ID。
 
 ## 4. 手算 BM25
 
@@ -113,7 +113,7 @@ python -m chapter8.experiments.worked_scores
 
 **预期推理**
 
-先固定分词器和公式。对每个词列出文档频率、IDF、各文档词频、文档长度和平均长度。代入同一 (k_1)、(b)，保留中间项后与 `BM25Index.search` 对照。
+先固定分词器和公式。对每个词列出文档频率、IDF、各文档词频、文档长度和平均长度。代入同一 \(k_1\)、\(b\)，保留中间项后与 `BM25Index.rank` 对照。
 
 若结果不同，按顺序检查：版本号是否被拆分；IDF 是否采用同一平滑式；排名从零还是一开始；长度按词项还是字符；浮点比较是否在容差内。
 
@@ -200,7 +200,7 @@ python -m unittest chapter8.tests.test_worked_scores -v
 
 先保存候选快照，再把 Catalog 状态改为 withdrawn。移除 Return Gate 时旧 Chunk 会返回；恢复后应因 `status_changed` 或摘要不一致被拒绝，计数加一。
 
-状态仍 published 但摘要改变，同样不能返回旧 Chunk；它说明内容版本已变，应等待新索引或从当前来源重新取证。
+状态仍 active 但摘要改变，同样不能返回旧 Chunk。使用新 Catalog 配旧索引，以及重排过程中调用 `catalog.withdraw()`，分别验证摘要变化与撤回窗口。当前 Trace 记录拒绝对象 ID，未细分 status_changed 等 reason。
 
 **常见错误**
 
@@ -214,7 +214,7 @@ python -m unittest chapter8.tests.test_worked_scores -v
 
 **预期推理**
 
-“知识库无答案”期望 abstain，相关集合为空，MRR 与 Recall 通常为 null；“有答案但无权”对当前 actor 仍应 abstain，同时治理指标说明权限过滤；“版本不适用”同理记录版本过滤。
+“知识库无答案”期望 abstain，相关集合为空，RR 与 Recall 通常为 null；“有答案但无权”对当前 actor 仍应 abstain，同时治理指标说明权限过滤；“版本不适用”同理记录版本过滤。
 
 Precision@K 在返回候选时可计算；若返回数为零，项目需明确分母策略。本章对无定义分母返回 null，不偷换 0。
 

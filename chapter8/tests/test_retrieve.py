@@ -1,4 +1,4 @@
-from dataclasses import asdict
+from dataclasses import asdict, replace
 from pathlib import Path
 import json
 import unittest
@@ -45,6 +45,35 @@ class WithdrawAfterSnapshotCatalog(KnowledgeCatalog):
 
 
 class GovernedRetrievalTests(unittest.TestCase):
+    def test_withdrawal_during_rerank_is_checked_before_return(self) -> None:
+        catalog = KnowledgeCatalog(load_documents(FIXTURE_ROOT))
+        retriever = build_retriever(catalog)
+
+        class WithdrawingReranker(DeterministicReranker):
+            def rank(self, query_text, candidates, top_k):
+                candidates = tuple(candidates)
+                for chunk in candidates:
+                    catalog.withdraw(chunk.document_id)
+                return super().rank(query_text, candidates, top_k)
+
+        retriever.reranker = WithdrawingReranker()
+        hits, trace = retriever.retrieve(public_query(), include_trace=True)
+        self.assertEqual((), hits)
+        self.assertGreater(len(trace.catalog_recheck_rejected), 0)
+
+    def test_old_chunks_are_rejected_when_current_source_digest_changes(self) -> None:
+        documents = load_documents(FIXTURE_ROOT)
+        chunks = chunks_for(documents)
+        current = tuple(replace(d, content=d.content + "\nUpdated revision.", content_digest=None) for d in documents)
+        retriever = HybridRetriever(
+            catalog=KnowledgeCatalog(current), chunks=chunks,
+            sparse=BM25Index(chunks), dense=DenseIndex(chunks, FrozenSemanticEncoder()),
+            reranker=DeterministicReranker(),
+        )
+        hits, trace = retriever.retrieve(public_query(), include_trace=True)
+        self.assertEqual((), hits)
+        self.assertGreater(len(trace.catalog_recheck_rejected), 0)
+
     def test_internal_retired_and_future_chunks_are_never_scored(self) -> None:
         retriever = build_retriever(KnowledgeCatalog(load_documents(FIXTURE_ROOT)))
         hits, trace = retriever.retrieve(public_query(), include_trace=True)

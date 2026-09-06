@@ -26,7 +26,7 @@ from chapter8.knowledge_runtime.dense import DenseIndex, FrozenSemanticEncoder
 from chapter8.knowledge_runtime.evaluation import (
     answer_support_metrics,
     citation_metrics,
-    mean_reciprocal_rank,
+    reciprocal_rank,
     ndcg_at_k,
     precision_at_k,
     recall_at_k,
@@ -143,7 +143,7 @@ def _evaluate(case: QuestionCase, retriever: HybridRetriever) -> tuple[dict[str,
         "retrieved_chunk_count": len(hits),
         "precision_at_3": precision_at_k(retrieved_documents, relevant, 3),
         "recall_at_3": recall_at_k(retrieved_documents, relevant, 3),
-        "mrr": mean_reciprocal_rank(retrieved_documents, relevant),
+        "reciprocal_rank": reciprocal_rank(retrieved_documents, relevant),
         "ndcg_at_3": ndcg_at_k(retrieved_documents, relevant, 3),
         "answer_status": decision.status.value,
         "expected_status": case.expected_status.value,
@@ -476,7 +476,7 @@ def build_report() -> dict[str, object]:
         if "outcome" in case
     ]
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "chapter": 8,
         "generated_at": CANONICAL_TIME,
         "scope": {
@@ -485,6 +485,9 @@ def build_report() -> dict[str, object]:
             "decision_policy": "scripted",
             "semantic_encoder": "frozen-concept-vector",
             "network_access": False,
+            "variants_meaning": "teaching_stage_labels_not_ablation_switches",
+            "fact_support": "human_reviewed_source_quotes_contained_in_chunk",
+            "answer_claims": "fixture_expected_claims_not_generated_or_verified",
         },
         "metric_contract": {
             "retrieval_unit": "unique_document_id",
@@ -527,7 +530,7 @@ def _render_markdown(report: dict[str, object]) -> str:
         "",
     ]
     for group_id, group in report["groups"].items():
-        lines.extend((f"## {group_id}", "", "| Case | 版本 | 判定 | 关键指标 |", "| --- | --- | --- | --- |"))
+        lines.extend((f"## {group_id}", "", "| Case | 教学标签 | 判定 | 关键指标 |", "| --- | --- | --- | --- |"))
         for case in group["cases"]:
             outcome = case.get("outcome")
             if not outcome:

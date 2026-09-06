@@ -102,9 +102,11 @@ class BuildSiteTests(unittest.TestCase):
             root = Path(directory)
             self.make_repository(root)
             write(root / "chapter9" / "faq.md", "# FAQ\n[Return](../book/chapter9.md)\n")
+            write(root / "chapter8" / "production-guide.md", "# Production\n[Return](../book/chapter8.md)\n")
             output = root / "_web"
             build_site(root, output)
             self.assertTrue((output / "chapter9" / "faq.md").is_file())
+            self.assertTrue((output / "chapter8" / "production-guide.md").is_file())
             self.assertIn("../book/chapter9.md", (output / "chapter9" / "faq.md").read_text())
 
 

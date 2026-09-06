@@ -5,6 +5,7 @@ from pathlib import Path
 
 from chapter8.knowledge_runtime.contracts import (
     AnswerStatus,
+    FactAnnotation,
     DocumentStatus,
     KnowledgeDocument,
     QuestionCase,
@@ -63,7 +64,8 @@ def load_documents(root: Path) -> tuple[KnowledgeDocument, ...]:
         raw = json.loads(metadata[stem].read_text(encoding="utf-8"))
         if not isinstance(raw, dict):
             raise ValueError(f"metadata_not_object:{stem}")
-        _require_exact_fields(raw, _METADATA_FIELDS, "unknown_metadata_fields")
+        optional = {"fact_annotations"} if "fact_annotations" in raw else set()
+        _require_exact_fields(raw, _METADATA_FIELDS | optional, "unknown_metadata_fields")
         if raw["document_id"] != stem:
             raise ValueError(f"document_id_filename_mismatch:{stem}")
         try:
@@ -81,6 +83,10 @@ def load_documents(root: Path) -> tuple[KnowledgeDocument, ...]:
                 visibility=Visibility(str(raw["visibility"])),
                 trust=TrustLevel(str(raw["trust"])),
                 fact_ids=tuple(str(fact_id) for fact_id in raw["fact_ids"]),
+                fact_annotations=tuple(
+                    FactAnnotation(fact_id=item["fact_id"], quote=item["quote"])
+                    for item in raw.get("fact_annotations", [])
+                ),
                 content=markdown[stem].read_text(encoding="utf-8"),
                 content_digest=str(raw["content_digest"]),
             )

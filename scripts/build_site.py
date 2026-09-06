@@ -53,6 +53,8 @@ def _allowlisted_sources(root: Path) -> tuple[Path, ...]:
     # Supplemental reading stays opt-in; do not expose private review/source trees.
     if (root / "chapter9" / "faq.md").is_file():
         sources.append(root / "chapter9" / "faq.md")
+    if (root / "chapter8" / "production-guide.md").is_file():
+        sources.append(root / "chapter8" / "production-guide.md")
 
     images = root / "book" / "images"
     if images.is_dir():

@@ -19,5 +19,15 @@
     "oidc-prerequisite",
     "no-secret-in-config"
   ],
-  "content_digest": "777d4cda1f8f07d8a64c3442a076b8649538b78cd1eccc2e2b6cf6acb00dd629"
+  "content_digest": "777d4cda1f8f07d8a64c3442a076b8649538b78cd1eccc2e2b6cf6acb00dd629",
+  "fact_annotations": [
+    {
+      "fact_id": "oidc-prerequisite",
+      "quote": "准备数据库、对象存储和 OIDC 客户端。"
+    },
+    {
+      "fact_id": "no-secret-in-config",
+      "quote": "配置文件不应保存客户端密钥。"
+    }
+  ]
 }

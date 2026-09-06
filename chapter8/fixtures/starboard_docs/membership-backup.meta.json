@@ -18,5 +18,15 @@
     "backup-fields",
     "recovery-boundary"
   ],
-  "content_digest": "0fca9685c8ecda22b0efcaca7694ca77abacdd758de23b36e3aa0bc0daf60e1a"
+  "content_digest": "0fca9685c8ecda22b0efcaca7694ca77abacdd758de23b36e3aa0bc0daf60e1a",
+  "fact_annotations": [
+    {
+      "fact_id": "backup-fields",
+      "quote": "管理员可在升级前导出成员 ID、角色与团队归属。"
+    },
+    {
+      "fact_id": "recovery-boundary",
+      "quote": "恢复工具只恢复误操作删除的成员，不会改变套餐配额或 SSO 能力。"
+    }
+  ]
 }

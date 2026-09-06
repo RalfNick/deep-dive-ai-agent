@@ -63,7 +63,7 @@
 | [chapter5.md](./chapter5.md) | v1.2-rc1 | 小输入例子先行，完整实验合同后移；明确优先级的教学范围；63 项测试 |
 | [chapter6.md](./chapter6.md) | v1.1-rc1 | 四项交接卡先行，七类状态后移，字段合同归入进阶；143 项测试 |
 | [chapter7.md](./chapter7.md) | Review 通过稿 | 约 2.6 万有效中文字符、7 张图、5 组无 API Key 实验、14 道分层练习与 65 项测试 |
-| [chapter8.md](./chapter8.md) | v1.4-rc1 | 删重并澄清真实 Embedding 未交付；保留 20 个规范案例、14 题、8 张 SVG + 1 张主图；补数值算例，62 项测试 |
+| [chapter8.md](./chapter8.md) | v1.4-rc2 | 片段引句标注、重排后资格与父摘要回查；真实请求入口；生产清单独立；71 项测试，20 个规范案例、14 题、8 张在用 SVG + 1 张主图，旧图保留 |
 | [chapter9.md](./chapter9.md) | v1.1-rc1 | 22 个 FAQ 移至配套材料；保留 8 张手绘图、21 个规范 Case、14 题与 47 项测试；协议冻结点不变 |
 | [sources/chapter1-sources.md](./sources/chapter1-sources.md) | 已建立 | 第 1 章资料台账与更新策略 |
 | [sources/chapter2-sources.md](./sources/chapter2-sources.md) | 已建立 | 作者资料页级映射、论文、官方文档、书籍与前沿信息核对台账 |

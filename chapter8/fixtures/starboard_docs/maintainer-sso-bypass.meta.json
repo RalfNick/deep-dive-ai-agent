@@ -15,5 +15,11 @@
   "fact_ids": [
     "internal-test-switch"
   ],
-  "content_digest": "6fd847b1ef06a75bbc50bb0b8882b30cf9a90d9730e6236335d4f2686860b9e6"
+  "content_digest": "6fd847b1ef06a75bbc50bb0b8882b30cf9a90d9730e6236335d4f2686860b9e6",
+  "fact_annotations": [
+    {
+      "fact_id": "internal-test-switch",
+      "quote": "测试环境可启用临时 SAML 兼容开关。该开关仅用于维护者诊断，不得用于客户组织，也不构成公开产品能力。"
+    }
+  ]
 }

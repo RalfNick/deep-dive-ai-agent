@@ -36,6 +36,29 @@ def valid_document(**overrides: object) -> KnowledgeDocument:
 
 
 class ContractTests(unittest.TestCase):
+    def test_partial_chunk_without_annotations_cannot_inherit_document_facts(self) -> None:
+        document = valid_document()
+        chunk = Chunk.from_document(document, 0, (), "Team 版")
+        self.assertEqual((), chunk.fact_ids)
+
+    def test_fact_annotation_must_reference_existing_fact_and_source_quote(self) -> None:
+        from chapter8.knowledge_runtime.contracts import FactAnnotation
+        for annotation in (
+            FactAnnotation("sso-32", "原文中没有这句话"),
+            FactAnnotation("unknown", "Team 版"),
+            FactAnnotation("sso-32", ""),
+        ):
+            with self.subTest(annotation=annotation), self.assertRaises(ValueError):
+                valid_document(fact_annotations=(annotation,))
+
+    def test_cut_annotation_is_not_counted_as_fact_support(self) -> None:
+        from chapter8.knowledge_runtime.contracts import FactAnnotation
+        document = valid_document(fact_annotations=(FactAnnotation("sso-32", "Team 版不再包含旧式 SSO。"),))
+        partial = Chunk.from_document(document, 0, (), "Team 版不再包含")
+        full = Chunk.from_document(document, 1, (), "Team 版不再包含旧式 SSO。")
+        self.assertEqual((), partial.fact_ids)
+        self.assertEqual(("sso-32",), full.fact_ids)
+
     def test_document_rejects_blank_id_invalid_time_and_empty_roles(self) -> None:
         with self.assertRaisesRegex(ValueError, "blank_document_id"):
             valid_document(document_id="")

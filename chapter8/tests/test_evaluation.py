@@ -4,7 +4,7 @@ import unittest
 from chapter8.knowledge_runtime.evaluation import (
     answer_support_metrics,
     citation_metrics,
-    mean_reciprocal_rank,
+    reciprocal_rank,
     ndcg_at_k,
     precision_at_k,
     recall_at_k,
@@ -17,13 +17,13 @@ class EvaluationTests(unittest.TestCase):
         relevant = {"a", "b"}
         self.assertAlmostEqual(2 / 3, precision_at_k(retrieved, relevant, 3))
         self.assertEqual(1.0, recall_at_k(retrieved, relevant, 3))
-        self.assertEqual(1.0, mean_reciprocal_rank(retrieved, relevant))
+        self.assertEqual(1.0, reciprocal_rank(retrieved, relevant))
         expected_ndcg = (1.0 + 1.0 / math.log2(4)) / (1.0 + 1.0 / math.log2(3))
         self.assertAlmostEqual(expected_ndcg, ndcg_at_k(retrieved, relevant, 3))
 
     def test_empty_relevance_returns_none_instead_of_fabricated_zero(self) -> None:
         self.assertIsNone(recall_at_k(("a",), set(), 1))
-        self.assertIsNone(mean_reciprocal_rank(("a",), set()))
+        self.assertIsNone(reciprocal_rank(("a",), set()))
         self.assertIsNone(ndcg_at_k(("a",), set(), 1))
 
     def test_precision_at_k_uses_k_as_the_denominator_even_with_fewer_results(self) -> None:

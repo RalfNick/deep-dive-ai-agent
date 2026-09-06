@@ -91,6 +91,16 @@ class PublicationChecksTest(unittest.TestCase):
             paths = self._write_bundle(Path(temp_dir))
             self.assertEqual(publication_errors(*paths, contract=self.contract), ())
 
+    def test_versioned_active_figure_can_keep_its_previous_source(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            old = FIGURES[0]
+            new = old.replace(".svg", "-v2.svg")
+            paths = self._write_bundle(Path(temp_dir), chapter=valid_chapter().replace(old, new))
+            (paths[3] / new).write_bytes((paths[3] / old).read_bytes())
+            self.assertEqual((), publication_errors(*paths, contract=self.contract))
+            (paths[3] / "fig8-stray.svg").write_text("<svg/>", encoding="utf-8")
+            self.assertIn("unreferenced_figure:fig8-stray.svg", publication_errors(*paths, contract=self.contract))
+
     def test_figures_and_exercises_must_be_exact(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             paths = self._write_bundle(Path(temp_dir))

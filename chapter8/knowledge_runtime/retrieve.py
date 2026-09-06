@@ -89,10 +89,19 @@ class HybridRetriever:
                 live_chunks.append(item.chunk)
 
         reranked = self.reranker.rank(query.text, live_chunks, query.candidate_k)
+        # Reranking may be slow or remote. Recheck after it, before Top-K and
+        # evidence construction; a live document ID alone cannot validate an old chunk.
+        current_ranked = []
+        for item in reranked:
+            current = self.catalog.resolve_document(item.chunk.document_id, query)
+            if current is None or current.content_digest != item.chunk.document_digest:
+                recheck_rejected.append(f"{item.chunk.document_id}:{item.chunk.chunk_id}")
+            else:
+                current_ranked.append(item)
         query_terms = set(tokenize(query.text))
         qualified = [
             item
-            for item in reranked
+            for item in current_ranked
             if len(query_terms & set(tokenize(f"{item.chunk.context_prefix}\n{item.chunk.content}"))) >= 2
         ][: query.top_k]
 

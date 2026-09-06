@@ -18,5 +18,11 @@
   "fact_ids": [
     "community-oidc-anecdote"
   ],
-  "content_digest": "6142fb9d882d4bb8dd7952556afbc84627ce3073aa3d3f61c69c3d91ebe68ac3"
+  "content_digest": "6142fb9d882d4bb8dd7952556afbc84627ce3073aa3d3f61c69c3d91ebe68ac3",
+  "fact_annotations": [
+    {
+      "fact_id": "community-oidc-anecdote",
+      "quote": "作者将测试组织从 2.8 升级到 3.2，先切换到 OIDC，再执行升级。该记录是经验分享，不替代正式迁移指南。"
+    }
+  ]
 }

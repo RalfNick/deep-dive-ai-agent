@@ -16,5 +16,11 @@
   "fact_ids": [
     "members-preserved-32"
   ],
-  "content_digest": "50aa0540ebbda82c613e63697850b1c260cd15d39b20dd090f73547d5376477f"
+  "content_digest": "50aa0540ebbda82c613e63697850b1c260cd15d39b20dd090f73547d5376477f",
+  "fact_annotations": [
+    {
+      "fact_id": "members-preserved-32",
+      "quote": "升级窗口内成员同步延迟七分钟，但没有成员记录被删除。"
+    }
+  ]
 }

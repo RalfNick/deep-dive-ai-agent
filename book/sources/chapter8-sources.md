@@ -1,5 +1,7 @@
 # 第 8 章资料台账：RAG 与知识工程
 
+编辑增补：2026-09-06，v1.4-rc2。S15 本地实现新增人工引句标注与重排后父摘要回查，报告字段改为单查询 reciprocal_rank；标准声明仍来自 Fixture，不是自然语言自动验真。S08 的检索前补语境说明本轮对照官方正文，其他快变产品事实未全部重核。
+
 核对日期：2026-08-28。RAG 框架接口、托管检索 API、评估库和产品行为变化很快；出版前必须重新打开标记为“是”的页面。本章的固定实验只验证声明的目录治理、切块、检索、证据和评估边界，不用于比较真实模型、Embedding、Reranker 或产品能力。
 
 ## 使用原则
@@ -75,7 +77,7 @@
 ### [S08] Contextual Retrieval
 - 类型：Anthropic 官方工程文章
 - URL / 本地路径：https://www.anthropic.com/engineering/contextual-retrieval
-- 事实使用：官方文章说明 Contextual Embeddings 与 Contextual BM25 在切块前为块补充文档级上下文，并将稀疏与稠密检索结合。
+- 事实使用：官方文章说明 Contextual Embeddings 与 Contextual BM25 为切分后的块补充文档级上下文，再进行嵌入和 BM25 建索引，并将稀疏与稠密检索结合。
 - 明确不声称：本章的确定性上下文前缀不是 Anthropic 生产实现，也不移植文章中的效果数字。
 - 最后核对：2026-08-28
 - 出版前复核：是
@@ -186,6 +188,16 @@
 - 事实使用：用于引出“文档 Embedding 与 Query Embedding 采用一致二值转换，再进入二值检索”的教学流程，以及表示压缩与完整 RAG 指标必须分开报告的问题。
 - 明确不声称：不复用文章的吞吐、延迟、语料规模或产品效果数字；技术边界以 S18、S19 为准，真实收益必须在本业务语料上消融评估。
 - 最后核对：2026-08-28
+- 出版前复核：是
+
+## 术语复核补充
+
+### [S22] Elastic Ranking evaluation
+- 类型：Elastic 官方指标文档
+- URL / 本地路径：https://www.elastic.co/docs/reference/elasticsearch/rest-apis/search-rank-eval
+- 事实使用：区分单查询首个相关项的倒数排名 RR 与多个查询的均值 MRR；不把单案例值当作总体平均。
+- 明确不声称：本章不集成 Elasticsearch，也不采用其全部指标默认设置；无标注相关项时返回 null 是本章显式合同。
+- 最后核对：2026-09-06
 - 出版前复核：是
 
 ## 出版前复核清单

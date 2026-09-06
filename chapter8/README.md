@@ -4,7 +4,7 @@
 
 ## 你将构建什么
 
-以 18 篇虚构“星舟工作台”产品与问答文档、20 个固定问题为语料，从 v0 到 v7 实现：
+以 18 篇虚构“星舟工作台”产品与问答文档、20 个固定问题为语料，构建以下能力。v0—v7 是正文教学阶段，不是八套实现或组件消融开关：
 
 - 有版本、状态、时效、权限、信任与摘要的 Source Catalog；
 - 固定字符、结构感知和上下文前缀三种切块；
@@ -15,6 +15,10 @@
 - JSON、Markdown 和脱敏 JSONL 三份可逐字节复现的报告。
 
 固定语义编码器不是训练得到的 Embedding，教学 Reranker 也不是真实 Cross-Encoder。公共报告验证边界合同，不比较模型或产品能力。
+
+先运行 `python -m chapter8.experiments.inspect_request`，检查一次真实离线请求的片段、事实标签与状态。元数据中的 `fact_annotations` 为人工审核的原文引句；只有完整包含引句的 Chunk 才获得事实标签，未标注则不覆盖事实。标注本身的语义正确性仍需人工核对。固定策略的答案来自夹具标准声明，不是生成或自动验真结果。
+
+v1.4-rc2 报告使用 schema_version=2，单查询指标由 `mrr` 改名为 `reciprocal_rank`；MRR 是多查询 RR 的均值，本实验不汇总该均值。最终回查在重排后验证资格与父摘要。准备扩展生产系统时再读[生产设计与排查清单](./production-guide.md)。
 
 计算题可先运行 `python -m chapter8.experiments.worked_scores`：它用三个短文核对 BM25，再核对 RRF 并列与删除通道的结果。完整手算表见[参考答案](./reference-answers.md)，本入口不修改原有 20 个案例的规范报告。
 
@@ -74,7 +78,7 @@ python -m chapter8.experiments.run_all --output chapter8/reports
 | --- | ---: | --- |
 | baseline | 3 | 无引用猜测、全量 Context 冲突、无答案边界 |
 | chunking | 3 | 结构完整、标题路径、原文摘要不变 |
-| retrieval | 4 | Precision、Recall、MRR、NDCG 与空结果 |
+| retrieval | 4 | Precision、Recall、RR、NDCG 与空结果 |
 | governance | 5 | 版本、权限、未来、撤回、陈旧索引 |
 | evidence | 5 | 缺失事实、错引、冲突、注入与拒答 |
 

@@ -18,5 +18,11 @@
   "fact_ids": [
     "withdrawn-member-cleanup"
   ],
-  "content_digest": "17ebaff1010ca01deb286775670fa24f5857c021384dec9fe37936c01eaba4dc"
+  "content_digest": "17ebaff1010ca01deb286775670fa24f5857c021384dec9fe37936c01eaba4dc",
+  "fact_annotations": [
+    {
+      "fact_id": "withdrawn-member-cleanup",
+      "quote": "草案曾建议升级时清理超额成员，但该方案已撤回，不能作为答案依据。"
+    }
+  ]
 }

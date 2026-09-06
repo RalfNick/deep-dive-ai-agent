@@ -16,5 +16,11 @@
   "fact_ids": [
     "oidc-callback-incident"
   ],
-  "content_digest": "aff77f150e8d9c0b300016cb1e5cb1306fe2ce648e7c8aafc6c506cfb9de8c63"
+  "content_digest": "aff77f150e8d9c0b300016cb1e5cb1306fe2ce648e7c8aafc6c506cfb9de8c63",
+  "fact_annotations": [
+    {
+      "fact_id": "oidc-callback-incident",
+      "quote": "一个测试组织在切换 OIDC 时配置了错误回调地址。"
+    }
+  ]
 }

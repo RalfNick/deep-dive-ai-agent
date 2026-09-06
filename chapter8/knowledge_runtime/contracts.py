@@ -79,6 +79,14 @@ def _require_text(value: str, reason: str) -> None:
 
 
 @dataclass(frozen=True)
+class FactAnnotation:
+    """Human-reviewed support quote, not an automatic entailment judgment."""
+
+    fact_id: str
+    quote: str
+
+
+@dataclass(frozen=True)
 class KnowledgeDocument:
     document_id: str
     title: str
@@ -95,6 +103,7 @@ class KnowledgeDocument:
     fact_ids: tuple[str, ...]
     content: str
     content_digest: str | None = None
+    fact_annotations: tuple[FactAnnotation, ...] = ()
 
     def __post_init__(self) -> None:
         _require_text(self.document_id, "blank_document_id")
@@ -117,6 +126,11 @@ class KnowledgeDocument:
             raise ValueError("duplicate_allowed_role")
         if any(not fact_id.strip() for fact_id in self.fact_ids):
             raise ValueError("blank_fact_id")
+        for annotation in self.fact_annotations:
+            if annotation.fact_id not in self.fact_ids:
+                raise ValueError("annotation_unknown_fact")
+            if not annotation.quote.strip() or annotation.quote not in self.content:
+                raise ValueError("annotation_quote_not_in_source")
         actual_digest = stable_digest(self.content)
         if self.content_digest is not None and self.content_digest != actual_digest:
             raise ValueError("content_digest_mismatch")
@@ -203,7 +217,10 @@ class Chunk:
             allowed_roles=document.allowed_roles,
             source_type=document.source_type,
             trust=document.trust,
-            fact_ids=document.fact_ids,
+            fact_ids=tuple(dict.fromkeys(
+                annotation.fact_id for annotation in document.fact_annotations
+                if annotation.quote in content
+            )),
         )
 
 

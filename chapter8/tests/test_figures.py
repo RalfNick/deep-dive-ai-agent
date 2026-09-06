@@ -14,10 +14,10 @@ FIGURES = tuple(
         "fig8-2-offline-online-pipeline.svg",
         "fig8-3-rag-evolution.svg",
         "fig8-4-chunking-comparison.svg",
-        "fig8-5-retrieval-funnel.svg",
+        "fig8-5-retrieval-funnel-v2.svg",
         "fig8-6-evidence-citations.svg",
         "fig8-7-governed-index.svg",
-        "fig8-8-evaluation-matrix.svg",
+        "fig8-8-evaluation-matrix-v2.svg",
     )
 )
 
@@ -29,7 +29,10 @@ def report_cases() -> dict[str, dict]:
 
 class FigureContractTest(unittest.TestCase):
     def test_exact_eight_figures_are_safe_accessible_svg(self) -> None:
-        self.assertEqual({path.name for path in IMAGE_DIR.glob("fig8-*.svg")}, {path.name for path in FIGURES})
+        # Old image versions remain recoverable; validate the eight active figures.
+        active = {path.name for path in FIGURES}
+        self.assertEqual(8, len(active))
+        self.assertTrue(all(path.is_file() for path in FIGURES))
         for path in FIGURES:
             root = ET.parse(path).getroot()
             self.assertEqual(root.attrib.get("viewBox"), "0 0 1200 675", path.name)
@@ -63,7 +66,7 @@ class FigureContractTest(unittest.TestCase):
         figure = FIGURES[4].read_text(encoding="utf-8")
         self.assertIn(f'{metrics["filtered_before_score_count"]} \u7bc7\u5728\u8bc4\u5206\u524d\u88ab\u8fc7\u6ee4', figure)
         self.assertIn(f'{metrics["retrieved_chunk_count"]} \u4e2a\u6700\u7ec8 Chunk', figure)
-        self.assertIn(f'MRR {metrics["mrr"]:.2f}', figure)
+        self.assertIn(f'RR {metrics["reciprocal_rank"]:.2f}', figure)
         self.assertIn(f'Recall@3 {metrics["recall_at_3"]:.2f}', figure)
 
     def test_evaluation_matrix_uses_values_and_preserves_null(self) -> None:
@@ -73,8 +76,8 @@ class FigureContractTest(unittest.TestCase):
         figure = FIGURES[7].read_text(encoding="utf-8")
         self.assertIn(f'Precision@3 {good["precision_at_3"]:.2f}', figure)
         self.assertIn(f'NDCG@3 {good["ndcg_at_3"]:.2f}', figure)
-        self.assertIsNone(no_answer["mrr"])
-        self.assertIn("\u65e0\u76f8\u5173\u9879\uff1aMRR = null", figure)
+        self.assertIsNone(no_answer["reciprocal_rank"])
+        self.assertIn("\u65e0\u76f8\u5173\u9879\uff1aRR = null", figure)
         self.assertIn("\u4e0d\u538b\u6210\u4e00\u4e2a\u603b\u5206", figure)
 
 

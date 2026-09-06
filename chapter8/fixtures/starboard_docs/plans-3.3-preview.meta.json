@@ -18,5 +18,11 @@
   "fact_ids": [
     "preview-team-identity"
   ],
-  "content_digest": "9b9b9b9ba722a920b8164bfb60e385cc09fbf88b52a78966338e036488630d03"
+  "content_digest": "9b9b9b9ba722a920b8164bfb60e385cc09fbf88b52a78966338e036488630d03",
+  "fact_annotations": [
+    {
+      "fact_id": "preview-team-identity",
+      "quote": "未来版本可能调整 Team 版身份能力。此文档在正式生效前不得回答 3.2 问题。"
+    }
+  ]
 }

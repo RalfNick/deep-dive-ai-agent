@@ -21,5 +21,23 @@
     "new-invites-blocked-32",
     "migration-dry-run"
   ],
-  "content_digest": "0e7f2ccae0b19fe61206a9824003b8a87aad3fa61ba9936d0360fe44cd5e767f"
+  "content_digest": "0e7f2ccae0b19fe61206a9824003b8a87aad3fa61ba9936d0360fe44cd5e767f",
+  "fact_annotations": [
+    {
+      "fact_id": "sso-team-32",
+      "quote": "Team 版不能在 3.2 保留旧式 SAML SSO。请选择 OIDC，或先升级到 Enterprise。"
+    },
+    {
+      "fact_id": "members-preserved-32",
+      "quote": "升级不会删除成员。超过套餐人数时，已有成员仍保留，但新的邀请会被阻止。"
+    },
+    {
+      "fact_id": "new-invites-blocked-32",
+      "quote": "升级不会删除成员。超过套餐人数时，已有成员仍保留，但新的邀请会被阻止。"
+    },
+    {
+      "fact_id": "migration-dry-run",
+      "quote": "starboard migrate --target 3.2 --dry-run"
+    }
+  ]
 }

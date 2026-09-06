@@ -20,5 +20,19 @@
     "new-invites-blocked-32",
     "sso-team-32"
   ],
-  "content_digest": "80f20e692ca4dd032bb9f90650eb522dcc4cc2979e355cebef2b4ce0b69cc7e3"
+  "content_digest": "80f20e692ca4dd032bb9f90650eb522dcc4cc2979e355cebef2b4ce0b69cc7e3",
+  "fact_annotations": [
+    {
+      "fact_id": "members-preserved-32",
+      "quote": "从 2.8 升级到 3.2 不会自动删除现有成员。"
+    },
+    {
+      "fact_id": "new-invites-blocked-32",
+      "quote": "若成员数超过新配额，系统阻止继续邀请，并提示管理员处理配额。"
+    },
+    {
+      "fact_id": "sso-team-32",
+      "quote": "Team 版应迁移到 OIDC；Enterprise 可继续使用 SAML。"
+    }
+  ]
 }

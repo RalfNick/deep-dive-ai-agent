@@ -37,7 +37,8 @@ def recall_at_k(retrieved: Sequence[str], relevant: Set[str], k: int) -> float |
     return len(set(retrieved[:k]) & set(relevant)) / len(relevant)
 
 
-def mean_reciprocal_rank(retrieved: Sequence[str], relevant: Set[str]) -> float | None:
+def reciprocal_rank(retrieved: Sequence[str], relevant: Set[str]) -> float | None:
+    """Single-query RR; averaging over a query set is a separate MRR operation."""
     if not relevant:
         return None
     for rank, item in enumerate(retrieved, start=1):

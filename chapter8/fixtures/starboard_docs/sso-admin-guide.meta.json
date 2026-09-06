@@ -17,5 +17,15 @@
     "oidc-callback-test",
     "rollback-identity-only"
   ],
-  "content_digest": "363cf6136e4c2d1c3ac4c9c81b3da7c739c34b43d9efe2593a12df5f34e6af8e"
+  "content_digest": "363cf6136e4c2d1c3ac4c9c81b3da7c739c34b43d9efe2593a12df5f34e6af8e",
+  "fact_annotations": [
+    {
+      "fact_id": "oidc-callback-test",
+      "quote": "管理员应先在测试组织验证回调地址，再停用旧连接器。"
+    },
+    {
+      "fact_id": "rollback-identity-only",
+      "quote": "回滚只恢复身份配置，不回滚成员数据。"
+    }
+  ]
 }

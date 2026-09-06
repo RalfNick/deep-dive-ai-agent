@@ -200,10 +200,10 @@
             "missing_fact_ids": [
               "sso-team-32"
             ],
-            "mrr": 0.0,
             "ndcg_at_3": 0.0,
             "precision_at_3": 0.0,
             "recall_at_3": 0.0,
+            "reciprocal_rank": 0.0,
             "retrieved_chunk_count": 2,
             "retrieved_document_ids": [
               "community-sso-note",
@@ -271,10 +271,10 @@
             "missing_fact_ids": [
               "quantum-login-32"
             ],
-            "mrr": null,
             "ndcg_at_3": null,
             "precision_at_3": 0.0,
             "recall_at_3": null,
+            "reciprocal_rank": null,
             "retrieved_chunk_count": 3,
             "retrieved_document_ids": [
               "plans-3.2",
@@ -318,11 +318,11 @@
             "expected_status": "answer",
             "filtered_before_score_count": 9,
             "missing_fact_ids": [],
-            "mrr": 1.0,
             "ndcg_at_3": 0.7653606369886217,
             "policy_violation_count": 0,
             "precision_at_3": 0.6666666666666666,
             "recall_at_3": 0.6666666666666666,
+            "reciprocal_rank": 1.0,
             "retrieved_chunk_count": 3,
             "retrieved_document_ids": [
               "migration-2x-to-3.2",
@@ -359,11 +359,11 @@
             "expected_status": "answer",
             "filtered_before_score_count": 9,
             "missing_fact_ids": [],
-            "mrr": 1.0,
             "ndcg_at_3": 1.0,
             "policy_violation_count": 0,
             "precision_at_3": 0.3333333333333333,
             "recall_at_3": 1.0,
+            "reciprocal_rank": 1.0,
             "retrieved_chunk_count": 1,
             "retrieved_document_ids": [
               "security-overview"
@@ -401,11 +401,11 @@
             "missing_fact_ids": [
               "sso-team-32"
             ],
-            "mrr": 0.0,
             "ndcg_at_3": 0.0,
             "policy_violation_count": 0,
             "precision_at_3": 0.0,
             "recall_at_3": 0.0,
+            "reciprocal_rank": 0.0,
             "retrieved_chunk_count": 1,
             "retrieved_document_ids": [
               "community-malicious-note"
@@ -443,11 +443,11 @@
             "expected_status": "answer",
             "filtered_before_score_count": 9,
             "missing_fact_ids": [],
-            "mrr": 1.0,
             "ndcg_at_3": 0.6131471927654584,
             "policy_violation_count": 0,
             "precision_at_3": 0.3333333333333333,
             "recall_at_3": 0.5,
+            "reciprocal_rank": 1.0,
             "retrieved_chunk_count": 3,
             "retrieved_document_ids": [
               "migration-2x-to-3.2",
@@ -484,10 +484,10 @@
             "expected_status": "answer",
             "filtered_before_score_count": 9,
             "missing_fact_ids": [],
-            "mrr": 1.0,
             "ndcg_at_3": 1.0,
             "precision_at_3": 0.3333333333333333,
             "recall_at_3": 1.0,
+            "reciprocal_rank": 1.0,
             "retrieved_chunk_count": 1,
             "retrieved_document_ids": [
               "security-overview"
@@ -531,10 +531,10 @@
             "expected_status": "answer",
             "filtered_before_score_count": 9,
             "missing_fact_ids": [],
-            "mrr": 1.0,
             "ndcg_at_3": 1.0,
             "precision_at_3": 0.3333333333333333,
             "recall_at_3": 1.0,
+            "reciprocal_rank": 1.0,
             "retrieved_chunk_count": 3,
             "retrieved_document_ids": [
               "plans-3.2",
@@ -572,10 +572,10 @@
             "missing_fact_ids": [
               "saml-enterprise-32"
             ],
-            "mrr": 0.0,
             "ndcg_at_3": 0.0,
             "precision_at_3": 0.0,
             "recall_at_3": 0.0,
+            "reciprocal_rank": 0.0,
             "retrieved_chunk_count": 0,
             "retrieved_document_ids": [],
             "supported_fact_ratio": 0.0,
@@ -611,10 +611,10 @@
             "expected_status": "answer",
             "filtered_before_score_count": 9,
             "missing_fact_ids": [],
-            "mrr": 0.3333333333333333,
             "ndcg_at_3": 0.5,
             "precision_at_3": 0.3333333333333333,
             "recall_at_3": 1.0,
+            "reciprocal_rank": 0.3333333333333333,
             "retrieved_chunk_count": 3,
             "retrieved_document_ids": [
               "plans-3.2",
@@ -656,10 +656,10 @@
             "missing_fact_ids": [
               "desktop-client-color-32"
             ],
-            "mrr": null,
             "ndcg_at_3": null,
             "precision_at_3": 0.0,
             "recall_at_3": null,
+            "reciprocal_rank": null,
             "retrieved_chunk_count": 3,
             "retrieved_document_ids": [
               "api-auth",
@@ -698,13 +698,16 @@
     "status_compared_case_count": 13,
     "unexpected_status_mismatch_count": 0
   },
-  "schema_version": 1,
+  "schema_version": 2,
   "scope": {
+    "answer_claims": "fixture_expected_claims_not_generated_or_verified",
     "corpus_document_count": 18,
     "decision_policy": "scripted",
+    "fact_support": "human_reviewed_source_quotes_contained_in_chunk",
     "network_access": false,
     "question_case_count": 20,
-    "semantic_encoder": "frozen-concept-vector"
+    "semantic_encoder": "frozen-concept-vector",
+    "variants_meaning": "teaching_stage_labels_not_ablation_switches"
   },
   "unmeasured": {
     "provider_cost": null,

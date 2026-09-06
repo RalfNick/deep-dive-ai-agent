@@ -19,5 +19,15 @@
     "sso-team-32",
     "snapshot-before-upgrade"
   ],
-  "content_digest": "b3e76de620d98ef85cdded604ee055af9f5d9db53d9a67886b99ac745623e47e"
+  "content_digest": "b3e76de620d98ef85cdded604ee055af9f5d9db53d9a67886b99ac745623e47e",
+  "fact_annotations": [
+    {
+      "fact_id": "sso-team-32",
+      "quote": "3.2 默认使用 OIDC。SAML 连接器仅对 Enterprise 开放。"
+    },
+    {
+      "fact_id": "snapshot-before-upgrade",
+      "quote": "升级任务先生成成员快照，再切换身份配置。"
+    }
+  ]
 }

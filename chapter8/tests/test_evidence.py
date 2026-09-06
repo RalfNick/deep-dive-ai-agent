@@ -34,6 +34,25 @@ def hit(document_id: str, phrase: str) -> RetrievalHit:
 
 
 class EvidenceTests(unittest.TestCase):
+    def test_migration_sso_section_does_not_cover_membership(self) -> None:
+        case = case_named("governance-compound-upgrade")
+        packet = build_evidence_packet(
+            case.query, (hit("migration-2x-to-3.2", "不能在 3.2 保留"),),
+            case.required_fact_ids,
+        )
+        self.assertEqual(("sso-team-32",), packet.present_fact_ids)
+        self.assertEqual(("members-preserved-32",), packet.missing_fact_ids)
+        self.assertEqual(AnswerStatus.PARTIAL, ScriptedAnswerPolicy().answer(case, packet).status)
+
+    def test_command_section_cannot_support_policy_claims(self) -> None:
+        case = case_named("governance-compound-upgrade")
+        packet = build_evidence_packet(
+            case.query, (hit("migration-2x-to-3.2", "starboard migrate"),),
+            case.required_fact_ids,
+        )
+        self.assertEqual((), packet.present_fact_ids)
+        self.assertEqual(AnswerStatus.ABSTAIN, ScriptedAnswerPolicy().answer(case, packet).status)
+
     def test_compound_answer_is_partial_when_membership_evidence_is_missing(self) -> None:
         case = case_named("governance-compound-upgrade")
         packet = build_evidence_packet(

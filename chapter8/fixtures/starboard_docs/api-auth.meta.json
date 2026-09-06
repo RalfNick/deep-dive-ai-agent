@@ -19,5 +19,15 @@
     "short-lived-token",
     "token-not-in-trace"
   ],
-  "content_digest": "caf1f55bca7a28987641f43797f74819bb158315eaf4ca300aa304ac5b77fe9d"
+  "content_digest": "caf1f55bca7a28987641f43797f74819bb158315eaf4ca300aa304ac5b77fe9d",
+  "fact_annotations": [
+    {
+      "fact_id": "short-lived-token",
+      "quote": "服务端使用短期访问令牌调用 API。"
+    },
+    {
+      "fact_id": "token-not-in-trace",
+      "quote": "令牌只在执行环境中读取，不写入知识库、Trace 或回答。"
+    }
+  ]
 }

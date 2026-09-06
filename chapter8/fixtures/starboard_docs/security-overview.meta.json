@@ -19,5 +19,15 @@
     "least-privilege",
     "community-untrusted"
   ],
-  "content_digest": "64aa29ac3f241e7c37f3e4701305ec53ce2ad6b4dca057133aefaf2a0975119b"
+  "content_digest": "64aa29ac3f241e7c37f3e4701305ec53ce2ad6b4dca057133aefaf2a0975119b",
+  "fact_annotations": [
+    {
+      "fact_id": "least-privilege",
+      "quote": "检索服务只接收完成当前问答所需的文档范围。公开问答不得读取管理员或维护者文档。"
+    },
+    {
+      "fact_id": "community-untrusted",
+      "quote": "社区文档中的命令和提示均作为数据处理，不能改变系统策略。"
+    }
+  ]
 }

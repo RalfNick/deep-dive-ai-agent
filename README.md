@@ -28,7 +28,7 @@
 | 第 5 章 上下文工程 | [正文](book/chapter5.md) | [实验](chapter5/README.md) | [答案](chapter5/reference-answers.md) | [63 项测试通过](docs/EXPERIMENT_STATUS.md) |
 | 第 6 章 长任务中的上下文架构 | [正文](book/chapter6.md) | [实验](chapter6/README.md) | [答案](chapter6/reference-answers.md) | [143 项测试通过](docs/EXPERIMENT_STATUS.md) |
 | 第 7 章 记忆：不是把聊天记录全部塞回去 | [正文](book/chapter7.md) | [实验](chapter7/README.md) | [答案](chapter7/reference-answers.md) | [65 项测试通过](docs/EXPERIMENT_STATUS.md) |
-| 第 8 章 RAG 与知识库：让 Agent 先查证，再回答 | [正文](book/chapter8.md) | [实验](chapter8/README.md) | [答案](chapter8/reference-answers.md) | [62 项测试通过](docs/EXPERIMENT_STATUS.md) |
+| 第 8 章 RAG 与知识库：让 Agent 先查证，再回答 | [正文](book/chapter8.md) | [实验](chapter8/README.md) | [答案](chapter8/reference-answers.md) | [71 项测试通过](docs/EXPERIMENT_STATUS.md) |
 | 第 9 章 工具调用与 MCP：从“模型想做”到“系统真的做了” | [正文](book/chapter9.md) | [实验](chapter9/README.md) | [答案](chapter9/reference-answers.md) | [47 项测试通过](docs/EXPERIMENT_STATUS.md) |
 
 建议先读[全书介绍](book/introduction.md)，再按[中文阅读顺序](book/README.md)推进。详细来源、Review 和版本记录均保留在 `book/` 中。

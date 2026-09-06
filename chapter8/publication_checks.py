@@ -17,7 +17,7 @@ SOURCE_LOCATION = re.compile(r"^- URL / \u672c\u5730\u8def\u5f84\uff1a[ \t]*(?P<
 
 @dataclass(frozen=True)
 class PublicationContract:
-    min_cjk: int = 25_000
+    min_cjk: int = 18_000  # Align with WRITING_GUIDE after extracting production checklists.
     max_cjk: int = 33_000
     min_headings: int = 24
     max_headings: int = 42
@@ -110,7 +110,10 @@ def publication_errors(
     for name in sorted(set(references) - inventory):
         errors.append(f"missing_figure:{name}")
     for name in sorted(inventory - set(references)):
-        errors.append(f"unreferenced_figure:{name}")
+        # Preserve prior sources only when a versioned successor is active.
+        successor = re.compile(re.escape(name.removesuffix(".svg")) + r"-v\d+\.svg")
+        if not any(successor.fullmatch(reference) for reference in references):
+            errors.append(f"unreferenced_figure:{name}")
 
     exercise_numbers = [int(match.group("number")) for match in EXERCISE.finditer(chapter)]
     answer_numbers = [int(match.group("number")) for match in ANSWER.finditer(answers)]
