@@ -1,5 +1,7 @@
 # 迁移清单
 
+校验字段更新于 2026-09-06：`bytes` 与 `sha256` 校验当前工作版本；`source` 和 `commit` 仅保留最初迁移来源，不表示修改后的正文仍与来源提交逐字一致。迁移时的清单与本轮修订前的正文可从 Git 历史恢复。
+
 本清单记录独立书籍仓库中从原工程迁移的文件。`source` 是可移植的来源标签；
 `commit` 是迁移时冻结的来源提交；文本按 `.gitattributes` 的 LF 规范化后计算字节数与 SHA-256，二进制保持原字节。
 
@@ -11,14 +13,14 @@
 | target | source | commit | bytes | sha256 |
 | --- | --- | --- | ---: | --- |
 | `book/OUTLINE.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 6929 | `c46a818b2f563230e28b519e9eb7432d23b40c345a417b79f59bd87e16e2f298` |
-| `book/README.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 7476 | `780f0ed1dc173c5f7a442583aafbd6089d5665037d627f8fcb517c72de8f07d8` |
-| `book/WRITING_GUIDE.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 4158 | `99fd64fbb7dbce142e309e266dafa2cafad65aca0514f0b17b45727db4c27b1b` |
-| `book/chapter1.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 84332 | `fd4fa7c5fd4f2b80267ed73ad73c81fdd1ae30c612ce2812dcf17a355d450598` |
-| `book/chapter2.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 73609 | `f6d7686dae9b0a664df31fd8f3ccdf5149def69c963c282bfc72dc6d9bed25f2` |
-| `book/chapter3.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 49763 | `4afd8debd006177d3947aaa3c6943cb28ede4b9d21669c0ebd7a3ebeaae3f622` |
-| `book/chapter4.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 53439 | `a3505ee4235dc43383f14676a652cdeb0fd6eb86a9a076c51f2c57da4d33ab25` |
-| `book/chapter5.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 64530 | `9d11e6d391dc3e517f9534328aec262e1234f3573a958ed1d6ce251f733d2d5e` |
-| `book/chapter6.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 115394 | `a22493abd801a300737f21741f3973e3221d9bc55bf5e39e9b526610eb3531ee` |
+| `book/README.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 7106 | `998cbfafb89bdf2143b018835cb7fdf539660a358e9d60d36d26638a48612ba2` |
+| `book/WRITING_GUIDE.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 4717 | `e8dc308e13219d59cf7ceba4479034fd264b815bce5e1cf2eb87a75213213846` |
+| `book/chapter1.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 84837 | `ed9cac85fd0159d0f9677e7dd9c15ef47a3d76025c4b687cef19387f5c91658a` |
+| `book/chapter2.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 74004 | `a943b91a271617bda3bfab9ad2f8749e11418337e47c8fabbe175936b062ba72` |
+| `book/chapter3.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 49244 | `a4a88696f43e20b0de3790cd42a17071d33739d98b01d78740ae88a88ec9fda2` |
+| `book/chapter4.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 53708 | `e99f22449590ac9a89c88d5b16696f4c2b5646ec6163ca57906c8144ffd3580c` |
+| `book/chapter5.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 67183 | `1aa076788702f192d614593866a7b05dd73f6792c6c675053f2dc50079a38b11` |
+| `book/chapter6.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 117368 | `4304d810d1713b10019e33757c37097171424a8285d86ae4cbd77021bd28719e` |
 | `book/images/fig0-1-book-roadmap.svg` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 5336 | `19c6f87985989b86ed6e09f8966d57b33e5b76fba1c842ae4b9851ad989ab8bf` |
 | `book/images/fig1-0-how-llms-work.webp` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 229740 | `acb411d7d13eb8d2c590ba461e82aded71476155160bcbdc933394a28ccb416e` |
 | `book/images/fig1-1-concept-boundaries.svg` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 5491 | `203b312b0c07716c20a1a8eb87e368a76abd5d8df18a2eb4dd30b80d3185bc1a` |
@@ -86,7 +88,7 @@
 | `book/sources/chapter5-sources.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 16912 | `573d0007d6a61513bb1e7c193f2617f50f0fad2554e35c486776a73fe720958f` |
 | `book/sources/chapter6-sources.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 15077 | `2e85a167dfef71813214274deaa996b384a1a0a1006530bd4555b2255fee5ac5` |
 | `book/tests/render_checks.test.mjs` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 1390 | `922496b3f6f386f665729877649c94b1c1bcc7f3572319ad3f3d5e5cbf67e3ca` |
-| `book/versions/CHAPTER_VERSIONS.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 11329 | `aeaa4af3fd30d17752b31e78181b72c6dbb57aca802782adfaeba6f35b690714` |
+| `book/versions/CHAPTER_VERSIONS.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 13060 | `ca6edc0350262857b2f2b9528373d59e0d36896f5a981a78e657912fb538e17e` |
 | `chapter1/README.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 3255 | `8514edc8758aa046214b81a9a40e4d78c813b505e8da6f9c0719076b9fa1bd36` |
 | `chapter1/attention_demo.py` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 1891 | `b6ba5e462adb1f522c43d7fd3b5b4afe5363257675f6e16a24486b3e1501ed46` |
 | `chapter1/bigram_lm.py` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 2431 | `9eb969dfc5e9052e573d693b1ca74be999de14324117ced3795cd2b77acf3ad7` |

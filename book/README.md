@@ -51,18 +51,20 @@
 
 ## 书稿状态
 
+当前包含 2026-09-06 的本地编辑候选，尚未推送或更新网站。第 7 章正文保持不变，其余修订与历史恢复入口见[章节版本记录](./versions/CHAPTER_VERSIONS.md)。
+
 | 文件 | 状态 | 说明 |
 | --- | --- | --- |
 | [introduction.md](./introduction.md) | 初稿 | 写作动机、核心主线和实验方法 |
-| [chapter1.md](./chapter1.md) | 二审稿 | 约 1.8 万中文字符、6 张图、5 个可运行实验、14 道分级练习及参考答案 |
-| [chapter2.md](./chapter2.md) | 二审稿 | 约 3.4 万中文字符、7 张图、7 个无 API Key 实验、17 道分级练习及参考答案；含两种微型神经语言模型的真实训练曲线 |
-| [chapter3.md](./chapter3.md) | 复审修订稿 | 约 1.07 万汉字 / 2.28 万非空字符、7 张图、5 个编号实验与 1 个 Trace 补充实验、18 道分级练习及参考答案；包含真实文件、测试进程、结构化 Verifier、循环门槛与 Trace 审计回放 |
-| [chapter4.md](./chapter4.md) | 复审稿 | 约 2.7 万中文字符、8 张图、5 组无 API Key 实验、15 道分层练习与 3 道扩展实验；包含过期审批、Receipt 崩溃恢复与单案例边界故障矩阵 |
-| [chapter5.md](./chapter5.md) | 复审修订稿 | 上下文装配、权限与来源身份、冲突消解、预算、注入边界，以及 63 项离线测试 |
-| [chapter6.md](./chapter6.md) | v1.0.1 书稿 | 长任务压缩、Artifact、Checkpoint、Rehydration、恢复与漂移；公共仓库保留 143 项非 PDF 测试 |
+| [chapter1.md](./chapter1.md) | v1.3-rc1 | 修正总览图数值、Softmax 表示和选中项；原图保留；6 张技术 SVG + 1 张主信息图，5 个实验 |
+| [chapter2.md](./chapter2.md) | editorial-v1 | 统一 float 验收类型，产品观察归入进阶；保留 7 个实验和真实微型训练曲线 |
+| [chapter3.md](./chapter3.md) | v1.2-rc1 | 保留全部闭环实验，收束重复生产清单，以四个问题衔接第四章 |
+| [chapter4.md](./chapter4.md) | editorial-v1 | 审批中断与恢复开场；原有 8 图、5 组实验、15 题及 3 道扩展实验保留 |
+| [chapter5.md](./chapter5.md) | v1.2-rc1 | 小输入例子先行，完整实验合同后移；明确优先级的教学范围；63 项测试 |
+| [chapter6.md](./chapter6.md) | v1.1-rc1 | 四项交接卡先行，七类状态后移，字段合同归入进阶；143 项测试 |
 | [chapter7.md](./chapter7.md) | Review 通过稿 | 约 2.6 万有效中文字符、7 张图、5 组无 API Key 实验、14 道分层练习与 65 项测试 |
-| [chapter8.md](./chapter8.md) | v1.1 复审优化稿 | 约 2.56 万有效中文字符、8 张图、5 组 20 个无 API Key 案例、14 道分层练习与 60 项测试；区分 10 个符合性案例与 3 个失败探针，统一文档级固定 K 指标口径 |
-| [chapter9.md](./chapter9.md) | v1.0.3 发布元数据热修版 | 正文与实验沿用 v1.0.2：约 2.6 万有效中文字符、8 幅原创手绘图、5 组 21 个无 API Key Case（20 个运行观察 + 1 个规范 Fixture）、14 道分层练习与 47 项测试；同步修正网站章节日期和“三份调用合同 + 写操作回执”摘要 |
+| [chapter8.md](./chapter8.md) | v1.4-rc1 | 删重并澄清真实 Embedding 未交付；保留 20 个规范案例、14 题、8 张 SVG + 1 张主图；补数值算例，62 项测试 |
+| [chapter9.md](./chapter9.md) | v1.1-rc1 | 22 个 FAQ 移至配套材料；保留 8 张手绘图、21 个规范 Case、14 题与 47 项测试；协议冻结点不变 |
 | [sources/chapter1-sources.md](./sources/chapter1-sources.md) | 已建立 | 第 1 章资料台账与更新策略 |
 | [sources/chapter2-sources.md](./sources/chapter2-sources.md) | 已建立 | 作者资料页级映射、论文、官方文档、书籍与前沿信息核对台账 |
 | [sources/chapter3-sources.md](./sources/chapter3-sources.md) | 已建立 | Agent 经典论文、OpenAI/Anthropic/LangChain 官方文档与出版前复核清单 |

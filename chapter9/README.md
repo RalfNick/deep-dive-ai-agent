@@ -4,6 +4,7 @@
 
 - [返回第 9 章正文](../book/chapter9.md)
 - [查看分层练习参考答案](./reference-answers.md)
+- [按需查阅 22 个补充问答](./faq.md)
 
 第一次运行前只需记住：每次调用都有 Definition、Call 和 Result；只有写操作还需要 Receipt。Definition 是能力目录，Call 是申请，Result 是办理结果，Receipt 是写操作成功后由执行边界记录的关联回执。Receipt 不是模型生成的文字，也不是外部系统的密码学签名；生产环境仍可能需要按外部 ID 回查。
 

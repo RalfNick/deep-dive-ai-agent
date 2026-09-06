@@ -97,6 +97,16 @@ class BuildSiteTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "output must stay inside repository"):
                 build_site(root, root.parent / "outside")
 
+    def test_chapter_nine_supplement_remains_readable_after_extraction(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.make_repository(root)
+            write(root / "chapter9" / "faq.md", "# FAQ\n[Return](../book/chapter9.md)\n")
+            output = root / "_web"
+            build_site(root, output)
+            self.assertTrue((output / "chapter9" / "faq.md").is_file())
+            self.assertIn("../book/chapter9.md", (output / "chapter9" / "faq.md").read_text())
+
 
 if __name__ == "__main__":
     unittest.main()

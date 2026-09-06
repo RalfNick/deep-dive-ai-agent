@@ -23,8 +23,12 @@ class BookManifestTest(unittest.TestCase):
         self.assertTrue(all(chapter["status"] == "planned" for chapter in chapters[9:]))
 
         chapter9 = chapters[8]
-        self.assertEqual("2026-09-04", manifest["updated"])
-        self.assertEqual("2026-09-04", chapter9["updated"])
+        # Later editorial updates may advance the date; never regress before
+        # the verified three-contract revision or lag a chapter's update.
+        self.assertGreaterEqual(chapter9["updated"], "2026-09-04")
+        self.assertGreaterEqual(manifest["updated"], max(
+            chapter["updated"] for chapter in chapters if chapter["status"] == "published"
+        ))
         self.assertIn("三份调用合同", chapter9["summary"])
         self.assertNotIn("四份工具合同", chapter9["summary"])
 

@@ -21,7 +21,28 @@ workspace_digest: workspace-price-v1
 
 恢复到了正确步骤，不等于恢复了正确任务。
 
-> **阅读提示**：本章接着第 5 章的 `ContextPacket`，讨论它在几十轮之后怎样被压缩、持久化和重建。正文使用一条固定的 30 事件价格修复轨迹和确定性 `ScriptedRepairPolicy`；离线结果只检验上下文生命周期边界，不比较真实模型、Claude Code、Codex 或框架能力。当前代码入口位于 [`chapter6/`](../chapter6/)，固定报告位于 [`context-continuity.json`](../chapter6/reports/context-continuity.json)，资料台账见 [`chapter6-sources.md`](./sources/chapter6-sources.md) 的 S01—S19。
+**先写一张给明天的任务卡**
+
+假设接手的人是你。只收到“下一步运行测试”，你还会追问什么？至少要知道：要修哪个问题、哪些做法不能用、昨天试过什么、接下来怎样判断是否修好。
+
+把这四个问题写成一张短卡，信息就具体了：
+
+| 交接问题 | 本次价格修复要留下的内容 |
+| --- | --- |
+| 要完成什么 | 让旧配置也进入统一的数值归一化流程 |
+| 什么不能变 | 保留 `calculate_price(config, amount)` 的公共签名 |
+| 哪条路已经失败 | 仅调整最终舍入仍不能通过旧配置测试 |
+| 下一步做什么、怎样验收 | 检查字符串 rate/precision 的转换，修改后重跑旧配置和原有回归测试 |
+
+这张卡是对开场场景的人工整理，用来理解交接所需的信息；它不是模型生成结果，也不是固定报告的原始输出。测试有没有通过，仍需从真实执行结果确认。
+
+现在做两个小实验。先遮住第三行：接手者很可能再花时间尝试昨天已经否定的方案。再遮住第二行：他可能用改函数参数的方法解决局部问题，却破坏现有调用方。只保存“已经进行到哪一步”，无法弥补这两种信息缺失。
+
+接着问：如果卡片还在，但程序不知道哪个工具已经执行、哪个动作正在等待审批，能安全继续吗？也不能。于是我们需要保存两类内容：一类供程序定位执行位置，一类供下一轮决策理解任务。后文将它们称为**执行连续性**与**语义连续性**。
+
+先把这两个问题记住就够了：**程序从哪里继续？接手者带着哪些依据继续？** `RunCheckpoint`、`CompactionArtifact` 等名称，是随后实现这两项责任时才需要的工具。
+
+> **阅读提示**：第一遍先沿“任务卡 → 滑动窗口与摘要的失败 → 双连续性 → 恢复流程”阅读；标为进阶的状态分类和字段合同留到实现时查阅。本章接着第 5 章的 `ContextPacket`，讨论它在几十轮之后怎样被压缩、持久化和重建。正文使用一条固定的 30 事件价格修复轨迹和确定性 `ScriptedRepairPolicy`；离线结果只检验上下文生命周期边界，不比较真实模型、Claude Code、Codex 或框架能力。当前代码入口位于 [`chapter6/`](../chapter6/)，固定报告位于 [`context-continuity.json`](../chapter6/reports/context-continuity.json)，资料台账见 [`chapter6-sources.md`](./sources/chapter6-sources.md) 的 S01—S19。
 
 先给出全章短答案：**长任务需要同时恢复两种连续性。RunCheckpoint 恢复执行连续性，回答“从哪里继续”；Context Rehydration 恢复语义连续性，回答“带着哪些目标、约束、决定、未决问题与证据继续”。两者通过一个经过校验的 `CompactionArtifact` 协作，却不能互相替代。**
 
@@ -89,38 +110,6 @@ workspace_digest: workspace-price-v1
 即使把预算改为 `64 B`，十条都能放入，E2 和 E4 也未必被模型同等利用。`Lost in the Middle` 在多文档问答和键值检索任务上改变相关信息位置，观察到受测模型通常在关键信息位于开头或结尾时表现更好、位于中间时下降。[^ch6-lost-middle] 这项研究不能外推为所有 2026 年模型、Coding Agent 或任意长度输入都必然呈相同曲线；它支持的谨慎结论只是：**“容量允许”不足以推出“每条信息都被同等有效地使用”。**
 
 所以长窗口改变的是预算，不是状态设计。真正的问题不是“最多可以塞多少”，而是“哪项信息必须跨边界延续，丢失后系统能否检测”。
-
-## 先分清七个状态表面
-
-工程讨论中最常见的混乱，是把所有可持久内容都叫作“记忆”。聊天历史是记忆，Checkpoint 是记忆，代码文件也是记忆；结果每个组件似乎都能恢复任务，却没有一个组件能回答完整的恢复问题。
-
-本章先用七个状态表面拆开责任：
-
-| 状态表面 | 主要所有者 | 典型内容 | 生命周期 | 恢复时回答的问题 |
-| --- | --- | --- | --- | --- |
-| Event History / Event Log | Runtime Recorder | 用户更新、观察、决定、工具结果、验证事件 | 单次长任务，追加式 | 过去实际发生了什么，来源顺序是什么 |
-| Model Context / `ContextPacket` | ContextBuilder | 本轮选中的指令、事实、观察、工具合同 | 一次模型调用 | 模型这一刻实际看见什么 |
-| Session（其中维护 Working Set） | Session Runtime | 会话标识、历史引用，以及近期失败、当前文件片段、刚更新的约束 | 单个会话或任务阶段 | 当前会话怎样延续，哪些内容暂时需要高分辨率保留 |
-| Handoff Artifact（可包含 Summary） | Compactor | 跨边界的目标、约束、决定、未决问题、摘要与定位符 | 一个或多个压缩代 | 旧历史不再全文加载时，什么语义必须延续 |
-| `RunCheckpoint` | Execution Runtime | `next_step`、完成步骤、cursor、Workspace Digest、`artifact_id` | 单次运行 | 程序从哪个确定性节点继续 |
-| Workspace | 文件系统或业务状态层 | 代码、测试、报告、日志、真实产物 | 可长于当前会话 | 当前外部世界究竟是什么版本 |
-| Long-term Memory / Cross-task Store | Memory Service | 未来独立任务仍需复用的受控信息 | 跨任务 | 下一项任务是否应召回过去经验或偏好 |
-
-![长任务连续性的七个状态表面](./images/fig6-2-state-surfaces.svg)
-
-图 2 用实现语言把 Session 中的活跃部分画成 `Working Set`，把 Long-term Memory 的预留位置画成 `Cross-task Store`。**Session 是拥有身份、历史引用和生命周期的容器；`WorkingSet` 是本地实现放在其中的活跃语义对象，不是 Session 的同义词。** 同样，Handoff Artifact 是跨边界交接这一类制品，既可以包含自由文本 Summary，也可以包含结构化字段；本章的 `CompactionArtifact` 是它的一个可检查实现。中间的 Commit boundary 是 Artifact 与 Checkpoint 的提交关系，不是第八种状态。
-
-读这个表时，可以连续追问三件事：**谁写，谁验证，失效后回到哪里。** Event Log 由 Runtime 追加，Digest 不匹配时应拒绝回放；ContextPacket 由 Builder 生成，下轮可以重新构造；Workspace 文件由实际工具改变，不能因为摘要声称“已修改”就视为修改完成。
-
-几个边界尤其容易混淆。
-
-**History 不等于 Context。** Event Log 可以保存全部 24 条事件，但本轮 Packet 只选其中一部分。保存完整历史与每轮重发完整历史是两件事。
-
-**Session 不等于 Long-term Memory。** 当前修复任务中的失败测试很重要，但它未必值得在未来独立任务中召回。第 7 章才讨论 Write、Recall、Forget 和 Correct；本章不把临时执行状态提前升级成长期事实。
-
-**Workspace 不等于模型已知状态。** `tests/test_pricing.py` 存在于磁盘，不代表它已进入 Packet；Artifact 保存了路径，也不代表路径指向的内容仍与压缩时相同。Digest 和 Rehydration 检查正是为了解决这个时间差。
-
-**Summary 不等于 Checkpoint。** Summary 可以说“旧配置仍失败”，却未必知道图状态从哪个节点恢复；Checkpoint 可以写 `next_step=apply-compatible-patch`，却未必解释为什么这一步正确。后面会把这条差异实现成两条独立连续性轨道。
 
 ## 贯穿实验：冻结同一条价格修复轨迹
 
@@ -365,6 +354,38 @@ summary_items = (goal, *decisions, _summary_next_intent(events))
 
 Checkpoint-only 行的 Packet、恢复正确性和重复工作是“—”，因为这个控制组没有构建 Chapter 5 `ContextPacket`，也没有把不完整语义送入正常恢复路径。未测量不能写成 false 或 0。Rehydrated 行则真的产生了 Chapter 5 类型，并对事件 25—30 的固定恢复序列进行检查。
 
+## 进阶阅读：把交接信息放回七类状态
+
+工程讨论中最常见的混乱，是把所有可持久内容都叫作“记忆”。聊天历史是记忆，Checkpoint 是记忆，代码文件也是记忆；结果每个组件似乎都能恢复任务，却没有一个组件能回答完整的恢复问题。
+
+本章先用七个状态表面拆开责任：
+
+| 状态表面 | 主要所有者 | 典型内容 | 生命周期 | 恢复时回答的问题 |
+| --- | --- | --- | --- | --- |
+| Event History / Event Log | Runtime Recorder | 用户更新、观察、决定、工具结果、验证事件 | 单次长任务，追加式 | 过去实际发生了什么，来源顺序是什么 |
+| Model Context / `ContextPacket` | ContextBuilder | 本轮选中的指令、事实、观察、工具合同 | 一次模型调用 | 模型这一刻实际看见什么 |
+| Session（其中维护 Working Set） | Session Runtime | 会话标识、历史引用，以及近期失败、当前文件片段、刚更新的约束 | 单个会话或任务阶段 | 当前会话怎样延续，哪些内容暂时需要高分辨率保留 |
+| Handoff Artifact（可包含 Summary） | Compactor | 跨边界的目标、约束、决定、未决问题、摘要与定位符 | 一个或多个压缩代 | 旧历史不再全文加载时，什么语义必须延续 |
+| `RunCheckpoint` | Execution Runtime | `next_step`、完成步骤、cursor、Workspace Digest、`artifact_id` | 单次运行 | 程序从哪个确定性节点继续 |
+| Workspace | 文件系统或业务状态层 | 代码、测试、报告、日志、真实产物 | 可长于当前会话 | 当前外部世界究竟是什么版本 |
+| Long-term Memory / Cross-task Store | Memory Service | 未来独立任务仍需复用的受控信息 | 跨任务 | 下一项任务是否应召回过去经验或偏好 |
+
+![长任务连续性的七个状态表面](./images/fig6-2-state-surfaces.svg)
+
+图 2 用实现语言把 Session 中的活跃部分画成 `Working Set`，把 Long-term Memory 的预留位置画成 `Cross-task Store`。**Session 是拥有身份、历史引用和生命周期的容器；`WorkingSet` 是本地实现放在其中的活跃语义对象，不是 Session 的同义词。** 同样，Handoff Artifact 是跨边界交接这一类制品，既可以包含自由文本 Summary，也可以包含结构化字段；本章的 `CompactionArtifact` 是它的一个可检查实现。中间的 Commit boundary 是 Artifact 与 Checkpoint 的提交关系，不是第八种状态。
+
+读这个表时，可以连续追问三件事：**谁写，谁验证，失效后回到哪里。** Event Log 由 Runtime 追加，Digest 不匹配时应拒绝回放；ContextPacket 由 Builder 生成，下轮可以重新构造；Workspace 文件由实际工具改变，不能因为摘要声称“已修改”就视为修改完成。
+
+几个边界尤其容易混淆。
+
+**History 不等于 Context。** Event Log 可以保存全部 24 条事件，但本轮 Packet 只选其中一部分。保存完整历史与每轮重发完整历史是两件事。
+
+**Session 不等于 Long-term Memory。** 当前修复任务中的失败测试很重要，但它未必值得在未来独立任务中召回。第 7 章才讨论 Write、Recall、Forget 和 Correct；本章不把临时执行状态提前升级成长期事实。
+
+**Workspace 不等于模型已知状态。** `tests/test_pricing.py` 存在于磁盘，不代表它已进入 Packet；Artifact 保存了路径，也不代表路径指向的内容仍与压缩时相同。Digest 和 Rehydration 检查正是为了解决这个时间差。
+
+**Summary 不等于 Checkpoint。** Summary 可以说“旧配置仍失败”，却未必知道图状态从哪个节点恢复；Checkpoint 可以写 `next_step=apply-compatible-patch`，却未必解释为什么这一步正确。后面会把这条差异实现成两条独立连续性轨道。
+
 ## Write—Select—Compress—Rehydrate：一条完整生命周期
 
 双连续性不是两个孤立文件。它们被一条可观察的**目标生命周期协议**连接：新事实先写 Event Log，活跃语义进入 Working Set；策略触发后生成 Artifact；调用方完成提交前校验后，再让 Checkpoint 引用已持久化 Artifact；恢复时由 Rehydrator 重新验证自己负责的边界，再构造下一轮 Packet。新的工具结果继续写回 Event Log，循环由此继续。当前教学代码用多个小模块分别覆盖这些责任，并没有实现一个包办六步的事务协调器。
@@ -377,7 +398,7 @@ Checkpoint-only 行的 Packet、恢复正确性和重复工作是“—”，因
 
 `WorkingSet` 则不是另一份永久日志。它持有近期 `event_ids`、高分辨率 `carry_items` 和自己的字节预算。比如刚失败的测试输出可能在当前两轮极其重要，等根因和 Locator 已写入 Artifact 后，就不必永远复制全文。Working Set 解决“暂时保真”，Artifact 解决“跨边界延续”，Event Log 解决“需要时回到来源”。
 
-## CompactionArtifact：把“交接完整”变成可检查合同
+## 进阶阅读：CompactionArtifact 的字段合同
 
 段落摘要的问题，不在于自然语言本身，而在于它没有声明必须保留什么。对于一次闲聊，几句自由文本可能已经足够；对于有验收条件、负向约束和失败证据的工程任务，压缩结果需要可验证结构。
 

@@ -50,6 +50,9 @@ def _allowlisted_sources(root: Path) -> tuple[Path, ...]:
         f"chapter{number}/reference-answers.md" for number in range(1, 10)
     )
     sources = [root / relative for relative in explicit]
+    # Supplemental reading stays opt-in; do not expose private review/source trees.
+    if (root / "chapter9" / "faq.md").is_file():
+        sources.append(root / "chapter9" / "faq.md")
 
     images = root / "book" / "images"
     if images.is_dir():

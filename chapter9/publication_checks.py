@@ -19,7 +19,8 @@ FIGURES = (
 
 @dataclass(frozen=True, slots=True)
 class PublicationContract:
-    min_cjk: int = 25_000
+    # Match WRITING_GUIDE's 1.8万 floor; extracted FAQ need not pad the main text.
+    min_cjk: int = 18_000
     max_cjk: int = 30_000
     min_headings: int = 20
     max_headings: int = 40

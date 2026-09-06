@@ -16,6 +16,8 @@
 
 固定语义编码器不是训练得到的 Embedding，教学 Reranker 也不是真实 Cross-Encoder。公共报告验证边界合同，不比较模型或产品能力。
 
+计算题可先运行 `python -m chapter8.experiments.worked_scores`：它用三个短文核对 BM25，再核对 RRF 并列与删除通道的结果。完整手算表见[参考答案](./reference-answers.md)，本入口不修改原有 20 个案例的规范报告。
+
 ## 目录
 
 ~~~text

@@ -3,8 +3,8 @@
   "title": "深入浅出 AI Agent",
   "subtitle": "从大模型原理到手写 Coding Agent",
   "description": "从模型、上下文和工具出发，逐步搭建可运行、可验证、可持续改进的 AI Agent 工程体系。",
-  "version": "0.9.0",
-  "updated": "2026-09-04",
+  "version": "0.9.1-rc1",
+  "updated": "2026-09-06",
   "cover": "images/deep-dive-ai-agent-cover.webp",
   "repositoryUrl": "https://github.com/RalfNick/deep-dive-ai-agent",
   "totalChapters": 18,
@@ -31,7 +31,7 @@
           "source": "chapter1.md",
           "experiment": "../chapter1/README.md",
           "answers": "../chapter1/reference-answers.md",
-          "updated": "2026-08-30"
+          "updated": "2026-09-06"
         },
         {
           "order": 2,
@@ -42,7 +42,7 @@
           "source": "chapter2.md",
           "experiment": "../chapter2/README.md",
           "answers": "../chapter2/reference-answers.md",
-          "updated": "2026-08-20"
+          "updated": "2026-09-06"
         },
         {
           "order": 3,
@@ -53,7 +53,7 @@
           "source": "chapter3.md",
           "experiment": "../chapter3/README.md",
           "answers": "../chapter3/reference-answers.md",
-          "updated": "2026-08-20"
+          "updated": "2026-09-06"
         },
         {
           "order": 4,
@@ -64,7 +64,7 @@
           "source": "chapter4.md",
           "experiment": "../chapter4/README.md",
           "answers": "../chapter4/reference-answers.md",
-          "updated": "2026-08-20"
+          "updated": "2026-09-06"
         }
       ]
     },
@@ -82,7 +82,7 @@
           "source": "chapter5.md",
           "experiment": "../chapter5/README.md",
           "answers": "../chapter5/reference-answers.md",
-          "updated": "2026-08-20"
+          "updated": "2026-09-06"
         },
         {
           "order": 6,
@@ -93,7 +93,7 @@
           "source": "chapter6.md",
           "experiment": "../chapter6/README.md",
           "answers": "../chapter6/reference-answers.md",
-          "updated": "2026-08-20"
+          "updated": "2026-09-06"
         },
         {
           "order": 7,
@@ -115,7 +115,7 @@
           "source": "chapter8.md",
           "experiment": "../chapter8/README.md",
           "answers": "../chapter8/reference-answers.md",
-          "updated": "2026-08-30"
+          "updated": "2026-09-06"
         }
       ]
     },
@@ -133,7 +133,7 @@
           "source": "chapter9.md",
           "experiment": "../chapter9/README.md",
           "answers": "../chapter9/reference-answers.md",
-          "updated": "2026-09-04"
+          "updated": "2026-09-06"
         },
         {
           "order": 10,
