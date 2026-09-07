@@ -51,20 +51,20 @@
 
 ## 书稿状态
 
-当前包含 2026-09-06 的本地编辑候选，尚未推送或更新网站。第 7 章正文保持不变，其余修订与历史恢复入口见[章节版本记录](./versions/CHAPTER_VERSIONS.md)。
+当前为 2026-09-07 编辑发布版。第 1–9 章的读者路径修订已经发布，第 8 章正式升级到 v1.4；第 7 章正文保持不变。全部旧稿、旧图和既有 tag 均保留，恢复入口见[章节版本记录](./versions/CHAPTER_VERSIONS.md)。
 
 | 文件 | 状态 | 说明 |
 | --- | --- | --- |
 | [introduction.md](./introduction.md) | 初稿 | 写作动机、核心主线和实验方法 |
-| [chapter1.md](./chapter1.md) | v1.3-rc1 | 修正总览图数值、Softmax 表示和选中项；原图保留；6 张技术 SVG + 1 张主信息图，5 个实验 |
+| [chapter1.md](./chapter1.md) | editorial-v1 | 修正总览图数值、Softmax 表示和选中项；原图保留；6 张技术 SVG + 1 张主信息图，5 个实验 |
 | [chapter2.md](./chapter2.md) | editorial-v1 | 统一 float 验收类型，产品观察归入进阶；保留 7 个实验和真实微型训练曲线 |
-| [chapter3.md](./chapter3.md) | v1.2-rc1 | 保留全部闭环实验，收束重复生产清单，以四个问题衔接第四章 |
+| [chapter3.md](./chapter3.md) | editorial-v1 | 保留全部闭环实验，收束重复生产清单，以四个问题衔接第四章 |
 | [chapter4.md](./chapter4.md) | editorial-v1 | 审批中断与恢复开场；原有 8 图、5 组实验、15 题及 3 道扩展实验保留 |
-| [chapter5.md](./chapter5.md) | v1.2-rc1 | 小输入例子先行，完整实验合同后移；明确优先级的教学范围；63 项测试 |
-| [chapter6.md](./chapter6.md) | v1.1-rc1 | 四项交接卡先行，七类状态后移，字段合同归入进阶；143 项测试 |
+| [chapter5.md](./chapter5.md) | editorial-v1 | 小输入例子先行，完整实验合同后移；明确优先级的教学范围；63 项测试 |
+| [chapter6.md](./chapter6.md) | editorial-v1 | 四项交接卡先行，七类状态后移，字段合同归入进阶；143 项测试 |
 | [chapter7.md](./chapter7.md) | Review 通过稿 | 约 2.6 万有效中文字符、7 张图、5 组无 API Key 实验、14 道分层练习与 65 项测试 |
-| [chapter8.md](./chapter8.md) | v1.4-rc2 | 片段引句标注、重排后资格与父摘要回查；真实请求入口；生产清单独立；71 项测试，20 个规范案例、14 题、8 张在用 SVG + 1 张主图，旧图保留 |
-| [chapter9.md](./chapter9.md) | v1.1-rc1 | 22 个 FAQ 移至配套材料；保留 8 张手绘图、21 个规范 Case、14 题与 47 项测试；协议冻结点不变 |
+| [chapter8.md](./chapter8.md) | v1.4 | 片段引句标注、重排后资格与父摘要回查；真实请求入口；生产清单独立；71 项测试，20 个规范案例、14 题、8 张在用 SVG + 1 张主图，旧图保留 |
+| [chapter9.md](./chapter9.md) | editorial-v1 | 22 个 FAQ 移至配套材料；保留 8 张手绘图、21 个规范 Case、14 题与 47 项测试；协议冻结点不变 |
 | [sources/chapter1-sources.md](./sources/chapter1-sources.md) | 已建立 | 第 1 章资料台账与更新策略 |
 | [sources/chapter2-sources.md](./sources/chapter2-sources.md) | 已建立 | 作者资料页级映射、论文、官方文档、书籍与前沿信息核对台账 |
 | [sources/chapter3-sources.md](./sources/chapter3-sources.md) | 已建立 | Agent 经典论文、OpenAI/Anthropic/LangChain 官方文档与出版前复核清单 |

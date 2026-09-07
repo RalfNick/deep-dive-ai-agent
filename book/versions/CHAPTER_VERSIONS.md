@@ -10,9 +10,9 @@
 
 ## 恢复与比较
 
-### 2026-09-06 第八章 v1.4-rc2：证据边界与读者路径复审
+### 2026-09-07 第八章 v1.4：证据边界与读者路径复审
 
-本地候选，未推送、未发布、未创建正式发布 tag。完整前版基线为 `49d185efd2b5463cd6962d45ac1d13d8a7710d22`；此前 editorial-v1 和公开 tag 均保留。
+由 v1.4-rc2 通过发布门禁后转为正式版本，使用 annotated tag `book-chapter8-v1.4` 固定完整源码。完整前版基线为 `49d185efd2b5463cd6962d45ac1d13d8a7710d22`；此前 editorial-v1 候选记录和公开 tag 均保留。
 
 - 修正 Chunk 继承整篇 fact_ids：显式人工引句标注，只让完整包含引句的片段支持事实；无标注不覆盖。
 - 重排后再次验证资格与父摘要；新增重排期间撤回、原文更新配旧索引、SSO 段缺成员事实等失败先行测试。
@@ -22,23 +22,23 @@
 
 回归记录见[第八章本轮复审](../reviews/chapter8-review-v1.4-rc2.md)。比较命令：`git diff 49d185e -- book/chapter8.md chapter8/`。
 
-### 2026-09-06 全书读者路径修订：editorial-v1
+### 2026-09-07 全书读者路径修订：editorial-v1
 
-本轮为本地编辑候选，未执行 GitHub 或网站发布。修改前完整基线为 `46be2bbca32dde80abadff65f20884407441859d`（已发布的 `book-chapter9-v1.0.3`）；该提交保存本轮修改前的全书、实验、来源与旧图。旧 tag 不移动。
+本轮以 annotated tag `book-editorial-v1` 发布到 GitHub 与网站。修改前完整基线为 `46be2bbca32dde80abadff65f20884407441859d`（已发布的 `book-chapter9-v1.0.3`）；该提交保存本轮修改前的全书、实验、来源与旧图。旧 tag 不移动。
 
 | 章节 | 编辑候选版本 | 本轮变化 |
 | --- | --- | --- |
-| 1 | v1.3-rc1 | 新主图以候选表对应 Logit / Softmax；采样项与追加项一致；原 WebP 保留 |
+| 1 | editorial-v1 | 新主图以候选表对应 Logit / Softmax；采样项与追加项一致；原 WebP 保留 |
 | 2 | editorial-v1 | 沿用 float 验收，产品观察标为进阶；保留原事实核对日期 |
-| 3 | v1.2-rc1 | 收束生产清单，以四个闭环问题衔接第四章 |
+| 3 | editorial-v1 | 收束生产清单，以四个闭环问题衔接第四章 |
 | 4 | editorial-v1 | 开场改为审批中断与恢复，突出本章区别于最小循环的职责 |
-| 5 | v1.2-rc1 | 先装小输入，再读完整字段；后移实验合同；说明教学优先级的适用边界 |
-| 6 | v1.1-rc1 | 任务卡先行，七类状态后移，Artifact 字段标为进阶 |
+| 5 | editorial-v1 | 先装小输入，再读完整字段；后移实验合同；说明教学优先级的适用边界 |
+| 6 | editorial-v1 | 任务卡先行，七类状态后移，Artifact 字段标为进阶 |
 | 7 | 不变 | 本轮保留偏好生命周期主线，不为统一形式改写有效内容 |
-| 8 | v1.4-rc1 | 实事求是说明 Embedding 适配器未交付，删重，补 BM25/RRF 完整答案与核对命令 |
-| 9 | v1.1-rc1 | 22 个 FAQ 移到配套材料，下一章名与目录一致；字数下限对齐全书写作标准 |
+| 8 | v1.4 | 实事求是说明 Embedding 适配器未交付，删重，补 BM25/RRF 完整答案与核对命令；随后由 rc2 修正证据边界并正式发布 |
+| 9 | editorial-v1 | 22 个 FAQ 移到配套材料，下一章名与目录一致；字数下限对齐全书写作标准 |
 
-候选的验证记录见[本轮 Review](../reviews/editorial-review-2026-09-06.md)。RC 名称用于标识待发布稿，不表示对应发布 tag 已创建，也未生成新版 PDF。
+候选阶段的验证记录见[本轮 Review](../reviews/editorial-review-2026-09-06.md)。原 RC 名称只标识发布前稿；正式发布由 `book-editorial-v1` 与 `book-chapter8-v1.4` 固定，未生成新版 PDF。
 
 查询旧稿示例：`git show 46be2bbca32dde80abadff65f20884407441859d:book/chapter5.md`。比较时对同一路径运行 `git diff 46be2bbca32dde80abadff65f20884407441859d -- book/chapter5.md`。
 
@@ -101,6 +101,7 @@ git diff book-chapter1-v1.0 book-chapter1-v1.1 -- book/chapter1.md chapter1
 | v1.1 | 2026-08-28 | `book-chapter8-v1.1` | 当前优化版；补齐无答案 fact 合同和 Partial 事实集合，区分 10 个符合性案例与 3 个失败探针，新增状态分类与摘要，统一唯一文档/固定 K 指标口径，同步报告、Trace、图 8-8、正文、来源和 Review | 60 项第 8 章测试通过；JSON、Markdown、JSONL SHA-256 分别为 `FA711B9F6203D97602612C8A017B82FC6B275E5CF02083F4981837D2236317EB`、`2D53AE220A48466701D9DFA2B507E3D6339DB6AACEB8CDC588CE1927C099259A`、`A6C6BA9F668173A1C3A9DBFC4246A2402ACA127D261C6B2D1C80EB9B38F18C9C` | 未生成独立 PDF；网站为本章当前发布载体 |
 | v1.2 | 2026-08-29 | `book-chapter8-v1.2` | 加入检索前知识加工、派生问答与 Source Chunk 的来源边界，补充二值量化适用条件，并据此优化主流程、实验边界与图 8-2 | 第 8 章 61 项测试与规范报告复现通过；GitHub CI、Pages 和 `wlxralf.com` 发布成功 | 未生成独立 PDF；历史正文、代码与网站源文件由 Git tag 固定 |
 | v1.3 | 2026-08-30 | `book-chapter8-v1.3` | 新增中文原创“RAG 如何工作”主信息图，用离线知识加工、在线证据回答和四道责任边界建立第一遍阅读路线；原 8 张 SVG 技术图全部保留 | 第 8 章 61 项测试、仓库 41 项合同测试、4 项渲染测试与 MkDocs strict 构建通过；WebP 主图约 206 KiB | 未生成独立 PDF；网站与 Git tag 为本次发布载体 |
+| v1.4 | 2026-09-07 | `book-chapter8-v1.4` | 修正 Chunk 事实继承边界和重排后的资格、父摘要回查；统一 reciprocal_rank 口径；新增真实请求检查入口并将生产扩展移到独立指南；同步全书读者路径编辑版 | 第 8 章 71 项、仓库 43 项合同测试及 4 项渲染测试通过；其他已发布章节 372 项回归通过；规范报告可重复生成，MkDocs strict 构建通过 | 未生成独立 PDF；网站与 Git tag 为本次发布载体 |
 
 ## 第 9 章：工具调用与 MCP
 

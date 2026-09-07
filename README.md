@@ -13,9 +13,9 @@
 - 在线阅读已发布：<https://wlxralf.com/books/deep-dive-ai-agent>。
 - PDF/EPUB 尚未在本仓库发布，未来只通过 GitHub Releases 提供。
 
-## 本地编辑候选
+## 2026-09-07 编辑发布
 
-2026-09-06 的 `editorial-v1` 正在本地完成读者路径优化，尚未发布到 GitHub 或网站。已发布基线及旧图均保留；修订范围见[版本记录](book/versions/CHAPTER_VERSIONS.md)。下表链接指向当前源码，测试数量以本地验证为准。
+本次发布完成第 1–9 章的读者路径优化，并将第 8 章升级到 v1.4：修正片段事实归属和重排后的证据回查，补充真实请求检查入口，同时保留旧稿、旧图和既有 tag。完整修订与恢复入口见[版本记录](book/versions/CHAPTER_VERSIONS.md)。
 
 ## 已发布章节与实验
 
