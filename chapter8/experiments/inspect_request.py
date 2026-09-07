@@ -2,12 +2,14 @@
 
 from dataclasses import asdict
 import json
+import sys
 
 from chapter8.experiments.run_all import _case_map, _retriever
 from chapter8.knowledge_runtime.evidence import ScriptedAnswerPolicy, build_evidence_packet
 
 
 def main() -> None:
+    sys.stdout.reconfigure(encoding="utf-8")
     case = _case_map()["governance-compound-upgrade"]
     hits, trace = _retriever().retrieve(case.query, include_trace=True)
     packet = build_evidence_packet(case.query, hits, case.required_fact_ids)

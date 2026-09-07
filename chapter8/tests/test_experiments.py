@@ -1,5 +1,6 @@
 import unittest
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
@@ -9,12 +10,14 @@ from chapter8.experiments.run_all import build_report
 
 class ExperimentTests(unittest.TestCase):
     def test_inspect_request_cli_exposes_chunk_support_and_decision(self) -> None:
+        child_env = os.environ.copy()
+        child_env["PYTHONIOENCODING"] = "cp936"
         result = subprocess.run(
             [sys.executable, "-B", "-m", "chapter8.experiments.inspect_request"],
-            cwd=Path(__file__).resolve().parents[2], capture_output=True, text=True, encoding="utf-8",
+            cwd=Path(__file__).resolve().parents[2], capture_output=True, env=child_env,
         )
-        self.assertEqual(0, result.returncode, result.stderr)
-        packet = json.loads(result.stdout)
+        self.assertEqual(0, result.returncode, result.stderr.decode("utf-8", errors="replace"))
+        packet = json.loads(result.stdout.decode("utf-8"))
         self.assertEqual("answer", packet["decision"]["status"])
         self.assertEqual(["sso-team-32", "members-preserved-32"], packet["present_fact_ids"])
         self.assertEqual([], packet["missing_fact_ids"])
