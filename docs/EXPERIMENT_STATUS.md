@@ -70,6 +70,14 @@ python chapter2/model_selection_demo.py
 
 第 1–9 章的规范离线生成器已连续运行两次；上述 19 个产物的第二次哈希与第一次一致。所有规范文本报告显式写入 UTF-8/LF；第 1、3、7、8、9 章只记录稳定运行合同，不记录操作系统、主机名或 Python 补丁版本。第 2 章的逐字节复现结论仍只限同一已记录数值环境；第 5 章 `deepseek-live.example.json` 只是脱敏结构示例，不计入离线规范报告。
 
+## 第 10 章写作候选验证
+
+2026-09-07，v1.0-rc1，尚未发布。`python -B -m unittest discover -s chapter10/tests -v`：37 项通过，其中 36 项标准库运行/答案测试、1 项可选 Markdown 预览测试。未安装预览依赖时只跳过该预览测试。
+
+五组实验涵盖工具目录/加载、发现边界、有限并发、持久作业与故障注入；`python -B -m chapter10.experiments --write` 可重复生成。JSON / Markdown / JSONL 的 SHA-256 分别为 `c4d87ae7bd46108ba0ea7e9b6ec4498299eb2cfadd120e0cf9cd6651e3f8732b`、`d7bfe620418d766e1399ab8ead4d9cd03c8787fc1f19036ef90521352966265d`、`f59f1bfce22f759b774570ef54460a194bc0a39cfcf9fa95d976f736fc174ade`。
+
+目录 300/可发现 299/加载 2；全量 93,644 字节，按需载荷 1,412 字节；有限并发峰值 2；八月报表 3 条、6,000 分。测量口径与限制见 `chapter10/README.md`。这些字节数不是 Token 或生产成本。
+
 ## 明确不声称
 
 - `serialized_bytes`、字符数或 JSON 长度不是 Token 数；离线报告不得把它们换算成 Token 节省率。

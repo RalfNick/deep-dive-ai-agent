@@ -72,7 +72,7 @@ jobs:
           python chapter2/structured_output_demo.py
           python chapter2/model_selection_demo.py
 
-      - name: Run Chapter 3 through Chapter 9 tests
+      - name: Run Chapter 3 through Chapter 10 tests
         run: |
           python -m unittest discover -s chapter3/tests -v
           python -m unittest discover -s chapter4/tests -v
@@ -81,6 +81,7 @@ jobs:
           python -m unittest discover -s chapter7/tests -v
           python -m unittest discover -s chapter8/tests -v
           python -m unittest discover -s chapter9/tests -v
+          python -m unittest discover -s chapter10/tests -v
 
       - name: Regenerate deterministic teaching reports
         run: |
@@ -92,6 +93,7 @@ jobs:
           python -m chapter7.experiments.run_all --output chapter7/reports
           python -m chapter8.experiments.run_all --output chapter8/reports
           python -m chapter9.experiments.run_all --output chapter9/reports
+          python -m chapter10.experiments --write
 
       - name: Run book renderer contracts
         run: npm test --prefix book

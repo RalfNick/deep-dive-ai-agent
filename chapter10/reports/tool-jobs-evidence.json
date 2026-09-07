@@ -1,0 +1,177 @@
+{
+  "contract": "deterministic tool-discovery and local-job boundary evidence",
+  "model_quality": null,
+  "provider_tokens": null,
+  "external_exactly_once": false,
+  "groups": {
+    "catalog": {
+      "registered": 300,
+      "discoverable": 299,
+      "loaded": 2,
+      "hits": [
+        {
+          "name": "orders.get",
+          "score": 3
+        },
+        {
+          "name": "shipments.get",
+          "score": 2
+        }
+      ],
+      "full_definitions_bytes": 93644,
+      "bootstrap_bytes": 150,
+      "hit_summaries_bytes": 452,
+      "loaded_definitions_bytes": 810,
+      "deferred_visible_payload_bytes": 1412
+    },
+    "boundaries": {
+      "unknown_query": [],
+      "ambiguous_query": [
+        {
+          "name": "orders.get",
+          "score": 1
+        },
+        {
+          "name": "shipments.get",
+          "score": 1
+        }
+      ],
+      "budget": "definition_budget_exceeded",
+      "revoked": "denied",
+      "stale": "stale_definition"
+    },
+    "concurrency": {
+      "limit": 2,
+      "peak_in_flight": 2,
+      "results": {
+        "call-A": {
+          "value": {
+            "order_id": "A",
+            "status": "paid"
+          }
+        },
+        "call-B": {
+          "value": {
+            "order_id": "B",
+            "status": "paid"
+          }
+        },
+        "call-C": {
+          "error": "LookupError"
+        }
+      },
+      "measured_network_latency_ms": null
+    },
+    "lifecycle": {
+      "submitted": {
+        "id": 1,
+        "state": "queued",
+        "attempt": 0,
+        "done": 0,
+        "total": 0,
+        "error": null
+      },
+      "resumed_with_same_job_id": 1,
+      "result": {
+        "artifact_id": "report-1",
+        "sha256": "2f0d54fc0d2d514275140f927d6b47d23193537bbf4586ea8cb1fec2521196a5",
+        "data": {
+          "month": "2026-08",
+          "row_count": 3,
+          "total_cents": 6000
+        }
+      },
+      "cursor": 5,
+      "new_events_after_cursor": [
+        {
+          "seq": 6,
+          "kind": "succeeded",
+          "attempt": 1,
+          "detail": {}
+        }
+      ],
+      "events": [
+        {
+          "seq": 1,
+          "kind": "queued",
+          "attempt": 0,
+          "detail": {}
+        },
+        {
+          "seq": 2,
+          "kind": "running",
+          "attempt": 1,
+          "detail": {}
+        },
+        {
+          "seq": 3,
+          "kind": "progress",
+          "attempt": 1,
+          "detail": {
+            "done": 1,
+            "total": 3
+          }
+        },
+        {
+          "seq": 4,
+          "kind": "progress",
+          "attempt": 1,
+          "detail": {
+            "done": 2,
+            "total": 3
+          }
+        },
+        {
+          "seq": 5,
+          "kind": "progress",
+          "attempt": 1,
+          "detail": {
+            "done": 3,
+            "total": 3
+          }
+        },
+        {
+          "seq": 6,
+          "kind": "succeeded",
+          "attempt": 1,
+          "detail": {}
+        }
+      ]
+    },
+    "failures": {
+      "same_submission_same_job": true,
+      "key_conflict": "key_conflict",
+      "recovery_attempts": [
+        1,
+        2
+      ],
+      "stale_worker": "stale_attempt",
+      "recovered_receipts": 1,
+      "repeated_finish_created_receipt": false,
+      "cancel_acknowledgement": "cancel_requested",
+      "cancel_before_commit": "cancelled",
+      "cancelled_receipts": 0,
+      "cancel_after_commit": "succeeded",
+      "deadline_error": "deadline_exceeded",
+      "early_retry": null,
+      "retry_final": {
+        "id": 4,
+        "state": "failed",
+        "attempt": 2,
+        "done": 0,
+        "total": 0,
+        "error": "temporary"
+      },
+      "permanent_final": {
+        "id": 5,
+        "state": "failed",
+        "attempt": 1,
+        "done": 0,
+        "total": 0,
+        "error": "bad_input"
+      },
+      "stopped_polling_job_state": "running",
+      "cross_owner_result": "not_found"
+    }
+  }
+}

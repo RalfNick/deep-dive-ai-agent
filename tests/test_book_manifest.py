@@ -20,7 +20,8 @@ class BookManifestTest(unittest.TestCase):
         self.assertEqual(list(range(1, 19)), [chapter["order"] for chapter in chapters])
         self.assertEqual(9, sum(chapter["status"] == "published" for chapter in chapters))
         self.assertEqual("published", chapters[8]["status"])
-        self.assertTrue(all(chapter["status"] == "planned" for chapter in chapters[9:]))
+        self.assertEqual("writing", chapters[9]["status"])
+        self.assertTrue(all(chapter["status"] == "planned" for chapter in chapters[10:]))
 
         chapter9 = chapters[8]
         # Later editorial updates may advance the date; never regress before

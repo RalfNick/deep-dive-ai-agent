@@ -139,7 +139,7 @@
           "order": 10,
           "slug": "chapter-10",
           "title": "大规模工具集与异步任务",
-          "status": "planned",
+          "status": "writing",
           "summary": "处理工具发现、描述预算、长任务、并发、取消与幂等。"
         },
         {
