@@ -1,12 +1,13 @@
 # 第 10 章实验：大规模工具集与异步任务
 
-状态：v1.0，已发布。先读[正文](../book/chapter10.md)，练习对应[参考答案](reference-answers.md)。
+状态：v1.1 修订稿，尚未发布；基于已发布的 v1.0。先读[正文](../book/chapter10.md)，练习对应[参考答案](reference-answers.md)。
 
 ## 十分钟开始
 
 需要 Python 3.11+。在仓库根目录运行；五组实验只用标准库，不调用任何模型或外部业务接口，不需要 API Key。
 
 ```powershell
+python -m chapter10.quickstart
 python -m chapter10.experiments --group catalog
 python -m chapter10.experiments --group boundaries
 python -m chapter10.experiments --group concurrency
@@ -25,7 +26,11 @@ python -m unittest discover -s chapter10/tests -v
 
 命令每次在临时目录中建立独立 SQLite 数据库，结束时自动清理，不连接用户数据库。`--group` 筛选展示输出；当前小规模实现会先运行全部五组，因此每组都是同一套证据的一个视图。
 
+`quickstart` 先完整展示提交、领取、计算、进度、结果提交与查询，再进入五组实验。它输出 `queued → running → succeeded`、三条八月记录和 6,000 分结果，使用临时数据库并自动清理；不包含后台调度器。`finish()` 验证提交资格，业务结果正确性由报表层负责，固定夹具由测试独立核验。
+
 ## 文件与阅读顺序
+
+先运行并阅读 [quickstart.py](quickstart.py)，把接口连接顺序走通，然后按下面顺序看实现。
 
 1. [catalog.py](catalog.py)：权限过滤 → 关键词打分 → 完整定义加载 → 再检查。
 2. [concurrency.py](concurrency.py)：用固定数量 worker 消费有限输入列表。

@@ -28,6 +28,8 @@
 
 作业重试时保持作业号、递增尝试代次。重新导出一份新的报表属于新意图，应换提交键。相同参数并不必然代表相同意图。
 
+延伸答案：返回原作业号，随后查询已提交结果。截止时间限制新执行与新提交，不阻止在幂等记录保留期内找回同一意图。必须先检查可信身份与参数，再查既有意图；旧记录缺失时才按新作业检查期限。同键改参数仍返回 `key_conflict`，不能借重试覆盖原期限或重试上限。对应回归测试见 `test_jobs.py` 中的 `test_replay_after_deadline_recovers_existing_terminal_job`。
+
 ## 6. 增加发票定义
 
 可运行实现：`tests/test_exercise_solutions.py` 中的 `test_exercise6_invoice_visibility`。
@@ -55,7 +57,7 @@ python -m unittest chapter10.tests.test_exercise_solutions.AsyncExerciseSolution
 python -m unittest chapter10.tests.test_concurrency.ConcurrencyTests.test_cancellation_propagates_and_workers_exit -v
 ```
 
-五个 ID 为 `0`–`4`，第三个参数对应的 ID `3` 返回 `LookupError`，其余四个保留值；用屏障与活动计数确认峰值为 2。外层取消测试检查 `CancelledError` 传播，并确认 worker 的 `finally` 已执行。
+五个 ID 为 `0`–`4`，参数值为 `3` 的调用（第四个调用，ID 为 `3`）返回 `LookupError`，其余四个保留值；用屏障与活动计数确认峰值为 2。外层取消测试检查 `CancelledError` 传播，并确认 worker 的 `finally` 已执行。
 
 仅有“最后返回五个元素”不能证明关联正确，也不能证明并发没有越界。仅有“取消函数返回了”不能证明内部工作已收束。
 

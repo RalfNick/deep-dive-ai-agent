@@ -76,7 +76,7 @@ class JobStore:
 
     def submit(self, owner: str, action_key: str, args: dict, *, now: int,
                deadline: int = 100, max_attempts: int = 3, capacity: int = 20) -> int:
-        if not owner or not action_key or capacity < 1 or max_attempts < 1 or deadline <= now:
+        if not owner or not action_key:
             raise JobError("invalid_submission")
         # This lab implements one business operation, frozen at version 1.
         if set(args) != {"month"} or not isinstance(args["month"], str):
@@ -89,6 +89,9 @@ class JobStore:
                 if existing["intent"] != intent:
                     raise JobError("key_conflict")
                 return existing["id"]
+            # Admission rules apply to new work, not recovery of a known intent.
+            if capacity < 1 or max_attempts < 1 or deadline <= now:
+                raise JobError("invalid_submission")
             count = self.db.execute("SELECT count(*) FROM jobs WHERE state NOT IN ('succeeded','failed','cancelled')").fetchone()[0]
             if count >= capacity:
                 raise JobError("queue_full")
@@ -151,6 +154,7 @@ class JobStore:
             self._event(job, "progress", {"done": done, "total": total})
 
     def finish(self, job: int, attempt: int, result: dict, *, now: int) -> bool:
+        """Commit a worker result atomically; business correctness is caller-owned."""
         body = canonical(result)
         digest = hashlib.sha256(body.encode("utf-8")).hexdigest()
         with self.transaction():

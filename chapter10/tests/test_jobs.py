@@ -31,6 +31,45 @@ class JobTests(unittest.TestCase):
         with self.assertRaisesRegex(JobError, "key_conflict"):
             self.store.submit("alice", "export-1", {"month": "2026-07"}, now=0)
 
+    def test_replay_after_deadline_recovers_existing_terminal_job(self):
+        for terminal in ("succeeded", "failed", "cancelled"):
+            with self.subTest(terminal=terminal):
+                job = self.submit(key=terminal, deadline=3)
+                if terminal == "cancelled":
+                    self.store.cancel("alice", job)
+                else:
+                    attempt = self.store.claim(job, now=1)
+                    if terminal == "succeeded":
+                        self.store.finish(job, attempt, {"total_cents": 6000}, now=2)
+                    else:
+                        self.store.fail(job, attempt, "bad_input", now=2)
+                before = self.store.events("alice", job)
+                try:
+                    replay = self.store.submit("alice", terminal, {"month": "2026-08"},
+                                               now=4, deadline=3)
+                except JobError as error:
+                    self.fail(f"Existing intent must remain recoverable: {error}")
+                self.assertEqual(job, replay)
+                self.assertEqual(terminal, self.store.get("alice", job)["state"])
+                self.assertEqual(before, self.store.events("alice", job))
+
+    def test_replay_conflict_is_detected_even_after_deadline(self):
+        self.submit(deadline=3)
+        with self.assertRaisesRegex(JobError, "key_conflict"):
+            self.store.submit("alice", "export-1", {"month": "2026-07"}, now=4, deadline=3)
+
+    def test_new_intent_with_expired_deadline_is_not_accepted(self):
+        with self.assertRaisesRegex(JobError, "invalid_submission"):
+            self.store.submit("alice", "new", {"month": "2026-08"}, now=3, deadline=3)
+        self.assertEqual(0, self.store.db.execute("SELECT count(*) FROM jobs").fetchone()[0])
+
+    def test_replay_does_not_replace_original_execution_budget(self):
+        job = self.submit(deadline=3, max_attempts=1)
+        self.assertEqual(job, self.store.submit("alice", "export-1", {"month": "2026-08"},
+                                              now=2, deadline=30, max_attempts=9))
+        self.assertIsNone(self.store.claim(job, now=3))
+        self.assertEqual("deadline_exceeded", self.store.get("alice", job)["error"])
+
     def test_keys_are_scoped_to_owner(self):
         self.assertNotEqual(self.submit(), self.submit(owner="bob"))
 

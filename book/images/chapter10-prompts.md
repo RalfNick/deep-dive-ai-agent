@@ -24,6 +24,14 @@
 
 标题：请求结束，工作还在。接受：用户提交→保存作业→返回作业号，先保存再回应。执行：queued→running→succeeded；running 可失败或进入 cancel_requested→cancelled。只画常见路径，省略重试回边。继续查询：断开、重连都围绕同一数据库作业号，查询状态、进度、结果。底部：后台执行 ≠ 忘记它；需要查询与恢复。
 
+### v1.1 图内范围标注
+
+输出：`fig10-4-durable-job-v1.1.png`。使用内置 imagegen 编辑，保留 `fig10-4-durable-job.png` 作为旧图。新图已目检：原三面板、六个状态和箭头保留，绿色面板明确说明它只画常见路径；完整分支在正文状态表中展开。
+
+实际编辑提示词：
+
+> Edit target: attached existing book infographic. Preserve the entire cream paper texture, hand-drawn Chinese lettering, blue/green/purple/orange sections, every icon and all arrows and all existing text. Make ONLY this change: replace the green middle section heading '2 执行' with '2 常见状态路径' and place a clearly readable smaller subtitle directly below that heading: '示意图，非完整状态图'. Adjust spacing minimally so no overlaps. This qualification is essential: this diagram deliberately shows only common paths, not all retry/cancellation transitions. Do not add or remove any state boxes or arrows. Preserve portrait aspect ratio and quality. No watermark, no extra text.
+
 ## 图 10-5：超时与取消
 
 标题：没等到，不等于没做完。三个独立场景：停止等待但作业继续；提交前请求取消，提交检查点确认取消，没有写入结果；结果已提交后取消，仍然成功。底部：超过作业截止时间，拒绝新的结果提交。不得画撤销已发生事实的回滚箭头。
