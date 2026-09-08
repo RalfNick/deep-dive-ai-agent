@@ -2,7 +2,7 @@
 
 > 本章阅读目标：工具多了，知道怎样让模型按需发现；事情做得久了，知道怎样让系统持续负责。
 >
-> 当前为 v1.0-rc1 写作候选，尚未发布。产品资料核对至 2026 年 9 月 7 日。实验使用 Python 3.11 及以上版本的标准库，不需要 API Key。
+> 当前版本为 v1.0。产品资料核对至 2026 年 9 月 7 日；本章于 2026 年 9 月 8 日发布。实验使用 Python 3.11 及以上版本的标准库，不需要 API Key。
 
 ## 从三个工具到三百个工具，变的是什么
 
@@ -625,6 +625,13 @@ python -m chapter10.experiments --write
 一个 Coding Agent 面对的不是固定的三个函数，而是文件、搜索结果、终端、测试、依赖配置、仓库说明和外部服务组成的工作环境。它为什么先搜索而不是读完所有文件？为什么测试命令退出了，任务却还不能宣布完成？为什么同一个工具，在不同工作目录和权限设置下会有不同结果？
 
 理解本章之后，你已经有了分析这些问题的起点。我们将以 Claude Code 和 Codex 为观察对象，先看一次真实修改如何走过读文件、定位、编辑、运行与验收，再解释仓库说明、Skills、MCP 等能力在这条链路里承担什么角色。第十二章再把它们收束成一个可以自己实现的 Mini Coding Agent。
+
+**继续阅读**
+
+- [运行第 10 章配套实验](../chapter10/README.md)
+- [查看第 10 章参考答案](../chapter10/reference-answers.md)
+- [查看第 10 章来源台账](./sources/chapter10-sources.md)
+- [查看第 11 章及后续写作规划](./OUTLINE.md)
 
 [^openai-search]: OpenAI 官方文档：[Tool search](https://developers.openai.com/api/docs/guides/tools-tool-search)。核对日期：2026-09-07。这里引用托管/客户端搜索、延迟定义与命名空间边界，不固定支持模型列表。
 [^claude-search]: Anthropic 官方文档：[Tool search tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-search-tool)。核对日期：2026-09-07。区分请求中发送定义与模型上下文加载定义。

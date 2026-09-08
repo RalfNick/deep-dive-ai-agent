@@ -3,8 +3,8 @@
   "title": "深入浅出 AI Agent",
   "subtitle": "从大模型原理到手写 Coding Agent",
   "description": "从模型、上下文和工具出发，逐步搭建可运行、可验证、可持续改进的 AI Agent 工程体系。",
-  "version": "0.9.1",
-  "updated": "2026-09-07",
+  "version": "0.10.0",
+  "updated": "2026-09-08",
   "cover": "images/deep-dive-ai-agent-cover.webp",
   "repositoryUrl": "https://github.com/RalfNick/deep-dive-ai-agent",
   "totalChapters": 18,
@@ -139,8 +139,12 @@
           "order": 10,
           "slug": "chapter-10",
           "title": "大规模工具集与异步任务",
-          "status": "writing",
-          "summary": "处理工具发现、描述预算、长任务、并发、取消与幂等。"
+          "status": "published",
+          "summary": "从大规模工具发现与按需加载出发，建立有限并发、持久异步作业、租约、取消、超时与幂等边界。",
+          "source": "chapter10.md",
+          "experiment": "../chapter10/README.md",
+          "answers": "../chapter10/reference-answers.md",
+          "updated": "2026-09-08"
         },
         {
           "order": 11,

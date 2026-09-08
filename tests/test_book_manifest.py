@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class BookManifestTest(unittest.TestCase):
-    def test_manifest_exposes_nine_published_and_nine_unpublished_chapters(self):
+    def test_manifest_exposes_ten_published_and_eight_unpublished_chapters(self):
         manifest = validate_manifest(ROOT)
         chapters = [
             chapter
@@ -18,9 +18,9 @@ class BookManifestTest(unittest.TestCase):
 
         self.assertEqual(18, len(chapters))
         self.assertEqual(list(range(1, 19)), [chapter["order"] for chapter in chapters])
-        self.assertEqual(9, sum(chapter["status"] == "published" for chapter in chapters))
+        self.assertEqual(10, sum(chapter["status"] == "published" for chapter in chapters))
         self.assertEqual("published", chapters[8]["status"])
-        self.assertEqual("writing", chapters[9]["status"])
+        self.assertEqual("published", chapters[9]["status"])
         self.assertTrue(all(chapter["status"] == "planned" for chapter in chapters[10:]))
 
         chapter9 = chapters[8]
@@ -32,6 +32,11 @@ class BookManifestTest(unittest.TestCase):
         ))
         self.assertIn("三份调用合同", chapter9["summary"])
         self.assertNotIn("四份工具合同", chapter9["summary"])
+
+        chapter10 = chapters[9]
+        self.assertGreaterEqual(chapter10["updated"], "2026-09-08")
+        self.assertIn("发现", chapter10["summary"])
+        self.assertIn("异步", chapter10["summary"])
 
     def test_every_published_entry_has_reachable_publication_files(self):
         manifest = validate_manifest(ROOT)

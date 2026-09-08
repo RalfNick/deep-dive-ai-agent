@@ -23,7 +23,7 @@ def _output_relative(source_relative: Path) -> Path:
         return Path("book-en/index.md")
     if (
         len(source_relative.parts) == 2
-        and re.fullmatch(r"chapter[1-9]", source_relative.parts[0])
+        and re.fullmatch(r"chapter(?:10|[1-9])", source_relative.parts[0])
         and source_relative.name == "README.md"
     ):
         return Path(source_relative.parts[0]) / "index.md"
@@ -44,10 +44,10 @@ def _allowlisted_sources(root: Path) -> tuple[Path, ...]:
         "docs/TRANSLATION.md",
         "docs/RELEASES.md",
     )
-    explicit += tuple(f"book/chapter{number}.md" for number in range(1, 10))
-    explicit += tuple(f"chapter{number}/README.md" for number in range(1, 10))
+    explicit += tuple(f"book/chapter{number}.md" for number in range(1, 11))
+    explicit += tuple(f"chapter{number}/README.md" for number in range(1, 11))
     explicit += tuple(
-        f"chapter{number}/reference-answers.md" for number in range(1, 10)
+        f"chapter{number}/reference-answers.md" for number in range(1, 11)
     )
     sources = [root / relative for relative in explicit]
     # Supplemental reading stays opt-in; do not expose private review/source trees.
@@ -63,7 +63,7 @@ def _allowlisted_sources(root: Path) -> tuple[Path, ...]:
             for path in sorted(images.rglob("*"))
             if path.is_file() and path.suffix.casefold() in IMAGE_SUFFIXES
         )
-    for number in range(1, 10):
+    for number in range(1, 11):
         reports = root / f"chapter{number}" / "reports"
         if not reports.is_dir():
             continue

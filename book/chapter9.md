@@ -1248,4 +1248,5 @@ FixtureRepository 的严格性值得留意。它拒绝未知顶层字段、非 U
 - [查看第 9 章参考答案](../chapter9/reference-answers.md)
 - [按需查阅第 9 章补充问答](../chapter9/faq.md)
 - [查看第 9 章来源台账](./sources/chapter9-sources.md)
-- [查看第 10 章及后续写作规划](./OUTLINE.md)
+- [继续阅读第 10 章：大规模工具集与异步任务](./chapter10.md)
+- [查看后续写作规划](./OUTLINE.md)

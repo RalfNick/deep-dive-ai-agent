@@ -35,8 +35,9 @@
 8. [第 7 章：记忆——不是把聊天记录全部塞回去](./chapter7.md)
 9. [第 8 章：RAG 与知识库——让 Agent 先查证，再回答](./chapter8.md)
 10. [第 9 章：工具调用与 MCP——从“模型想做”到“系统真的做了”](./chapter9.md)
+11. [第 10 章：大规模工具集与异步任务](./chapter10.md)
 
-每章末尾都连接正文、配套实验、参考答案和下一阅读位置。第 10 章已有 v1.0-rc1 本地候选（`chapter10.md` 与 `chapter10/` 实验包），尚未发布；第 11–18 章只有[写作规划](./OUTLINE.md)，不把候选或规划标题计为已发布章节。
+每章末尾都连接正文、配套实验、参考答案和下一阅读位置。第 11–18 章只有[写作规划](./OUTLINE.md)，不把规划标题计为已发布章节。
 
 ## 阅读路径
 
@@ -51,7 +52,7 @@
 
 ## 书稿状态
 
-当前为 2026-09-07 编辑发布版。第 1–9 章的读者路径修订已经发布，第 8 章正式升级到 v1.4；第 7 章正文保持不变。全部旧稿、旧图和既有 tag 均保留，恢复入口见[章节版本记录](./versions/CHAPTER_VERSIONS.md)。
+当前为 2026-09-08 发布版。第 1–10 章已发布，第 10 章正式版本为 v1.0；第 1–9 章旧稿、旧图和既有 tag 均保留，第 10 章的 v1.0-rc1 候选也保留在 Git 历史中。恢复入口见[章节版本记录](./versions/CHAPTER_VERSIONS.md)。
 
 | 文件 | 状态 | 说明 |
 | --- | --- | --- |
@@ -65,6 +66,7 @@
 | [chapter7.md](./chapter7.md) | Review 通过稿 | 约 2.6 万有效中文字符、7 张图、5 组无 API Key 实验、14 道分层练习与 65 项测试 |
 | [chapter8.md](./chapter8.md) | v1.4 | 片段引句标注、重排后资格与父摘要回查；真实请求入口；生产清单独立；71 项测试，20 个规范案例、14 题、8 张在用 SVG + 1 张主图，旧图保留 |
 | [chapter9.md](./chapter9.md) | editorial-v1 | 22 个 FAQ 移至配套材料；保留 8 张手绘图、21 个规范 Case、14 题与 47 项测试；协议冻结点不变 |
+| [chapter10.md](./chapter10.md) | v1.0 | 大规模工具发现与按需加载、有限并发、持久作业、租约、取消、超时和幂等；6 张原创图、5 组实验、14 题与 37 项检查 |
 | [sources/chapter1-sources.md](./sources/chapter1-sources.md) | 已建立 | 第 1 章资料台账与更新策略 |
 | [sources/chapter2-sources.md](./sources/chapter2-sources.md) | 已建立 | 作者资料页级映射、论文、官方文档、书籍与前沿信息核对台账 |
 | [sources/chapter3-sources.md](./sources/chapter3-sources.md) | 已建立 | Agent 经典论文、OpenAI/Anthropic/LangChain 官方文档与出版前复核清单 |
@@ -72,11 +74,13 @@
 | [sources/chapter7-sources.md](./sources/chapter7-sources.md) | 已建立 | Memory 研究、评估与 LangGraph、Claude Code、OpenAI Agents SDK、Codex 官方事实台账 |
 | [sources/chapter8-sources.md](./sources/chapter8-sources.md) | 已建立 | RAG 原始研究、检索算法、LangChain/LangGraph、OpenAI、Anthropic 与 Ragas 官方资料台账 |
 | [sources/chapter9-sources.md](./sources/chapter9-sources.md) | 已建立 | MCP 2026-07-28 规范、官方 Python SDK、Provider Tool Use 与本地工程证据台账 |
+| [sources/chapter10-sources.md](./sources/chapter10-sources.md) | 已建立 | 工具搜索、异步任务、幂等、取消、持久化与官方产品边界台账 |
 | [reviews/chapter4-review.md](./reviews/chapter4-review.md) | 已完成 | 普通读者与 AI 工程专家双视角问题清单、修订记录和证据边界 |
 | [reviews/chapter7-review-codex.md](./reviews/chapter7-review-codex.md) | 已完成 | 读者、AI Agent 专家、实验与资料时效四视角 Review 及修订证据 |
 | [reviews/chapter8-review-codex.md](./reviews/chapter8-review-codex.md) | 已完成 | 读者、AI 专家、工程证据与资料时效四视角 Review，包含发现处置与报告哈希 |
 | [reviews/chapter9-review-codex-v2.md](./reviews/chapter9-review-codex-v2.md) | 已完成 | v1.0.2 复审：修正协议时序与边界图，落实 Output Schema 门禁，统一证据口径；没有未处理的 P0 或 P1 |
 | [reviews/chapter9-review-codex.md](./reviews/chapter9-review-codex.md) | 历史版本 | v1.0 首轮 Review，保留用于版本比较 |
+| [reviews/chapter10-review-codex.md](./reviews/chapter10-review-codex.md) | 已完成 | 读者、工程与事实边界自审；记录候选门禁、保留限制和正式发布复核 |
 | [WRITING_GUIDE.md](./WRITING_GUIDE.md) | 已建立 | 后续章节的篇幅、图表、实验和失败案例标准 |
 
 本目录中的插图均为本书重新绘制或生成的 SVG/PNG，便于后续导出 PDF、EPUB 和网页版本；用户提供的旧资料只作为知识线索和结构素材，不直接复用原图或原文。
