@@ -13,9 +13,9 @@
 - 在线阅读已发布：<https://wlxralf.com/books/deep-dive-ai-agent>。
 - PDF/EPUB 尚未在本仓库发布，未来只通过 GitHub Releases 提供。
 
-## 2026-09-08 第 10 章发布
+## 2026-09-09 第 10 章 v1.1 发布
 
-第 10 章《大规模工具集与异步任务》由 v1.0-rc1 候选升级为 v1.0：加入大规模工具发现与按需加载、有限并发、持久异步作业、租约与代次、取消、超时和幂等边界；配套 6 幅原创图、5 组标准库实验、37 项章节检查及 14 道分层练习。候选提交继续保留在 Git 历史中，正式版由 `book-chapter10-v1.0` 标记。
+第 10 章《大规模工具集与异步任务》发布 v1.1：修复截止时间后无法按幂等键找回既有作业的问题，新增提交—领取—执行—完成—查询的完整 quickstart，并明确提交资格与业务正确性的边界。全章配套 6 幅原创图、5 组标准库实验、42 项章节测试及 14 道分层练习。v1.0 与 v1.0-rc1 历史不改写，v1.1 由 `book-chapter10-v1.1` 标记。
 
 ## 2026-09-07 编辑发布
 
@@ -34,7 +34,7 @@
 | 第 7 章 记忆：不是把聊天记录全部塞回去 | [正文](book/chapter7.md) | [实验](chapter7/README.md) | [答案](chapter7/reference-answers.md) | [65 项测试通过](docs/EXPERIMENT_STATUS.md) |
 | 第 8 章 RAG 与知识库：让 Agent 先查证，再回答 | [正文](book/chapter8.md) | [实验](chapter8/README.md) | [答案](chapter8/reference-answers.md) | [71 项测试通过](docs/EXPERIMENT_STATUS.md) |
 | 第 9 章 工具调用与 MCP：从“模型想做”到“系统真的做了” | [正文](book/chapter9.md) | [实验](chapter9/README.md) | [答案](chapter9/reference-answers.md) | [47 项测试通过](docs/EXPERIMENT_STATUS.md) |
-| 第 10 章 大规模工具集与异步任务 | [正文](book/chapter10.md) | [实验](chapter10/README.md) | [答案](chapter10/reference-answers.md) | [37 项检查通过](docs/EXPERIMENT_STATUS.md) |
+| 第 10 章 大规模工具集与异步任务 | [正文](book/chapter10.md) | [实验](chapter10/README.md) | [答案](chapter10/reference-answers.md) | [42 项测试通过](docs/EXPERIMENT_STATUS.md) |
 
 建议先读[全书介绍](book/introduction.md)，再按[中文阅读顺序](book/README.md)推进。详细来源、Review 和版本记录均保留在 `book/` 中。
 

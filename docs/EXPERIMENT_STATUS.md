@@ -1,8 +1,8 @@
 # 实验验证状态
 
-## 2026-09-08 第十章 v1.0
+## 2026-09-09 第十章 v1.1
 
-第十章由 v1.0-rc1 候选发布为 v1.0。37 项章节检查通过，其中 36 项验证标准库运行与答案合同，1 项验证可选 HTML 预览；五组实验与三份规范报告可重复生成。发布门禁同时覆盖仓库合同、已发布章节回归、Node 排版合同、MkDocs strict 构建和仓库安全检查。下方记录给出本章精确边界，不把固定夹具结果解释为真实模型或分布式系统评测。
+第十章发布 v1.1。42 项章节测试通过：在 v1.0 基础上新增 4 个幂等/准入回归测试方法和 1 个完整 quickstart 命令测试；五组实验与三份规范报告仍可重复生成。发布门禁同时覆盖仓库合同、已发布章节回归、Node 排版合同、MkDocs strict 构建和仓库安全检查。下方记录给出本章精确边界，不把固定夹具结果解释为真实模型或分布式系统评测。
 
 ## 2026-09-07 第八章 v1.4
 
@@ -31,7 +31,7 @@
 | 第 7 章 | `python -m unittest discover -s chapter7/tests -v` | 新增章节 | 65 通过 | `python -m chapter7.experiments.run_all --output chapter7/reports` | 固定 Candidate、时钟与决策策略；验证 Write、Recall、Correct、Forget、隔离和报告合同，不调用真实模型 |
 | 第 8 章 | `python -m unittest discover -s chapter8/tests -v` | v1.4 复审优化 | 71 通过 | `python -m chapter8.experiments.run_all --output chapter8/reports` | 18 篇虚构文档、20 个固定问题和确定性检索策略；验证治理、召回、证据、拒答与索引回查；状态结果区分符合性案例与失败探针，不比较真实模型或供应商 |
 | 第 9 章 | `python -m unittest discover -s chapter9/tests -v` | v1.0.3 发布版 | 47 通过 | `python -m chapter9.experiments.run_all --output chapter9/reports` | 5 组 21 个规范 Case；验证 Schema、策略、执行、回执、Loop 与 MCP SDK 合同；锁定 `mcp==2.1.1`，进程内 MCP 测试不代表模型质量或远程生产部署 |
-| 第 10 章 | `python -m unittest discover -s chapter10/tests -v` | v1.0 发布版 | 37 通过 | `python -m chapter10.experiments --write` | 5 组标准库实验；验证目录/加载、发现边界、有限并发、持久作业与故障语义；不含真实模型、外部 SDK、HTTP 服务或分布式 exactly-once |
+| 第 10 章 | `python -m unittest discover -s chapter10/tests -v` | v1.1 发布版 | 42 通过 | `python -m chapter10.experiments --write` | 5 组标准库实验；验证目录/加载、发现边界、有限并发、可恢复持久作业与故障语义；新增完整 quickstart 与晚到重试回归；不含真实模型、外部 SDK、HTTP 服务或分布式 exactly-once |
 
 第 1、3 章迁移后各多 1 项测试，用于冻结规范报告时间戳。第 6 章排除了 4 项只验证未迁移 PDF 发布物、版本台账和二进制哈希的测试，同时增加 1 项跨平台路径保护回归；Markdown、图表、实验、来源、Claims/Non-claims 与发布门禁仍在公共测试中。
 
@@ -80,7 +80,7 @@ python chapter2/model_selection_demo.py
 
 ## 第 10 章发布验证
 
-2026-09-08，v1.0，已发布。`python -B -m unittest discover -s chapter10/tests -v`：37 项通过，其中 36 项标准库运行/答案测试、1 项可选 Markdown 预览测试。未安装预览依赖时只跳过该预览测试。
+2026-09-09，v1.1，已发布。`python -B -m unittest discover -s chapter10/tests -v`：42 项通过；新增 4 个幂等/准入回归测试方法与 1 个 quickstart 子进程测试。预览依赖可用时同时验证 Markdown 页面；未安装时只跳过该预览测试。
 
 五组实验涵盖工具目录/加载、发现边界、有限并发、持久作业与故障注入；`python -B -m chapter10.experiments --write` 可重复生成。JSON / Markdown / JSONL 的 SHA-256 分别为 `c4d87ae7bd46108ba0ea7e9b6ec4498299eb2cfadd120e0cf9cd6651e3f8732b`、`d7bfe620418d766e1399ab8ead4d9cd03c8787fc1f19036ef90521352966265d`、`f59f1bfce22f759b774570ef54460a194bc0a39cfcf9fa95d976f736fc174ade`。
 

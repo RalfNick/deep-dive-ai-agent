@@ -1,6 +1,6 @@
 # 第 10 章实验：大规模工具集与异步任务
 
-状态：v1.1 修订稿，尚未发布；基于已发布的 v1.0。先读[正文](../book/chapter10.md)，练习对应[参考答案](reference-answers.md)。
+状态：v1.1，已发布；v1.0 由历史标签完整保留。先读[正文](../book/chapter10.md)，练习对应[参考答案](reference-answers.md)。
 
 ## 十分钟开始
 

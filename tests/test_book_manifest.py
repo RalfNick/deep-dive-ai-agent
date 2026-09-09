@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class BookManifestTest(unittest.TestCase):
     def test_manifest_exposes_ten_published_and_eight_unpublished_chapters(self):
         manifest = validate_manifest(ROOT)
+        self.assertEqual("0.10.1", manifest["version"])
         chapters = [
             chapter
             for section in manifest["sections"]
@@ -34,9 +35,10 @@ class BookManifestTest(unittest.TestCase):
         self.assertNotIn("四份工具合同", chapter9["summary"])
 
         chapter10 = chapters[9]
-        self.assertGreaterEqual(chapter10["updated"], "2026-09-08")
+        self.assertGreaterEqual(chapter10["updated"], "2026-09-09")
         self.assertIn("发现", chapter10["summary"])
         self.assertIn("异步", chapter10["summary"])
+        self.assertIn("可恢复", chapter10["summary"])
 
     def test_every_published_entry_has_reachable_publication_files(self):
         manifest = validate_manifest(ROOT)
