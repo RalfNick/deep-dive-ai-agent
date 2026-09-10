@@ -92,6 +92,8 @@ python chapter2/model_selection_demo.py
 
 入口：`python -B -m chapter11.quickstart`；完整检查：`python -B -m unittest discover -s chapter11/tests -v`。不需要 API Key；操作来自固定序列，产品遵循、模型质量、沙箱安全字段不伪填得分。公开统计仍为 10 章；本节不是发布公告。
 
+2026-09-10，v1.0-rc2 修订：章节检查增至 26 项，新增工作台 Review 回归 4 项和练习 CLI 检查 5 项；原有文稿检查加强脚注双向与片段校验。结果与 stdout/stderr 分流，保留断言差异，未知测试数不记为零；目标红灯确认后才冻结并修复。练习 6–10 各有独立临时现场，第 9 题支持预先声明缺失链接验收合同。规范报告重新运行并逐字节复现；rc1 的报告、正文和代码历史保留。详见 [rc2 复核](../book/reviews/chapter11-review-rc2.md)。未执行产品端修复，未发布。
+
 ## 统一证据边界
 
 - `serialized_bytes`、字符数或 JSON 长度不是 Token 数；离线报告不得把它们换算成 Token 节省率。

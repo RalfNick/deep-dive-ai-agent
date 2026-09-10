@@ -15,10 +15,16 @@ def repair(root: Path) -> dict:
     missing = verify(root, fingerprint(root / "tests"))
     test = root / "tests/test_links.py"
     test.write_text(test.read_text(encoding="utf-8") + REGRESSION, encoding="utf-8", newline="\n")
-    # Freeze the intentionally extended suite before code editing, not before
-    # a reviewer-approved regression has been added.
-    expected = fingerprint(root / "tests")
     red = run_tests(root)
+    details = red.get("details", [])
+    if not (red["count"] == 4 and red["failures"] == 1 and red["errors"] == 0
+            and red["exit_code"] == 1 and len(details) == 1
+            and details[0]["test"] == "test_links.LinkTests.test_nested_document"
+            and details[0]["kind"] == "failure"
+            and "[] != ['../faq.md']" in details[0]["message"]):
+        raise ValueError("unexpected_red: expected the nested-link assertion, not green or an environment error")
+    # Freeze only after confirming the target regression really failed.
+    expected = fingerprint(root / "tests")
     source = root / "linkcheck.py"
     patch_file(root, "linkcheck.py", fingerprint(source), BUG_LINE, FIX_LINE)
     final = verify(root, expected)

@@ -11,10 +11,7 @@
     "failures": 0,
     "errors": 0,
     "ok": true,
-    "details": [],
     "exit_code": 0,
-    "stdout": "",
-    "stderr": "",
     "scope": "tests"
   },
   "initial_acceptance": {
@@ -24,26 +21,14 @@
       "root_valid": true,
       "missing_still_fails": true
     },
-    "ok": false,
-    "exit_code": 0,
-    "stdout": "",
-    "stderr": ""
+    "ok": false
   },
   "red": {
     "count": 4,
     "failures": 1,
     "errors": 0,
     "ok": false,
-    "details": [
-      {
-        "test": "test_links.LinkTests.test_nested_document",
-        "kind": "failure",
-        "message": "AssertionError: Lists differ: [] != ['../faq.md']\n\nSecond list contains 1 additional elements.\nFirst extra element 0:\n'../faq.md'\n\n- []\n+ ['../faq.md']"
-      }
-    ],
     "exit_code": 1,
-    "stdout": "",
-    "stderr": "",
     "scope": "tests"
   },
   "final": {
@@ -52,10 +37,7 @@
       "failures": 0,
       "errors": 0,
       "ok": true,
-      "details": [],
       "exit_code": 0,
-      "stdout": "",
-      "stderr": "",
       "scope": "tests"
     },
     "acceptance": {
@@ -65,10 +47,7 @@
         "root_valid": true,
         "missing_still_fails": true
       },
-      "ok": true,
-      "exit_code": 0,
-      "stdout": "",
-      "stderr": ""
+      "ok": true
     },
     "tests_unchanged": true,
     "snapshot_stable": true,
@@ -100,10 +79,7 @@
     "failures": 0,
     "errors": 0,
     "ok": true,
-    "details": [],
     "exit_code": 0,
-    "stdout": "",
-    "stderr": "",
     "scope": "tests"
   },
   "interpretation": "file inventory and real command execution; not product instruction adherence"
@@ -133,10 +109,7 @@
       "failures": 0,
       "errors": 0,
       "ok": true,
-      "details": [],
       "exit_code": 0,
-      "stdout": "",
-      "stderr": "",
       "scope": "tests"
     },
     "acceptance": {
@@ -146,10 +119,7 @@
         "root_valid": true,
         "missing_still_fails": true
       },
-      "ok": false,
-      "exit_code": 0,
-      "stdout": "",
-      "stderr": ""
+      "ok": false
     },
     "tests_unchanged": true,
     "snapshot_stable": true,
@@ -162,10 +132,7 @@
       "failures": 0,
       "errors": 0,
       "ok": true,
-      "details": [],
       "exit_code": 0,
-      "stdout": "",
-      "stderr": "",
       "scope": "empty_tests"
     },
     "acceptance": {
@@ -175,10 +142,7 @@
         "root_valid": true,
         "missing_still_fails": true
       },
-      "ok": false,
-      "exit_code": 0,
-      "stdout": "",
-      "stderr": ""
+      "ok": false
     },
     "tests_unchanged": true,
     "snapshot_stable": true,
@@ -191,10 +155,7 @@
       "failures": 0,
       "errors": 0,
       "ok": true,
-      "details": [],
       "exit_code": 0,
-      "stdout": "",
-      "stderr": "",
       "scope": "tests"
     },
     "acceptance": {
@@ -204,10 +165,7 @@
         "root_valid": true,
         "missing_still_fails": true
       },
-      "ok": false,
-      "exit_code": 0,
-      "stdout": "",
-      "stderr": ""
+      "ok": false
     },
     "tests_unchanged": false,
     "snapshot_stable": true,
@@ -229,10 +187,7 @@
       "failures": 0,
       "errors": 0,
       "ok": true,
-      "details": [],
       "exit_code": 0,
-      "stdout": "",
-      "stderr": "",
       "scope": "tests"
     },
     "acceptance": {
@@ -242,10 +197,7 @@
         "root_valid": true,
         "missing_still_fails": true
       },
-      "ok": false,
-      "exit_code": 0,
-      "stdout": "",
-      "stderr": ""
+      "ok": false
     },
     "tests_unchanged": true,
     "snapshot_stable": true,

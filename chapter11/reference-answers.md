@@ -2,6 +2,18 @@
 
 对应 [正文](../book/chapter11.md) 的 14 题。答案关注可观察依据，不要求与作者采用相同措辞。所有动手修改仅在 chapter11.prepare 创建的可信教学目录进行，不操作业务仓库。
 
+v1.0-rc2 补充了第 6–10 题的完整程序。在**本书仓库根目录**任选一条运行；每条命令自行创建并清理临时教学仓库，不依赖上一题留下的变量或文件：
+
+```bash
+python -B -m chapter11.exercise_solutions 6
+python -B -m chapter11.exercise_solutions 7
+python -B -m chapter11.exercise_solutions 8
+python -B -m chapter11.exercise_solutions 9
+python -B -m chapter11.exercise_solutions 10
+```
+
+完整导入、root 的创建与清理、函数调用见 [exercise_solutions.py](exercise_solutions.py)；第 6 题复用 [repair](experiments.py)。下面把“怎样手做”与“程序输出应当怎样”分开说明。输出与预期不同时，先调查原因，不重新生成基线来掩盖差异。
+
 ## 1. 相对路径的起点
 
 正确过程：docs/api/reference.md → 所在目录 docs/api/ → docs/api/../guide/start.md → docs/guide/start.md。
@@ -44,7 +56,7 @@ AGENTS.md 保存本项目约定，例如活动源码位置、运行目录和测�
 
 再运行原命令：4 项测试，其中新增测试失败。现在把 linkcheck.py 的 base = root 改为 base = document.parent，重新运行，预期 4 项通过。最后查看 git diff -- linkcheck.py tests/test_links.py。
 
-可用 python -m chapter11.quickstart 对照固定程序的同一过程。若手动输出不同，不修改报告来迎合预期；先核对活动文件、缩进、运行目录和是否真的执行了新增测试。
+回到**本书仓库根目录**运行 `python -B -m chapter11.exercise_solutions 6`，可对照固定程序的同一过程：initial_tests.count=3、red.count=4、red.failures=1、final.accepted=true，diff 包含源码与新增测试。red.details 应指出 test_nested_document 的期望空列表与实际 ../faq.md 不一致。程序确认这个特定失败之后才冻结测试；绿灯、导入错误或其他断言失败都会以 unexpected_red 中止，不继续改源码。
 
 ## 7. 用户笔记与过期补丁
 
@@ -54,23 +66,29 @@ AGENTS.md 保存本项目约定，例如活动源码位置、运行目录和测�
 
 整仓证据摘要与源码补丁摘要用途不同：笔记变化会让旧整仓验收失效，却不应自动阻止一个只依赖当前源码版本的补丁。检查后仍有并发窗口；该测试不提供多人写锁保证。
 
+运行 `python -B -m chapter11.exercise_solutions 7`。exercise7 函数先保存笔记字节，再应用补丁；随后保存源码摘要、模拟协作者写入，尝试过期补丁。预期 notes_preserved=true、conflict_error="stale_source"、collaborator_preserved=true。
+
 ## 8. 零项测试
 
-运行 verification 组，查看 zero_tests：tests.exit_code=0、tests.count=0、accepted=false。退出码表明测试运行器没有报告失败，不表明发现了测试；本工作台还拒绝错误范围 empty_tests。因此不能将“命令成功”“测试充分”“任务完成”合并成一个布尔值。
+运行 `python -B -m chapter11.exercise_solutions 8`：tests.exit_code=0、tests.count=0、accepted=false。exercise8 显式把运行范围设为 empty_tests。退出码表明测试运行器没有报告失败，不表明发现了测试；本工作台还拒绝错误范围 empty_tests。因此不能将“命令成功”“测试充分”“任务完成”合并成一个布尔值。如果子进程异常退出、没有写出有效报告，count 应为 null，而不是伪装成“发现了零项测试”。
 
 ## 9. 新增真正缺失的嵌套链接
 
 在 docs/guide/start.md 添加 一个显示文字为 Missing、目标为 ../absent.md 的内联链接，且不要创建 docs/absent.md。新的期望 missing 列表应为 ["../absent.md"]，有效的 ../faq.md 不在其中。
 
-这次需求变化同时影响 REGRESSION 的嵌套检查和独立 ACCEPTANCE 中 nested_valid 的预期；不能只改测试，却保留“整个文档无缺失链接”的旧验收。建议在实验包副本新增一个独立场景：先声明新预期，再生成夹具、增加断言、冻结测试，最后修复路径。
+这次需求变化同时影响回归测试和独立验收；不能只改测试，却保留“整个文档无缺失链接”的旧预期。exercise9 在任何修复之前声明 expected_nested=("../absent.md",)，再生成夹具、增加断言、确认目标失败、冻结测试，最后修复路径。它通过 `verify(root, expected_tests, nested_missing=expected_nested)` 传入事先批准的新合同，不修改包内的验收脚本。这个参数是教学场景的配置入口，不应交给被评估的候选代码自行设置。
 
 旧代码通常报告 ["../faq.md", "../absent.md"]，正确代码只报告 ["../absent.md"]。同时保留根目录 missing.md 的负样本，拒绝把 broken_links 改成无条件 return []。新增场景另存报告，不覆盖本章规范五组结果。
+
+运行 `python -B -m chapter11.exercise_solutions 9`。预期 expected_nested_missing=["../absent.md"]、red.failures=1、final.accepted=true；程序接着注入“恒空返回”错误版本，always_empty.accepted=false，且其中 acceptance.checks.nested_missing_reported=false。这一步说明拒绝错误修复不只依赖“测试是否被改过”，还依赖有效与缺失链接两种行为。
 
 ## 10. 文档变化使证据失效
 
 修复后调用 verify 保存 receipt；随后在 docs/faq.md 追加普通说明；调用 evidence_is_current(root, receipt) 应为 false。它不会把旧 receipt 的 accepted 改为 false，而是判断该历史证据能否代表当前文件状态。
 
 整仓摘要简单、保守，能防止遗漏文档等相关变化；代价是无关笔记或措辞修改也会触发失效。可按验收依赖收窄集合，但需要证明集合完整，不能为了减少重测而静默漏掉输入。
+
+运行 `python -B -m chapter11.exercise_solutions 10`。预期 historical_accepted=true、current_after_document_edit=false、revalidation.accepted=true。最后一个 true 很重要：普通说明改变让历史证据过期，但不必然破坏功能；重新验证后可以为新文件快照出具一份成功回执。
 
 ## 11. 结束事件检查程序
 

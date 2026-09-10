@@ -17,7 +17,7 @@ class ArtifactTests(unittest.TestCase):
             url = urlsplit(target)
             if not url.scheme and url.path:
                 self.assertTrue((source.parent / unquote(url.path)).is_file(), target)
-        references = set(re.findall(r"\[\^([^\]]+)\]", text))
+        references = set(re.findall(r"\[\^([^\]]+)\](?!:)", text))
         definitions = set(re.findall(r"(?m)^\[\^([^\]]+)\]:", text))
         self.assertEqual(references, definitions)
 
@@ -30,7 +30,10 @@ class ArtifactTests(unittest.TestCase):
         self.assertNotIn("第 10 章 ·", html)
         self.assertNotIn("<p>~~~", html, "fences must render as code, not prose")
         base = ROOT / "chapter11/preview-pages"
+        identifiers = set(re.findall(r'id="([^"]+)"', html))
         for target in re.findall(r'(?:src|href)="([^"]+)"', html):
             url = urlsplit(target)
             if not url.scheme and url.path:
                 self.assertTrue((base / unquote(url.path)).is_file(), target)
+            elif not url.scheme and url.fragment:
+                self.assertIn(unquote(url.fragment), identifiers, target)

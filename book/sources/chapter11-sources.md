@@ -1,6 +1,6 @@
 # 第 11 章资料来源与事实边界
 
-版本：v1.0-rc1；核对日期：2026-09-10。正文为原创教学解释，资料用于核对事实，不复刻其他书籍的原文、插图或案例。
+版本：v1.0-rc2；核对日期：2026-09-10。正文为原创教学解释，资料用于核对事实，不复刻其他书籍的原文、插图或案例。
 
 ## 来源与用途
 
@@ -10,6 +10,8 @@
 | [OpenAI Best practices](https://learn.chatgpt.com/guides/best-practices) | 任务上下文、项目指导、验证与交付工作流 | 通用成功率或每次都会遵循 |
 | [OpenAI AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md) | 项目指令发现、范围和配置边界 | 任意名称文件都会加载，所有目录一开始全部读入 |
 | [OpenAI Build skills](https://learn.chatgpt.com/docs/build-skills) | 复用任务方法与按需资源 | Skill 等同模型训练或强制安全策略 |
+| [OpenAI Codex CLI](https://learn.chatgpt.com/docs/codex/cli) | codex 启动、/status 与 /permissions 交互入口 | 本次已经登录或运行产品修复 |
+| [Claude Code Quickstart](https://code.claude.com/docs/en/quickstart) | claude 启动与官方安装登录入口 | 两家产品命令和权限可互换 |
 | [OpenAI Hooks](https://learn.chatgpt.com/docs/hooks) | 事件、匹配、信任和返回语义需明确 | 本章已安装产品 Hook 或所有事件均能阻断 |
 | [OpenAI Worktrees](https://learn.chatgpt.com/docs/environments/git-worktrees) | 独立工作现场及文件环境核对 | 会话恢复必然恢复依赖、未提交文件或外部副作用 |
 | [Claude Code 工作原理](https://code.claude.com/docs/en/how-claude-code-works) | 仓库读取、工具行动与反馈的产品流程 | 本次运行了真实产品修复 |
@@ -25,6 +27,8 @@
 
 OpenAI 资料通过本次下载的官方 Codex 手册及其来源入口核对；Anthropic、Python 与 Git 使用官方页面。产品网页是滚动文档，日期不是长期兼容承诺。为保持可移植性，不提交作者本机缓存路径。发布前应重新核对有变化的产品事实，尤其指令加载、Hook 事件、检查点范围与权限。
 
+rc2 另行打开官方 CLI、Build skills 与 Claude Code Memory 页面，核对操作指南中的交互命令、技能目录和 @AGENTS.md 导入；codex resume 的会话选择入口也与本地 CLI 帮助交叉核对。页面说明、本地帮助与产品实际执行是三种不同证据，不能相互替代。
+
 ## 本地证据
 
 | 结论 | 实现与可复现结果 |
@@ -36,12 +40,15 @@ OpenAI 资料通过本次下载的官方 Codex 手册及其来源入口核对；
 | 保存的历史成功不代表当前成功 | resume；evidence_is_current |
 | 指令文件仅完成清单和命令观察 | instructions；product_adherence=not_measured |
 | 输出来自运行且可复现 | [报告复现测试](../../chapter11/tests/test_experiments.py)，两次生成与规范文件逐字节比较 |
+| 调试日志不污染结构化结果，错误不伪装成零项测试 | [Review 回归测试](../../chapter11/tests/test_review_regressions.py)，真实子进程 stdout/stderr 与异常退出注入 |
+| 只有目标回归失败才进入修复 | repair；替换回归夹具为全绿、导入错误、无关断言，确认 unexpected_red 且源码未改 |
+| 练习有独立可运行入口与输出约束 | [练习程序](../../chapter11/exercise_solutions.py)、[CLI 检查](../../chapter11/tests/test_exercise_solutions.py) |
 
 源码、文档、Git 和测试子进程确实运行；选择步骤与补丁内容固定，模型调用为零。实验样本每场景一个，不计算成功率、Token 节省、厂商排名或生产安全等级。
 
 ## 本次产品观察边界
 
-只执行本地版本检查，发现 Codex CLI 0.146.0；Claude Code 未出现在当前 PATH。这只说明当前命令环境，不证明机器上所有位置都未安装。未使用用户历史消息中提供的 API Key；没有调用外部模型，没有启动子 Agent，也没有产品端任务 Trace。
+本地检查限于版本和 CLI 帮助，发现 Codex CLI 0.146.0；Claude Code 未出现在当前 PATH。这只说明当前命令环境，不证明机器上所有位置都未安装。未使用用户历史消息中提供的 API Key；没有调用外部模型，没有启动子 Agent，也没有产品端任务 Trace。
 
 [产品观察指南](../../chapter11/product-walkthrough.md) 是待执行步骤，所有产品结果留作“待实际运行”。后续如实测，需另存脱敏观察报告，不改写本章固定序列的证据来源。
 

@@ -1,6 +1,6 @@
 # 第 11 章：Coding Agent 的仓库工作台
 
-配套正文：[Coding Agent：代码库就是它的环境](../book/chapter11.md)。当前为 **v1.0-rc1 本地候选**，未发布。
+配套正文：[Coding Agent：代码库就是它的环境](../book/chapter11.md)。当前为 **v1.0-rc2 本地候选**，未发布。rc1 书稿与代码保留在 Git 提交 2ad0791，旧规范报告另存于 [rc1 报告目录](reports/versions/v1.0-rc1/repository-work.md)。
 
 ## 先运行完整修复
 
@@ -21,6 +21,8 @@ quickstart 在临时目录建立教学 Git 仓库，运行后自动清理该临�
 - diff：活动源码的一行修改，以及新增回归测试。
 
 这里的“修复”由固定程序序列完成。没有模型推理，也不是对 Claude Code 或 Codex 的运行成绩。
+
+red.details 保存失败测试名、异常类别和期望/实际值差异；stdout、stderr 独立保留，普通 print 不再破坏结果解析。repair 只在确认目标回归失败后冻结测试并修复；测试意外全绿、导入错误或其他失败会以 unexpected_red 中止。子进程未产出有效报告时，count 为 null，不冒充“零项测试”。临时结果文件不是安全边界，输出也没有生产级容量限制。
 
 ## 五组实验
 
@@ -56,7 +58,21 @@ python -m chapter11.prepare chapter11/live-reports/manual-repo --with-guidance
 
 只允许新目录或空目录；已有内容会报 not_empty，不会覆盖。它创建一个独立教学仓库；后续 Git 命令应在该目录运行。live-reports 已被本书忽略，请自行决定是否另行保存观察结果，不要把真实令牌或隐私日志放进去。
 
-[产品观察指南](product-walkthrough.md) 给出相同任务与记录模板。[参考答案](reference-answers.md) 对应正文 14 题。机器可执行的边界断言见 [test_workbench.py](tests/test_workbench.py) 和 [test_experiments.py](tests/test_experiments.py)。
+[产品观察指南](product-walkthrough.md) 给出完整 Codex 手动路线、Claude Code 对应入口与记录模板。[参考答案](reference-answers.md) 对应正文 14 题。机器可执行的边界断言见 [test_workbench.py](tests/test_workbench.py)、[test_experiments.py](tests/test_experiments.py) 和 [Review 回归测试](tests/test_review_regressions.py)。
+
+## 直接运行第 6–10 题
+
+回到本书仓库根目录，任选一条；每题自行建立临时教学现场，不依赖前一题：
+
+```bash
+python -B -m chapter11.exercise_solutions 6
+python -B -m chapter11.exercise_solutions 7
+python -B -m chapter11.exercise_solutions 8
+python -B -m chapter11.exercise_solutions 9
+python -B -m chapter11.exercise_solutions 10
+```
+
+第 9 题预先声明新的缺失链接合同，再做红绿修复，并验证“恒空返回”仍被拒绝；不会覆盖标准五组报告。完整上下文见 [exercise_solutions.py](exercise_solutions.py)，预期输出见参考答案。
 
 ## 代码阅读顺序
 
