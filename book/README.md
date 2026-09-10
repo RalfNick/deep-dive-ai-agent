@@ -86,4 +86,8 @@
 
 本目录中的插图均为本书重新绘制或生成的 SVG/PNG，便于后续导出 PDF、EPUB 和网页版本；用户提供的旧资料只作为知识线索和结构素材，不直接复用原图或原文。
 
+## 本地写作候选（未发布）
+
+2026-09-10 新增[第 11 章 Coding Agent：代码库就是它的环境](./chapter11.md)，v1.0-rc1。约 1.96 万中文字符、7 幅在用原创手绘图、5 组无 API Key 实验、14 道练习与答案；入口见[配套实验](../chapter11/README.md)、[资料来源](./sources/chapter11-sources.md)与[自审记录](./reviews/chapter11-review-codex.md)。公开网站与 manifest 仍是前 10 章，本候选未推送发布。
+
 后续核心章节的篇幅、插图、实验和失败案例密度统一遵守 [WRITING_GUIDE.md](./WRITING_GUIDE.md)。

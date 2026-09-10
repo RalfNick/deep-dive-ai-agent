@@ -86,7 +86,13 @@ python chapter2/model_selection_demo.py
 
 目录 300/可发现 299/加载 2；全量 93,644 字节，按需载荷 1,412 字节；有限并发峰值 2；八月报表 3 条、6,000 分。测量口径与限制见 `chapter10/README.md`。这些字节数不是 Token 或生产成本。
 
-## 明确不声称
+## 第 11 章本地候选（未发布）
+
+2026-09-10，v1.0-rc1。17 项章节检查，其中一项预览检查依赖可选 Markdown 包；本机已安装并运行。五组实验分别覆盖修复、项目指令清单、过期补丁、验收反例和旧证据失效。规范 JSON 与 Markdown 经两次生成并与仓库文件逐字节比较。
+
+入口：`python -B -m chapter11.quickstart`；完整检查：`python -B -m unittest discover -s chapter11/tests -v`。不需要 API Key；操作来自固定序列，产品遵循、模型质量、沙箱安全字段不伪填得分。公开统计仍为 10 章；本节不是发布公告。
+
+## 统一证据边界
 
 - `serialized_bytes`、字符数或 JSON 长度不是 Token 数；离线报告不得把它们换算成 Token 节省率。
 - 固定夹具只隔离所测边界，不能比较 Claude Code、Codex、DeepSeek 或任何 SDK 的整体能力。

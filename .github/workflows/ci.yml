@@ -83,6 +83,9 @@ jobs:
           python -m unittest discover -s chapter9/tests -v
           python -m unittest discover -s chapter10/tests -v
 
+      - name: Run Chapter 11 candidate tests
+        run: python -B -m unittest discover -s chapter11/tests -v
+
       - name: Regenerate deterministic teaching reports
         run: |
           python chapter1/generate_report.py
