@@ -1,0 +1,4 @@
+-r requirements.in
+langgraph>=1,<2
+langgraph-checkpoint-sqlite>=3,<4
+openai-agents>=0.10,<1

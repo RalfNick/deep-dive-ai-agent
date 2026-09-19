@@ -1,0 +1,2 @@
+# Real HTTP model adapter. Offline mechanisms only require the standard library.
+openai>=2.24,<3
