@@ -1,0 +1,2 @@
+User work in progress: keep this file unchanged.
+Consider a separate feature for URL fragment checking after the path bug is fixed.
