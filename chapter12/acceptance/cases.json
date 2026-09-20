@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "root_valid",
+      "document": "README.md",
+      "files": {
+        "README.md": "[Target](docs/target.md)\n",
+        "docs/target.md": "# Target\n"
+      },
+      "expected": []
+    },
+    {
+      "id": "nested_valid",
+      "document": "docs/guide/start.md",
+      "files": {
+        "docs/guide/start.md": "[Target](../target.md)\n",
+        "docs/target.md": "# Target\n"
+      },
+      "expected": []
+    },
+    {
+      "id": "nested_missing",
+      "document": "docs/guide/start.md",
+      "files": {
+        "docs/guide/start.md": "[Missing](missing.md)\n"
+      },
+      "expected": ["missing.md"]
+    },
+    {
+      "id": "external",
+      "document": "docs/external.md",
+      "files": {
+        "docs/external.md": "[External](https://example.com/docs)\n"
+      },
+      "expected": []
+    }
+  ]
+}

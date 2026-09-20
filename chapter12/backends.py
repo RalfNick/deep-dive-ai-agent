@@ -23,6 +23,7 @@ from .contracts import Record
 from .prepare import control_path
 
 SANDBOX = Path(__file__).parent / "sandbox"
+ACCEPTANCE = Path(__file__).parent / "acceptance"
 IMAGE_LOCK = SANDBOX / "image-lock.json"
 PRESETS = {"candidate_tests", "acceptance", "probe_output", "probe_sleep",
            "probe_child", "probe_env"}
@@ -68,7 +69,7 @@ def _preset_command(root: Path, preset: str) -> list[str]:
     if preset == "candidate_tests":
         return [sys.executable, "-B", "-m", "unittest", "discover", "-s", "tests"]
     if preset == "acceptance":
-        runner = control_path(root) / "acceptance" / "runner.py"
+        runner = ACCEPTANCE / "runner.py"
         if not runner.is_file():
             raise RuntimeError("acceptance_unavailable")
         return [sys.executable, "-B", str(runner), "--workspace", str(root)]
@@ -255,7 +256,9 @@ def _image() -> str:
 def container_command(root: Path, preset: str, name: str,
                       runtime: str = "docker") -> list[str]:
     command = _preset_command(root, preset)
-    if preset in {"candidate_tests", "probe_output", "probe_sleep", "probe_env"}:
+    if preset == "acceptance":
+        command = ["python", "-B", "/acceptance/runner.py", "--workspace", "/work"]
+    elif preset in {"candidate_tests", "probe_output", "probe_sleep", "probe_env"}:
         # The image has the same Python minor version; replace the host path.
         command[0] = "python"
     mount = f"{root.absolute()}:/work:rw"
@@ -264,7 +267,8 @@ def container_command(root: Path, preset: str, name: str,
             "--security-opt", "no-new-privileges", "--pids-limit", "64",
             "--memory", "256m", "--cpus", "1", "--workdir", "/work",
             "--mount", f"type=bind,source={root.absolute()},target=/work",
-            "--tmpfs", "/tmp:rw,noexec,nosuid,size=16m", _image(), *command]
+            "--mount", f"type=bind,source={ACCEPTANCE.absolute()},target=/acceptance,readonly",
+            "--tmpfs", "/tmp:rw,noexec,nosuid,nodev,size=32m", _image(), *command]
 
 
 def probe_container() -> Record:
