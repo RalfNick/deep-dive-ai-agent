@@ -124,6 +124,8 @@ def _compile(services: Services, checkpointer):
 def run_graph(state: Record, services: Services, checkpoint: Path,
               approval: bool | None = None) -> Record:
     _require_framework()
+    if state.get("status") == "verifying":
+        return services.finish(state)
     from langgraph.checkpoint.sqlite import SqliteSaver
     from langgraph.types import Command
 

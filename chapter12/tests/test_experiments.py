@@ -4,16 +4,20 @@ import json
 
 import pytest
 
-from chapter12.experiments import canonicalize, main, run_group
+from chapter12.experiments import (authoritative_summary_retained, canonicalize,
+                                   exactly_one_write_and_receipt, main,
+                                   offline_completion_proved, run_group)
 from chapter12 import quickstart
 
 
-def test_reports_are_reproducible(tmp_path):
-    left = canonicalize(run_group(2, tmp_path / "one"))
-    right = canonicalize(run_group(2, tmp_path / "two"))
+@pytest.mark.parametrize("group", [2, 4])
+def test_reports_are_reproducible(group, tmp_path):
+    left = canonicalize(run_group(group, tmp_path / "one"))
+    right = canonicalize(run_group(group, tmp_path / "two"))
     assert left == right
     assert left["decision_source"] == "replay"
-    assert left["scenarios"]["false_finish"]["accepted"] is False
+    if group == 2:
+        assert left["scenarios"]["false_finish"]["accepted"] is False
     serialized = json.dumps(left)
     assert str(tmp_path) not in serialized
 
@@ -45,6 +49,40 @@ def test_framework_report_uses_all_three_real_entries(tmp_path):
                for item in report["scenarios"].values())
     assert report["scenarios"]["langgraph"]["observed"]["writes"] == 2
     assert report["scenarios"]["agents_sdk"]["observed"]["writes"] == 2
+
+
+@pytest.mark.parametrize(("writes", "receipts", "expected"), [
+    (1, 1, True), (1, 0, False), (0, 1, False), (2, 1, False), (1, 2, False),
+])
+def test_recovery_criterion_requires_exactly_one_write_and_receipt(
+        writes, receipts, expected):
+    events = ([{"kind": "action_written"}] * writes
+              + [{"kind": "action_receipt"}] * receipts)
+    assert exactly_one_write_and_receipt(events) is expected
+
+
+def test_offline_completion_criterion_rejects_partial_evidence():
+    observed = {"status": "completed", "red_observed": True, "writes": 2,
+                "diff_paths": ["src/linkcheck.py", "tests/test_agent_nested.py"],
+                "candidate_tests": 3, "verification_passed": True,
+                "acceptance_case_count": 4}
+    assert offline_completion_proved(observed)
+    for key, invalid in (("writes", 1), ("diff_paths", ["src/linkcheck.py"]),
+                         ("candidate_tests", 0), ("verification_passed", False),
+                         ("acceptance_case_count", 0)):
+        changed = dict(observed, **{key: invalid})
+        assert not offline_completion_proved(changed)
+
+
+def test_authoritative_summary_criterion_rejects_missing_runtime_facts():
+    summary = {"kind": "authoritative_run_state",
+               "user_requirements": {"goal": "retain required state"},
+               "disk_facts": {"workspace_hash": "a" * 64, "status": "ready"},
+               "runtime": {"counters": {"model_turns": 0, "tool_calls": 0}}}
+    assert authoritative_summary_retained(summary)
+    changed = json.loads(json.dumps(summary))
+    changed["runtime"].pop("counters")
+    assert not authoritative_summary_retained(changed)
 
 
 def test_cli_refuses_overwrite_without_replace(tmp_path, capsys):

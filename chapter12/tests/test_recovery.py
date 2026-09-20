@@ -116,7 +116,7 @@ def _write_cli_fixture(tmp_path: Path):
 
 def _start_and_action(repo: Path, workspace: Path, decisions: Path):
     started = _cli(repo, ["start", "--workspace", str(workspace), "--run-id", "r1",
-                          "--replay", str(decisions)])
+                          "--replay", str(decisions), "--trust-replay-file"])
     assert started.returncode == 0, started.stderr
     output = json.loads(started.stdout)
     assert output["status"] == "awaiting_approval"
@@ -131,16 +131,43 @@ def test_real_process_start_approve_resume_and_repeat_resume(tmp_path):
                            "--action-id", action_id])
     assert approved.returncode == 0, approved.stderr
     resumed = _cli(repo, ["resume", "--workspace", str(workspace), "--run-id", "r1",
-                          "--replay", str(decisions)])
+                          "--replay", str(decisions), "--trust-replay-file"])
     assert resumed.returncode == 0 and json.loads(resumed.stdout)["status"] == "completed"
     again = _cli(repo, ["resume", "--workspace", str(workspace), "--run-id", "r1",
-                        "--replay", str(decisions)])
+                        "--replay", str(decisions), "--trust-replay-file"])
     assert again.returncode == 0 and json.loads(again.stdout)["status"] == "completed"
     store = Store(control_path(workspace) / "state.sqlite")
     events = store.events("r1")
     assert len([event for event in events if event["kind"] == "action_written"]) == 1
     assert len([event for event in events if event["kind"] == "action_receipt"]) == 1
     assert store.load("r1")["counters"]["model_turns"] == 2
+
+
+def test_real_process_resumes_verification_without_another_model_turn(tmp_path):
+    repo = Path(__file__).parents[2]
+    workspace, decisions = _write_cli_fixture(tmp_path)
+    action_id = _start_and_action(repo, workspace, decisions)
+    assert _cli(repo, ["approve", "--workspace", str(workspace), "--run-id", "r1",
+                       "--action-id", action_id]).returncode == 0
+    environment = dict(os.environ, CHAPTER12_TEST_MODE="1",
+                       CHAPTER12_TEST_FAULT="during_verification")
+
+    crashed = _cli(repo, ["resume", "--workspace", str(workspace), "--run-id", "r1",
+                          "--replay", str(decisions), "--trust-replay-file"], environment)
+    assert crashed.returncode == 73
+    store = Store(control_path(workspace) / "state.sqlite")
+    assert store.load("r1")["status"] == "verifying"
+    assert store.load("r1")["counters"]["model_turns"] == 2
+
+    resumed = _cli(repo, ["resume", "--workspace", str(workspace), "--run-id", "r1",
+                          "--replay", str(decisions), "--trust-replay-file"])
+    assert resumed.returncode == 0, resumed.stderr
+    state = store.load("r1")
+    assert state["status"] == "completed"
+    assert state["counters"]["model_turns"] == 2
+    kinds = [event["kind"] for event in store.events("r1")]
+    assert kinds.count("verification_started") == 1
+    assert kinds.count("verification_resumed") == 1
 
 
 @pytest.mark.parametrize("fault,expected_code", [
@@ -152,7 +179,7 @@ def test_real_process_crash_windows_recover_without_duplicate_write(
     environment = dict(os.environ, CHAPTER12_TEST_MODE="1", CHAPTER12_TEST_FAULT=fault)
     if fault == "after_intent":
         crashed = _cli(repo, ["start", "--workspace", str(workspace), "--run-id", "r1",
-                              "--replay", str(decisions)], environment)
+                              "--replay", str(decisions), "--trust-replay-file"], environment)
         assert crashed.returncode == expected_code
         # approve reconstructs the pending action from durable intent.
         store = Store(control_path(workspace) / "state.sqlite")
@@ -165,10 +192,10 @@ def test_real_process_crash_windows_recover_without_duplicate_write(
         assert _cli(repo, ["approve", "--workspace", str(workspace), "--run-id", "r1",
                            "--action-id", action_id]).returncode == 0
         crashed = _cli(repo, ["resume", "--workspace", str(workspace), "--run-id", "r1",
-                              "--replay", str(decisions)], environment)
+                              "--replay", str(decisions), "--trust-replay-file"], environment)
         assert crashed.returncode == expected_code
     resumed = _cli(repo, ["resume", "--workspace", str(workspace), "--run-id", "r1",
-                          "--replay", str(decisions)])
+                          "--replay", str(decisions), "--trust-replay-file"])
     assert resumed.returncode == 0, resumed.stderr
     store = Store(control_path(workspace) / "state.sqlite")
     events = store.events("r1")

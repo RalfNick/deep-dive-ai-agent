@@ -20,6 +20,9 @@ from .services import Services
 from .state import Store
 
 
+TRUSTED_REPLAY = Path(__file__).parent / "fixtures" / "replay" / "canonical.json"
+
+
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="python -m chapter12.quickstart")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -32,6 +35,10 @@ def _parser() -> argparse.ArgumentParser:
             command.add_argument("--backend", choices=("trusted_local", "container"),
                                  default="trusted_local")
             command.add_argument("--replay", type=Path)
+            command.add_argument(
+                "--trust-replay-file", action="store_true",
+                help=("assert that a non-canonical replay file is trusted; "
+                      "trusted_local may execute tests written by its decisions"))
             command.add_argument("--model-name")
             command.add_argument("--base-url")
             command.add_argument("--parallel-tool-calls-unsupported", action="store_true")
@@ -72,6 +79,11 @@ def _model(args, backend: str):
     if args.model == "replay":
         if args.replay is None:
             raise ValueError("replay_file_required")
+        canonical = TRUSTED_REPLAY.resolve()
+        supplied = args.replay.resolve()
+        if (backend == "trusted_local" and supplied != canonical
+                and not args.trust_replay_file):
+            raise ValueError("trusted_replay_confirmation_required")
         return ReplayModel(_read_decisions(args.replay))
     if backend != "container":
         raise ValueError("live_requires_container")

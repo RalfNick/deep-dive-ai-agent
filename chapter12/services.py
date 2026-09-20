@@ -31,7 +31,8 @@ class Services:
         self.max_tool_calls = max_tool_calls
         self.context_bytes = context_bytes
         self.clock = clock
-        if fault not in {None, "after_intent", "after_write_before_receipt"}:
+        if fault not in {None, "after_intent", "after_write_before_receipt",
+                         "during_verification"}:
             raise ValueError("unknown_fault_point")
         self.fault = fault
         self.baseline = verifier.capture_baseline(self.root)
@@ -191,14 +192,22 @@ class Services:
         return self.observe(state, self.execute(state))
 
     def finish(self, state: Record) -> Record:
+        resumed = state.get("status") == "verifying"
         state["status"] = "verifying"
-        self.store.save_with_event(state, "verification_started", {})
-        verdict = verifier.verify(self.root, self.backend, self.baseline, self.cancel)
-        live_hash = manifest_hash(workspace_manifest(self.root))
-        if verdict.get("passed") and verdict.get("after_hash") != live_hash:
-            verdict = copy.deepcopy(verdict)
-            verdict["passed"] = False
-            verdict["reason"] = "post_verification_change"
+        self.store.save_with_event(
+            state, "verification_resumed" if resumed else "verification_started", {})
+        if self.fault == "during_verification":
+            os._exit(73)
+        try:
+            verdict = verifier.verify(self.root, self.backend, self.baseline, self.cancel)
+            live_hash = manifest_hash(workspace_manifest(self.root))
+            if verdict.get("passed") and verdict.get("after_hash") != live_hash:
+                verdict = copy.deepcopy(verdict)
+                verdict["passed"] = False
+                verdict["reason"] = "post_verification_change"
+        except (OSError, RuntimeError, ValueError) as error:
+            reason = str(error) or type(error).__name__
+            return self.fail(state, f"verification_error:{reason}")
         state["evidence"]["verification"] = verdict
         state["workspace_hash"] = live_hash
         if verdict.get("passed"):

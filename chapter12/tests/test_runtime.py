@@ -11,7 +11,7 @@ import pytest
 from chapter12.contracts import new_state, validate_result
 from chapter12.prepare import create_workspace
 from chapter12.providers.replay import ReplayModel
-from chapter12.quickstart import main
+from chapter12.quickstart import TRUSTED_REPLAY, main
 from chapter12.runtime import run
 from chapter12.services import Services
 from chapter12.state import Store
@@ -128,6 +128,47 @@ def test_final_completes_only_after_live_verifier_passes(tmp_path):
     assert any(event["kind"] == "verification_passed" for event in db.events("r1"))
 
 
+def test_verifier_error_becomes_audited_failure(tmp_path, monkeypatch):
+    root, db, model, state, services = setup(
+        tmp_path, [{"kind": "final", "text": "verify", "call": None}])
+
+    def unavailable(*args, **kwargs):
+        raise RuntimeError("container_unavailable")
+
+    monkeypatch.setattr("chapter12.services.verifier.verify", unavailable)
+    result = run(state, services)
+
+    assert result["status"] == "failed"
+    assert result["reason"] == "verification_error:container_unavailable"
+    assert model.provider_state == {"cursor": 1}
+    kinds = [event["kind"] for event in db.events("r1")]
+    assert kinds[-2:] == ["verification_started", "run_failed"]
+
+
+def test_post_verification_workspace_error_becomes_audited_failure(
+        tmp_path, monkeypatch):
+    root, db, model, state, services = setup(
+        tmp_path, [{"kind": "final", "text": "verify", "call": None}])
+
+    from chapter12 import services as services_module
+    original = services_module.workspace_manifest
+    calls = 0
+
+    def unreadable(*args, **kwargs):
+        nonlocal calls
+        calls += 1
+        if calls > 1:
+            raise OSError("workspace_unreadable")
+        return original(*args, **kwargs)
+
+    monkeypatch.setattr("chapter12.services.workspace_manifest", unreadable)
+    result = run(state, services)
+
+    assert result["status"] == "failed"
+    assert result["reason"] == "verification_error:workspace_unreadable"
+    assert [event["kind"] for event in db.events("r1")][-1] == "run_failed"
+
+
 def test_live_hash_change_after_verdict_prevents_completion(tmp_path, monkeypatch):
     root, db, model, state, services = setup(
         tmp_path, [{"kind": "final", "text": "done", "call": None}])
@@ -220,11 +261,25 @@ def test_quickstart_help_start_and_trace(tmp_path, capsys):
     decisions.write_text(json.dumps([
         {"kind": "final", "text": "verify", "call": None}]), encoding="utf-8")
     workspace = tmp_path / "cli-repo"
+    assert main(["start", "--workspace", str(workspace), "--run-id", "cli1",
+                 "--replay", str(decisions)]) == 2
+    refusal = json.loads(capsys.readouterr().out)
+    assert refusal["reason"] == "trusted_replay_confirmation_required"
+    assert not workspace.exists()
     code = main(["start", "--workspace", str(workspace), "--run-id", "cli1",
-                 "--replay", str(decisions)])
+                 "--replay", str(decisions), "--trust-replay-file"])
     assert code == 1
     output = json.loads(capsys.readouterr().out)
     assert output["run_id"] == "cli1" and output["status"] == "failed"
     assert main(["trace", "--workspace", str(workspace), "--run-id", "cli1"]) == 0
     trace = json.loads(capsys.readouterr().out)
     assert trace and trace[0]["run_id"] == "cli1"
+
+
+def test_shipped_replay_is_the_only_implicit_trusted_local_replay(tmp_path, capsys):
+    workspace = tmp_path / "canonical-repo"
+    code = main(["start", "--workspace", str(workspace), "--run-id", "canonical1",
+                 "--replay", str(TRUSTED_REPLAY)])
+    assert code == 0
+    output = json.loads(capsys.readouterr().out)
+    assert output["status"] == "awaiting_approval"

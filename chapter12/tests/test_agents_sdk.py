@@ -16,6 +16,7 @@ from chapter12.prepare import control_path, create_workspace
 from chapter12.services import Services
 from chapter12.state import Store
 from chapter12.tests.framework_cases import run_scenario
+from chapter12.tests.test_verifier import CORRECT
 from chapter12.tools import read_file
 
 
@@ -99,3 +100,23 @@ def test_make_model_is_real_sdk_model_not_application_simulator():
     model = make_model([{"kind": "final", "text": "done", "call": None}])
     assert isinstance(model, Model)
     assert not hasattr(model, "services")
+
+
+def test_sdk_resumes_persisted_verification_before_loading_snapshot(tmp_path):
+    root = create_workspace(tmp_path / "repo")
+    (root / "src/linkcheck.py").write_text(CORRECT, encoding="utf-8", newline="\n")
+    store = Store(control_path(root) / "state.sqlite")
+    state = new_state("verify-sdk", "verify", "trusted_local", time.time())
+    state["status"] = "verifying"
+    store.save(state)
+    model = make_model([])
+    services = Services(root, store, model, "trusted_local", threading.Event())
+    snapshot = control_path(root) / "sdk-state.json"
+    snapshot.write_text("must not be loaded", encoding="utf-8")
+
+    result = run_sdk(state, services, snapshot)
+
+    assert result["status"] == "completed"
+    assert result["counters"]["model_turns"] == 0
+    assert [event["kind"] for event in store.events("verify-sdk")][-1] == \
+        "verification_passed"

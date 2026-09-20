@@ -28,7 +28,7 @@
 
 五组规范实验已经在两个独立目录重跑，逐组 JSON 的 SHA-256 完全一致。三种编排都执行了真实本地框架代码；模型决策来自固定 Replay：
 
-- `offline-canonical.json`: `EFDFDCCC928E4E0A371DAFD312E6CE33B961DB09330A3F0253EAB611EC4A46D9`
+- `offline-canonical.json`: `AFC9AB8544C6123D9FBB087238CA5C983B6FE0AC4C11D2AAAD90B1D8A672F5DB`
 - `framework-comparison.json`: `0FF34EBDA6150297DEB4B24E14DAA62441A8CFA79026E4B33A59917EFFB69057`
 
 这些结果证明协议、状态、审批、恢复、Verifier 和框架适配在固定输入下的行为，不证明任何真实模型能够独立完成任务，也不证明容器隔离合同已经成立。

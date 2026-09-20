@@ -9,6 +9,9 @@ def run(state: Record, services: Services) -> Record:
     services.store.save(state)
     transient_failures = 0
     while not services.stopped(state):
+        if state["status"] == "verifying":
+            state = services.finish(state)
+            continue
         try:
             decision = services.decide(state)
             transient_failures = 0

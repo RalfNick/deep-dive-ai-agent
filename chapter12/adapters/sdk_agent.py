@@ -131,6 +131,10 @@ def _interruption_call_id(item: Any) -> str | None:
 async def _run_async(state: Record, services: Services, snapshot: Path,
                      approval: bool | None) -> Record:
     services.sdk_run_state = state
+    if state.get("status") == "verifying":
+        state = services.finish(state)
+        services.sdk_run_state = state
+        return state
     model = services.model
     if hasattr(model, "cursor"):
         model.cursor = int(state.get("provider_state", {}).get("cursor", 0))

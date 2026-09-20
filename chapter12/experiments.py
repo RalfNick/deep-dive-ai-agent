@@ -52,6 +52,32 @@ def _case(expected, observed, criterion, passed, does_not_prove):
     return result
 
 
+def exactly_one_write_and_receipt(events: list[dict]) -> bool:
+    return (sum(event.get("kind") == "action_written" for event in events) == 1
+            and sum(event.get("kind") == "action_receipt" for event in events) == 1)
+
+
+def offline_completion_proved(observed: dict) -> bool:
+    return (observed.get("status") == "completed"
+            and observed.get("red_observed") is True
+            and observed.get("writes") == 2
+            and observed.get("diff_paths")
+            == ["src/linkcheck.py", "tests/test_agent_nested.py"]
+            and observed.get("candidate_tests") == 3
+            and observed.get("verification_passed") is True
+            and observed.get("acceptance_case_count") == 4)
+
+
+def authoritative_summary_retained(summary: dict) -> bool:
+    return (summary.get("kind") == "authoritative_run_state"
+            and summary.get("user_requirements", {}).get("goal")
+            == "retain required state"
+            and summary.get("disk_facts")
+            == {"workspace_hash": "a" * 64, "status": "ready"}
+            and summary.get("runtime", {}).get("counters")
+            == {"model_turns": 0, "tool_calls": 0})
+
+
 def _base(group: int, orchestration: str = "manual", backend: str = "trusted_local"):
     return {"schema_version": 1, "decision_source": "replay",
             "orchestration": orchestration, "backend": backend,
@@ -102,17 +128,20 @@ def _group1(directory: Path) -> dict:
     state = outcome["state"]
     red = [event for event in events if event["kind"] == "tool_observed"
            and event["payload"].get("error") == "tests_failed"]
+    verification = state["evidence"]["verification"]
+    observed = {"status": state["status"], "red_observed": len(red) == 1,
+                "writes": sum(event["kind"] == "action_written" for event in events),
+                "diff_paths": outcome["diff"]["paths"],
+                "candidate_tests": verification["candidate_tests"]["discovered"],
+                "verification_passed": verification["passed"],
+                "acceptance_case_count": verification["acceptance"]["case_count"]}
     report = _base(1)
     report["scenarios"] = {
         "offline_complete": _case(
             "read → regression red → two approved patches → green → verifier",
-            {"status": state["status"], "red_observed": len(red) == 1,
-             "writes": sum(event["kind"] == "action_written" for event in events),
-             "diff_paths": outcome["diff"]["paths"],
-             "candidate_tests": state["evidence"]["verification"]
-                ["candidate_tests"]["discovered"]},
+            observed,
             "completed only after one failing candidate-test observation and independent acceptance",
-            state["status"] == "completed" and len(red) == 1,
+            offline_completion_proved(observed),
             "Replay decisions do not measure live model capability."),
         "live_complete": _case(
             "container preflight then real model run",
@@ -243,8 +272,8 @@ def _group3(directory: Path) -> dict:
             {"status": state["status"], "action_bound": bool(action_id),
              "writes": sum(e["kind"] == "action_written" for e in events),
              "receipts": sum(e["kind"] == "action_receipt" for e in events)},
-            "repeated resume keeps write and receipt at one", state["status"] == "ready" and
-            sum(e["kind"] == "action_written" for e in events) == 1,
+            "repeated resume keeps write and receipt at one",
+            state["status"] == "ready" and exactly_one_write_and_receipt(events),
             "This does not make filesystem and SQLite one atomic transaction."),
         "stale_approval": _case("preserve external edit and stop",
             {"status": stale_state["status"], "reason": stale_state["reason"]},
@@ -254,8 +283,9 @@ def _group3(directory: Path) -> dict:
             {"status": crash_state["status"],
              "writes": sum(e["kind"] == "action_written" for e in crash_events),
              "receipts": sum(e["kind"] == "action_receipt" for e in crash_events)},
-            "one write and one recovered receipt", crash_state["status"] == "ready" and
-            sum(e["kind"] == "action_receipt" for e in crash_events) == 1,
+            "one write and one recovered receipt",
+            crash_state["status"] == "ready"
+            and exactly_one_write_and_receipt(crash_events),
             "Only the named cooperative crash window is covered."),
     }
     report["evidence"].update({"logical_events": ["action_intent", "approval_recorded",
@@ -265,12 +295,14 @@ def _group3(directory: Path) -> dict:
 
 def _group4(directory: Path) -> dict:
     root = create_workspace(directory / "repo")
-    state = new_state("context", "retain required state", "trusted_local", time.time())
+    state = new_state("context", "retain required state", "trusted_local", 0)
     state["workspace_hash"] = "a" * 64
     for index in range(20):
         state["messages"].append({"role": "user", "content": f"old observation {index} " * 20})
     view = build_context(state, 1800)
     compacted = any("history_compaction" in item.get("content", "") for item in view)
+    summary = json.loads(view[0]["content"])
+    retained = authoritative_summary_retained(summary)
     denied = _error_name(lambda: safe_path(root, "../outside"))
     container = backends.probe_container()
     cancel = threading.Event(); cancel.set()
@@ -278,8 +310,10 @@ def _group4(directory: Path) -> dict:
     report = _base(4, backend="mixed:trusted_local+container_probe")
     report["scenarios"] = {
         "context_compaction": _case("bounded view retains authoritative summary",
-            {"compacted": compacted, "view_bytes": len(json.dumps(view).encode())},
-            "compacted and <=1800 bytes", compacted and len(json.dumps(view).encode()) <= 1800,
+            {"compacted": compacted, "view_bytes": len(json.dumps(view).encode()),
+             "authoritative_summary_retained": retained},
+            "compacted, <=1800 bytes, and authoritative facts retained",
+            compacted and len(json.dumps(view).encode()) <= 1800 and retained,
             "Byte budget is not a tokenizer count."),
         "path_boundary": _case("parent traversal rejected", {"error": denied},
             "path_denied", denied == "path_denied",

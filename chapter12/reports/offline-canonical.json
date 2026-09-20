@@ -74,6 +74,7 @@
           "does_not_prove": "Replay decisions do not measure live model capability.",
           "expected": "read → regression red → two approved patches → green → verifier",
           "observed": {
+            "acceptance_case_count": 4,
             "candidate_tests": 3,
             "diff_paths": [
               "src/linkcheck.py",
@@ -81,6 +82,7 @@
             ],
             "red_observed": true,
             "status": "completed",
+            "verification_passed": true,
             "writes": 2
           },
           "passed": true
@@ -287,12 +289,13 @@
           "passed": false
         },
         "context_compaction": {
-          "criterion": "compacted and <=1800 bytes",
+          "criterion": "compacted, <=1800 bytes, and authoritative facts retained",
           "does_not_prove": "Byte budget is not a tokenizer count.",
           "expected": "bounded view retains authoritative summary",
           "observed": {
+            "authoritative_summary_retained": true,
             "compacted": true,
-            "view_bytes": 1446
+            "view_bytes": 1592
           },
           "passed": true
         },

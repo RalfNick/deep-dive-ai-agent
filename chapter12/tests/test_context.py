@@ -56,7 +56,10 @@ def test_context_keeps_forced_state_and_complete_last_failure_group():
     assert summary["model_working_note"] == state["plan"]
     assert summary["disk_facts"]["workspace_hash"] == "a" * 64
     assert summary["approval"] == state["pending"]
-    assert summary["verification"] == state["evidence"]
+    assert summary["evidence"]["verification"] == state["evidence"]["verification"]
+    assert summary["evidence"]["additional_keys"] == ["last_failure"]
+    assert summary["runtime"]["counters"] == state["counters"]
+    assert summary["runtime"]["deadline"] == state["deadline"]
     assert any(item.get("tool_call_id") == "c2" for item in view)
     assert not any(any(call.get("id") == "pending-1" for call in item.get("tool_calls", []))
                    for item in view)
@@ -81,3 +84,39 @@ def test_context_compacts_only_whole_groups():
 def test_too_small_for_forced_context_is_explicit():
     with pytest.raises(ValueError, match="context_budget_exhausted"):
         build_context(state_with_history(), 100)
+
+
+def test_large_tool_output_is_not_copied_into_forced_summary():
+    state = state_with_history()
+    marker = "UNIQUE_RAW_MARKER_" + "x" * 40000
+    state["evidence"]["last_result"] = {
+        "call_id": "tests-1", "ok": False,
+        "data": {"returncode": 1, "stdout": marker, "stderr": "failure",
+                 "truncated": False, "timed_out": False, "cancelled": False,
+                 "duration_seconds": 0.5, "discovered": 3,
+                 "diagnostic": "failed", "reason": None},
+        "error": "tests_failed", "truncated": False,
+    }
+    large_call = {"role": "assistant", "content": None, "tool_calls": [{
+        "id": "tests-1", "type": "function",
+        "function": {"name": "run_tests",
+                     "arguments": '{"preset":"candidate_tests"}'}}]}
+    large_result = {"role": "tool", "tool_call_id": "tests-1",
+                    "content": json.dumps(state["evidence"]["last_result"])}
+    state["messages"][-1:-1] = [large_call, large_result]
+
+    view = build_context(state, 32768)
+    encoded = json.dumps(view, ensure_ascii=False, sort_keys=True,
+                         separators=(",", ":")).encode("utf-8")
+    summary = json.loads(view[0]["content"])
+
+    assert len(encoded) <= 32768
+    assert marker not in encoded.decode("utf-8")
+    compact_tool = next(item for item in view if item.get("tool_call_id") == "tests-1")
+    assert json.loads(compact_tool["content"])["data"]["discovered"] == 3
+    assert summary["evidence"]["last_result"]["data"]["stdout_bytes"] > 40000
+    assert summary["evidence"]["last_result"]["data"]["discovered"] == 3
+    assert summary["runtime"] == {
+        "backend": "trusted_local", "counters": state["counters"],
+        "deadline": state["deadline"], "reason": state["reason"],
+    }
