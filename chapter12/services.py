@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import copy
 import json
+import os
 from pathlib import Path
 import threading
 import time
@@ -11,15 +12,16 @@ from typing import Any
 from . import executor, verifier
 from .context import build_context
 from .contracts import Record, TERMINAL, validate_call, validate_result
-from .state import Store
-from .tools import manifest_hash, prepare_patch, workspace_manifest
+from .recovery import recover
+from .state import Store, workspace_lock
+from .tools import manifest_hash, prepare_patch, workspace_manifest, write_patch
 
 
 class Services:
     def __init__(self, root: Path, store: Store, model: Any, backend: str,
                  cancel: threading.Event, *, max_model_turns: int = 30,
                  max_tool_calls: int = 60, context_bytes: int = 32768,
-                 clock: Any = time.time):
+                 clock: Any = time.time, fault: str | None = None):
         self.root = Path(root).absolute()
         self.store = store
         self.model = model
@@ -29,6 +31,9 @@ class Services:
         self.max_tool_calls = max_tool_calls
         self.context_bytes = context_bytes
         self.clock = clock
+        if fault not in {None, "after_intent", "after_write_before_receipt"}:
+            raise ValueError("unknown_fault_point")
+        self.fault = fault
         self.baseline = verifier.capture_baseline(self.root)
 
     def _transition(self, state: Record, status: str, reason: str,
@@ -111,6 +116,8 @@ class Services:
             if validated["name"] == "apply_patch":
                 patch = prepare_patch(self.root, validated)
                 action = self.store.intent(state["run_id"], validated, patch)
+                if self.fault == "after_intent":
+                    os._exit(71)
                 state["pending"] = {"call": validated,
                                     "call_id": validated["call_id"],
                                     "action_id": action["action_id"],
@@ -158,6 +165,33 @@ class Services:
         self.store.save_with_event(state, "tool_observed", result,
                                    call_id=result["call_id"])
         return state
+
+    def resume(self, state: Record) -> Record:
+        state = recover(self.root, self.store, state)
+        if state["status"] != "executing":
+            return state
+        with workspace_lock(self.root):
+            state = recover(self.root, self.store, state)
+            if state["status"] != "executing":
+                return state
+            action = self.store.action(state["pending"]["action_id"])
+            data = write_patch(self.root, action["patch"])
+            self.store.append_event(state["run_id"], "action_written", {
+                "path": data["path"], "version": data["version"]},
+                action["call_id"], action["action_id"])
+            if self.fault == "after_write_before_receipt":
+                os._exit(72)
+            result = {"call_id": action["call_id"], "ok": True, "data": data,
+                      "error": None, "truncated": False}
+            state["messages"].append({"role": "tool", "tool_call_id": action["call_id"],
+                                      "content": json.dumps(result, ensure_ascii=False,
+                                                            sort_keys=True)})
+            state["evidence"]["last_result"] = copy.deepcopy(result)
+            state["pending"] = None
+            state["status"] = "ready"
+            state["reason"] = None
+            self.store.complete_action(state, action["action_id"], result)
+            return state
 
     def finish(self, state: Record) -> Record:
         state["status"] = "verifying"

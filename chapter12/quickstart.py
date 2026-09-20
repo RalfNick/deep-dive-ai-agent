@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 import threading
 import time
@@ -10,6 +11,7 @@ import time
 from .contracts import new_state
 from .prepare import control_path, create_workspace
 from .providers.replay import ReplayModel
+from .recovery import recover, resolve_approval
 from .runtime import run
 from .services import Services
 from .state import Store
@@ -24,6 +26,8 @@ def _parser() -> argparse.ArgumentParser:
         command.add_argument("--run-id", required=True)
         if name in {"start", "resume"}:
             command.add_argument("--replay", type=Path, required=True)
+        if name in {"approve", "reject"}:
+            command.add_argument("--action-id", required=True)
     return parser
 
 
@@ -62,6 +66,9 @@ def main(argv: list[str] | None = None) -> int:
     except SystemExit as error:
         return int(error.code)
     root = args.workspace.absolute()
+    fault = None
+    if os.environ.get("CHAPTER12_TEST_MODE") == "1":
+        fault = os.environ.get("CHAPTER12_TEST_FAULT") or None
     if args.command == "start":
         root = create_workspace(root)
         state_path, binding_path = _paths(root)
@@ -72,9 +79,10 @@ def main(argv: list[str] | None = None) -> int:
                           "trusted_local", time.time())
         model = ReplayModel(_read_decisions(args.replay))
         result = run(state, Services(root, store, model, "trusted_local",
-                                     threading.Event()))
-        print(json.dumps({key: result.get(key) for key in
-                          ("run_id", "status", "reason")}, ensure_ascii=False,
+                                     threading.Event(), fault=fault))
+        payload = {key: result.get(key) for key in ("run_id", "status", "reason")}
+        payload["action_id"] = (result.get("pending") or {}).get("action_id")
+        print(json.dumps(payload, ensure_ascii=False,
                          sort_keys=True))
         return 0 if result["status"] in {"completed", "awaiting_approval"} else 1
     state_path, _ = _check_binding(root, args.run_id)
@@ -82,11 +90,25 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "trace":
         print(json.dumps(store.events(args.run_id), ensure_ascii=False, sort_keys=True))
         return 0
-    # Task 8 supplies mutation semantics; exposing the commands now keeps the
-    # CLI surface stable without pretending they already work.
-    if args.command in {"approve", "reject", "resume"}:
-        print(json.dumps({"error": "command_not_available_until_recovery_stage"}))
-        return 2
+    state = recover(root, store, store.load(args.run_id))
+    if args.command in {"approve", "reject"}:
+        pending = state.get("pending") or {}
+        if pending.get("action_id") != args.action_id:
+            raise ValueError("approval_mismatch")
+        state = resolve_approval(state, store, args.command == "approve")
+        print(json.dumps({"run_id": state["run_id"], "status": state["status"],
+                          "reason": state["reason"], "action_id": args.action_id},
+                         ensure_ascii=False, sort_keys=True))
+        return 0
+    if args.command == "resume":
+        model = ReplayModel(_read_decisions(args.replay), state.get("provider_state") or None)
+        services = Services(root, store, model, state["backend"], threading.Event(),
+                            fault=fault)
+        state = services.resume(state)
+        state = run(state, services)
+        print(json.dumps({key: state.get(key) for key in ("run_id", "status", "reason")},
+                         ensure_ascii=False, sort_keys=True))
+        return 0 if state["status"] in {"completed", "awaiting_approval"} else 1
     return 2
 
 

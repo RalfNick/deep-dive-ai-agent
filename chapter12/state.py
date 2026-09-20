@@ -10,7 +10,7 @@ from pathlib import Path
 import sqlite3
 from typing import Any, Iterator
 
-from .contracts import Record, STATUSES, validate_call
+from .contracts import Record, STATUSES, validate_call, validate_result
 from .prepare import control_path
 from .tools import manifest_hash, safe_path
 from .trace import sanitize
@@ -218,6 +218,32 @@ class Store:
                                (canonical_json(action), action_id))
             self._event(connection, action['run_id'], 'action_receipt', result,
                         action['call_id'], action_id)
+
+    def complete_action(self, state: Record, action_id: str, result: Record) -> None:
+        """Atomically persist the receipt, paired observation state, and event."""
+        result = validate_result(result)
+        with self._connection() as connection:
+            connection.execute('BEGIN IMMEDIATE')
+            action = self._action(connection, action_id)
+            if state.get('run_id') != action['run_id'] or result['call_id'] != action['call_id']:
+                raise ValueError('receipt_call_mismatch')
+            if action['result'] is not None:
+                if action['result'] != result:
+                    raise ValueError('receipt_conflict')
+                self._save(connection, state)
+                return
+            action['result'] = copy.deepcopy(result)
+            connection.execute('UPDATE actions SET payload=? WHERE action_id=?',
+                               (canonical_json(action), action_id))
+            self._save(connection, state)
+            self._event(connection, action['run_id'], 'action_receipt', result,
+                        action['call_id'], action_id)
+
+    def unresolved_actions(self, run_id: str) -> list[Record]:
+        with self._connection() as connection:
+            rows = connection.execute('SELECT payload FROM actions WHERE run_id=? ORDER BY rowid',
+                                      (run_id,)).fetchall()
+        return [action for row in rows if (action := _decode(row[0]))['result'] is None]
 
     def approve(self, approval: Record) -> None:
         keys = {'run_id', 'action_id', 'arguments_hash', 'workspace_hash', 'approved'}
