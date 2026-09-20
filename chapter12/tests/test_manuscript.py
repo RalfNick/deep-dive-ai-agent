@@ -52,11 +52,15 @@ def test_manuscript_has_reader_route_tables_experiments_and_real_paths():
     assert "python -B -m chapter12.exercise_solutions --all" in manuscript
 
 
-def test_illustrations_are_markers_until_task_15_not_broken_links():
+def test_illustrations_are_real_assets_after_task_15():
     manuscript = text()
-    markers = re.findall(r"^> \[图 12-[1-7] 制作标记：.+\]$", manuscript, re.M)
-    assert len(markers) == 7
-    assert "book/images/chapter12/" not in manuscript
+    targets = re.findall(
+        r"!\[图 12-[1-7]：[^\]]+\]\((images/chapter12/[^)]+\.png)\)",
+        manuscript,
+    )
+    assert len(targets) == 7
+    assert "制作标记" not in manuscript
+    assert all((ROOT / "book" / target).is_file() for target in targets)
 
 
 def test_review_contains_both_reader_and_engineering_findings():
