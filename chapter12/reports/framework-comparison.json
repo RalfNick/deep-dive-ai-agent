@@ -1,0 +1,65 @@
+{
+  "backend": "trusted_local",
+  "decision_source": "replay",
+  "evidence": {
+    "group": "12-5",
+    "responsibility": {
+      "agents_sdk": "Runner, Model, function tools and RunState",
+      "langgraph": "StateGraph nodes and checkpoint",
+      "manual": "application while-loop"
+    },
+    "versions": {
+      "langgraph": "1.2.11",
+      "openai_agents": "0.20.0",
+      "python": "3.11.15"
+    }
+  },
+  "limits": {
+    "container": "deferred_by_user",
+    "deadline_seconds": 300,
+    "live_model": "not_run",
+    "model_turns": 30,
+    "platform_factors": {
+      "os_name": "nt",
+      "symlink_probe": "separate"
+    },
+    "tool_calls": 60
+  },
+  "orchestration": "comparison",
+  "scenarios": {
+    "agents_sdk": {
+      "criterion": "status=completed, writes=2, candidate_tests=3",
+      "does_not_prove": "One fixture does not rank framework quality or model capability.",
+      "expected": "shared task, two approved writes, verifier passes",
+      "observed": {
+        "candidate_tests": 3,
+        "status": "completed",
+        "writes": 2
+      },
+      "passed": true
+    },
+    "langgraph": {
+      "criterion": "status=completed, writes=2, candidate_tests=3",
+      "does_not_prove": "One fixture does not rank framework quality or model capability.",
+      "expected": "shared task, two approved writes, verifier passes",
+      "observed": {
+        "candidate_tests": 3,
+        "status": "completed",
+        "writes": 2
+      },
+      "passed": true
+    },
+    "manual": {
+      "criterion": "status=completed, writes=2, candidate_tests=3",
+      "does_not_prove": "One fixture does not rank framework quality or model capability.",
+      "expected": "shared task, two approved writes, verifier passes",
+      "observed": {
+        "candidate_tests": 3,
+        "status": "completed",
+        "writes": 2
+      },
+      "passed": true
+    }
+  },
+  "schema_version": 1
+}

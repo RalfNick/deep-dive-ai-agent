@@ -1,0 +1,378 @@
+{
+  "decision_source": "replay",
+  "groups": {
+    "1": {
+      "backend": "trusted_local",
+      "decision_source": "replay",
+      "evidence": {
+        "artifact": "logical:offline-complete",
+        "event_kinds": [
+          "model_requested",
+          "model_decision",
+          "tool_proposed",
+          "tool_observed",
+          "model_requested",
+          "model_decision",
+          "action_intent",
+          "approval_requested",
+          "approval_recorded",
+          "approval_resolved",
+          "recovery_recheck_passed",
+          "recovery_recheck_passed",
+          "action_written",
+          "action_receipt",
+          "model_requested",
+          "model_decision",
+          "tool_proposed",
+          "tool_observed",
+          "model_requested",
+          "model_decision",
+          "action_intent",
+          "approval_requested",
+          "approval_recorded",
+          "approval_resolved",
+          "recovery_recheck_passed",
+          "recovery_recheck_passed",
+          "action_written",
+          "action_receipt",
+          "model_requested",
+          "model_decision",
+          "tool_proposed",
+          "tool_observed",
+          "model_requested",
+          "model_decision",
+          "verification_started",
+          "verification_passed"
+        ],
+        "group": "12-1"
+      },
+      "limits": {
+        "container": "deferred_by_user",
+        "deadline_seconds": 300,
+        "live_model": "not_run",
+        "model_turns": 30,
+        "platform_factors": {
+          "os_name": "nt",
+          "symlink_probe": "separate"
+        },
+        "tool_calls": 60
+      },
+      "orchestration": "manual",
+      "scenarios": {
+        "live_complete": {
+          "criterion": "a complete sanitized live trace exists",
+          "does_not_prove": "Offline success is not a substitute for a live model run.",
+          "expected": "container preflight then real model run",
+          "observed": {
+            "reason": "container_runtime_not_authorized",
+            "status": "deferred"
+          },
+          "passed": false
+        },
+        "offline_complete": {
+          "criterion": "completed only after one failing candidate-test observation and independent acceptance",
+          "does_not_prove": "Replay decisions do not measure live model capability.",
+          "expected": "read → regression red → two approved patches → green → verifier",
+          "observed": {
+            "candidate_tests": 3,
+            "diff_paths": [
+              "src/linkcheck.py",
+              "tests/test_agent_nested.py"
+            ],
+            "red_observed": true,
+            "status": "completed",
+            "writes": 2
+          },
+          "passed": true
+        }
+      },
+      "schema_version": 1
+    },
+    "2": {
+      "backend": "trusted_local",
+      "decision_source": "replay",
+      "evidence": {
+        "group": "12-2",
+        "logical_events": [
+          "validation",
+          "bounded_output",
+          "version_conflict",
+          "independent_acceptance",
+          "completion_protocol"
+        ]
+      },
+      "limits": {
+        "container": "deferred_by_user",
+        "deadline_seconds": 300,
+        "live_model": "not_run",
+        "model_turns": 30,
+        "platform_factors": {
+          "os_name": "nt",
+          "symlink_probe": "separate"
+        },
+        "tool_calls": 60
+      },
+      "orchestration": "manual",
+      "scenarios": {
+        "always_empty": {
+          "accepted": false,
+          "criterion": "nested_missing is rejected",
+          "does_not_prove": "Cooperative acceptance is not hostile-code containment.",
+          "expected": "independent missing-link case fails",
+          "observed": {
+            "accepted": false,
+            "failed_cases": [
+              "nested_missing"
+            ]
+          },
+          "passed": true
+        },
+        "false_finish": {
+          "accepted": false,
+          "criterion": "status is not completed",
+          "does_not_prove": "Replay output does not measure instruction following.",
+          "expected": "model text triggers verifier, not completion",
+          "observed": {
+            "accepted": false,
+            "status": "failed"
+          },
+          "passed": true
+        },
+        "invalid_arguments": {
+          "criterion": "extra fields rejected",
+          "does_not_prove": "It does not prove semantic correctness of valid arguments.",
+          "expected": "strict fields",
+          "observed": {
+            "error": "invalid_fields"
+          },
+          "passed": true
+        },
+        "output_truncation": {
+          "criterion": "truncated=true and stored_bytes<=256",
+          "does_not_prove": "This is a host-process output test, not container isolation.",
+          "expected": "drain pipes and cap bytes",
+          "observed": {
+            "stored_bytes": 256,
+            "truncated": true
+          },
+          "passed": true
+        },
+        "stale_patch": {
+          "criterion": "stale_version",
+          "does_not_prove": "It does not resolve the user's external edit.",
+          "expected": "reject old version",
+          "observed": {
+            "error": "stale_version"
+          },
+          "passed": true
+        },
+        "unknown_tool": {
+          "criterion": "unknown_tool and no side effect",
+          "does_not_prove": "Schema rejection does not sandbox known tools.",
+          "expected": "reject before dispatch",
+          "observed": {
+            "error": "unknown_tool",
+            "workspace_unchanged": true
+          },
+          "passed": true
+        }
+      },
+      "schema_version": 1
+    },
+    "3": {
+      "backend": "trusted_local",
+      "decision_source": "replay",
+      "evidence": {
+        "group": "12-3",
+        "logical_events": [
+          "action_intent",
+          "approval_recorded",
+          "action_written",
+          "action_receipt",
+          "recovery_uncertain"
+        ]
+      },
+      "limits": {
+        "container": "deferred_by_user",
+        "deadline_seconds": 300,
+        "live_model": "not_run",
+        "model_turns": 30,
+        "platform_factors": {
+          "os_name": "nt",
+          "symlink_probe": "separate"
+        },
+        "tool_calls": 60
+      },
+      "orchestration": "manual",
+      "scenarios": {
+        "approval_resume": {
+          "criterion": "repeated resume keeps write and receipt at one",
+          "does_not_prove": "This does not make filesystem and SQLite one atomic transaction.",
+          "expected": "one approved action, one write, one receipt",
+          "observed": {
+            "action_bound": true,
+            "receipts": 1,
+            "status": "ready",
+            "writes": 1
+          },
+          "passed": true
+        },
+        "stale_approval": {
+          "criterion": "approval_stale",
+          "does_not_prove": "The Agent does not merge the external change.",
+          "expected": "preserve external edit and stop",
+          "observed": {
+            "reason": "approval_stale",
+            "status": "failed"
+          },
+          "passed": true
+        },
+        "write_before_receipt": {
+          "criterion": "one write and one recovered receipt",
+          "does_not_prove": "Only the named cooperative crash window is covered.",
+          "expected": "record receipt without second write",
+          "observed": {
+            "receipts": 1,
+            "status": "ready",
+            "writes": 1
+          },
+          "passed": true
+        }
+      },
+      "schema_version": 1
+    },
+    "4": {
+      "backend": "mixed:trusted_local+container_probe",
+      "decision_source": "replay",
+      "evidence": {
+        "container_probe_source": "chapter12.backends.probe_container",
+        "group": "12-4",
+        "policy_and_os_probe_separate": true
+      },
+      "limits": {
+        "container": "deferred_by_user",
+        "deadline_seconds": 300,
+        "live_model": "not_run",
+        "model_turns": 30,
+        "platform_factors": {
+          "os_name": "nt",
+          "symlink_probe": "separate"
+        },
+        "tool_calls": 60
+      },
+      "orchestration": "manual",
+      "scenarios": {
+        "cancel_and_deadline": {
+          "criterion": "cancelled and timed_out, reason=cancelled",
+          "does_not_prove": "Host process cancellation is not container cleanup evidence.",
+          "expected": "both facts recorded, cancellation wins reason",
+          "observed": {
+            "cancelled": true,
+            "reason": "cancelled",
+            "timed_out": true
+          },
+          "passed": true
+        },
+        "container_isolation": {
+          "criterion": "isolation_passed=true",
+          "does_not_prove": "deferred container probes cannot be replaced by policy or replay.",
+          "expected": "all real isolation probes pass",
+          "observed": {
+            "available": false,
+            "image_pinned": true,
+            "isolation_passed": false,
+            "reason": "runtime_unavailable",
+            "runtime": null
+          },
+          "passed": false
+        },
+        "context_compaction": {
+          "criterion": "compacted and <=1800 bytes",
+          "does_not_prove": "Byte budget is not a tokenizer count.",
+          "expected": "bounded view retains authoritative summary",
+          "observed": {
+            "compacted": true,
+            "view_bytes": 1446
+          },
+          "passed": true
+        },
+        "path_boundary": {
+          "criterion": "path_denied",
+          "does_not_prove": "A path validator is not an OS sandbox.",
+          "expected": "parent traversal rejected",
+          "observed": {
+            "error": "path_denied"
+          },
+          "passed": true
+        }
+      },
+      "schema_version": 1
+    },
+    "5": {
+      "backend": "trusted_local",
+      "decision_source": "replay",
+      "evidence": {
+        "group": "12-5",
+        "responsibility": {
+          "agents_sdk": "Runner, Model, function tools and RunState",
+          "langgraph": "StateGraph nodes and checkpoint",
+          "manual": "application while-loop"
+        },
+        "versions": {
+          "langgraph": "1.2.11",
+          "openai_agents": "0.20.0",
+          "python": "3.11.15"
+        }
+      },
+      "limits": {
+        "container": "deferred_by_user",
+        "deadline_seconds": 300,
+        "live_model": "not_run",
+        "model_turns": 30,
+        "platform_factors": {
+          "os_name": "nt",
+          "symlink_probe": "separate"
+        },
+        "tool_calls": 60
+      },
+      "orchestration": "comparison",
+      "scenarios": {
+        "agents_sdk": {
+          "criterion": "status=completed, writes=2, candidate_tests=3",
+          "does_not_prove": "One fixture does not rank framework quality or model capability.",
+          "expected": "shared task, two approved writes, verifier passes",
+          "observed": {
+            "candidate_tests": 3,
+            "status": "completed",
+            "writes": 2
+          },
+          "passed": true
+        },
+        "langgraph": {
+          "criterion": "status=completed, writes=2, candidate_tests=3",
+          "does_not_prove": "One fixture does not rank framework quality or model capability.",
+          "expected": "shared task, two approved writes, verifier passes",
+          "observed": {
+            "candidate_tests": 3,
+            "status": "completed",
+            "writes": 2
+          },
+          "passed": true
+        },
+        "manual": {
+          "criterion": "status=completed, writes=2, candidate_tests=3",
+          "does_not_prove": "One fixture does not rank framework quality or model capability.",
+          "expected": "shared task, two approved writes, verifier passes",
+          "observed": {
+            "candidate_tests": 3,
+            "status": "completed",
+            "writes": 2
+          },
+          "passed": true
+        }
+      },
+      "schema_version": 1
+    }
+  },
+  "schema_version": 1
+}
