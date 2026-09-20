@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "image": "python:3.11.15-slim-bookworm",
+  "digest": "sha256:d29f48a31a8b408ed19272ca1e7b10ebae13b240a27e862d3d4217c528e2e0c3",
+  "source": "https://hub.docker.com/v2/repositories/library/python/tags/3.11.15-slim-bookworm",
+  "verified_at": "2026-09-20",
+  "runtime_probe_status": "deferred_by_user"
+}
