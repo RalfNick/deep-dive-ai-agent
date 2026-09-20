@@ -78,6 +78,23 @@ def validate_call(value: Record) -> Record:
     return copy.deepcopy(value)
 
 
+def validate_result(value: Record) -> Record:
+    """Validate the one unambiguous ToolResult shape used at every gateway."""
+    if type(value) is not dict or set(value) != {
+            'call_id', 'ok', 'data', 'error', 'truncated'}:
+        raise ValueError('invalid_tool_result')
+    if (not isinstance(value['call_id'], str)
+            or not re.fullmatch(r'[A-Za-z0-9_-]{1,160}', value['call_id'])
+            or type(value['ok']) is not bool or type(value['data']) is not dict
+            or type(value['truncated']) is not bool):
+        raise ValueError('invalid_tool_result')
+    error = value['error']
+    if ((value['ok'] and error is not None)
+            or (not value['ok'] and (not isinstance(error, str) or not error))):
+        raise ValueError('invalid_tool_result')
+    return copy.deepcopy(value)
+
+
 def new_state(run_id: str, goal: str, backend: str, now: float) -> Record:
     if not isinstance(run_id, str) or not re.fullmatch(r'[A-Za-z0-9_-]{1,80}', run_id):
         raise ValueError('invalid_run_id')

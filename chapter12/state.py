@@ -97,12 +97,14 @@ class Store:
         with self._connection() as connection:
             self._save(connection, state)
 
-    def save_with_event(self, state: Record, kind: str, payload: Record) -> None:
+    def save_with_event(self, state: Record, kind: str, payload: Record,
+                        call_id: str | None = None,
+                        action_id: str | None = None) -> None:
         # Validate raw event serializability before filtering unknown fields.
         canonical_json(payload)
         with self._connection() as connection:
             self._save(connection, state)
-            self._event(connection, state['run_id'], kind, payload)
+            self._event(connection, state['run_id'], kind, payload, call_id, action_id)
 
     def load(self, run_id: str) -> Record:
         with self._connection() as connection:

@@ -7,13 +7,19 @@ import threading
 
 from . import backends
 from .contracts import Record
+from .prepare import control_path
 from .tools import manifest_hash, workspace_manifest, writable
 
 CASES = Path(__file__).parent / "acceptance" / "cases.json"
 
 
 def capture_baseline(root: Path) -> Record:
-    files = workspace_manifest(root)
+    original = control_path(root) / "baseline.json"
+    if original.is_file():
+        document = json.loads(original.read_text(encoding="utf-8"))
+        files = document["files"]
+    else:
+        files = workspace_manifest(root)
     protected = {name: value for name, value in files.items() if not writable(name)}
     return {"schema_version": 1, "protected_files": protected,
             "allowed_changes": ["src/linkcheck.py", "tests/test_agent_*.py"],
