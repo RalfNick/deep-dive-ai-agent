@@ -1,0 +1,297 @@
+{
+  "answers": [
+    {
+      "criteria": [
+        "schema 校验成功只产生一个结构化提议",
+        "未经过执行网关时工作区哈希保持不变"
+      ],
+      "evidence": {
+        "call_id": "proposal-only",
+        "executed": false,
+        "tool": "apply_patch",
+        "workspace_unchanged": true
+      },
+      "execution": "real",
+      "number": 1,
+      "status": "passed",
+      "title": "工具调用是提议，不是执行"
+    },
+    {
+      "criteria": [
+        "按 seq 而不是日志显示顺序定位失败",
+        "报告失败事件的 call_id 与 error，而不重新执行工具"
+      ],
+      "evidence": {
+        "event_sequence": [
+          "tool_observed",
+          "tool_observed",
+          "model_message"
+        ],
+        "first_failure": {
+          "call_id": "test-red",
+          "error": "tests_failed",
+          "seq": 2
+        }
+      },
+      "execution": "real",
+      "number": 2,
+      "status": "passed",
+      "title": "从 Trace 定位第一次失败"
+    },
+    {
+      "criteria": [
+        "查询只读取受限工作区 manifest",
+        "正文的五工具协议保持不变"
+      ],
+      "evidence": {
+        "contract_tools": [
+          "apply_patch",
+          "read_file",
+          "run_tests",
+          "search",
+          "show_diff"
+        ],
+        "matches": [
+          "legacy/check_links.py",
+          "src/linkcheck.py",
+          "tests/test_existing.py"
+        ],
+        "query": {
+          "suffix": ".py"
+        },
+        "registered_as_model_tool": false
+      },
+      "execution": "real",
+      "number": 3,
+      "status": "passed",
+      "title": "增加独立的只读查询入口"
+    },
+    {
+      "criteria": [
+        "旧文本出现次数不等于 1 时拒绝补丁",
+        "拒绝发生在写文件之前"
+      ],
+      "evidence": {
+        "error": "non_unique_match",
+        "match_count": 6,
+        "write_attempted": false
+      },
+      "execution": "real",
+      "number": 4,
+      "status": "passed",
+      "title": "补丁为什么要求唯一匹配"
+    },
+    {
+      "criteria": [
+        "准备补丁时比较提议版本和磁盘当前版本",
+        "检测到外部编辑后保留用户内容并返回 stale_version"
+      ],
+      "evidence": {
+        "error": "stale_version",
+        "external_edit_preserved": true,
+        "version_changed": true
+      },
+      "execution": "real",
+      "number": 5,
+      "status": "passed",
+      "title": "拒绝基于过期版本的补丁"
+    },
+    {
+      "criteria": [
+        "批准同时绑定 run、action、参数哈希和工作区哈希",
+        "任一字段不匹配时不落批准记录"
+      ],
+      "evidence": {
+        "approval_recorded": false,
+        "bound_fields": [
+          "run_id",
+          "action_id",
+          "arguments_hash",
+          "workspace_hash"
+        ],
+        "error": "approval_mismatch"
+      },
+      "execution": "real",
+      "number": 6,
+      "status": "passed",
+      "title": "批准必须绑定到具体动作"
+    },
+    {
+      "criteria": [
+        "当前 manifest 等于 before 时重新检查批准",
+        "等于 after 时只补记回执；第三种状态停止并请求人工处理"
+      ],
+      "evidence": {
+        "rewrite_after_state": false,
+        "states": {
+          "after": "record_receipt",
+          "before": "recheck_approval",
+          "other": "uncertain"
+        }
+      },
+      "execution": "real",
+      "number": 7,
+      "status": "passed",
+      "title": "崩溃恢复的三态判断"
+    },
+    {
+      "criteria": [
+        "压缩只能选择完整消息组，不能留下孤立 tool result",
+        "最近一次失败的 call/result 对必须保留"
+      ],
+      "evidence": {
+        "assistant_call_ids": [
+          "failed-tests"
+        ],
+        "compacted": true,
+        "tool_result_ids": [
+          "failed-tests"
+        ],
+        "view_messages": 4
+      },
+      "execution": "real",
+      "number": 8,
+      "status": "passed",
+      "title": "压缩时保留完整工具消息对"
+    },
+    {
+      "criteria": [
+        "退出码为 0 之外还要求 discovered > 0",
+        "零测试时不运行后续验收并返回 candidate_tests_failed"
+      ],
+      "evidence": {
+        "acceptance_case_count": 0,
+        "accepted": false,
+        "discovered": 0,
+        "reason": "candidate_tests_failed"
+      },
+      "execution": "real",
+      "number": 9,
+      "status": "passed",
+      "title": "零测试为什么不能算绿色"
+    },
+    {
+      "criteria": [
+        "剩余预算不能小于 0",
+        "下一次调用超时取剩余预算与单次上限的较小值"
+      ],
+      "evidence": {
+        "formula": "min(max(0,total-elapsed),single_call_cap)"
+      },
+      "execution": "computed",
+      "input": {
+        "elapsed_seconds": 35,
+        "single_call_cap": 45,
+        "total_seconds": 120
+      },
+      "next_timeout_seconds": 45,
+      "number": 10,
+      "remaining_seconds": 85,
+      "status": "passed",
+      "title": "总预算与单次超时的计算"
+    },
+    {
+      "criteria": [
+        "静态命令同时声明网络、只读根、非 root、cap drop 与资源限制",
+        "只有真实探针全部通过才可把环境标成 verified"
+      ],
+      "evidence": {
+        "environment_probe": {
+          "available": false,
+          "image_pinned": true,
+          "isolation_passed": false,
+          "reason": "runtime_unavailable",
+          "runtime": null
+        },
+        "mechanism_checks": {
+          "capabilities_dropped": true,
+          "network_none": true,
+          "no_new_privileges": true,
+          "non_root_user": true,
+          "read_only_root": true,
+          "resource_limits": true
+        }
+      },
+      "execution": "real",
+      "number": 11,
+      "status": "unverified",
+      "title": "区分隔离命令和隔离证据"
+    },
+    {
+      "criteria": [
+        "同一 thread_id 跨进程恢复",
+        "两个批准动作各写一次、各记一次回执"
+      ],
+      "evidence": {
+        "distinct_processes": 4,
+        "framework_version": "1.2.11",
+        "orchestration": "langgraph",
+        "receipts": 2,
+        "status": "completed",
+        "writes": 2
+      },
+      "execution": "real",
+      "number": 12,
+      "status": "passed",
+      "title": "LangGraph 重入不能重复写入"
+    },
+    {
+      "criteria": [
+        "Runner 的 final_output 必须进入宿主 verifier",
+        "没有代码修改和验收证据时状态不得变成 completed"
+      ],
+      "evidence": {
+        "framework_version": "0.20.0",
+        "orchestration": "agents_sdk",
+        "status": "failed",
+        "verification_failures": 1,
+        "writes": 0
+      },
+      "execution": "real",
+      "number": 13,
+      "status": "passed",
+      "title": "SDK 最终输出不等于任务完成"
+    },
+    {
+      "criteria": [
+        "每项责任只有一个最终 owner",
+        "框架状态不能替代宿主审批、执行回执和验收事实"
+      ],
+      "evidence": {
+        "decision_rule": "framework orchestrates; host authorizes, executes and accepts",
+        "responsibilities": {
+          "framework": [
+            "推进节点或 Runner 回合",
+            "保存框架级 checkpoint 或 RunState"
+          ],
+          "handwritten_loop": [
+            "决定何时请求模型",
+            "把 observation 送回下一轮"
+          ],
+          "host_application": [
+            "权限策略与真实执行",
+            "幂等账本",
+            "独立验收",
+            "安全 Trace"
+          ],
+          "pi_source": [
+            "展示模型、Agent Core、Coding Agent 的分层",
+            "提供会话与资源装配参考"
+          ]
+        }
+      },
+      "execution": "design",
+      "number": 14,
+      "status": "answered",
+      "title": "手写循环、Pi、框架与宿主的职责"
+    }
+  ],
+  "schema_version": 1,
+  "summary": {
+    "all_mechanisms_passed": false,
+    "count": 14,
+    "unverified": [
+      11
+    ]
+  }
+}
