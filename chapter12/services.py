@@ -147,14 +147,29 @@ class Services:
         if self.clock() >= state["deadline"]:
             return {"call_id": state["pending"]["call_id"], "ok": False, "data": {},
                     "error": "deadline", "truncated": False}
-        return executor.dispatch(self.root, state["pending"]["call"], self.backend,
-                                 self.cancel)
+        pending = state["pending"]
+        if pending.get("action_id"):
+            with workspace_lock(self.root):
+                state = recover(self.root, self.store, state)
+                if state["status"] != "executing":
+                    return copy.deepcopy(state["evidence"]["last_result"])
+                action = self.store.action(state["pending"]["action_id"])
+                data = write_patch(self.root, action["patch"])
+                self.store.append_event(state["run_id"], "action_written", {
+                    "path": data["path"], "version": data["version"]},
+                    action["call_id"], action["action_id"])
+                if self.fault == "after_write_before_receipt":
+                    os._exit(72)
+                return {"call_id": action["call_id"], "ok": True, "data": data,
+                        "error": None, "truncated": False}
+        return executor.dispatch(self.root, pending["call"], self.backend, self.cancel)
 
     def observe(self, state: Record, result: Record) -> Record:
         result = validate_result(result)
         pending = state.get("pending")
         if not isinstance(pending, dict) or result.get("call_id") != pending.get("call_id"):
             raise ValueError("result_call_mismatch")
+        action_id = pending.get("action_id")
         state["messages"].append({"role": "tool", "tool_call_id": result["call_id"],
                                   "content": json.dumps(result, ensure_ascii=False,
                                                         sort_keys=True)})
@@ -162,36 +177,18 @@ class Services:
         state["pending"] = None
         state["status"] = "ready"
         state["reason"] = None
-        self.store.save_with_event(state, "tool_observed", result,
-                                   call_id=result["call_id"])
+        if action_id:
+            self.store.complete_action(state, action_id, result)
+        else:
+            self.store.save_with_event(state, "tool_observed", result,
+                                       call_id=result["call_id"])
         return state
 
     def resume(self, state: Record) -> Record:
         state = recover(self.root, self.store, state)
         if state["status"] != "executing":
             return state
-        with workspace_lock(self.root):
-            state = recover(self.root, self.store, state)
-            if state["status"] != "executing":
-                return state
-            action = self.store.action(state["pending"]["action_id"])
-            data = write_patch(self.root, action["patch"])
-            self.store.append_event(state["run_id"], "action_written", {
-                "path": data["path"], "version": data["version"]},
-                action["call_id"], action["action_id"])
-            if self.fault == "after_write_before_receipt":
-                os._exit(72)
-            result = {"call_id": action["call_id"], "ok": True, "data": data,
-                      "error": None, "truncated": False}
-            state["messages"].append({"role": "tool", "tool_call_id": action["call_id"],
-                                      "content": json.dumps(result, ensure_ascii=False,
-                                                            sort_keys=True)})
-            state["evidence"]["last_result"] = copy.deepcopy(result)
-            state["pending"] = None
-            state["status"] = "ready"
-            state["reason"] = None
-            self.store.complete_action(state, action["action_id"], result)
-            return state
+        return self.observe(state, self.execute(state))
 
     def finish(self, state: Record) -> Record:
         state["status"] = "verifying"
