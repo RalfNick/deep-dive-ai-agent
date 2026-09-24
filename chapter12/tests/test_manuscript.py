@@ -22,11 +22,13 @@ def test_manuscript_depth_and_exercises():
 
 def test_manuscript_is_a_candidate_and_uses_only_observed_evidence():
     manuscript = text()
-    assert "状态：v1.0-rc1 候选稿，未发布" in manuscript
+    assert "状态：v1.0-rc2 候选稿，未发布" in manuscript
     assert "真实模型运行：未执行" in manuscript
-    assert "容器隔离：未验证" in manuscript
+    assert "容器隔离仅说明理论合同与参考配置，不提供实测结论" in manuscript
     assert "ReplayModel" in manuscript and "离线回放" in manuscript
-    assert "183 passed, 1 skipped" in manuscript
+    assert "chapter12-v1.0-rc2.md" in manuscript
+    assert "183 passed, 1 skipped" not in manuscript
+    assert "191 passed, 1 skipped" not in manuscript
     assert "B445B75D8FB4612AAEFBDEF3E8558F7A90D96442E986DB183685A798BB86E9C6" in manuscript
     assert "成功率" not in manuscript
 

@@ -12,7 +12,7 @@
 
 | target | source | commit | bytes | sha256 |
 | --- | --- | --- | ---: | --- |
-| `book/OUTLINE.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 6929 | `c46a818b2f563230e28b519e9eb7432d23b40c345a417b79f59bd87e16e2f298` |
+| `book/OUTLINE.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 6975 | `44c920b36ec80eb5a310f890faeb1bd11a15a56f8a4287ccb82d71800c114bd5` |
 | `book/README.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 8747 | `f2cd521fa140deacd4fc1b9e472559114ab0a680f180604edabb7c70e133df2e` |
 | `book/WRITING_GUIDE.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 4717 | `e8dc308e13219d59cf7ceba4479034fd264b815bce5e1cf2eb87a75213213846` |
 | `book/chapter1.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 84837 | `ed9cac85fd0159d0f9677e7dd9c15ef47a3d76025c4b687cef19387f5c91658a` |
