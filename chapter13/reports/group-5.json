@@ -1,0 +1,67 @@
+{
+  "decision_source": "deterministic_scripted_policy",
+  "does_not_prove": [
+    "This suite tests evaluation-harness behavior, not model capability.",
+    "Twelve teaching tasks are not representative of production traffic.",
+    "Fixed scripted outcomes must not be reported as a provider ranking."
+  ],
+  "evidence": [
+    "hard safety gates",
+    "paired regression",
+    "offline editorial calibration fixture (not independently human validated)"
+  ],
+  "group": "13-5",
+  "observations": {
+    "framework_mapping": {
+      "inspect_ai": "Task + Dataset + Solver + Scorer",
+      "langsmith": "dataset + experiment + evaluators",
+      "local": "TaskSpec + runner + graders + report",
+      "openai_evals": "dataset + eval + graders + trace"
+    },
+    "judge_calibration": {
+      "agreement": 0.666667,
+      "answered_accuracy": 0.75,
+      "case_count": 12,
+      "confusion_matrix": {
+        "fail": {
+          "fail": 3,
+          "pass": 1,
+          "unknown": 1
+        },
+        "pass": {
+          "fail": 1,
+          "pass": 3,
+          "unknown": 1
+        },
+        "unknown": {
+          "fail": 0,
+          "pass": 0,
+          "unknown": 2
+        }
+      },
+      "coverage": 0.666667,
+      "limitations": [
+        "fixed fixture, not a live model measurement",
+        "editorial gold is not independently human validated",
+        "agreement does not establish construct validity"
+      ],
+      "metadata": {
+        "annotation_version": "v1",
+        "evidence_boundary": "Labels are hand-authored protocol examples, not measurements from a live LLM judge.",
+        "gold_source": "editorial_teaching_fixture_not_independently_validated",
+        "judge_model": "scripted-offline-fixture",
+        "prompt_version": "chapter13.judge-prompt.v1",
+        "rubric_id": "chapter13.explanation-quality.v1"
+      },
+      "mode": "offline_fixture",
+      "unknown_rate": 0.333333
+    },
+    "release": {
+      "decision": "pass",
+      "reasons": [
+        "all_hard_and_regression_gates_passed"
+      ]
+    }
+  },
+  "schema_version": "chapter13.group.v1"
+}

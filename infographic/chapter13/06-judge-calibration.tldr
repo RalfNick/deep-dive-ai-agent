@@ -1,0 +1,521 @@
+{
+  "tldrawFileFormatVersion": 1,
+  "schema": {
+    "schemaVersion": 1,
+    "storeVersion": 4,
+    "recordVersions": {
+      "asset": {
+        "version": 1,
+        "subTypeKey": "type",
+        "subTypeVersions": {
+          "image": 2,
+          "video": 2,
+          "bookmark": 0
+        }
+      },
+      "camera": {
+        "version": 1
+      },
+      "document": {
+        "version": 2
+      },
+      "instance": {
+        "version": 17
+      },
+      "instance_page_state": {
+        "version": 3
+      },
+      "page": {
+        "version": 1
+      },
+      "shape": {
+        "version": 3,
+        "subTypeKey": "type",
+        "subTypeVersions": {
+          "group": 0,
+          "embed": 4,
+          "bookmark": 1,
+          "image": 2,
+          "text": 1,
+          "draw": 1,
+          "geo": 7,
+          "line": 0,
+          "note": 4,
+          "frame": 0,
+          "arrow": 1,
+          "highlight": 0,
+          "video": 1
+        }
+      },
+      "instance_presence": {
+        "version": 4
+      },
+      "pointer": {
+        "version": 1
+      }
+    }
+  },
+  "records": [
+    {
+      "id": "document:document",
+      "typeName": "document",
+      "gridSize": 10,
+      "name": "",
+      "meta": {}
+    },
+    {
+      "id": "page:page1",
+      "typeName": "page",
+      "name": "Page 1",
+      "index": "a1",
+      "meta": {}
+    },
+    {
+      "id": "shape:paper",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a1",
+      "x": 20,
+      "y": 20,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 1560,
+        "h": 900,
+        "geo": "rectangle",
+        "color": "yellow",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "s",
+        "font": "draw",
+        "text": "",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:title",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a2",
+      "x": 120,
+      "y": 60,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 1360,
+        "h": 100,
+        "geo": "rectangle",
+        "color": "white",
+        "labelColor": "black",
+        "fill": "solid",
+        "dash": "draw",
+        "size": "l",
+        "font": "draw",
+        "text": "LLM-as-Judge：先校准，再扩大使用",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:rubric",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a3",
+      "x": 90,
+      "y": 330,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 300,
+        "h": 150,
+        "geo": "rectangle",
+        "color": "blue",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "明确 Rubric\n分维度 + 允许 Unknown",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:judge",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a4",
+      "x": 470,
+      "y": 330,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 300,
+        "h": 150,
+        "geo": "rectangle",
+        "color": "violet",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "LLM Judge\n结构化标签 + 证据",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:sample",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a5",
+      "x": 850,
+      "y": 330,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 300,
+        "h": 150,
+        "geo": "rectangle",
+        "color": "green",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "人工抽样复核\n建立 Gold Labels",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:matrix",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a6",
+      "x": 1230,
+      "y": 330,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 300,
+        "h": 150,
+        "geo": "rectangle",
+        "color": "orange",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "一致率 + 混淆矩阵\n查看偏差，而非只看均分",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:revise",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a7",
+      "x": 630,
+      "y": 650,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 420,
+        "h": 130,
+        "geo": "rectangle",
+        "color": "yellow",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "修订任务 / Rubric / Judge",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:a1",
+      "typeName": "shape",
+      "type": "arrow",
+      "parentId": "page:page1",
+      "index": "a8",
+      "x": 0,
+      "y": 0,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "dash": "draw",
+        "size": "m",
+        "fill": "none",
+        "color": "black",
+        "labelColor": "black",
+        "bend": 0,
+        "start": {
+          "type": "binding",
+          "boundShapeId": "shape:rubric",
+          "normalizedAnchor": {
+            "x": 1,
+            "y": 0.5
+          },
+          "isExact": false
+        },
+        "end": {
+          "type": "binding",
+          "boundShapeId": "shape:judge",
+          "normalizedAnchor": {
+            "x": 0,
+            "y": 0.5
+          },
+          "isExact": false
+        },
+        "arrowheadStart": "none",
+        "arrowheadEnd": "arrow",
+        "text": "",
+        "font": "draw"
+      }
+    },
+    {
+      "id": "shape:a2",
+      "typeName": "shape",
+      "type": "arrow",
+      "parentId": "page:page1",
+      "index": "a9",
+      "x": 0,
+      "y": 0,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "dash": "draw",
+        "size": "m",
+        "fill": "none",
+        "color": "black",
+        "labelColor": "black",
+        "bend": 0,
+        "start": {
+          "type": "binding",
+          "boundShapeId": "shape:judge",
+          "normalizedAnchor": {
+            "x": 1,
+            "y": 0.5
+          },
+          "isExact": false
+        },
+        "end": {
+          "type": "binding",
+          "boundShapeId": "shape:sample",
+          "normalizedAnchor": {
+            "x": 0,
+            "y": 0.5
+          },
+          "isExact": false
+        },
+        "arrowheadStart": "none",
+        "arrowheadEnd": "arrow",
+        "text": "",
+        "font": "draw"
+      }
+    },
+    {
+      "id": "shape:a3",
+      "typeName": "shape",
+      "type": "arrow",
+      "parentId": "page:page1",
+      "index": "aA",
+      "x": 0,
+      "y": 0,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "dash": "draw",
+        "size": "m",
+        "fill": "none",
+        "color": "black",
+        "labelColor": "black",
+        "bend": 0,
+        "start": {
+          "type": "binding",
+          "boundShapeId": "shape:sample",
+          "normalizedAnchor": {
+            "x": 1,
+            "y": 0.5
+          },
+          "isExact": false
+        },
+        "end": {
+          "type": "binding",
+          "boundShapeId": "shape:matrix",
+          "normalizedAnchor": {
+            "x": 0,
+            "y": 0.5
+          },
+          "isExact": false
+        },
+        "arrowheadStart": "none",
+        "arrowheadEnd": "arrow",
+        "text": "",
+        "font": "draw"
+      }
+    },
+    {
+      "id": "shape:a4",
+      "typeName": "shape",
+      "type": "arrow",
+      "parentId": "page:page1",
+      "index": "aB",
+      "x": 0,
+      "y": 0,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "dash": "draw",
+        "size": "m",
+        "fill": "none",
+        "color": "black",
+        "labelColor": "black",
+        "bend": 30,
+        "start": {
+          "type": "binding",
+          "boundShapeId": "shape:matrix",
+          "normalizedAnchor": {
+            "x": 0.5,
+            "y": 1
+          },
+          "isExact": false
+        },
+        "end": {
+          "type": "binding",
+          "boundShapeId": "shape:revise",
+          "normalizedAnchor": {
+            "x": 1,
+            "y": 0.5
+          },
+          "isExact": false
+        },
+        "arrowheadStart": "none",
+        "arrowheadEnd": "arrow",
+        "text": "发现系统性分歧",
+        "font": "draw"
+      }
+    },
+    {
+      "id": "shape:a5",
+      "typeName": "shape",
+      "type": "arrow",
+      "parentId": "page:page1",
+      "index": "aC",
+      "x": 0,
+      "y": 0,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "dash": "dashed",
+        "size": "m",
+        "fill": "none",
+        "color": "black",
+        "labelColor": "black",
+        "bend": 80,
+        "start": {
+          "type": "binding",
+          "boundShapeId": "shape:revise",
+          "normalizedAnchor": {
+            "x": 0,
+            "y": 0.5
+          },
+          "isExact": false
+        },
+        "end": {
+          "type": "binding",
+          "boundShapeId": "shape:rubric",
+          "normalizedAnchor": {
+            "x": 0.5,
+            "y": 1
+          },
+          "isExact": false
+        },
+        "arrowheadStart": "none",
+        "arrowheadEnd": "arrow",
+        "text": "重新校准",
+        "font": "draw"
+      }
+    },
+    {
+      "id": "shape:warning",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "aD",
+      "x": 380,
+      "y": 800,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 840,
+        "h": 70,
+        "geo": "rectangle",
+        "color": "white",
+        "labelColor": "black",
+        "fill": "solid",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "Judge 是可扩展的测量工具，不是自动生成的真相。",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    }
+  ]
+}

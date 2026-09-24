@@ -4,6 +4,8 @@
 !.env.example
 .venv/
 chapter12/.runs/
+chapter13/.runs/
+chapter13/.test-tmp*/
 venv/
 
 # Python

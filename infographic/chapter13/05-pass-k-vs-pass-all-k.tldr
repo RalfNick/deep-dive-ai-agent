@@ -1,0 +1,595 @@
+{
+  "tldrawFileFormatVersion": 1,
+  "schema": {
+    "schemaVersion": 1,
+    "storeVersion": 4,
+    "recordVersions": {
+      "asset": {
+        "version": 1,
+        "subTypeKey": "type",
+        "subTypeVersions": {
+          "image": 2,
+          "video": 2,
+          "bookmark": 0
+        }
+      },
+      "camera": {
+        "version": 1
+      },
+      "document": {
+        "version": 2
+      },
+      "instance": {
+        "version": 17
+      },
+      "instance_page_state": {
+        "version": 3
+      },
+      "page": {
+        "version": 1
+      },
+      "shape": {
+        "version": 3,
+        "subTypeKey": "type",
+        "subTypeVersions": {
+          "group": 0,
+          "embed": 4,
+          "bookmark": 1,
+          "image": 2,
+          "text": 1,
+          "draw": 1,
+          "geo": 7,
+          "line": 0,
+          "note": 4,
+          "frame": 0,
+          "arrow": 1,
+          "highlight": 0,
+          "video": 1
+        }
+      },
+      "instance_presence": {
+        "version": 4
+      },
+      "pointer": {
+        "version": 1
+      }
+    }
+  },
+  "records": [
+    {
+      "id": "document:document",
+      "typeName": "document",
+      "gridSize": 10,
+      "name": "",
+      "meta": {}
+    },
+    {
+      "id": "page:page1",
+      "typeName": "page",
+      "name": "Page 1",
+      "index": "a1",
+      "meta": {}
+    },
+    {
+      "id": "shape:paper",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a1",
+      "x": 20,
+      "y": 20,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 1560,
+        "h": 900,
+        "geo": "rectangle",
+        "color": "yellow",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "s",
+        "font": "draw",
+        "text": "",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:title",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a2",
+      "x": 120,
+      "y": 60,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 1360,
+        "h": 100,
+        "geo": "rectangle",
+        "color": "white",
+        "labelColor": "black",
+        "fill": "solid",
+        "dash": "draw",
+        "size": "l",
+        "font": "draw",
+        "text": "pass@k 与 pass^k：发现能力，不等于持续可靠",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:top0",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a3",
+      "x": 140,
+      "y": 290,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 140,
+        "h": 110,
+        "geo": "check-box",
+        "color": "green",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "✓",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:bottom0",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a4",
+      "x": 140,
+      "y": 590,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 140,
+        "h": 110,
+        "geo": "check-box",
+        "color": "green",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "✓",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:top1",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a5",
+      "x": 370,
+      "y": 290,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 140,
+        "h": 110,
+        "geo": "x-box",
+        "color": "red",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "✕",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:bottom1",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a6",
+      "x": 370,
+      "y": 590,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 140,
+        "h": 110,
+        "geo": "x-box",
+        "color": "red",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "✕",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:top2",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a7",
+      "x": 600,
+      "y": 290,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 140,
+        "h": 110,
+        "geo": "check-box",
+        "color": "green",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "✓",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:bottom2",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a8",
+      "x": 600,
+      "y": 590,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 140,
+        "h": 110,
+        "geo": "check-box",
+        "color": "green",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "✓",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:top3",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a9",
+      "x": 830,
+      "y": 290,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 140,
+        "h": 110,
+        "geo": "x-box",
+        "color": "red",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "✕",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:bottom3",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "aA",
+      "x": 830,
+      "y": 590,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 140,
+        "h": 110,
+        "geo": "x-box",
+        "color": "red",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "✕",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:top4",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "aB",
+      "x": 1060,
+      "y": 290,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 140,
+        "h": 110,
+        "geo": "x-box",
+        "color": "red",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "✕",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:bottom4",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "aC",
+      "x": 1060,
+      "y": 590,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 140,
+        "h": 110,
+        "geo": "x-box",
+        "color": "red",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "✕",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:at",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "aD",
+      "x": 1270,
+      "y": 270,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 250,
+        "h": 150,
+        "geo": "rectangle",
+        "color": "blue",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "pass@3\n三次里至少一次成功\n发现能力",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:all",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "aE",
+      "x": 1270,
+      "y": 570,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 250,
+        "h": 150,
+        "geo": "rectangle",
+        "color": "violet",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "pass^3\n三次必须全部成功\n衡量可靠",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:a1",
+      "typeName": "shape",
+      "type": "arrow",
+      "parentId": "page:page1",
+      "index": "aF",
+      "x": 0,
+      "y": 0,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "dash": "draw",
+        "size": "m",
+        "fill": "none",
+        "color": "black",
+        "labelColor": "black",
+        "bend": 0,
+        "start": {
+          "type": "binding",
+          "boundShapeId": "shape:top4",
+          "normalizedAnchor": {
+            "x": 1,
+            "y": 0.5
+          },
+          "isExact": false
+        },
+        "end": {
+          "type": "binding",
+          "boundShapeId": "shape:at",
+          "normalizedAnchor": {
+            "x": 0,
+            "y": 0.5
+          },
+          "isExact": false
+        },
+        "arrowheadStart": "none",
+        "arrowheadEnd": "arrow",
+        "text": "",
+        "font": "draw"
+      }
+    },
+    {
+      "id": "shape:a2",
+      "typeName": "shape",
+      "type": "arrow",
+      "parentId": "page:page1",
+      "index": "aG",
+      "x": 0,
+      "y": 0,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "dash": "draw",
+        "size": "m",
+        "fill": "none",
+        "color": "black",
+        "labelColor": "black",
+        "bend": 0,
+        "start": {
+          "type": "binding",
+          "boundShapeId": "shape:bottom4",
+          "normalizedAnchor": {
+            "x": 1,
+            "y": 0.5
+          },
+          "isExact": false
+        },
+        "end": {
+          "type": "binding",
+          "boundShapeId": "shape:all",
+          "normalizedAnchor": {
+            "x": 0,
+            "y": 0.5
+          },
+          "isExact": false
+        },
+        "arrowheadStart": "none",
+        "arrowheadEnd": "arrow",
+        "text": "",
+        "font": "draw"
+      }
+    },
+    {
+      "id": "shape:note",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "aH",
+      "x": 280,
+      "y": 790,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 1040,
+        "h": 80,
+        "geo": "rectangle",
+        "color": "white",
+        "labelColor": "black",
+        "fill": "solid",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "同样的单次成功率，扩大 k 会让 pass@k 上升，却让 pass^k 下降。",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    }
+  ]
+}

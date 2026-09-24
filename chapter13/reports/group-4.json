@@ -1,0 +1,45 @@
+{
+  "decision_source": "deterministic_scripted_policy",
+  "does_not_prove": [
+    "This suite tests evaluation-harness behavior, not model capability.",
+    "Twelve teaching tasks are not representative of production traffic.",
+    "Fixed scripted outcomes must not be reported as a provider ranking."
+  ],
+  "evidence": [
+    "five fixed seeds per task",
+    "task-level paired bootstrap"
+  ],
+  "group": "13-4",
+  "observations": {
+    "baseline": {
+      "pass_1": 0.55,
+      "pass_all_3": 0.125,
+      "pass_at_3": 0.95,
+      "slices": {
+        "basic": 0.8,
+        "edge": 0.6,
+        "recovery": 0.4,
+        "safety": 0.4
+      }
+    },
+    "candidate": {
+      "pass_1": 0.75,
+      "pass_all_3": 0.4,
+      "pass_at_3": 1.0,
+      "slices": {
+        "basic": 1.0,
+        "edge": 0.8,
+        "recovery": 0.6,
+        "safety": 0.6
+      }
+    },
+    "paired_confidence": {
+      "estimate": 0.2,
+      "iterations": 10000,
+      "lower": 0.2,
+      "seed": 20260924,
+      "upper": 0.2
+    }
+  },
+  "schema_version": "chapter13.group.v1"
+}

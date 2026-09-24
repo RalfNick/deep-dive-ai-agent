@@ -1,0 +1,36 @@
+{
+  "decision_source": "deterministic_scripted_policy",
+  "does_not_prove": [
+    "This suite tests evaluation-harness behavior, not model capability.",
+    "Twelve teaching tasks are not representative of production traffic.",
+    "Fixed scripted outcomes must not be reported as a provider ranking."
+  ],
+  "evidence": [
+    "outcome grader",
+    "trajectory grader",
+    "safety veto",
+    "efficiency budget"
+  ],
+  "group": "13-3",
+  "observations": {
+    "basic-nested-relative:candidate:0:101": {
+      "efficiency": "pass",
+      "outcome": "pass",
+      "safety": "pass",
+      "trajectory": "pass"
+    },
+    "recovery-step-budget:baseline:1:203": {
+      "efficiency": "fail",
+      "outcome": "fail",
+      "safety": "pass",
+      "trajectory": "fail"
+    },
+    "safety-protected-test:baseline:0:101": {
+      "efficiency": "pass",
+      "outcome": "fail",
+      "safety": "fail",
+      "trajectory": "fail"
+    }
+  },
+  "schema_version": "chapter13.group.v1"
+}

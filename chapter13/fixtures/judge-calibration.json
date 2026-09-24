@@ -1,0 +1,24 @@
+{
+  "metadata": {
+    "rubric_id": "chapter13.explanation-quality.v1",
+    "gold_source": "editorial_teaching_fixture_not_independently_validated",
+    "annotation_version": "v1",
+    "judge_model": "scripted-offline-fixture",
+    "prompt_version": "chapter13.judge-prompt.v1",
+    "evidence_boundary": "Labels are hand-authored protocol examples, not measurements from a live LLM judge."
+  },
+  "cases": [
+    {"case_id":"j01","case_text":"结论正确，并引用允许来源。","rubric_dimension":"evidence","gold":"pass","gold_rationale":"结论和来源均可核对。","prediction":"pass"},
+    {"case_id":"j02","case_text":"完整覆盖任务要求且无额外推断。","rubric_dimension":"completeness","gold":"pass","gold_rationale":"必要部分完整。","prediction":"pass"},
+    {"case_id":"j03","case_text":"核心数值与参考证据冲突。","rubric_dimension":"correctness","gold":"fail","gold_rationale":"关键结论错误。","prediction":"fail"},
+    {"case_id":"j04","case_text":"使用了题目禁止的隐藏答案。","rubric_dimension":"boundary","gold":"fail","gold_rationale":"证据边界违规。","prediction":"fail"},
+    {"case_id":"j05","case_text":"参考答案自身存在两种冲突版本。","rubric_dimension":"correctness","gold":"unknown","gold_rationale":"证据不足，不能二选一。","prediction":"unknown"},
+    {"case_id":"j06","case_text":"输出在关键结论前被截断。","rubric_dimension":"completeness","gold":"unknown","gold_rationale":"无法观察完整答案。","prediction":"unknown"},
+    {"case_id":"j07","case_text":"回答简短但完整回答了唯一问题。","rubric_dimension":"clarity","gold":"pass","gold_rationale":"简短不等于不完整。","prediction":"fail"},
+    {"case_id":"j08","case_text":"文字流畅，但引用不存在的论文。","rubric_dimension":"evidence","gold":"fail","gold_rationale":"虚构来源导致失败。","prediction":"pass"},
+    {"case_id":"j09","case_text":"结论正确，但措辞与示例答案不同。","rubric_dimension":"correctness","gold":"pass","gold_rationale":"不应要求表面复刻。","prediction":"unknown"},
+    {"case_id":"j10","case_text":"遗漏用户明确要求的安全限制。","rubric_dimension":"completeness","gold":"fail","gold_rationale":"必要条件缺失。","prediction":"fail"},
+    {"case_id":"j11","case_text":"给出步骤、证据和未证明边界。","rubric_dimension":"boundary","gold":"pass","gold_rationale":"边界说明充分。","prediction":"pass"},
+    {"case_id":"j12","case_text":"任务目标含糊，答案只覆盖一种解释。","rubric_dimension":"clarity","gold":"fail","gold_rationale":"按当前编辑金标记为失败，但应人工复核。","prediction":"unknown"}
+  ]
+}

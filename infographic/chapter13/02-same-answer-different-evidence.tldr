@@ -1,0 +1,478 @@
+{
+  "tldrawFileFormatVersion": 1,
+  "schema": {
+    "schemaVersion": 1,
+    "storeVersion": 4,
+    "recordVersions": {
+      "asset": {
+        "version": 1,
+        "subTypeKey": "type",
+        "subTypeVersions": {
+          "image": 2,
+          "video": 2,
+          "bookmark": 0
+        }
+      },
+      "camera": {
+        "version": 1
+      },
+      "document": {
+        "version": 2
+      },
+      "instance": {
+        "version": 17
+      },
+      "instance_page_state": {
+        "version": 3
+      },
+      "page": {
+        "version": 1
+      },
+      "shape": {
+        "version": 3,
+        "subTypeKey": "type",
+        "subTypeVersions": {
+          "group": 0,
+          "embed": 4,
+          "bookmark": 1,
+          "image": 2,
+          "text": 1,
+          "draw": 1,
+          "geo": 7,
+          "line": 0,
+          "note": 4,
+          "frame": 0,
+          "arrow": 1,
+          "highlight": 0,
+          "video": 1
+        }
+      },
+      "instance_presence": {
+        "version": 4
+      },
+      "pointer": {
+        "version": 1
+      }
+    }
+  },
+  "records": [
+    {
+      "id": "document:document",
+      "typeName": "document",
+      "gridSize": 10,
+      "name": "",
+      "meta": {}
+    },
+    {
+      "id": "page:page1",
+      "typeName": "page",
+      "name": "Page 1",
+      "index": "a1",
+      "meta": {}
+    },
+    {
+      "id": "shape:paper",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a1",
+      "x": 20,
+      "y": 20,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 1560,
+        "h": 900,
+        "geo": "rectangle",
+        "color": "yellow",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "s",
+        "font": "draw",
+        "text": "",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:title",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a2",
+      "x": 120,
+      "y": 60,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 1360,
+        "h": 100,
+        "geo": "rectangle",
+        "color": "white",
+        "labelColor": "black",
+        "fill": "solid",
+        "dash": "draw",
+        "size": "l",
+        "font": "draw",
+        "text": "同一句“修复完成”，为什么证据完全不同？",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:task",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a3",
+      "x": 650,
+      "y": 190,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 300,
+        "h": 100,
+        "geo": "rectangle",
+        "color": "blue",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "同一个仓库问题",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:agent_a",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a4",
+      "x": 160,
+      "y": 390,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 520,
+        "h": 150,
+        "geo": "rectangle",
+        "color": "green",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "Agent A\n读代码 → 修改源文件 → 独立验证",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:agent_b",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a5",
+      "x": 920,
+      "y": 390,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 520,
+        "h": 150,
+        "geo": "rectangle",
+        "color": "red",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "Agent B\n改弱测试 → 越界读取 → 宣布完成",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:final_a",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a6",
+      "x": 260,
+      "y": 650,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 320,
+        "h": 120,
+        "geo": "rectangle",
+        "color": "light-blue",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "最终回复\n“修复完成”",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:final_b",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a7",
+      "x": 1020,
+      "y": 650,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 320,
+        "h": 120,
+        "geo": "rectangle",
+        "color": "light-red",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "最终回复\n“修复完成”",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:a1",
+      "typeName": "shape",
+      "type": "arrow",
+      "parentId": "page:page1",
+      "index": "a8",
+      "x": 0,
+      "y": 0,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "dash": "draw",
+        "size": "m",
+        "fill": "none",
+        "color": "black",
+        "labelColor": "black",
+        "bend": 0,
+        "start": {
+          "type": "binding",
+          "boundShapeId": "shape:task",
+          "normalizedAnchor": {
+            "x": 0.35,
+            "y": 1
+          },
+          "isExact": false
+        },
+        "end": {
+          "type": "binding",
+          "boundShapeId": "shape:agent_a",
+          "normalizedAnchor": {
+            "x": 0.5,
+            "y": 0
+          },
+          "isExact": false
+        },
+        "arrowheadStart": "none",
+        "arrowheadEnd": "arrow",
+        "text": "相同输入",
+        "font": "draw"
+      }
+    },
+    {
+      "id": "shape:a2",
+      "typeName": "shape",
+      "type": "arrow",
+      "parentId": "page:page1",
+      "index": "a9",
+      "x": 0,
+      "y": 0,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "dash": "draw",
+        "size": "m",
+        "fill": "none",
+        "color": "black",
+        "labelColor": "black",
+        "bend": 0,
+        "start": {
+          "type": "binding",
+          "boundShapeId": "shape:task",
+          "normalizedAnchor": {
+            "x": 0.65,
+            "y": 1
+          },
+          "isExact": false
+        },
+        "end": {
+          "type": "binding",
+          "boundShapeId": "shape:agent_b",
+          "normalizedAnchor": {
+            "x": 0.5,
+            "y": 0
+          },
+          "isExact": false
+        },
+        "arrowheadStart": "none",
+        "arrowheadEnd": "arrow",
+        "text": "相同输入",
+        "font": "draw"
+      }
+    },
+    {
+      "id": "shape:a3",
+      "typeName": "shape",
+      "type": "arrow",
+      "parentId": "page:page1",
+      "index": "aA",
+      "x": 0,
+      "y": 0,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "dash": "draw",
+        "size": "m",
+        "fill": "none",
+        "color": "black",
+        "labelColor": "black",
+        "bend": 0,
+        "start": {
+          "type": "binding",
+          "boundShapeId": "shape:agent_a",
+          "normalizedAnchor": {
+            "x": 0.5,
+            "y": 1
+          },
+          "isExact": false
+        },
+        "end": {
+          "type": "binding",
+          "boundShapeId": "shape:final_a",
+          "normalizedAnchor": {
+            "x": 0.5,
+            "y": 0
+          },
+          "isExact": false
+        },
+        "arrowheadStart": "none",
+        "arrowheadEnd": "arrow",
+        "text": "结果正确 + 轨迹安全",
+        "font": "draw"
+      }
+    },
+    {
+      "id": "shape:a4",
+      "typeName": "shape",
+      "type": "arrow",
+      "parentId": "page:page1",
+      "index": "aB",
+      "x": 0,
+      "y": 0,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "dash": "draw",
+        "size": "m",
+        "fill": "none",
+        "color": "red",
+        "labelColor": "black",
+        "bend": 0,
+        "start": {
+          "type": "binding",
+          "boundShapeId": "shape:agent_b",
+          "normalizedAnchor": {
+            "x": 0.5,
+            "y": 1
+          },
+          "isExact": false
+        },
+        "end": {
+          "type": "binding",
+          "boundShapeId": "shape:final_b",
+          "normalizedAnchor": {
+            "x": 0.5,
+            "y": 0
+          },
+          "isExact": false
+        },
+        "arrowheadStart": "none",
+        "arrowheadEnd": "arrow",
+        "text": "假成功",
+        "font": "draw"
+      }
+    },
+    {
+      "id": "shape:lesson",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "aC",
+      "x": 300,
+      "y": 810,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 1000,
+        "h": 70,
+        "geo": "rectangle",
+        "color": "white",
+        "labelColor": "black",
+        "fill": "solid",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "只比较最后一句话，两者相同；检查 Outcome、Trajectory 与 Safety，结论相反。",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    }
+  ]
+}

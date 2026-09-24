@@ -1,0 +1,344 @@
+{
+  "answers": [
+    {
+      "criteria": [
+        "三类证据的 owner 不混淆",
+        "反例同时说明结果与过程"
+      ],
+      "evidence": {
+        "counterexample": "退款到账，但 Agent 先重复扣款再回滚；结果可接受，过程不可接受",
+        "final_answer": "Agent 声称做了什么；不能单独证明环境改变",
+        "outcome": "运行结束时可独立观察的环境事实",
+        "trajectory": "从输入到终态的事件、工具、策略和状态序列"
+      },
+      "execution": "design",
+      "number": 1,
+      "status": "answered",
+      "title": "区分 Final Answer、Outcome 与 Trajectory"
+    },
+    {
+      "criteria": [
+        "使用真实 group-1 实验",
+        "比较回复、结果、完整性与事件"
+      ],
+      "evidence": {
+        "conclusion": "文本相同只证明声明相同，不能推出任务成功",
+        "key_differences": [
+          "solution_matches",
+          "protected_paths_intact",
+          "events"
+        ],
+        "same_final_answer": true,
+        "same_outcome": false
+      },
+      "execution": "real",
+      "number": 2,
+      "status": "passed",
+      "title": "读取同一句完成声明背后的证据"
+    },
+    {
+      "criteria": [
+        "使用无放回组合估计",
+        "区分至少一次成功与全部成功"
+      ],
+      "evidence": {
+        "c": 2,
+        "k": 3,
+        "n": 5,
+        "pass_1": 0.4,
+        "pass_all_3": 0.0,
+        "pass_at_3": 0.9
+      },
+      "execution": "computed",
+      "number": 3,
+      "status": "passed",
+      "title": "手算 pass@1、pass@3 与 pass^3"
+    },
+    {
+      "criteria": [
+        "成功条件可独立验证",
+        "保持 basic 切片数量不变"
+      ],
+      "evidence": {
+        "replacement": {
+          "allowed_write_prefixes": [
+            "src/"
+          ],
+          "prompt": "检查器必须跳过 mailto 链接，同时继续报告缺失的本地 Markdown 文件",
+          "protected_paths": [
+            "tests/",
+            ".eval/"
+          ],
+          "success_conditions": [
+            "mailto:user@example.com 不报错",
+            "missing.md 仍报错"
+          ],
+          "task_id": "basic-mailto-link"
+        },
+        "slice_balance": "用此任务替换一个 basic 任务，而不是追加第 13 个任务"
+      },
+      "execution": "design",
+      "number": 4,
+      "status": "answered",
+      "title": "写一条无歧义 TaskSpec"
+    },
+    {
+      "criteria": [
+        "不把基础设施噪声计作能力失败",
+        "承认分类所需上下文"
+      ],
+      "evidence": {
+        "agent_step_budget_exhausted": "agent_failed",
+        "dependency_download_failed": "environment_error，前提是依赖源和网络由评测方提供",
+        "extra_facts": [
+          "resource limits",
+          "infrastructure health",
+          "tool schema version",
+          "retry ownership"
+        ],
+        "invalid_tool_arguments": "agent_failed，前提是工具 schema 与解析器正常",
+        "test_process_oom": "requires attribution before setting Trial.status; then environment_error or agent_failed"
+      },
+      "execution": "design",
+      "number": 5,
+      "status": "answered",
+      "title": "区分环境错误与 Agent 失败"
+    },
+    {
+      "criteria": [
+        "约束不变量而非唯一工具序列",
+        "覆盖授权、幂等和验收"
+      ],
+      "evidence": {
+        "invariants": [
+          "任何 refund_execute 之前必须存在绑定同一订单与金额的有效批准",
+          "同一 refund_id 最多出现一个成功副作用回执",
+          "宣布完成前必须读取支付方终态并与目标金额一致"
+        ]
+      },
+      "execution": "design",
+      "number": 6,
+      "status": "answered",
+      "title": "为退款任务设计轨迹不变量"
+    },
+    {
+      "criteria": [
+        "Outcome 可以通过而 Safety 失败",
+        "效率不得抵消安全违规"
+      ],
+      "evidence": {
+        "efficiency": "pass",
+        "outcome": "pass",
+        "release": {
+          "decision": "fail",
+          "reasons": [
+            "safety_violation"
+          ]
+        },
+        "safety": "fail",
+        "trial_modified": true
+      },
+      "execution": "real",
+      "number": 7,
+      "status": "passed",
+      "title": "验证安全硬门禁"
+    },
+    {
+      "criteria": [
+        "总体提升不覆盖关键切片回归",
+        "给出修复后重跑动作"
+      ],
+      "evidence": {
+        "next_step": "定位安全切片失败，修复后用相同任务和种子成对重跑",
+        "overall_delta": 0.05,
+        "release": {
+          "decision": "fail",
+          "reasons": [
+            "slice_regression"
+          ]
+        },
+        "safety_slice_delta": -0.12
+      },
+      "execution": "real",
+      "number": 8,
+      "status": "passed",
+      "title": "验证切片回归门禁"
+    },
+    {
+      "criteria": [
+        "指标由使用方式决定",
+        "说明失败成本"
+      ],
+      "evidence": {
+        "automatic_refund": "pass^k；每次真实执行都必须可靠",
+        "batch_rename": "pass^k；一批中的任一次错误都可能破坏文件",
+        "code_candidate_generation": "pass@k；允许生成多个候选后由测试选择",
+        "research_report": "pass@k when editor selects; pass^k when auto-published repeatedly"
+      },
+      "execution": "design",
+      "number": 9,
+      "status": "answered",
+      "title": "按产品语义选择可靠性指标"
+    },
+    {
+      "criteria": [
+        "以任务为重采样单位",
+        "固定随机种子",
+        "区间跨零不强行分胜负"
+      ],
+      "evidence": {
+        "bootstrap": {
+          "estimate": 0.016667,
+          "iterations": 10000,
+          "lower": -0.058333,
+          "seed": 20260924,
+          "upper": 0.091667
+        },
+        "interpretation": "inconclusive",
+        "task_deltas": [
+          0.2,
+          0.2,
+          0.2,
+          0.1,
+          0.1,
+          0.0,
+          0.0,
+          -0.1,
+          -0.1,
+          -0.2,
+          -0.2,
+          0.0
+        ]
+      },
+      "execution": "real",
+      "number": 10,
+      "status": "passed",
+      "title": "执行固定种子的成对 Bootstrap"
+    },
+    {
+      "criteria": [
+        "实际调整两个预测标签",
+        "总体一致率与混淆方向分开报告",
+        "Unknown 计入覆盖率"
+      ],
+      "evidence": {
+        "after": {
+          "agreement": 0.666667,
+          "confusion_matrix": {
+            "fail": {
+              "fail": 3,
+              "pass": 2,
+              "unknown": 0
+            },
+            "pass": {
+              "fail": 0,
+              "pass": 3,
+              "unknown": 2
+            },
+            "unknown": {
+              "fail": 0,
+              "pass": 0,
+              "unknown": 2
+            }
+          },
+          "coverage": 0.666667
+        },
+        "agreement_unchanged": true,
+        "before": {
+          "agreement": 0.666667,
+          "confusion_matrix": {
+            "fail": {
+              "fail": 3,
+              "pass": 1,
+              "unknown": 1
+            },
+            "pass": {
+              "fail": 1,
+              "pass": 3,
+              "unknown": 1
+            },
+            "unknown": {
+              "fail": 0,
+              "pass": 0,
+              "unknown": 2
+            }
+          },
+          "coverage": 0.666667
+        },
+        "changed_cases": [
+          "j07: fail -> unknown",
+          "j12: unknown -> pass"
+        ],
+        "confusion_changed": true,
+        "risk_rule": "高风险自动动作中，gold=fail 被判 pass 比保守的 unknown 更危险"
+      },
+      "execution": "real",
+      "number": 11,
+      "status": "passed",
+      "title": "读取 Judge 校准证据"
+    },
+    {
+      "criteria": [
+        "四种污染各有独立控制",
+        "检测不能只依赖 Agent 自报"
+      ],
+      "evidence": {
+        "cross_trial_cache": "每个 Trial 使用新工作区和命名空间，并校验初始环境指纹",
+        "git_history": "从净化快照创建任务，移除泄漏修复的提交和远端",
+        "hidden_tests": "放在被测进程不可读、只由外部 grader 挂载的位置",
+        "oracle": "凭据与答案不进入 Agent 工作区，访问事件由外部策略记录"
+      },
+      "execution": "design",
+      "number": 12,
+      "status": "answered",
+      "title": "设计防投机边界"
+    },
+    {
+      "criteria": [
+        "映射抽象而非背 API",
+        "保留业务责任"
+      ],
+      "evidence": {
+        "business_owned": [
+          "任务真实性与污染控制",
+          "安全不变量",
+          "发布阈值与人工升级"
+        ],
+        "inspect_ai": {
+          "Graders": "Scorer",
+          "Report": "Eval log / metrics",
+          "Runner": "Solver",
+          "TaskSpec": "Task + Dataset sample"
+        }
+      },
+      "execution": "design",
+      "number": 13,
+      "status": "answered",
+      "title": "映射成熟评估框架"
+    },
+    {
+      "criteria": [
+        "按证据层排查",
+        "每一步有停止标准"
+      ],
+      "evidence": {
+        "sequence": [
+          "先复现环境并核对环境指纹；同夹具健康则排除环境",
+          "双人复核 Task 与成功条件；达成一致则排除任务歧义",
+          "用人工金标和反例校准 Grader；误差在阈值内则排除评分漂移",
+          "在相同任务、种子和 Harness 下成对重跑；剩余稳定差值归因给 Agent 变更"
+        ],
+        "stop_rule": "每个排除结论都必须有可复现记录，证据冲突时结论保持 inconclusive"
+      },
+      "execution": "design",
+      "number": 14,
+      "status": "answered",
+      "title": "定位 Agent、Task、Grader 或环境问题"
+    }
+  ],
+  "schema_version": "chapter13.exercises.v1",
+  "summary": {
+    "all_passed": true,
+    "count": 14
+  }
+}

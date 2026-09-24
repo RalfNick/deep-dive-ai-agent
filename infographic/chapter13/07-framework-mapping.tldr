@@ -1,0 +1,564 @@
+{
+  "tldrawFileFormatVersion": 1,
+  "schema": {
+    "schemaVersion": 1,
+    "storeVersion": 4,
+    "recordVersions": {
+      "asset": {
+        "version": 1,
+        "subTypeKey": "type",
+        "subTypeVersions": {
+          "image": 2,
+          "video": 2,
+          "bookmark": 0
+        }
+      },
+      "camera": {
+        "version": 1
+      },
+      "document": {
+        "version": 2
+      },
+      "instance": {
+        "version": 17
+      },
+      "instance_page_state": {
+        "version": 3
+      },
+      "page": {
+        "version": 1
+      },
+      "shape": {
+        "version": 3,
+        "subTypeKey": "type",
+        "subTypeVersions": {
+          "group": 0,
+          "embed": 4,
+          "bookmark": 1,
+          "image": 2,
+          "text": 1,
+          "draw": 1,
+          "geo": 7,
+          "line": 0,
+          "note": 4,
+          "frame": 0,
+          "arrow": 1,
+          "highlight": 0,
+          "video": 1
+        }
+      },
+      "instance_presence": {
+        "version": 4
+      },
+      "pointer": {
+        "version": 1
+      }
+    }
+  },
+  "records": [
+    {
+      "id": "document:document",
+      "typeName": "document",
+      "gridSize": 10,
+      "name": "",
+      "meta": {}
+    },
+    {
+      "id": "page:page1",
+      "typeName": "page",
+      "name": "Page 1",
+      "index": "a1",
+      "meta": {}
+    },
+    {
+      "id": "shape:paper",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a1",
+      "x": 20,
+      "y": 20,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 1560,
+        "h": 900,
+        "geo": "rectangle",
+        "color": "yellow",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "s",
+        "font": "draw",
+        "text": "",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:title",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a2",
+      "x": 120,
+      "y": 60,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 1360,
+        "h": 100,
+        "geo": "rectangle",
+        "color": "white",
+        "labelColor": "black",
+        "fill": "solid",
+        "dash": "draw",
+        "size": "l",
+        "font": "draw",
+        "text": "同一套评估概念，如何映射到不同框架？",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:local",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a3",
+      "x": 80,
+      "y": 240,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 420,
+        "h": 150,
+        "geo": "rectangle",
+        "color": "blue",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "本章最小 Harness\nTaskSpec · Runner · Graders · Report",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:inspect",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a4",
+      "x": 610,
+      "y": 210,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 390,
+        "h": 130,
+        "geo": "rectangle",
+        "color": "violet",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "Inspect AI\nDataset · Solver · Scorer · Task",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:openai",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a5",
+      "x": 610,
+      "y": 410,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 390,
+        "h": 130,
+        "geo": "rectangle",
+        "color": "green",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "OpenAI Evals\nDataset · Eval · Graders · Trace",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:langsmith",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a6",
+      "x": 610,
+      "y": 610,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 390,
+        "h": 130,
+        "geo": "rectangle",
+        "color": "orange",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "LangSmith\nDataset · Experiment · Evaluators",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:gate",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "a7",
+      "x": 1130,
+      "y": 380,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 390,
+        "h": 190,
+        "geo": "hexagon",
+        "color": "yellow",
+        "labelColor": "black",
+        "fill": "semi",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "共同目标\n可重复比较 + 失败证据 + 发布门禁",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    },
+    {
+      "id": "shape:a1",
+      "typeName": "shape",
+      "type": "arrow",
+      "parentId": "page:page1",
+      "index": "a8",
+      "x": 0,
+      "y": 0,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "dash": "draw",
+        "size": "m",
+        "fill": "none",
+        "color": "black",
+        "labelColor": "black",
+        "bend": 0,
+        "start": {
+          "type": "binding",
+          "boundShapeId": "shape:local",
+          "normalizedAnchor": {
+            "x": 1,
+            "y": 0.25
+          },
+          "isExact": false
+        },
+        "end": {
+          "type": "binding",
+          "boundShapeId": "shape:inspect",
+          "normalizedAnchor": {
+            "x": 0,
+            "y": 0.5
+          },
+          "isExact": false
+        },
+        "arrowheadStart": "none",
+        "arrowheadEnd": "arrow",
+        "text": "概念映射",
+        "font": "draw"
+      }
+    },
+    {
+      "id": "shape:a2",
+      "typeName": "shape",
+      "type": "arrow",
+      "parentId": "page:page1",
+      "index": "a9",
+      "x": 0,
+      "y": 0,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "dash": "draw",
+        "size": "m",
+        "fill": "none",
+        "color": "black",
+        "labelColor": "black",
+        "bend": 0,
+        "start": {
+          "type": "binding",
+          "boundShapeId": "shape:local",
+          "normalizedAnchor": {
+            "x": 1,
+            "y": 0.5
+          },
+          "isExact": false
+        },
+        "end": {
+          "type": "binding",
+          "boundShapeId": "shape:openai",
+          "normalizedAnchor": {
+            "x": 0,
+            "y": 0.5
+          },
+          "isExact": false
+        },
+        "arrowheadStart": "none",
+        "arrowheadEnd": "arrow",
+        "text": "概念映射",
+        "font": "draw"
+      }
+    },
+    {
+      "id": "shape:a3",
+      "typeName": "shape",
+      "type": "arrow",
+      "parentId": "page:page1",
+      "index": "aA",
+      "x": 0,
+      "y": 0,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "dash": "draw",
+        "size": "m",
+        "fill": "none",
+        "color": "black",
+        "labelColor": "black",
+        "bend": 0,
+        "start": {
+          "type": "binding",
+          "boundShapeId": "shape:local",
+          "normalizedAnchor": {
+            "x": 1,
+            "y": 0.75
+          },
+          "isExact": false
+        },
+        "end": {
+          "type": "binding",
+          "boundShapeId": "shape:langsmith",
+          "normalizedAnchor": {
+            "x": 0,
+            "y": 0.5
+          },
+          "isExact": false
+        },
+        "arrowheadStart": "none",
+        "arrowheadEnd": "arrow",
+        "text": "概念映射",
+        "font": "draw"
+      }
+    },
+    {
+      "id": "shape:a4",
+      "typeName": "shape",
+      "type": "arrow",
+      "parentId": "page:page1",
+      "index": "aB",
+      "x": 0,
+      "y": 0,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "dash": "draw",
+        "size": "m",
+        "fill": "none",
+        "color": "black",
+        "labelColor": "black",
+        "bend": 0,
+        "start": {
+          "type": "binding",
+          "boundShapeId": "shape:inspect",
+          "normalizedAnchor": {
+            "x": 1,
+            "y": 0.5
+          },
+          "isExact": false
+        },
+        "end": {
+          "type": "binding",
+          "boundShapeId": "shape:gate",
+          "normalizedAnchor": {
+            "x": 0,
+            "y": 0.25
+          },
+          "isExact": false
+        },
+        "arrowheadStart": "none",
+        "arrowheadEnd": "arrow",
+        "text": "",
+        "font": "draw"
+      }
+    },
+    {
+      "id": "shape:a5",
+      "typeName": "shape",
+      "type": "arrow",
+      "parentId": "page:page1",
+      "index": "aC",
+      "x": 0,
+      "y": 0,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "dash": "draw",
+        "size": "m",
+        "fill": "none",
+        "color": "black",
+        "labelColor": "black",
+        "bend": 0,
+        "start": {
+          "type": "binding",
+          "boundShapeId": "shape:openai",
+          "normalizedAnchor": {
+            "x": 1,
+            "y": 0.5
+          },
+          "isExact": false
+        },
+        "end": {
+          "type": "binding",
+          "boundShapeId": "shape:gate",
+          "normalizedAnchor": {
+            "x": 0,
+            "y": 0.5
+          },
+          "isExact": false
+        },
+        "arrowheadStart": "none",
+        "arrowheadEnd": "arrow",
+        "text": "",
+        "font": "draw"
+      }
+    },
+    {
+      "id": "shape:a6",
+      "typeName": "shape",
+      "type": "arrow",
+      "parentId": "page:page1",
+      "index": "aD",
+      "x": 0,
+      "y": 0,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "dash": "draw",
+        "size": "m",
+        "fill": "none",
+        "color": "black",
+        "labelColor": "black",
+        "bend": 0,
+        "start": {
+          "type": "binding",
+          "boundShapeId": "shape:langsmith",
+          "normalizedAnchor": {
+            "x": 1,
+            "y": 0.5
+          },
+          "isExact": false
+        },
+        "end": {
+          "type": "binding",
+          "boundShapeId": "shape:gate",
+          "normalizedAnchor": {
+            "x": 0,
+            "y": 0.75
+          },
+          "isExact": false
+        },
+        "arrowheadStart": "none",
+        "arrowheadEnd": "arrow",
+        "text": "",
+        "font": "draw"
+      }
+    },
+    {
+      "id": "shape:boundary",
+      "typeName": "shape",
+      "type": "geo",
+      "parentId": "page:page1",
+      "index": "aE",
+      "x": 260,
+      "y": 800,
+      "rotation": 0,
+      "isLocked": false,
+      "opacity": 1,
+      "meta": {},
+      "props": {
+        "w": 1080,
+        "h": 70,
+        "geo": "rectangle",
+        "color": "white",
+        "labelColor": "black",
+        "fill": "solid",
+        "dash": "draw",
+        "size": "m",
+        "font": "draw",
+        "text": "框架替你组织运行；成功标准、风险边界和证据解释仍由团队负责。",
+        "align": "middle",
+        "verticalAlign": "middle",
+        "growY": 0,
+        "url": ""
+      }
+    }
+  ]
+}
