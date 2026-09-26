@@ -1,0 +1,3 @@
+-r requirements.in
+jsonschema==4.26.0
+pytest==9.0.2

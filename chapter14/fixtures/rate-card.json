@@ -1,0 +1,10 @@
+{
+  "version": "chapter14.cost-units.v1",
+  "currency": null,
+  "description": "Versioned teaching units; not provider pricing.",
+  "rates": {
+    "model_input_per_1k": 1.0,
+    "model_output_per_1k": 2.0,
+    "tool_call": 0.25
+  }
+}

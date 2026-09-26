@@ -1,0 +1,2 @@
+# Requires-Python: >=3.11,<3.12
+# Runtime uses only the Python standard library.

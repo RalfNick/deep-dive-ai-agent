@@ -1,0 +1,171 @@
+[
+  {
+    "scenario_id": "simple-01",
+    "slice": "simple",
+    "title": "summarize a short policy note",
+    "logical_operations": 1,
+    "work_profile": ["model", "verifier"]
+  },
+  {
+    "scenario_id": "simple-02",
+    "slice": "simple",
+    "title": "classify a support request",
+    "logical_operations": 1,
+    "work_profile": ["model", "verifier"]
+  },
+  {
+    "scenario_id": "simple-03",
+    "slice": "simple",
+    "title": "extract structured fields",
+    "logical_operations": 1,
+    "work_profile": ["model", "verifier"]
+  },
+  {
+    "scenario_id": "simple-04",
+    "slice": "simple",
+    "title": "rewrite a release note",
+    "logical_operations": 1,
+    "work_profile": ["model", "verifier"]
+  },
+  {
+    "scenario_id": "simple-05",
+    "slice": "simple",
+    "title": "answer a bounded factual question",
+    "logical_operations": 1,
+    "work_profile": ["model", "verifier"]
+  },
+  {
+    "scenario_id": "simple-06",
+    "slice": "simple",
+    "title": "format a small checklist",
+    "logical_operations": 1,
+    "work_profile": ["model", "verifier"]
+  },
+  {
+    "scenario_id": "retrieval-01",
+    "slice": "retrieval",
+    "title": "retrieve one handbook section",
+    "logical_operations": 2,
+    "work_profile": ["model", "retrieval", "verifier"]
+  },
+  {
+    "scenario_id": "retrieval-02",
+    "slice": "retrieval",
+    "title": "compare two knowledge entries",
+    "logical_operations": 3,
+    "work_profile": ["model", "retrieval_parallel", "verifier"]
+  },
+  {
+    "scenario_id": "retrieval-03",
+    "slice": "retrieval",
+    "title": "resolve a versioned procedure",
+    "logical_operations": 2,
+    "work_profile": ["model", "retrieval", "verifier"]
+  },
+  {
+    "scenario_id": "retrieval-04",
+    "slice": "retrieval",
+    "title": "answer with two evidence references",
+    "logical_operations": 3,
+    "work_profile": ["model", "retrieval_parallel", "verifier"]
+  },
+  {
+    "scenario_id": "retrieval-05",
+    "slice": "retrieval",
+    "title": "handle an empty search result",
+    "logical_operations": 2,
+    "work_profile": ["model", "retrieval", "verifier"]
+  },
+  {
+    "scenario_id": "retrieval-06",
+    "slice": "retrieval",
+    "title": "filter an outdated knowledge entry",
+    "logical_operations": 3,
+    "work_profile": ["model", "retrieval_parallel", "verifier"]
+  },
+  {
+    "scenario_id": "write-01",
+    "slice": "write",
+    "title": "update a bounded configuration field",
+    "logical_operations": 2,
+    "work_profile": ["model", "approval", "tool", "verifier"]
+  },
+  {
+    "scenario_id": "write-02",
+    "slice": "write",
+    "title": "create a small generated artifact",
+    "logical_operations": 2,
+    "work_profile": ["model", "approval", "tool", "verifier"]
+  },
+  {
+    "scenario_id": "write-03",
+    "slice": "write",
+    "title": "patch one allowed source file",
+    "logical_operations": 2,
+    "work_profile": ["model", "approval", "tool", "verifier"]
+  },
+  {
+    "scenario_id": "write-04",
+    "slice": "write",
+    "title": "reject an out-of-scope edit",
+    "logical_operations": 2,
+    "work_profile": ["model", "approval", "tool", "verifier"]
+  },
+  {
+    "scenario_id": "write-05",
+    "slice": "write",
+    "title": "apply two independent edits",
+    "logical_operations": 3,
+    "work_profile": ["model", "approval", "tool_parallel", "verifier"]
+  },
+  {
+    "scenario_id": "write-06",
+    "slice": "write",
+    "title": "resume an approved write",
+    "logical_operations": 2,
+    "work_profile": ["model", "approval", "tool", "verifier"]
+  },
+  {
+    "scenario_id": "recovery-01",
+    "slice": "recovery",
+    "title": "recover from one transient tool error",
+    "logical_operations": 2,
+    "work_profile": ["model", "tool", "retry", "verifier"]
+  },
+  {
+    "scenario_id": "recovery-02",
+    "slice": "recovery",
+    "title": "stop after a permanent tool error",
+    "logical_operations": 2,
+    "work_profile": ["model", "tool", "verifier"]
+  },
+  {
+    "scenario_id": "recovery-03",
+    "slice": "recovery",
+    "title": "recover from a retrieval timeout",
+    "logical_operations": 3,
+    "work_profile": ["model", "retrieval", "retry", "verifier"]
+  },
+  {
+    "scenario_id": "recovery-04",
+    "slice": "recovery",
+    "title": "stop at a step budget",
+    "logical_operations": 2,
+    "work_profile": ["model", "tool", "verifier"]
+  },
+  {
+    "scenario_id": "recovery-05",
+    "slice": "recovery",
+    "title": "resume after an approval timeout",
+    "logical_operations": 3,
+    "work_profile": ["model", "approval", "retry", "tool", "verifier"]
+  },
+  {
+    "scenario_id": "recovery-06",
+    "slice": "recovery",
+    "title": "surface incomplete telemetry without guessing",
+    "logical_operations": 2,
+    "work_profile": ["model", "tool", "verifier"],
+    "telemetry_complete": false
+  }
+]
