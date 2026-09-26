@@ -589,7 +589,7 @@ actions:
 
 ## 分层练习
 
-下面练习的参考方向将在本章候选版本的 `reference-answers.md` 中给出；设计题没有唯一答案，重点是证据边界是否完整。
+下面练习的可运行证据与参考方向见 [参考答案](../chapter14/reference-answers.md)；设计题没有唯一答案，重点是证据边界是否完整。
 
 1. **★ 概念解释**：用自己的话区分 Benchmark、Evaluation、Observability 与 Production diagnosis，并各写一个它不能回答的问题。
 2. **★ Card 审计**：比较 `benchmark-cards.json` 中的两组结果，列出第二组至少三个不可直接比较的字段。

@@ -1,0 +1,353 @@
+{
+  "answers": [
+    {
+      "criteria": [
+        "四类问题边界不混淆",
+        "每类都指出一个盲区"
+      ],
+      "evidence": {
+        "benchmark": "固定任务与规则下能做到什么；不能单独说明生产体验",
+        "evaluation": "结果和轨迹是否满足标准；不能单独解释系统内部耗时",
+        "observability": "从外部证据推断内部状态；不能自动定义业务正确",
+        "production_diagnosis": "哪个候选原因解释退化；证据不足时必须 inconclusive"
+      },
+      "execution": "design",
+      "number": 1,
+      "status": "answered",
+      "title": "区分 Benchmark、Evaluation、Observability 与生产诊断"
+    },
+    {
+      "criteria": [
+        "忽略分数先审合同",
+        "指出 Harness、预算与重试差异"
+      ],
+      "evidence": {
+        "conclusion": "同分只表示聚合结果相同，不表示测量条件或系统能力相同",
+        "control_verdict": "comparable",
+        "same_score_different_fields": [
+          "harness",
+          "retry_policy",
+          "step_budget"
+        ],
+        "same_score_verdict": "partially_comparable"
+      },
+      "execution": "real",
+      "number": 2,
+      "status": "passed",
+      "title": "审计 Benchmark Card"
+    },
+    {
+      "criteria": [
+        "使用 nearest-rank.v1",
+        "比较平均值与尾部"
+      ],
+      "evidence": {
+        "interpretation": "平均值 180.1ms 掩盖了 900ms 慢尾",
+        "mean": 190.1,
+        "nearest_rank": {
+          "p50": 111,
+          "p95": 900
+        },
+        "values": [
+          100,
+          105,
+          108,
+          110,
+          111,
+          113,
+          116,
+          118,
+          120,
+          900
+        ]
+      },
+      "execution": "real",
+      "number": 3,
+      "status": "passed",
+      "title": "手算 nearest-rank 分位数"
+    },
+    {
+      "criteria": [
+        "结构父子边与等待依赖边分开",
+        "并行检索互不依赖"
+      ],
+      "evidence": {
+        "dependency_edges": [
+          "model.plan -> retrieval.a",
+          "model.plan -> retrieval.b",
+          "retrieval.a -> verifier",
+          "retrieval.b -> verifier"
+        ],
+        "parallel": [
+          "retrieval.a",
+          "retrieval.b"
+        ],
+        "parent_edges": [
+          "agent.run -> model.plan",
+          "agent.run -> retrieval.a",
+          "agent.run -> retrieval.b",
+          "agent.run -> verifier"
+        ]
+      },
+      "execution": "design",
+      "number": 4,
+      "status": "answered",
+      "title": "拆分父子树与依赖图"
+    },
+    {
+      "criteria": [
+        "并行 Span 不直接相加",
+        "重试以逻辑操作为分母"
+      ],
+      "evidence": {
+        "critical_path_duration_ms": 320.0,
+        "critical_path_span_ids": [
+          "plan",
+          "retrieval-b",
+          "verify"
+        ],
+        "endpoint_duration_ms": 320,
+        "incident_retry_amplification": 1.4375,
+        "retry_formula": "billable_attempts / declared_logical_operations",
+        "work_span_duration_sum_ms": 440
+      },
+      "execution": "real",
+      "number": 5,
+      "status": "passed",
+      "title": "计算关键路径与重试放大"
+    },
+    {
+      "criteria": [
+        "总体指标不用 Tail 样本作分母",
+        "Coverage 与完整率分开"
+      ],
+      "evidence": {
+        "failed_request_count": 3,
+        "invalid_rate": "12/49 counts error-bearing retained traces, not failed population requests",
+        "population_failure_rate": 0.041666666666666664,
+        "request_count": 72,
+        "retained_trace_count": 49,
+        "telemetry_completeness": 0.9583333333333334,
+        "trace_coverage": 0.6805555555555556,
+        "trace_error_reason_count": 12
+      },
+      "execution": "real",
+      "number": 6,
+      "status": "passed",
+      "title": "选择采样分母"
+    },
+    {
+      "criteria": [
+        "已知总量与覆盖率同时报告",
+        "不把缺失当零"
+      ],
+      "evidence": {
+        "allowed_claim": "80 个已知调用合计 40 单位，字段覆盖率 80%",
+        "call_count": 100,
+        "forbidden_claim": "全部 100 个调用总成本就是 40 单位",
+        "known_cost_units": 40,
+        "known_usage_count": 80,
+        "usage_coverage": 0.8
+      },
+      "execution": "design",
+      "number": 7,
+      "status": "answered",
+      "title": "解释部分用量"
+    },
+    {
+      "criteria": [
+        "按用途和风险分层",
+        "敏感值在导出前处理"
+      ],
+      "evidence": {
+        "controlled_storage": [
+          "薪酬查询原文",
+          "受权限保护的文档摘录"
+        ],
+        "drop": [
+          "Authorization header",
+          "raw API key"
+        ],
+        "hash_with_salt": [
+          "employee_id",
+          "document_id"
+        ],
+        "ordering": [
+          "record",
+          "redact",
+          "validate",
+          "sample",
+          "export"
+        ],
+        "retain": [
+          "release_id",
+          "scenario_slice"
+        ]
+      },
+      "execution": "design",
+      "number": 8,
+      "status": "answered",
+      "title": "设计隐私字段分层"
+    },
+    {
+      "criteria": [
+        "容量与罕见高风险事件同时覆盖",
+        "总体计数独立"
+      ],
+      "evidence": {
+        "audit": "越权尝试与高风险副作用进入独立、不可由概率丢弃的审计通道",
+        "head": "按 trace_id 确定性保留低比例基础样本",
+        "population": "请求与失败计数在采样前聚合",
+        "tail": "保留错误、慢请求、新发布和一般安全信号"
+      },
+      "execution": "design",
+      "number": 9,
+      "status": "answered",
+      "title": "组合 Head、Tail 与审计通道"
+    },
+    {
+      "criteria": [
+        "每个故障匹配所需信号",
+        "不让单一信号承担全部证明"
+      ],
+      "evidence": {
+        "exporter_drops_spans": [
+          "telemetry completeness",
+          "exporter queue/error metrics"
+        ],
+        "model_slow": [
+          "Trace model span",
+          "provider latency/usage",
+          "release slice metrics"
+        ],
+        "retry_whole_loop": [
+          "dependency-aware Trace",
+          "retry amplification",
+          "cost and p95"
+        ],
+        "user_dislikes_correct_answer": [
+          "Outcome Eval",
+          "feedback",
+          "task/session context"
+        ]
+      },
+      "execution": "design",
+      "number": 10,
+      "status": "answered",
+      "title": "为故障选择观测信号"
+    },
+    {
+      "criteria": [
+        "五个候选变量逐一控制",
+        "固定任务和测量合同"
+      ],
+      "evidence": {
+        "ablations": [
+          "固定模型，只替换 Query rewrite",
+          "固定 Query，只替换索引快照",
+          "固定候选集，只替换 Reranker",
+          "固定排序结果，只替换文档内容版本",
+          "固定其余四项，只替换模型"
+        ],
+        "measurement": [
+          "retrieval recall",
+          "answer outcome",
+          "latency",
+          "usage coverage"
+        ],
+        "stop_rule": "只有一个干预稳定消除目标症状时才确认；否则 inconclusive"
+      },
+      "execution": "design",
+      "number": 11,
+      "status": "answered",
+      "title": "设计检索消融"
+    },
+    {
+      "criteria": [
+        "假设产生可反驳预测",
+        "包含同发布反例"
+      ],
+      "evidence": {
+        "falsifiers": [
+          "只有 recovery 切片变慢",
+          "simple 反证 Trace 保持稳定",
+          "固定 retry policy 后全部症状消失"
+        ],
+        "hypothesis": "新模型导致所有请求变慢",
+        "predictions": [
+          "所有场景切片的 model span 都系统性变慢",
+          "不使用恢复路径的 simple 请求也变慢",
+          "固定工具与重试后退化仍然存在"
+        ]
+      },
+      "execution": "design",
+      "number": 12,
+      "status": "answered",
+      "title": "用反证挑战模型变慢假设"
+    },
+    {
+      "criteria": [
+        "映射稳定概念而非背 API",
+        "指出不可一一对应处"
+      ],
+      "evidence": {
+        "checked_on": "2026-09-26",
+        "non_isomorphic": [
+          "本章 depends_on 工作 DAG 不能简单等于 Parent",
+          "IncidentReport 与业务 Eval 不由 Trace 协议自动定义"
+        ],
+        "opentelemetry": {
+          "release": "Resource or stable attribute",
+          "span_id_parent": "Span ID / Parent Span ID",
+          "trace_id": "Trace ID"
+        }
+      },
+      "execution": "design",
+      "number": 13,
+      "status": "answered",
+      "title": "映射观测平台"
+    },
+    {
+      "criteria": [
+        "结论保留支持、反证、完整率与未知项",
+        "缺少关键证据就拒绝"
+      ],
+      "evidence": {
+        "ablation_winner": [
+          "retry_policy"
+        ],
+        "canonical": {
+          "accepted": true,
+          "reason_codes": []
+        },
+        "conclusion": "confirmed",
+        "missing_completeness": {
+          "accepted": false,
+          "reason_codes": [
+            "missing_data_completeness"
+          ]
+        },
+        "missing_counterevidence": {
+          "accepted": false,
+          "reason_codes": [
+            "missing_counterevidence"
+          ]
+        },
+        "root_cause": "retry_policy"
+      },
+      "execution": "real",
+      "number": 14,
+      "status": "passed",
+      "title": "把事故固化为可审计报告"
+    }
+  ],
+  "limits": [
+    "design_answers_are_rubrics_not_unique_proofs",
+    "deterministic_fixture_not_real_production_measurement"
+  ],
+  "schema_version": "chapter14.exercises.v1",
+  "summary": {
+    "all_passed": true,
+    "count": 14
+  }
+}

@@ -23,6 +23,8 @@ py -3.11 -m venv .venv
 ```powershell
 python -B -m pytest chapter14/tests -q
 python -B -m chapter14.experiments --group all --output chapter14/.runs/reader-first
+python -B -m chapter14.exercise_solutions --all
+python -B -m chapter14.preview
 ```
 
 输出目录已存在时，命令默认拒绝覆盖。确实需要替换时显式添加 `--replace`；旧目录会重命名为相邻的 `.previous-N`，不会被删除。
@@ -87,6 +89,25 @@ python -B -m chapter14.experiments --group 3 --output chapter14/.runs/group-3
 
 [integrations.md](integrations.md) 把本章领域模型映射到 OpenTelemetry、Langfuse 与 OpenAI Agents SDK。它只用于理解责任边界，不是兼容性声明；产品 API 与语义状态以核对日期后的官方文档为准。
 
+## 练习与本地预览
+
+[reference-answers.md](reference-answers.md) 给出 14 道题的参考解释。机器可检查答案由 `exercise_solutions.py` 生成：
+
+```powershell
+python -B -m chapter14.exercise_solutions `
+  --all `
+  --output chapter14/.runs/exercise-results.json
+```
+
+生成本地候选预览后，可用可选的 Playwright 依赖执行桌面端与移动端检查：
+
+```powershell
+python -B -m chapter14.preview
+node book/check_chapter14_preview.mjs
+```
+
+`preview-pages/`、截图和 `.runs/` 都是本地临时产物，不进入规范报告或公开站点。
+
 ## 证据边界
 
 - 72 条 Trace 是教学夹具，不代表生产流量和真实随机性。
@@ -95,4 +116,3 @@ python -B -m chapter14.experiments --group 3 --output chapter14/.runs/group-3
 - Tail 保留计数不能作为总体错误率、延迟或场景占比。
 - 本地脱敏器是教学实现，不能替代组织的数据分类、密钥扫描、访问控制和合规评审。
 - 本地合同不声明符合任何观测平台的全部 Schema 或传输协议。
-
