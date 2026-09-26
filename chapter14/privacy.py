@@ -7,7 +7,7 @@ import json
 import re
 from typing import Any
 
-from .contracts import ValidationIssue
+from .contracts import SpanRecord, TraceRecord, ValidationIssue
 
 
 SECRET_KEYS = frozenset({"authorization", "cookie", "apikey", "token", "password", "credential"})
@@ -52,6 +52,19 @@ def redact_payload(value: object, *, salt: str) -> object:
         return item
 
     return redact(value)
+
+
+def redact_trace(trace: TraceRecord, *, salt: str) -> TraceRecord:
+    """Return a structurally equivalent TraceRecord with sensitive fields transformed."""
+    payload = redact_payload(trace.to_dict(), salt=salt)
+    assert isinstance(payload, dict)
+    span_payloads = payload.pop("spans")
+    assert isinstance(span_payloads, list)
+    spans = tuple(SpanRecord(**item) for item in span_payloads)
+    safe = TraceRecord(**payload, spans=spans)
+    if validate_export_safe(safe.to_dict()):
+        raise ValueError("unsafe_trace_after_redaction")
+    return safe
 
 
 def validate_export_safe(value: object) -> tuple[ValidationIssue, ...]:

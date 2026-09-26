@@ -6,7 +6,7 @@ import hashlib
 from typing import Any
 
 from .contracts import SamplingDecision, TraceRecord
-from .privacy import redact_payload, validate_export_safe
+from .privacy import redact_trace, validate_export_safe
 
 
 def _bucket(trace_id: str) -> float:
@@ -29,6 +29,8 @@ def head_sample(trace: TraceRecord, probability: float, policy_version: str) -> 
 
 
 def tail_sample(trace: TraceRecord, thresholds: Mapping[str, Any], policy_version: str) -> SamplingDecision:
+    if validate_export_safe(trace.to_dict()):
+        raise ValueError("unsafe_trace_before_tail_sampling")
     reasons: list[str] = []
     latency = trace.ended_at_ms - trace.started_at_ms
     if trace.status != "success" or any(span.status == "error" for span in trace.spans):
@@ -57,6 +59,8 @@ def combined_sample(
     thresholds: Mapping[str, Any],
     policy_version: str,
 ) -> SamplingDecision:
+    if validate_export_safe(trace.to_dict()):
+        raise ValueError("unsafe_trace_before_sampling")
     head = head_sample(trace, probability, f"{policy_version}.head")
     tail = tail_sample(trace, thresholds, f"{policy_version}.tail")
     keep = head.decision == "keep" or tail.decision == "keep"
@@ -82,13 +86,14 @@ def sampling_report(
     by_trace = {decision.trace_id: decision for decision in decisions}
     if set(by_trace) != {trace.trace_id for trace in traces}:
         raise ValueError("sampling_decisions_do_not_match_traces")
-    retained = [trace for trace in traces if by_trace[trace.trace_id].decision == "keep"]
+    # Transform and validate every full trace before selecting a retained
+    # representation. Tail decisions may inspect only an already-safe trace.
+    safe_traces = [redact_trace(trace, salt=salt) for trace in traces]
+    retained = [trace for trace in safe_traces if by_trace[trace.trace_id].decision == "keep"]
 
-    # Redaction happens before a retained representation is selected for the
-    # report. This models the required buffer -> sample -> export ordering.
     retained_metadata: list[dict[str, object]] = []
     for trace in retained:
-        redacted = redact_payload(trace.to_dict(), salt=salt)
+        redacted = trace.to_dict()
         issues = validate_export_safe(redacted)
         if issues:
             raise ValueError("unsafe_trace_after_redaction")

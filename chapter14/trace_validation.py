@@ -93,6 +93,8 @@ def validate_trace(trace: TraceRecord) -> tuple[ValidationIssue, ...]:
                 issues.append(_issue(trace, "unknown_dependency", "dependency span is missing", span_id=span.span_id, field="depends_on_span_ids"))
             elif dependency.kind in CONTAINER_KINDS:
                 issues.append(_issue(trace, "dependency_on_container", "work DAG cannot depend on grouping spans", span_id=span.span_id, field="depends_on_span_ids"))
+            elif dependency.end_ms > span.start_ms:
+                issues.append(_issue(trace, "dependency_time_order", "dependency must finish before dependent work starts", span_id=span.span_id, field="depends_on_span_ids"))
 
     if _has_cycle(parent_edges, parent_edges):
         issues.append(_issue(trace, "parent_cycle", "parent tree contains a cycle", field="parent_span_id"))

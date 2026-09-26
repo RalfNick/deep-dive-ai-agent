@@ -1,8 +1,11 @@
 from __future__ import annotations
 
 import json
+from dataclasses import replace
 
-from chapter14.privacy import redact_payload, validate_export_safe
+import pytest
+
+from chapter14.privacy import redact_payload, redact_trace, validate_export_safe
 from chapter14.sampling import combined_sample, head_sample, sampling_report, tail_sample
 from chapter14.trace_builder import build_trace_fixture
 
@@ -90,3 +93,26 @@ def test_combined_sampling_and_report_keep_population_and_diagnostic_denominator
     assert "diagnostic_error_rate" not in serialized
     assert report["limits"] == ["tail_retention_is_diagnostic_not_an_unbiased_denominator"]
     assert validate_export_safe(report) == ()
+
+
+def test_combined_sampling_rejects_raw_sensitive_trace_and_accepts_redacted_trace() -> None:
+    trace = build_trace_fixture()[0]
+    work = next(span for span in trace.spans if span.kind == "model")
+    unsafe = replace(
+        trace,
+        spans=tuple(
+            replace(span, attributes={"Authorization": "Bearer teaching-secret"})
+            if span.span_id == work.span_id else span
+            for span in trace.spans
+        ),
+        tags={"email": "reader@example.com", "logical_operations": 1},
+    )
+
+    with pytest.raises(ValueError, match="unsafe_trace_before_sampling"):
+        combined_sample(unsafe, 0.1, {"slow_ms": 450}, "combined.v1")
+
+    safe = redact_trace(unsafe, salt="chapter14-test-salt")
+    decision = combined_sample(safe, 0.1, {"slow_ms": 450}, "combined.v1")
+
+    assert decision.trace_id == trace.trace_id
+    assert validate_export_safe(safe.to_dict()) == ()

@@ -71,6 +71,17 @@ def test_dependency_on_container_span_is_rejected_before_metrics() -> None:
         require_valid_trace(invalid)
 
 
+def test_dependency_must_finish_before_dependent_work_starts() -> None:
+    trace = _parallel_trace()
+    retrievals = [span for span in trace.spans if span.kind == "retrieval"]
+    first, second = retrievals
+    invalid = _replace_span(trace, first.span_id, depends_on_span_ids=(second.span_id,))
+
+    assert "dependency_time_order" in _codes(invalid)
+    with pytest.raises(ValueError, match="dependency_time_order"):
+        require_valid_trace(invalid)
+
+
 def test_duplicate_ids_negative_usage_and_forbidden_attributes_are_rejected() -> None:
     trace = _parallel_trace()
     work = next(span for span in trace.spans if span.kind == "retrieval")
