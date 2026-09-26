@@ -46,14 +46,16 @@ def test_export_gate_rejects_forbidden_keys_and_values() -> None:
 
 def test_head_sampling_is_trace_id_deterministic_and_can_miss_a_rare_error() -> None:
     traces = build_trace_fixture()
-    first = [head_sample(trace, 0.1, "head.v1") for trace in traces]
-    second = [head_sample(trace, 0.1, "head.v1") for trace in reversed(traces)]
+    first = [head_sample(trace.trace_id, 0.1, "head.v1") for trace in traces]
+    second = [head_sample(trace.trace_id, 0.1, "head.v1") for trace in reversed(traces)]
     reversed_by_id = {item.trace_id: item.to_dict() for item in second}
 
     assert all(item.to_dict() == reversed_by_id[item.trace_id] for item in first)
     error_trace_ids = {trace.trace_id for trace in traces if trace.status != "success"}
     kept = {item.trace_id for item in first if item.decision == "keep"}
     assert error_trace_ids - kept
+    with pytest.raises(ValueError, match="missing_trace_id"):
+        head_sample("", 0.1, "head.v1")
 
 
 def test_tail_sampling_retains_diagnostic_cases_without_claiming_population_rates() -> None:

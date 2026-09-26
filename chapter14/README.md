@@ -68,7 +68,8 @@ python -B -m chapter14.experiments --group 3 --output chapter14/.runs/group-3
 ## 关键口径
 
 - 分位数：`nearest-rank.v1`。
-- 关键路径：`work-dag-longest-path.v1`；结构容器不重复计入。
+- 关键路径：`work-dag-longest-path.v1`；它是已观测工作 DAG 的最长路径，不包含排队、调度和未插桩空档，也不等同于完整端到端延迟。
+- 未归因时间：`endpoint_duration_ms - critical_path_duration_ms`；它提示观测缺口，不自动等于队列时间。
 - 重试放大：`billable-attempts-per-declared-operation.v1`。
 - 成本：`chapter14.cost-units.v1`，不是 Provider Price。
 - Trace Coverage：被保留明细的请求比例。
@@ -81,7 +82,7 @@ python -B -m chapter14.experiments --group 3 --output chapter14/.runs/group-3
 2. `benchmark.py`：Benchmark Card 加载与可比性审计。
 3. `trace_builder.py`、`trace_validation.py`：确定性 Trace 与两类图验证。
 4. `metrics.py`：分位数、关键路径、用量与发布比较。
-5. `privacy.py`、`sampling.py`：先脱敏、后采样与分母分离。
+5. `privacy.py`、`sampling.py`：Head 只取 Trace ID，完整载荷先脱敏，再做 Tail 判定、缓冲或导出。
 6. `diagnosis.py`：切片、消融、事故结论与回归任务。
 7. `experiments.py`：五组实验、Schema 校验、报告与防覆盖。
 

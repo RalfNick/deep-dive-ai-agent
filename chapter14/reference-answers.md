@@ -84,6 +84,8 @@ plan 80 + max(retrieval 120, retrieval 200) + verify 40 = 320 ms
 
 若只把检索 A 从 120 降到 20 毫秒，关键路径仍经过 200 毫秒的检索 B，端到端仍为 320 毫秒。因此“优化了 100 毫秒 Span”不等于用户少等 100 毫秒。
 
+这个手算例子没有放入排队空档。规范夹具 `trace-stable-retrieval-02` 的端到端耗时为 331 毫秒，已观测工作关键路径为 296 毫秒，另有 35 毫秒未归因时间。它可以提示继续检查队列、调度和插桩缺口，却不能单凭差值断言根因。
+
 参考脚本还从 24 条 incident Trace 重新计算重试放大率 `1.4375`。公式是“模型/检索/工具等可计费尝试数 ÷ 声明的逻辑操作数”。比值只能说明额外尝试，不单独证明重试错误。
 
 ## 6. 采样分母
@@ -128,7 +130,9 @@ Telemetry Completeness  = 69 / 72 = 0.958333...
 - 必须删除：Authorization、Cookie、原始 API Key；
 - 仅限受控存储：薪酬查询原文、权限文档摘录，并设置短留存和访问审计。
 
-处理顺序是 `record → redact → validate → sample → export`。这里的 `record` 指在进程内形成事件，不代表先把原文写入外部日志。字段白名单与 Export Gate 应在数据离开信任边界前生效。
+Head 决策只需要 `trace_id`，可以在完整载荷形成前执行：`trace_id → deterministic bucket → keep/drop`。它不读取 Prompt，也不意味着原始载荷可以提前进入观测管线。
+
+完整载荷的处理顺序是 `record → redact → validate → tail decision/buffer → export`。这里的 `record` 指在进程内形成事件，不代表先把原文写入外部日志。字段白名单与 Export Gate 应在数据离开信任边界前生效。
 
 ## 9. 千万级请求下的采样组合
 
@@ -199,4 +203,3 @@ Telemetry Completeness  = 69 / 72 = 0.958333...
 ```
 
 真实团队还应要求查询窗口、环境、支持证据、未知项、责任人和动作。门禁拒绝缺失字段不是为了追求文档完整，而是防止“只展示支持自己结论的 Trace”或在遥测严重缺失时给出确定根因。
-

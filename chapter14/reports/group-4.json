@@ -2,13 +2,21 @@
   "group": 4,
   "privacy": {
     "export_safe": true,
-    "ordering": [
-      "record",
-      "redact",
-      "sample",
-      "export",
-      "store"
-    ],
+    "ordering": {
+      "full_payload": [
+        "record",
+        "redact",
+        "export_safety_gate",
+        "tail_decision_or_buffer",
+        "export",
+        "store"
+      ],
+      "head_decision": [
+        "trace_id",
+        "deterministic_bucket",
+        "keep_or_drop"
+      ]
+    },
     "redacted_example": {
       "email": "hash:29f6dae85b6961b7",
       "headers": {

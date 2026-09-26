@@ -252,13 +252,17 @@ Langfuse 的数据模型也用 Session 聚合多个 Trace，用 Observation 表�
 80 + 120 + 200 + 40 = 440 ms
 ```
 
-但用户真正等待的关键路径是：
+在这个没有排队空档的简化例子中，决定用户等待时间的工作链是：
 
 ```text
 80 + max(120, 200) + 40 = 320 ms
 ```
 
-两路检索贡献了 320 毫秒的“工作量”，却只有较慢的一路决定端到端等待。关键路径是依赖图中耗时最长的有效路径；容器 Span 只用于结构展示，不应与其子 Span 再次相加。
+两路检索贡献了 320 毫秒的“工作量”，却只有较慢的一路进入最长工作链。本章算法计算的是依赖图中耗时最长的**已观测工作路径**；容器 Span 只用于结构展示，不应与其子 Span 再次相加。
+
+但“已观测工作路径”不必等于端到端延迟。规范夹具中的另一个请求端到端耗时 331 毫秒，最长工作路径只有 296 毫秒，中间还有 35 毫秒没有归属于这条路径上的工作 Span。它可能来自排队、调度、Span 之间的等待，也可能来自尚未插桩的代码。可靠报告因此同时保留 `endpoint_duration_ms`、`critical_path_duration_ms` 与 `critical_path_unattributed_elapsed_ms`，不会把工作路径冒充用户完整等待时间。
+
+这个差值只能提示“还有时间没有被当前关键工作链解释”，不能自动断言 35 毫秒全是队列时间。要继续拆分，必须增加更细的队列、调度或网络 Span。
 
 ![图 14-5：并行工作不能直接求和；决定用户等待时间的是依赖图上的最长路径。](images/chapter14/05-critical-path.svg)
 
@@ -318,7 +322,7 @@ retry_amplification = 可计费尝试数 / 声明的逻辑操作数
 
 OpenTelemetry 文档同样区分 Head 与 Tail：前者通常在 Trace 早期决定，无法使用完整 Trace 信息；后者能利用完整 Span 集合，却需要更多状态和资源。[来源：OTEL-SAMPLING](sources/chapter14-sources.md#opentelemetry)
 
-![图 14-6：原始事件先经过应用侧脱敏，再进入 Head/Tail 采样，最后分别服务总体指标和诊断明细。](images/chapter14/06-sampling-privacy.svg)
+![图 14-6：Head 只根据 Trace ID 提前决定；完整载荷先脱敏，再进入 Tail、缓冲与导出。](images/chapter14/06-sampling-privacy.svg)
 
 ### Trace Coverage 与 Telemetry Completeness 不是一个数
 
@@ -334,17 +338,20 @@ OpenTelemetry 文档同样区分 Head 与 Tail：前者通常在 Trace 早期决
 
 **失败样本 4：把 Tail 样本当生产分布。** 事故期间 Tail 策略保留全部错误请求，只保留少量正常请求。团队用样本计算“错误率 24%”，造成二次告警。正确做法是从采样前计数器计算总体错误率，用 Tail 样本解释错误形状。
 
-### 脱敏必须发生在导出与采样之前
+### Head 只看标识；完整载荷必须先脱敏
 
 “先把原始 Prompt 发到观测平台，再在 UI 里隐藏”不叫数据最小化。数据已经越过信任边界，采样未命中的内容也可能短暂进入队列、缓存或其他 Exporter。
 
-本章的顺序固定为：
+Head Sampling 是一个容易混淆的例外：它可以在 Prompt、工具参数等完整载荷尚未形成时，只根据 `trace_id` 和固定概率提前做决定。本章的 `head_sample` 也只接收 `trace_id`。这次判断不需要先“脱敏一个尚不存在的载荷”，但它同样无权读取原始 Prompt。
+
+一旦事件包含 Prompt、检索内容或工具参数，顺序就必须固定为：
 
 ```text
-原始事件 → 应用侧递归脱敏 → 导出安全验证 → 采样 → 保留/丢弃
+Head 决策：trace_id → 确定性桶 → keep / drop
+完整载荷：原始事件 → 应用侧递归脱敏 → 导出安全验证 → Tail 判定 / 缓冲 / 导出
 ```
 
-脱敏器处理嵌套密钥、身份字段和工具参数；敏感值可以删除、替换或在带盐条件下生成不可逆关联摘要。Export Gate 再扫描禁止字段与危险值，发现遗漏就拒绝导出。Langfuse 的 masking 文档也提醒：掩码作用于导出副本，若同时配置其他 Exporter，需要分别处理；若数据绝不能离开信任边界，应在应用侧完成处理。[来源：LANGFUSE-MASKING](sources/chapter14-sources.md#langfuse)
+换句话说，Head 可以提前决定“是否值得保留”，却不能授权原始载荷进入采样缓冲。Tail 需要查看完成后的 Trace，因此它读取的必须是已脱敏并通过安全门禁的副本。脱敏器处理嵌套密钥、身份字段和工具参数；敏感值可以删除、替换或在带盐条件下生成不可逆关联摘要。Export Gate 再扫描禁止字段与危险值，发现遗漏就拒绝导出。Langfuse 的 masking 文档也提醒：掩码作用于导出副本，若同时配置其他 Exporter，需要分别处理；若数据绝不能离开信任边界，应在应用侧完成处理。[来源：LANGFUSE-MASKING](sources/chapter14-sources.md#langfuse)
 
 ### 不要把隐藏思维链当作观测目标
 
@@ -352,7 +359,7 @@ Agent 可观测性需要的是可审计事件：模型请求的版本与摘要�
 
 生产中更可靠的做法是记录**显式理由与证据引用**：为什么选择某工具、用了哪些文档 ID、哪条策略触发审批、哪项验证失败。它们可以被 Schema 校验、权限控制和回放。自由文本“内心独白”既可能泄露敏感信息，也不能当作系统真实因果。
 
-> **实验 14-4 ★★：先脱敏，再比较 Head 与 Tail**
+> **实验 14-4 ★★：分开 Head 决策与 Tail 安全载荷**
 >
 > ```powershell
 > python -B -m chapter14.experiments `
@@ -506,7 +513,7 @@ Prompt、检索文档、工具参数和输出可能同时包含身份信息、�
 
 ## 一份可交付的生产诊断报告
 
-报告不应只有截图和一句“疑似模型抖动”。本章的 `IncidentReport` 至少保存：症状、受影响切片、候选原因、支持 Trace、反证 Trace、消融结果、数据完整率、未知项、结论、置信度、建议动作和回归任务。
+报告不应只有截图和一句“疑似模型抖动”。本章的 `IncidentReport` 至少保存：症状、受影响切片、候选原因、支持 Trace、反证 Trace、消融结果、数据完整率、未知项、结论、置信度、建议动作和回归任务。若结论为 `confirmed`，构造器和 JSON Schema 都要求支持 Trace 与反证 Trace 至少各一条；证据不足时必须降级为 `inconclusive`，不能只靠一组正例确认根因。
 
 一个人类可读摘要可以写成：
 
@@ -542,7 +549,7 @@ actions:
 3. [trace_builder.py](../chapter14/trace_builder.py)：72 条 Trace 怎样固定生成；
 4. [trace_validation.py](../chapter14/trace_validation.py)：父子树、依赖图和导出边界怎样失败关闭；
 5. [metrics.py](../chapter14/metrics.py)：nearest-rank、关键路径、用量覆盖和重试放大；
-6. [privacy.py](../chapter14/privacy.py) 与 [sampling.py](../chapter14/sampling.py)：先脱敏、后采样，分母怎样分离；
+6. [privacy.py](../chapter14/privacy.py) 与 [sampling.py](../chapter14/sampling.py)：Head 只取标识，完整载荷先脱敏，分母怎样分离；
 7. [diagnosis.py](../chapter14/diagnosis.py)：切片、反证、消融和回归任务；
 8. [experiments.py](../chapter14/experiments.py)：五组证据怎样汇总成稳定报告。
 
@@ -554,10 +561,10 @@ actions:
 
 - Benchmark 分数只有在任务、系统、资源和指标合同对齐后才可比较；
 - Agent 生产质量需要 Metrics、Trace、Eval 和反馈的互补证据；
-- 父子结构与工作依赖必须分开，关键路径不能用 Span 时长简单相加；
+- 父子结构与工作依赖必须分开，已观测工作关键路径既不能用 Span 时长简单相加，也不能冒充完整端到端延迟；
 - 延迟、用量、成本、重试都需要明确算法、费率版本和覆盖率；
 - Head 与 Tail 采样服务不同目标，Tail 样本不能作为总体分母；
-- 脱敏应发生在采样和导出前，缺失遥测必须产生 unknown；
+- Head 可以只根据非敏感标识提前决策，但完整载荷必须在 Tail、缓冲和导出前脱敏；
 - 切片、反证和单变量消融能把候选原因收缩为可回归假设；
 - 事故证据最终应转化为离线回归任务和发布保护。
 

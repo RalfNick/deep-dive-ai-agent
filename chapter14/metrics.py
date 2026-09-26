@@ -21,6 +21,12 @@ def nearest_rank(values: Sequence[float], percentile: float) -> float:
 
 
 def critical_path(trace: TraceRecord) -> dict[str, object]:
+    """Measure the longest observed work chain, not total user wait.
+
+    The DAG contains instrumented work spans. Queueing, scheduling and
+    uninstrumented gaps remain in the endpoint-minus-path residual and must not
+    be silently attributed to one cause.
+    """
     require_valid_trace(trace)
     work = {span.span_id: span for span in trace.spans if span.kind not in CONTAINER_KINDS}
     memo: dict[str, tuple[float, tuple[str, ...]]] = {}
@@ -39,11 +45,13 @@ def critical_path(trace: TraceRecord) -> dict[str, object]:
         return memo[span_id]
 
     duration, path = max((longest_to(span_id) for span_id in sorted(work)), key=lambda item: (item[0], item[1]))
+    endpoint_duration = trace.ended_at_ms - trace.started_at_ms
     return {
         "trace_id": trace.trace_id,
-        "endpoint_duration_ms": trace.ended_at_ms - trace.started_at_ms,
+        "endpoint_duration_ms": endpoint_duration,
         "work_span_duration_sum_ms": sum(span.end_ms - span.start_ms for span in work.values()),
         "critical_path_duration_ms": duration,
+        "critical_path_unattributed_elapsed_ms": endpoint_duration - duration,
         "critical_path_span_ids": list(path),
         "algorithm": "work-dag-longest-path.v1",
     }

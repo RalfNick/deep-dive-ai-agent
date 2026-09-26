@@ -30,6 +30,9 @@ def test_five_groups_expose_the_promised_evidence(tmp_path: Path) -> None:
     assert groups[3]["release_summaries"]["incident"]["latency_ms"]["p95"] > groups[3]["release_summaries"]["stable"]["latency_ms"]["p95"]
     assert groups[4]["sampling"]["population_metrics"]["request_count"] == 72
     assert groups[4]["privacy"]["export_safe"] is True
+    assert groups[4]["privacy"]["ordering"]["head_decision"] == [
+        "trace_id", "deterministic_bucket", "keep_or_drop"
+    ]
     assert groups[5]["incident_report"]["root_cause"] == "retry_policy"
     assert len(groups[5]["regression_tasks"]) == 3
 
@@ -93,5 +96,11 @@ def test_report_schema_accepts_real_report_and_rejects_semantic_mutations(tmp_pa
     missing_completeness = deepcopy(report)
     del missing_completeness["sampling"]["telemetry_completeness"]
     mutations.append(missing_completeness)
+    confirmed_without_support = deepcopy(report)
+    confirmed_without_support["incident_report"]["supporting_trace_ids"] = []
+    mutations.append(confirmed_without_support)
+    confirmed_without_counterevidence = deepcopy(report)
+    confirmed_without_counterevidence["incident_report"]["counterevidence_trace_ids"] = []
+    mutations.append(confirmed_without_counterevidence)
 
     assert all(list(validator.iter_errors(item)) for item in mutations)

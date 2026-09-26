@@ -9,6 +9,7 @@
       "trace-stable-retrieval-02:model-answer",
       "trace-stable-retrieval-02:verify"
     ],
+    "critical_path_unattributed_elapsed_ms": 35.0,
     "endpoint_duration_ms": 331,
     "trace_id": "trace-stable-retrieval-02",
     "work_span_duration_sum_ms": 360

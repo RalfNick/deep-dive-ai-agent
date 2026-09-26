@@ -99,7 +99,7 @@ def test_valid_contracts_serialize_explicit_nulls() -> None:
         data_completeness=0.95,
         candidate_causes=("retry_policy", "tool_latency"),
         supporting_trace_ids=(trace.trace_id,),
-        counterevidence_trace_ids=(),
+        counterevidence_trace_ids=("trace-control-01",),
         ablation_results=({"hypothesis": "retry_policy", "symptoms_removed": True},),
         root_cause="retry_policy",
         confidence=0.9,
@@ -121,7 +121,7 @@ def test_valid_contracts_serialize_explicit_nulls() -> None:
     assert trace.to_dict()["spans"][0]["output_tokens"] is None
     assert trace.to_dict()["spans"][0]["error_type"] is None
     assert decision.to_dict()["reason_codes"] == ["deterministic_bucket"]
-    assert report.to_dict()["counterevidence_trace_ids"] == []
+    assert report.to_dict()["counterevidence_trace_ids"] == ["trace-control-01"]
     assert issue.to_dict()["field"] == "parent_span_id"
     with pytest.raises(FrozenInstanceError):
         trace.status = "failure"  # type: ignore[misc]
@@ -149,11 +149,27 @@ def test_valid_contracts_serialize_explicit_nulls() -> None:
         (lambda: SamplingDecision("trace-1", "head", "maybe", (), 0.1, "v1"), "invalid_sampling_decision"),
         (lambda: SamplingDecision("trace-1", "head", "keep", (), 1.1, "v1"), "invalid_sampling_probability"),
         (lambda: IncidentReport("symptom", (), 1.0, (), (), (), (), None, 0.5, "certain", (), (), ()), "invalid_incident_conclusion"),
+        (
+            lambda: IncidentReport("symptom", (), 1.0, (), (), ("trace-control",), (), "cause", 0.9, "confirmed", (), (), ()),
+            "confirmed_incident_requires_supporting_evidence",
+        ),
+        (
+            lambda: IncidentReport("symptom", (), 1.0, (), ("trace-support",), (), (), "cause", 0.9, "confirmed", (), (), ()),
+            "confirmed_incident_requires_counterevidence",
+        ),
     ],
 )
 def test_invalid_contracts_fail_at_construction(factory, error_code: str) -> None:
     with pytest.raises(ValueError, match=error_code):
         factory()
+
+
+def test_inconclusive_incident_can_preserve_evidence_gaps_as_unknowns() -> None:
+    report = IncidentReport(
+        "symptom", (), 0.4, (), (), (), (), None, 0.2, "inconclusive", ("more_traces_required",), (), ()
+    )
+    assert report.supporting_trace_ids == ()
+    assert report.counterevidence_trace_ids == ()
 
 
 def test_scenario_fixture_has_unique_balanced_safe_records() -> None:

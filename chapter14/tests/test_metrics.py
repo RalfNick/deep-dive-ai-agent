@@ -31,6 +31,8 @@ def test_critical_path_excludes_containers_and_handles_parallel_work() -> None:
     assert result["work_span_duration_sum_ms"] == 360
     assert result["work_span_duration_sum_ms"] > result["endpoint_duration_ms"]
     assert result["critical_path_duration_ms"] == 296
+    assert result["critical_path_unattributed_elapsed_ms"] == 35
+    assert result["endpoint_duration_ms"] > result["critical_path_duration_ms"]
     assert [item.rsplit(":", 1)[-1] for item in result["critical_path_span_ids"]] == [
         "model-plan", "retrieve-a", "model-answer", "verify"
     ]

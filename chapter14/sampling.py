@@ -14,12 +14,14 @@ def _bucket(trace_id: str) -> float:
     return integer / 2**64
 
 
-def head_sample(trace: TraceRecord, probability: float, policy_version: str) -> SamplingDecision:
+def head_sample(trace_id: str, probability: float, policy_version: str) -> SamplingDecision:
+    if not isinstance(trace_id, str) or not trace_id.strip():
+        raise ValueError("missing_trace_id")
     if not 0 <= probability <= 1:
         raise ValueError("invalid_sampling_probability")
-    keep = _bucket(trace.trace_id) < probability
+    keep = _bucket(trace_id) < probability
     return SamplingDecision(
-        trace.trace_id,
+        trace_id,
         "head",
         "keep" if keep else "drop",
         ("deterministic_bucket_keep" if keep else "deterministic_bucket_drop",),
@@ -59,9 +61,12 @@ def combined_sample(
     thresholds: Mapping[str, Any],
     policy_version: str,
 ) -> SamplingDecision:
+    # Head sampling can happen before a payload exists and uses only a
+    # non-sensitive identifier. Tail sampling may inspect the completed trace,
+    # so that payload must already have passed the export-safety gate.
+    head = head_sample(trace.trace_id, probability, f"{policy_version}.head")
     if validate_export_safe(trace.to_dict()):
         raise ValueError("unsafe_trace_before_sampling")
-    head = head_sample(trace, probability, f"{policy_version}.head")
     tail = tail_sample(trace, thresholds, f"{policy_version}.tail")
     keep = head.decision == "keep" or tail.decision == "keep"
     reasons = (

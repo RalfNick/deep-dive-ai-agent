@@ -92,7 +92,12 @@ def _group_payload(group: int) -> dict[str, object]:
             "privacy": {
                 "redacted_example": redacted,
                 "export_safe": not validate_export_safe(redacted),
-                "ordering": ["record", "redact", "sample", "export", "store"],
+                "ordering": {
+                    "head_decision": ["trace_id", "deterministic_bucket", "keep_or_drop"],
+                    "full_payload": [
+                        "record", "redact", "export_safety_gate", "tail_decision_or_buffer", "export", "store"
+                    ],
+                },
             },
         }
     if group == 5:

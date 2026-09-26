@@ -276,6 +276,11 @@ class IncidentReport:
             "regression_task_ids",
         ):
             object.__setattr__(self, name, tuple(getattr(self, name)))
+        if self.conclusion == IncidentConclusion.CONFIRMED:
+            if not self.supporting_trace_ids:
+                raise ValueError("confirmed_incident_requires_supporting_evidence")
+            if not self.counterevidence_trace_ids:
+                raise ValueError("confirmed_incident_requires_counterevidence")
         object.__setattr__(self, "ablation_results", tuple(_freeze(item) for item in self.ablation_results))
 
     def to_dict(self) -> dict[str, Any]:

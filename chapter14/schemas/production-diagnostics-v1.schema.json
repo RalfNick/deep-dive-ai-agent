@@ -305,6 +305,20 @@
         "recommended_actions",
         "regression_task_ids"
       ],
+      "allOf": [
+        {
+          "if": {
+            "required": ["conclusion"],
+            "properties": {"conclusion": {"const": "confirmed"}}
+          },
+          "then": {
+            "properties": {
+              "supporting_trace_ids": {"minItems": 1},
+              "counterevidence_trace_ids": {"minItems": 1}
+            }
+          }
+        }
+      ],
       "properties": {
         "symptom": {"type": "string", "minLength": 1},
         "affected_slices": {"type": "array", "items": {"enum": ["simple", "retrieval", "write", "recovery"]}},

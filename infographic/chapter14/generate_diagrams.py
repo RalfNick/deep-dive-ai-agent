@@ -17,7 +17,7 @@ APPROVED_DIAGRAMS = (
     ("03-observability-signals", "五类观测信号：各自回答什么"),
     ("04-session-trace-span", "Session → Trace → Span：结构树与依赖边"),
     ("05-critical-path", "关键路径：延迟不是 Span 时长相加"),
-    ("06-sampling-privacy", "采样与隐私：先脱敏，再采样"),
+    ("06-sampling-privacy", "采样与隐私：Head 提前判定，载荷先脱敏"),
     ("07-diagnosis-loop", "生产诊断闭环：从告警到回归"),
 )
 
@@ -169,21 +169,24 @@ def _scene_critical_path() -> Scene:
 
 def _scene_sampling() -> Scene:
     nodes = (
-        Node("record", "Record\n最小必要字段", 70, 350, 220, 120, "blue"),
-        Node("redact", "Redact\n凭据删 · 身份哈希", 360, 330, 270, 160, "violet"),
-        Node("sample", "Sample\nHead + Tail", 720, 350, 230, 120, "orange"),
-        Node("export", "Export\n安全门禁", 1040, 350, 230, 120, "green"),
-        Node("store", "Store\n受控 Trace", 1360, 350, 190, 120, "blue"),
-        Node("metrics", "Population Metrics\n请求数 · 失败数", 690, 650, 300, 120, "green"),
+        Node("record", "Record\n最小必要字段", 70, 390, 220, 120, "blue"),
+        Node("head", "Head Decision\n只读取 Trace ID", 400, 220, 270, 120, "orange"),
+        Node("redact", "Redact\n凭据删 · 身份哈希", 400, 510, 270, 140, "violet"),
+        Node("tail", "Tail Decision\n读取安全 Trace", 760, 520, 240, 120, "orange"),
+        Node("export", "Export\n安全门禁", 1080, 520, 230, 120, "green"),
+        Node("store", "Store\n受控 Trace", 1370, 390, 180, 120, "blue"),
+        Node("metrics", "Population Metrics\n请求数 · 失败数", 70, 680, 250, 110, "green"),
     )
     edges = (
-        Edge("e1", "record", "redact", "先脱敏"),
-        Edge("e2", "redact", "sample", "再采样"),
-        Edge("e3", "sample", "export", "保留"),
-        Edge("e4", "export", "store", "安全存储"),
-        Edge("e5", "record", "metrics", "总体计数", "green", "dashed"),
+        Edge("e1", "record", "head", "仅 Trace ID", "orange"),
+        Edge("e2", "head", "store", "是否保留", "orange", "dashed", -70),
+        Edge("e3", "record", "redact", "载荷先脱敏"),
+        Edge("e4", "redact", "tail", "安全 Trace"),
+        Edge("e5", "tail", "export", "Tail 保留"),
+        Edge("e6", "export", "store", "安全载荷"),
+        Edge("e7", "record", "metrics", "总体计数", "green", "dashed"),
     )
-    return Scene(APPROVED_DIAGRAMS[5][0], APPROVED_DIAGRAMS[5][1], "Tail Sample 用来找案例，不能直接充当总体错误率分母。", nodes, edges, "正确顺序是先脱敏再采样；否则被丢弃的 Trace 也可能在缓冲区泄露敏感数据。")
+    return Scene(APPROVED_DIAGRAMS[5][0], APPROVED_DIAGRAMS[5][1], "Head 只看标识；Tail 读取的完整载荷必须已经脱敏。", nodes, edges, "Head 可提前决定；任何被缓冲、保存或导出的完整载荷都必须先脱敏。")
 
 
 def _scene_diagnosis() -> Scene:
