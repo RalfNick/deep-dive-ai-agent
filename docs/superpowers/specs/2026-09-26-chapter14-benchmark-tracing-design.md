@@ -1,8 +1,10 @@
 # 第 14 章《Benchmark、Tracing 与生产诊断》设计说明
 
-日期：2026-09-26  
-目标分支：`codex/chapter14-benchmark-tracing`  
-状态：待作者书面确认后进入实施计划  
+日期：2026-09-26
+
+目标分支：`codex/chapter14-benchmark-tracing`
+
+状态：待作者书面确认后进入实施计划
 
 ## 1. 目标与读者
 
