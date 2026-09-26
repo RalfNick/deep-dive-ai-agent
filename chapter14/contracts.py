@@ -22,6 +22,7 @@ class ScenarioSlice(StrEnum):
 
 class SpanKind(StrEnum):
     ROOT = "root"
+    CONTAINER = "container"
     MODEL = "model"
     RETRIEVAL = "retrieval"
     TOOL = "tool"
