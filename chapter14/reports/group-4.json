@@ -1,0 +1,391 @@
+{
+  "group": 4,
+  "privacy": {
+    "export_safe": true,
+    "ordering": [
+      "record",
+      "redact",
+      "sample",
+      "export",
+      "store"
+    ],
+    "redacted_example": {
+      "email": "hash:29f6dae85b6961b7",
+      "headers": {
+        "Authorization": "[REDACTED]"
+      },
+      "tool_arguments": {
+        "digest": "sha256:f1c3810a520fa00a49c64cdd6dfd776cc601a4b648d20d9f99b61fe1cd4791f8",
+        "redacted": true
+      }
+    }
+  },
+  "sampling": {
+    "diagnostic_retained_counts": {
+      "approval_or_security": 18,
+      "new_release": 24,
+      "retained_trace_count": 49,
+      "slow_trace": 3,
+      "telemetry_incomplete": 3,
+      "trace_error": 12
+    },
+    "limits": [
+      "tail_retention_is_diagnostic_not_an_unbiased_denominator"
+    ],
+    "policy_versions": [
+      "combined.v1"
+    ],
+    "population_metrics": {
+      "failed_request_count": 3,
+      "request_count": 72
+    },
+    "retained_trace_metadata": [
+      {
+        "release_id": "stable",
+        "slice": "retrieval",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-stable-retrieval-04"
+      },
+      {
+        "release_id": "stable",
+        "slice": "write",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-stable-write-01"
+      },
+      {
+        "release_id": "stable",
+        "slice": "write",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-stable-write-02"
+      },
+      {
+        "release_id": "stable",
+        "slice": "write",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-stable-write-03"
+      },
+      {
+        "release_id": "stable",
+        "slice": "write",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-stable-write-04"
+      },
+      {
+        "release_id": "stable",
+        "slice": "write",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-stable-write-05"
+      },
+      {
+        "release_id": "stable",
+        "slice": "write",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-stable-write-06"
+      },
+      {
+        "release_id": "stable",
+        "slice": "recovery",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-stable-recovery-01"
+      },
+      {
+        "release_id": "stable",
+        "slice": "recovery",
+        "status": "failure",
+        "telemetry_complete": true,
+        "trace_id": "trace-stable-recovery-02"
+      },
+      {
+        "release_id": "stable",
+        "slice": "recovery",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-stable-recovery-03"
+      },
+      {
+        "release_id": "stable",
+        "slice": "recovery",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-stable-recovery-05"
+      },
+      {
+        "release_id": "stable",
+        "slice": "recovery",
+        "status": "success",
+        "telemetry_complete": false,
+        "trace_id": "trace-stable-recovery-06"
+      },
+      {
+        "release_id": "incident",
+        "slice": "simple",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-simple-01"
+      },
+      {
+        "release_id": "incident",
+        "slice": "simple",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-simple-02"
+      },
+      {
+        "release_id": "incident",
+        "slice": "simple",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-simple-03"
+      },
+      {
+        "release_id": "incident",
+        "slice": "simple",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-simple-04"
+      },
+      {
+        "release_id": "incident",
+        "slice": "simple",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-simple-05"
+      },
+      {
+        "release_id": "incident",
+        "slice": "simple",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-simple-06"
+      },
+      {
+        "release_id": "incident",
+        "slice": "retrieval",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-retrieval-01"
+      },
+      {
+        "release_id": "incident",
+        "slice": "retrieval",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-retrieval-02"
+      },
+      {
+        "release_id": "incident",
+        "slice": "retrieval",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-retrieval-03"
+      },
+      {
+        "release_id": "incident",
+        "slice": "retrieval",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-retrieval-04"
+      },
+      {
+        "release_id": "incident",
+        "slice": "retrieval",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-retrieval-05"
+      },
+      {
+        "release_id": "incident",
+        "slice": "retrieval",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-retrieval-06"
+      },
+      {
+        "release_id": "incident",
+        "slice": "write",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-write-01"
+      },
+      {
+        "release_id": "incident",
+        "slice": "write",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-write-02"
+      },
+      {
+        "release_id": "incident",
+        "slice": "write",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-write-03"
+      },
+      {
+        "release_id": "incident",
+        "slice": "write",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-write-04"
+      },
+      {
+        "release_id": "incident",
+        "slice": "write",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-write-05"
+      },
+      {
+        "release_id": "incident",
+        "slice": "write",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-write-06"
+      },
+      {
+        "release_id": "incident",
+        "slice": "recovery",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-recovery-01"
+      },
+      {
+        "release_id": "incident",
+        "slice": "recovery",
+        "status": "failure",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-recovery-02"
+      },
+      {
+        "release_id": "incident",
+        "slice": "recovery",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-recovery-03"
+      },
+      {
+        "release_id": "incident",
+        "slice": "recovery",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-recovery-04"
+      },
+      {
+        "release_id": "incident",
+        "slice": "recovery",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-incident-recovery-05"
+      },
+      {
+        "release_id": "incident",
+        "slice": "recovery",
+        "status": "success",
+        "telemetry_complete": false,
+        "trace_id": "trace-incident-recovery-06"
+      },
+      {
+        "release_id": "fixed",
+        "slice": "simple",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-fixed-simple-03"
+      },
+      {
+        "release_id": "fixed",
+        "slice": "retrieval",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-fixed-retrieval-06"
+      },
+      {
+        "release_id": "fixed",
+        "slice": "write",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-fixed-write-01"
+      },
+      {
+        "release_id": "fixed",
+        "slice": "write",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-fixed-write-02"
+      },
+      {
+        "release_id": "fixed",
+        "slice": "write",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-fixed-write-03"
+      },
+      {
+        "release_id": "fixed",
+        "slice": "write",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-fixed-write-04"
+      },
+      {
+        "release_id": "fixed",
+        "slice": "write",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-fixed-write-05"
+      },
+      {
+        "release_id": "fixed",
+        "slice": "write",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-fixed-write-06"
+      },
+      {
+        "release_id": "fixed",
+        "slice": "recovery",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-fixed-recovery-01"
+      },
+      {
+        "release_id": "fixed",
+        "slice": "recovery",
+        "status": "failure",
+        "telemetry_complete": true,
+        "trace_id": "trace-fixed-recovery-02"
+      },
+      {
+        "release_id": "fixed",
+        "slice": "recovery",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-fixed-recovery-03"
+      },
+      {
+        "release_id": "fixed",
+        "slice": "recovery",
+        "status": "success",
+        "telemetry_complete": true,
+        "trace_id": "trace-fixed-recovery-05"
+      },
+      {
+        "release_id": "fixed",
+        "slice": "recovery",
+        "status": "success",
+        "telemetry_complete": false,
+        "trace_id": "trace-fixed-recovery-06"
+      }
+    ],
+    "telemetry_completeness": 0.9583333333333334,
+    "trace_coverage": 0.6805555555555556
+  },
+  "title": "sampling, privacy, and observability blind spots"
+}

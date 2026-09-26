@@ -1,0 +1,40 @@
+{
+  "artifacts": [
+    {
+      "bytes": 20951,
+      "name": "diagnostic-report.json",
+      "sha256": "49f651364419533460abf924509567c0ed04a127a91743fa968acb51c5d9fc75"
+    },
+    {
+      "bytes": 804,
+      "name": "diagnostic-report.md",
+      "sha256": "2c382ee6b0323c36c679039d9a9357b86ad9eefb33b62802ce48922c04576411"
+    },
+    {
+      "bytes": 3412,
+      "name": "group-1.json",
+      "sha256": "c61e6bc9b7fcbac158f9d70dfd4981076350d816d4425b890934da9c05c0a9d4"
+    },
+    {
+      "bytes": 2386,
+      "name": "group-2.json",
+      "sha256": "a1e7505a030929efcf068328fecf6548f50c98927894657edefba1a89ad0a71a"
+    },
+    {
+      "bytes": 6452,
+      "name": "group-3.json",
+      "sha256": "02c3a32d83c126a68cf6589284e03c49a053377986e55ebee5463888e510ad1b"
+    },
+    {
+      "bytes": 10382,
+      "name": "group-4.json",
+      "sha256": "de1e284ca8a3971a886502453e1eb00a6c2f37e291d63ed8a4ae9db70f324436"
+    },
+    {
+      "bytes": 6400,
+      "name": "group-5.json",
+      "sha256": "debc184171acc50eae9d1e776366235c48ad116787b4dedb9bff40abf914fd0e"
+    }
+  ],
+  "schema_version": "chapter14.artifact-manifest.v1"
+}

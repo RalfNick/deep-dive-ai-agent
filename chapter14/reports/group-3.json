@@ -1,0 +1,234 @@
+{
+  "group": 3,
+  "parallel_trace_example": {
+    "algorithm": "work-dag-longest-path.v1",
+    "critical_path_duration_ms": 296.0,
+    "critical_path_span_ids": [
+      "trace-stable-retrieval-02:model-plan",
+      "trace-stable-retrieval-02:retrieve-a",
+      "trace-stable-retrieval-02:model-answer",
+      "trace-stable-retrieval-02:verify"
+    ],
+    "endpoint_duration_ms": 331,
+    "trace_id": "trace-stable-retrieval-02",
+    "work_span_duration_sum_ms": 360
+  },
+  "release_comparison": {
+    "fixed_vs_incident": {
+      "cost_units_total_delta": -1.71,
+      "latency_p95_ms_delta": -180,
+      "outcome_score_mean_delta": 0.0,
+      "retry_amplification_delta": -0.125
+    },
+    "incident_vs_stable": {
+      "cost_units_total_delta": 1.71,
+      "latency_p95_ms_delta": 180,
+      "outcome_score_mean_delta": 0.0,
+      "retry_amplification_delta": 0.125
+    },
+    "limits": [
+      "deterministic_fixture_only",
+      "cost_units_are_not_provider_prices"
+    ],
+    "release_order": [
+      "stable",
+      "incident",
+      "fixed"
+    ]
+  },
+  "release_summaries": {
+    "fixed": {
+      "algorithm_versions": {
+        "critical_path": "work-dag-longest-path.v1",
+        "percentile": "nearest-rank.v1",
+        "retry_amplification": "billable-attempts-per-declared-operation.v1"
+      },
+      "critical_path_ms": {
+        "p50": 262.0,
+        "p95": 392.0
+      },
+      "error_span_count": 7,
+      "latency_ms": {
+        "max": 440,
+        "p50": 292,
+        "p95": 432
+      },
+      "outcome_score_mean": 0.958333,
+      "rate_card_version": "chapter14.cost-units.v1",
+      "release_id": "fixed",
+      "retry_amplification": 1.3125,
+      "slices": {
+        "recovery": {
+          "latency_p95_ms": 440,
+          "outcome_score_mean": 0.833333,
+          "success_rate": 0.833333,
+          "trace_count": 6
+        },
+        "retrieval": {
+          "latency_p95_ms": 343,
+          "outcome_score_mean": 1.0,
+          "success_rate": 1.0,
+          "trace_count": 6
+        },
+        "simple": {
+          "latency_p95_ms": 177,
+          "outcome_score_mean": 1.0,
+          "success_rate": 1.0,
+          "trace_count": 6
+        },
+        "write": {
+          "latency_p95_ms": 292,
+          "outcome_score_mean": 1.0,
+          "success_rate": 1.0,
+          "trace_count": 6
+        }
+      },
+      "status_counts": {
+        "failure": 1,
+        "success": 23
+      },
+      "success_count": 23,
+      "telemetry_complete_count": 23,
+      "telemetry_complete_rate": 0.958333,
+      "trace_count": 24,
+      "usage": {
+        "cost_field_coverage": 1.0,
+        "cost_units_total": 16.03,
+        "input_tokens_total": 4866,
+        "missing_token_fields": 1,
+        "output_tokens_total": 1457,
+        "token_field_coverage": 0.983333
+      },
+      "work_span_duration_sum_ms": 6678
+    },
+    "incident": {
+      "algorithm_versions": {
+        "critical_path": "work-dag-longest-path.v1",
+        "percentile": "nearest-rank.v1",
+        "retry_amplification": "billable-attempts-per-declared-operation.v1"
+      },
+      "critical_path_ms": {
+        "p50": 262.0,
+        "p95": 562.0
+      },
+      "error_span_count": 7,
+      "latency_ms": {
+        "max": 620,
+        "p50": 292,
+        "p95": 612
+      },
+      "outcome_score_mean": 0.958333,
+      "rate_card_version": "chapter14.cost-units.v1",
+      "release_id": "incident",
+      "retry_amplification": 1.4375,
+      "slices": {
+        "recovery": {
+          "latency_p95_ms": 620,
+          "outcome_score_mean": 0.833333,
+          "success_rate": 0.833333,
+          "trace_count": 6
+        },
+        "retrieval": {
+          "latency_p95_ms": 343,
+          "outcome_score_mean": 1.0,
+          "success_rate": 1.0,
+          "trace_count": 6
+        },
+        "simple": {
+          "latency_p95_ms": 177,
+          "outcome_score_mean": 1.0,
+          "success_rate": 1.0,
+          "trace_count": 6
+        },
+        "write": {
+          "latency_p95_ms": 292,
+          "outcome_score_mean": 1.0,
+          "success_rate": 1.0,
+          "trace_count": 6
+        }
+      },
+      "status_counts": {
+        "failure": 1,
+        "success": 23
+      },
+      "success_count": 23,
+      "telemetry_complete_count": 23,
+      "telemetry_complete_rate": 0.958333,
+      "trace_count": 24,
+      "usage": {
+        "cost_field_coverage": 1.0,
+        "cost_units_total": 17.74,
+        "input_tokens_total": 5496,
+        "missing_token_fields": 1,
+        "output_tokens_total": 1622,
+        "token_field_coverage": 0.984848
+      },
+      "work_span_duration_sum_ms": 7188
+    },
+    "stable": {
+      "algorithm_versions": {
+        "critical_path": "work-dag-longest-path.v1",
+        "percentile": "nearest-rank.v1",
+        "retry_amplification": "billable-attempts-per-declared-operation.v1"
+      },
+      "critical_path_ms": {
+        "p50": 262.0,
+        "p95": 392.0
+      },
+      "error_span_count": 7,
+      "latency_ms": {
+        "max": 440,
+        "p50": 292,
+        "p95": 432
+      },
+      "outcome_score_mean": 0.958333,
+      "rate_card_version": "chapter14.cost-units.v1",
+      "release_id": "stable",
+      "retry_amplification": 1.3125,
+      "slices": {
+        "recovery": {
+          "latency_p95_ms": 440,
+          "outcome_score_mean": 0.833333,
+          "success_rate": 0.833333,
+          "trace_count": 6
+        },
+        "retrieval": {
+          "latency_p95_ms": 343,
+          "outcome_score_mean": 1.0,
+          "success_rate": 1.0,
+          "trace_count": 6
+        },
+        "simple": {
+          "latency_p95_ms": 177,
+          "outcome_score_mean": 1.0,
+          "success_rate": 1.0,
+          "trace_count": 6
+        },
+        "write": {
+          "latency_p95_ms": 292,
+          "outcome_score_mean": 1.0,
+          "success_rate": 1.0,
+          "trace_count": 6
+        }
+      },
+      "status_counts": {
+        "failure": 1,
+        "success": 23
+      },
+      "success_count": 23,
+      "telemetry_complete_count": 23,
+      "telemetry_complete_rate": 0.958333,
+      "trace_count": 24,
+      "usage": {
+        "cost_field_coverage": 1.0,
+        "cost_units_total": 16.03,
+        "input_tokens_total": 4866,
+        "missing_token_fields": 1,
+        "output_tokens_total": 1457,
+        "token_field_coverage": 0.983333
+      },
+      "work_span_duration_sum_ms": 6678
+    }
+  },
+  "title": "latency, critical path, usage, and retry amplification"
+}

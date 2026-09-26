@@ -1,0 +1,204 @@
+{
+  "ablations": [
+    {
+      "all_canonical_symptoms_removed": false,
+      "cost_units_total": 17.74,
+      "evidence_mode": "deterministic_counterfactual_fixture",
+      "hypothesis": "model",
+      "intervention": "hold_model_at_stable_contract",
+      "latency_p95_ms": 612.0,
+      "outcome_score_mean": 0.958333,
+      "removed_symptoms": [],
+      "retry_amplification": 1.4375
+    },
+    {
+      "all_canonical_symptoms_removed": false,
+      "cost_units_total": 17.74,
+      "evidence_mode": "deterministic_counterfactual_fixture",
+      "hypothesis": "prompt",
+      "intervention": "hold_prompt_at_stable_contract",
+      "latency_p95_ms": 612.0,
+      "outcome_score_mean": 0.958333,
+      "removed_symptoms": [],
+      "retry_amplification": 1.4375
+    },
+    {
+      "all_canonical_symptoms_removed": false,
+      "cost_units_total": 16.885,
+      "evidence_mode": "deterministic_counterfactual_fixture",
+      "hypothesis": "context_assembly",
+      "intervention": "hold_context_assembly_at_stable_contract",
+      "latency_p95_ms": 612.0,
+      "outcome_score_mean": 0.958333,
+      "removed_symptoms": [],
+      "retry_amplification": 1.4375
+    },
+    {
+      "all_canonical_symptoms_removed": false,
+      "cost_units_total": 17.74,
+      "evidence_mode": "deterministic_counterfactual_fixture",
+      "hypothesis": "tool_latency",
+      "intervention": "hold_tool_latency_at_stable_contract",
+      "latency_p95_ms": 432.0,
+      "outcome_score_mean": 0.958333,
+      "removed_symptoms": [
+        "latency"
+      ],
+      "retry_amplification": 1.4375
+    },
+    {
+      "all_canonical_symptoms_removed": true,
+      "cost_units_total": 16.03,
+      "evidence_mode": "deterministic_counterfactual_fixture",
+      "hypothesis": "retry_policy",
+      "intervention": "hold_retry_policy_at_stable_contract",
+      "latency_p95_ms": 432.0,
+      "outcome_score_mean": 0.958333,
+      "removed_symptoms": [
+        "latency",
+        "cost",
+        "retry_amplification"
+      ],
+      "retry_amplification": 1.3125
+    }
+  ],
+  "group": 5,
+  "incident_report": {
+    "ablation_results": [
+      {
+        "all_canonical_symptoms_removed": false,
+        "cost_units_total": 17.74,
+        "evidence_mode": "deterministic_counterfactual_fixture",
+        "hypothesis": "model",
+        "intervention": "hold_model_at_stable_contract",
+        "latency_p95_ms": 612.0,
+        "outcome_score_mean": 0.958333,
+        "removed_symptoms": [],
+        "retry_amplification": 1.4375
+      },
+      {
+        "all_canonical_symptoms_removed": false,
+        "cost_units_total": 17.74,
+        "evidence_mode": "deterministic_counterfactual_fixture",
+        "hypothesis": "prompt",
+        "intervention": "hold_prompt_at_stable_contract",
+        "latency_p95_ms": 612.0,
+        "outcome_score_mean": 0.958333,
+        "removed_symptoms": [],
+        "retry_amplification": 1.4375
+      },
+      {
+        "all_canonical_symptoms_removed": false,
+        "cost_units_total": 16.885,
+        "evidence_mode": "deterministic_counterfactual_fixture",
+        "hypothesis": "context_assembly",
+        "intervention": "hold_context_assembly_at_stable_contract",
+        "latency_p95_ms": 612.0,
+        "outcome_score_mean": 0.958333,
+        "removed_symptoms": [],
+        "retry_amplification": 1.4375
+      },
+      {
+        "all_canonical_symptoms_removed": false,
+        "cost_units_total": 17.74,
+        "evidence_mode": "deterministic_counterfactual_fixture",
+        "hypothesis": "tool_latency",
+        "intervention": "hold_tool_latency_at_stable_contract",
+        "latency_p95_ms": 432.0,
+        "outcome_score_mean": 0.958333,
+        "removed_symptoms": [
+          "latency"
+        ],
+        "retry_amplification": 1.4375
+      },
+      {
+        "all_canonical_symptoms_removed": true,
+        "cost_units_total": 16.03,
+        "evidence_mode": "deterministic_counterfactual_fixture",
+        "hypothesis": "retry_policy",
+        "intervention": "hold_retry_policy_at_stable_contract",
+        "latency_p95_ms": 432.0,
+        "outcome_score_mean": 0.958333,
+        "removed_symptoms": [
+          "latency",
+          "cost",
+          "retry_amplification"
+        ],
+        "retry_amplification": 1.3125
+      }
+    ],
+    "affected_slices": [
+      "recovery"
+    ],
+    "candidate_causes": [
+      "model",
+      "prompt",
+      "context_assembly",
+      "tool_latency",
+      "retry_policy"
+    ],
+    "conclusion": "confirmed",
+    "confidence": 0.92,
+    "counterevidence_trace_ids": [
+      "trace-incident-simple-01",
+      "trace-incident-simple-02",
+      "trace-incident-simple-03",
+      "trace-incident-simple-04"
+    ],
+    "data_completeness": 0.958333,
+    "recommended_actions": [
+      "bound_retry_scope_to_the_failed_tool_call",
+      "replay_recovery_slices_before_release",
+      "retain_population_counters_when_traces_are_sampled"
+    ],
+    "regression_task_ids": [
+      "reg-retry-latency",
+      "reg-retry-cost",
+      "reg-retry-amplification"
+    ],
+    "root_cause": "retry_policy",
+    "supporting_trace_ids": [
+      "trace-incident-recovery-01",
+      "trace-incident-recovery-03",
+      "trace-incident-recovery-05"
+    ],
+    "symptom": "outcome stable while p95 latency, cost units, and retry amplification regress",
+    "unknowns": [
+      "provider_usage_partially_missing",
+      "fixture_does_not_prove_real_world_causality"
+    ]
+  },
+  "regression_tasks": [
+    {
+      "assertion": "fixed p95 latency is no worse than stable",
+      "slice": "recovery",
+      "source_trace_ids": [
+        "trace-incident-recovery-01",
+        "trace-incident-recovery-03",
+        "trace-incident-recovery-05"
+      ],
+      "task_id": "reg-retry-latency"
+    },
+    {
+      "assertion": "retry does not repeat context assembly or model planning",
+      "slice": "recovery",
+      "source_trace_ids": [
+        "trace-incident-recovery-01",
+        "trace-incident-recovery-03",
+        "trace-incident-recovery-05"
+      ],
+      "task_id": "reg-retry-cost"
+    },
+    {
+      "assertion": "retry amplification returns to the stable bound",
+      "slice": "recovery",
+      "source_trace_ids": [
+        "trace-incident-recovery-01",
+        "trace-incident-recovery-03",
+        "trace-incident-recovery-05"
+      ],
+      "task_id": "reg-retry-amplification"
+    }
+  ],
+  "title": "alert to root cause to regression tasks"
+}

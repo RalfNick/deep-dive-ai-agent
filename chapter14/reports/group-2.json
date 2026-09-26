@@ -1,0 +1,85 @@
+{
+  "group": 2,
+  "limits": [
+    "logs_deliberately_omit_parent_and_dependency_edges"
+  ],
+  "log_view": {
+    "causal_edges_available": false,
+    "records": [
+      {
+        "event": "span_started",
+        "level": "info",
+        "name": "model.plan",
+        "span_id": "trace-incident-retrieval-02:model-plan",
+        "status": "ok",
+        "timestamp_ms": 10,
+        "trace_id": "trace-incident-retrieval-02"
+      },
+      {
+        "event": "span_started",
+        "level": "info",
+        "name": "agent.run",
+        "span_id": "trace-incident-retrieval-02:agent-run",
+        "status": "ok",
+        "timestamp_ms": 5,
+        "trace_id": "trace-incident-retrieval-02"
+      },
+      {
+        "event": "span_started",
+        "level": "info",
+        "name": "knowledge.search",
+        "span_id": "trace-incident-retrieval-02:retrieve-a",
+        "status": "ok",
+        "timestamp_ms": 85,
+        "trace_id": "trace-incident-retrieval-02"
+      },
+      {
+        "event": "span_started",
+        "level": "info",
+        "name": "verify.outcome",
+        "span_id": "trace-incident-retrieval-02:verify",
+        "status": "ok",
+        "timestamp_ms": 286,
+        "trace_id": "trace-incident-retrieval-02"
+      },
+      {
+        "event": "span_started",
+        "level": "info",
+        "name": "model.answer",
+        "span_id": "trace-incident-retrieval-02:model-answer",
+        "status": "ok",
+        "timestamp_ms": 181,
+        "trace_id": "trace-incident-retrieval-02"
+      },
+      {
+        "event": "span_started",
+        "level": "info",
+        "name": "knowledge.search",
+        "span_id": "trace-incident-retrieval-02:retrieve-b",
+        "status": "ok",
+        "timestamp_ms": 85,
+        "trace_id": "trace-incident-retrieval-02"
+      },
+      {
+        "event": "span_started",
+        "level": "info",
+        "name": "agent.request",
+        "span_id": "trace-incident-retrieval-02:root",
+        "status": "ok",
+        "timestamp_ms": 0,
+        "trace_id": "trace-incident-retrieval-02"
+      }
+    ]
+  },
+  "title": "unordered logs versus causal trace",
+  "trace_id": "trace-incident-retrieval-02",
+  "trace_view": {
+    "dependency_edge_count": 5,
+    "parallel_span_ids": [
+      "trace-incident-retrieval-02:retrieve-a",
+      "trace-incident-retrieval-02:retrieve-b"
+    ],
+    "parent_edge_count": 6,
+    "span_count": 7
+  }
+}

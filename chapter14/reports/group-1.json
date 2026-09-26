@@ -1,0 +1,136 @@
+{
+  "cards": [
+    {
+      "attempts_per_task": 1,
+      "benchmark_id": "repo-repair",
+      "benchmark_version": "2026-09",
+      "contamination_risk": "unknown",
+      "environment": "python-3.11",
+      "exclusions": [],
+      "harness": "harness-a",
+      "metric": "resolved_percent",
+      "model": "model-a",
+      "retry_policy": "bounded-1",
+      "score": 72.0,
+      "source": "fixture://control-a",
+      "step_budget": 40,
+      "subject": "agent-system",
+      "task_period": "2026-q3",
+      "task_subset": "verified",
+      "timeout_ms": 30000,
+      "token_budget": 20000,
+      "tools": [
+        "read",
+        "edit",
+        "test"
+      ]
+    },
+    {
+      "attempts_per_task": 1,
+      "benchmark_id": "repo-repair",
+      "benchmark_version": "2026-09",
+      "contamination_risk": "unknown",
+      "environment": "python-3.11",
+      "exclusions": [],
+      "harness": "harness-a",
+      "metric": "resolved_percent",
+      "model": "model-a",
+      "retry_policy": "bounded-1",
+      "score": 74.0,
+      "source": "fixture://control-b",
+      "step_budget": 40,
+      "subject": "agent-system",
+      "task_period": "2026-q3",
+      "task_subset": "verified",
+      "timeout_ms": 30000,
+      "token_budget": 20000,
+      "tools": [
+        "read",
+        "edit",
+        "test"
+      ]
+    },
+    {
+      "attempts_per_task": 1,
+      "benchmark_id": "repo-repair",
+      "benchmark_version": "2026-09",
+      "contamination_risk": "unknown",
+      "environment": "python-3.11",
+      "exclusions": [],
+      "harness": "harness-a",
+      "metric": "resolved_percent",
+      "model": "model-a",
+      "retry_policy": "bounded-1",
+      "score": 72.0,
+      "source": "fixture://same-score-a",
+      "step_budget": 40,
+      "subject": "agent-system",
+      "task_period": "2026-q3",
+      "task_subset": "verified",
+      "timeout_ms": 30000,
+      "token_budget": 20000,
+      "tools": [
+        "read",
+        "edit",
+        "test"
+      ]
+    },
+    {
+      "attempts_per_task": 1,
+      "benchmark_id": "repo-repair",
+      "benchmark_version": "2026-09",
+      "contamination_risk": "unknown",
+      "environment": "python-3.11",
+      "exclusions": [],
+      "harness": "harness-b",
+      "metric": "resolved_percent",
+      "model": "model-a",
+      "retry_policy": "bounded-3",
+      "score": 72.0,
+      "source": "fixture://same-score-b",
+      "step_budget": 80,
+      "subject": "agent-system",
+      "task_period": "2026-q3",
+      "task_subset": "verified",
+      "timeout_ms": 30000,
+      "token_budget": 20000,
+      "tools": [
+        "read",
+        "edit",
+        "test"
+      ]
+    }
+  ],
+  "comparisons": {
+    "control": {
+      "different_fields": [],
+      "limits": [
+        "contract_comparison_only",
+        "task_representativeness_not_proven"
+      ],
+      "missing_fields": [],
+      "reason_codes": [
+        "contracts_match"
+      ],
+      "verdict": "comparable"
+    },
+    "same_score_misleading": {
+      "different_fields": [
+        "harness",
+        "retry_policy",
+        "step_budget"
+      ],
+      "limits": [
+        "contract_comparison_only",
+        "task_representativeness_not_proven"
+      ],
+      "missing_fields": [],
+      "reason_codes": [
+        "controlled_configuration_mismatch"
+      ],
+      "verdict": "partially_comparable"
+    }
+  },
+  "group": 1,
+  "title": "same score, different measurement contract"
+}

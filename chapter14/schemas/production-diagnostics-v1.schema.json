@@ -1,0 +1,336 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/chapter14/production-diagnostics-v1.schema.json",
+  "title": "Chapter 14 deterministic production diagnostics",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "fixture",
+    "benchmark",
+    "release_summaries",
+    "release_comparison",
+    "sampling",
+    "incident_report",
+    "regression_tasks",
+    "group_artifacts",
+    "evidence_limits"
+  ],
+  "properties": {
+    "schema_version": {"const": "chapter14.diagnostics.v1"},
+    "fixture": {"$ref": "#/$defs/fixture"},
+    "benchmark": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["control_verdict", "same_score_verdict"],
+      "properties": {
+        "control_verdict": {"const": "comparable"},
+        "same_score_verdict": {"enum": ["partially_comparable", "not_comparable"]}
+      }
+    },
+    "release_summaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stable", "incident", "fixed"],
+      "properties": {
+        "stable": {"$ref": "#/$defs/releaseSummary"},
+        "incident": {"$ref": "#/$defs/releaseSummary"},
+        "fixed": {"$ref": "#/$defs/releaseSummary"}
+      }
+    },
+    "release_comparison": {"type": "object"},
+    "sampling": {"$ref": "#/$defs/sampling"},
+    "incident_report": {"$ref": "#/$defs/incidentReport"},
+    "regression_tasks": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/regressionTask"}
+    },
+    "group_artifacts": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^group-[1-5]\\.json$"}
+    },
+    "evidence_limits": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "$defs": {
+    "fixture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["fixture_version", "scored_trace_count", "release_ids", "release_counts", "slice_counts"],
+      "properties": {
+        "fixture_version": {"const": "chapter14.trace-fixture.v1"},
+        "scored_trace_count": {"const": 72},
+        "release_ids": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": {"enum": ["stable", "incident", "fixed"]}
+        },
+        "release_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["stable", "incident", "fixed"],
+          "properties": {
+            "stable": {"const": 24},
+            "incident": {"const": 24},
+            "fixed": {"const": 24}
+          }
+        },
+        "slice_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["simple", "retrieval", "write", "recovery"],
+          "properties": {
+            "simple": {"const": 18},
+            "retrieval": {"const": 18},
+            "write": {"const": 18},
+            "recovery": {"const": 18}
+          }
+        }
+      }
+    },
+    "latency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["p50", "p95", "max"],
+      "properties": {
+        "p50": {"type": "number", "minimum": 0},
+        "p95": {"type": "number", "minimum": 0},
+        "max": {"type": "number", "minimum": 0}
+      }
+    },
+    "criticalPath": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["p50", "p95"],
+      "properties": {
+        "p50": {"type": "number", "minimum": 0},
+        "p95": {"type": "number", "minimum": 0}
+      }
+    },
+    "usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "input_tokens_total",
+        "output_tokens_total",
+        "cost_units_total",
+        "token_field_coverage",
+        "missing_token_fields",
+        "cost_field_coverage"
+      ],
+      "properties": {
+        "input_tokens_total": {"type": "integer", "minimum": 0},
+        "output_tokens_total": {"type": "integer", "minimum": 0},
+        "cost_units_total": {"type": "number", "minimum": 0},
+        "token_field_coverage": {"type": "number", "minimum": 0, "maximum": 1},
+        "missing_token_fields": {"type": "integer", "minimum": 0},
+        "cost_field_coverage": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "sliceSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trace_count", "success_rate", "outcome_score_mean", "latency_p95_ms"],
+      "properties": {
+        "trace_count": {"const": 6},
+        "success_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "outcome_score_mean": {"type": "number", "minimum": 0, "maximum": 1},
+        "latency_p95_ms": {"type": "number", "minimum": 0}
+      }
+    },
+    "releaseSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "release_id",
+        "trace_count",
+        "success_count",
+        "status_counts",
+        "outcome_score_mean",
+        "latency_ms",
+        "critical_path_ms",
+        "work_span_duration_sum_ms",
+        "retry_amplification",
+        "usage",
+        "telemetry_complete_count",
+        "telemetry_complete_rate",
+        "error_span_count",
+        "slices",
+        "rate_card_version",
+        "algorithm_versions"
+      ],
+      "properties": {
+        "release_id": {"enum": ["stable", "incident", "fixed"]},
+        "trace_count": {"const": 24},
+        "success_count": {"type": "integer", "minimum": 0, "maximum": 24},
+        "status_counts": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}},
+        "outcome_score_mean": {"type": "number", "minimum": 0, "maximum": 1},
+        "latency_ms": {"$ref": "#/$defs/latency"},
+        "critical_path_ms": {"$ref": "#/$defs/criticalPath"},
+        "work_span_duration_sum_ms": {"type": "number", "minimum": 0},
+        "retry_amplification": {"type": "number", "minimum": 0},
+        "usage": {"$ref": "#/$defs/usage"},
+        "telemetry_complete_count": {"type": "integer", "minimum": 0, "maximum": 24},
+        "telemetry_complete_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "error_span_count": {"type": "integer", "minimum": 0},
+        "slices": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["simple", "retrieval", "write", "recovery"],
+          "properties": {
+            "simple": {"$ref": "#/$defs/sliceSummary"},
+            "retrieval": {"$ref": "#/$defs/sliceSummary"},
+            "write": {"$ref": "#/$defs/sliceSummary"},
+            "recovery": {"$ref": "#/$defs/sliceSummary"}
+          }
+        },
+        "rate_card_version": {"const": "chapter14.cost-units.v1"},
+        "algorithm_versions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["percentile", "critical_path", "retry_amplification"],
+          "properties": {
+            "percentile": {"const": "nearest-rank.v1"},
+            "critical_path": {"const": "work-dag-longest-path.v1"},
+            "retry_amplification": {"const": "billable-attempts-per-declared-operation.v1"}
+          }
+        }
+      }
+    },
+    "sampling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_versions",
+        "population_metrics",
+        "diagnostic_retained_counts",
+        "trace_coverage",
+        "telemetry_completeness",
+        "retained_trace_metadata",
+        "limits"
+      ],
+      "properties": {
+        "policy_versions": {"type": "array", "items": {"type": "string"}},
+        "population_metrics": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["request_count", "failed_request_count"],
+          "properties": {
+            "request_count": {"const": 72},
+            "failed_request_count": {"type": "integer", "minimum": 0, "maximum": 72}
+          }
+        },
+        "diagnostic_retained_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["retained_trace_count", "trace_error", "slow_trace", "approval_or_security", "telemetry_incomplete", "new_release"],
+          "properties": {
+            "retained_trace_count": {"type": "integer", "minimum": 0, "maximum": 72},
+            "trace_error": {"type": "integer", "minimum": 0},
+            "slow_trace": {"type": "integer", "minimum": 0},
+            "approval_or_security": {"type": "integer", "minimum": 0},
+            "telemetry_incomplete": {"type": "integer", "minimum": 0},
+            "new_release": {"type": "integer", "minimum": 0}
+          }
+        },
+        "trace_coverage": {"type": "number", "minimum": 0, "maximum": 1},
+        "telemetry_completeness": {"type": "number", "minimum": 0, "maximum": 1},
+        "retained_trace_metadata": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["trace_id", "release_id", "slice", "status", "telemetry_complete"],
+            "properties": {
+              "trace_id": {"type": "string", "minLength": 1},
+              "release_id": {"enum": ["stable", "incident", "fixed"]},
+              "slice": {"enum": ["simple", "retrieval", "write", "recovery"]},
+              "status": {"enum": ["success", "failure", "error"]},
+              "telemetry_complete": {"type": "boolean"}
+            }
+          }
+        },
+        "limits": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+      }
+    },
+    "ablation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hypothesis",
+        "intervention",
+        "latency_p95_ms",
+        "cost_units_total",
+        "retry_amplification",
+        "outcome_score_mean",
+        "removed_symptoms",
+        "all_canonical_symptoms_removed",
+        "evidence_mode"
+      ],
+      "properties": {
+        "hypothesis": {"enum": ["model", "prompt", "context_assembly", "tool_latency", "retry_policy"]},
+        "intervention": {"type": "string"},
+        "latency_p95_ms": {"type": "number", "minimum": 0},
+        "cost_units_total": {"type": "number", "minimum": 0},
+        "retry_amplification": {"type": "number", "minimum": 0},
+        "outcome_score_mean": {"type": "number", "minimum": 0, "maximum": 1},
+        "removed_symptoms": {"type": "array", "uniqueItems": true, "items": {"enum": ["latency", "cost", "retry_amplification"]}},
+        "all_canonical_symptoms_removed": {"type": "boolean"},
+        "evidence_mode": {"const": "deterministic_counterfactual_fixture"}
+      }
+    },
+    "incidentReport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "symptom",
+        "affected_slices",
+        "data_completeness",
+        "candidate_causes",
+        "supporting_trace_ids",
+        "counterevidence_trace_ids",
+        "ablation_results",
+        "root_cause",
+        "confidence",
+        "conclusion",
+        "unknowns",
+        "recommended_actions",
+        "regression_task_ids"
+      ],
+      "properties": {
+        "symptom": {"type": "string", "minLength": 1},
+        "affected_slices": {"type": "array", "items": {"enum": ["simple", "retrieval", "write", "recovery"]}},
+        "data_completeness": {"type": "number", "minimum": 0, "maximum": 1},
+        "candidate_causes": {"type": "array", "items": {"type": "string"}},
+        "supporting_trace_ids": {"type": "array", "items": {"type": "string"}},
+        "counterevidence_trace_ids": {"type": "array", "items": {"type": "string"}},
+        "ablation_results": {"type": "array", "items": {"$ref": "#/$defs/ablation"}},
+        "root_cause": {"type": ["string", "null"]},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "conclusion": {"enum": ["confirmed", "inconclusive", "ruled_out"]},
+        "unknowns": {"type": "array", "items": {"type": "string"}},
+        "recommended_actions": {"type": "array", "items": {"type": "string"}},
+        "regression_task_ids": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "regressionTask": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["task_id", "slice", "assertion", "source_trace_ids"],
+      "properties": {
+        "task_id": {"type": "string", "minLength": 1},
+        "slice": {"enum": ["simple", "retrieval", "write", "recovery"]},
+        "assertion": {"type": "string", "minLength": 1},
+        "source_trace_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+      }
+    }
+  }
+}
