@@ -84,7 +84,7 @@
 ### local-runner
 
 - `chapter13/runner.py`、`grading.py`、`metrics.py`、`experiments.py`。
-- 用途：确定性策略、真实临时工作区、四类评分器、`pass@k`、`pass^k`、成对 Bootstrap 和发布门禁。
+- 用途：确定性策略、真实临时工作区、四类评分器、`pass@k`、`pass^k`、退化/非退化成对 Bootstrap、Capability/Regression/Adversarial 分视图和发布门禁。稳定报告由 Draft 2020-12 Schema 自动验证。
 
 ### local-judge
 

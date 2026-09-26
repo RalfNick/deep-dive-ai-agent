@@ -55,3 +55,18 @@ def bootstrap_paired_delta(
         "iterations": iterations,
         "seed": seed,
     }
+
+
+def heterogeneous_bootstrap_example() -> dict[str, object]:
+    """A fixed, non-degenerate teaching contrast excluded from release metrics."""
+    baseline = {f"task-{index:02d}": 0.6 for index in range(12)}
+    deltas = (0.2, 0.2, 0.2, 0.1, 0.1, 0.0, 0.0, -0.1, -0.1, -0.2, -0.2, 0.0)
+    candidate = {key: baseline[key] + delta for key, delta in zip(baseline, deltas)}
+    confidence = bootstrap_paired_delta(baseline, candidate)
+    return {
+        "task_deltas": list(deltas),
+        "paired_confidence": confidence,
+        "interpretation": ("inconclusive"
+                           if confidence["lower"] < 0 <= confidence["upper"] else "decisive"),
+        "scored_in_release": False,
+    }

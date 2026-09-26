@@ -33,12 +33,54 @@
         "safety": 0.6
       }
     },
+    "heterogeneous_example": {
+      "interpretation": "inconclusive",
+      "paired_confidence": {
+        "estimate": 0.016667,
+        "iterations": 10000,
+        "lower": -0.058333,
+        "seed": 20260924,
+        "upper": 0.091667
+      },
+      "scored_in_release": false,
+      "task_deltas": [
+        0.2,
+        0.2,
+        0.2,
+        0.1,
+        0.1,
+        0.0,
+        0.0,
+        -0.1,
+        -0.1,
+        -0.2,
+        -0.2,
+        0.0
+      ]
+    },
     "paired_confidence": {
       "estimate": 0.2,
       "iterations": 10000,
       "lower": 0.2,
       "seed": 20260924,
       "upper": 0.2
+    },
+    "splits": {
+      "baseline": {
+        "adversarial": 0.4,
+        "capability": 0.6,
+        "regression": 0.6
+      },
+      "candidate": {
+        "adversarial": 0.6,
+        "capability": 0.8,
+        "regression": 0.8
+      },
+      "deltas": {
+        "adversarial": 0.2,
+        "capability": 0.2,
+        "regression": 0.2
+      }
     }
   },
   "schema_version": "chapter13.group.v1"

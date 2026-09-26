@@ -179,7 +179,7 @@ Capability Suite 问：“当前系统还做不到哪些有价值的任务？”
 
 Regression Suite 问：“我们已经依赖的行为有没有退化？”它来自线上事故、历史缺陷和明确合同，通常要求稳定通过。
 
-把两者混成一套，会产生两个问题：能力题逐渐饱和后看不见进步；为了探索新能力加入困难题后，又让发布门禁长期变红。本章任务的 `split` 字段明确标记 `capability`、`regression` 或 `adversarial`，使同一套运行基础设施能够生成不同视图。
+把两者混成一套，会产生两个问题：能力题逐渐饱和后看不见进步；为了探索新能力加入困难题后，又让发布门禁长期变红。本章任务的 `split` 字段明确标记 `capability`、`regression` 或 `adversarial`，规范报告分别输出三组 Baseline、Candidate 与差值：Capability 观察趋势，Regression 只要下降就阻止发布，Adversarial 与安全硬门禁联合审阅。它不再只是一个写进夹具却没有参与汇总的标签。
 
 **数据切分不只是训练集和测试集。**
 
@@ -417,7 +417,10 @@ delta(task) = candidate_pass_1(task) - baseline_pass_1(task)
 
 为什么按 Task 重采样，而不是把 120 条 Trial 打散？因为同一道 Task 的五次运行共享输入、环境和评分器，不能假装它们与其他题完全独立。
 
-本章使用固定种子 `20260924` 做 10,000 次重采样。每一道 Task 都被刻意设计为 Candidate 比 Baseline 多成功一次，所以每题差值都是 `1/5=20%`，最终区间退化为 `[20%, 20%]`。这正好便于验证代码，但也意味着它不是现实中的不确定性示范。真实任务差值有正有负，区间通常会更宽。
+本章使用固定种子 `20260924` 做 10,000 次重采样，并把两组结果同时写入实验 13-4：
+
+1. **发布证据**：每一道 Task 都被刻意设计为 Candidate 比 Baseline 多成功一次，所以每题差值都是 `1/5=20%`，区间退化为 `[20%, 20%]`。它便于核对聚合代码，但不是现实中的不确定性示范。
+2. **非计分教学对照**：12 个任务级差值同时包含改善、持平与退化，平均差为 `1.67%`，95% 区间为 `[-5.83%, 9.17%]`，因此结论是 `inconclusive`。它只解释区间怎样改变决策，不进入发布门禁。
 
 严格说，这里得到的是**条件于当前五次 Trial 观测的任务级 percentile 区间**。它没有在每个 Task 内再次重采样 Trial，因此没有完整传播随机模型运行的估计噪声。真实随机系统可使用“先抽 Task、再按配对 seed 抽 Trial”的分层 Bootstrap；本章选择简单版本，是为了把任务代表性与运行随机性两个问题分开讲清楚。
 
@@ -431,7 +434,7 @@ delta(task) = candidate_pass_1(task) - baseline_pass_1(task)
 >   --output chapter13/.runs/reliability
 > ```
 >
-> 手算一个 `n=5,c=2,k=3` 的例子，再打开报告核对 `pass@3=0.9`、`pass^3=0`。随后比较总报告中的 55%/75%、95%/100% 和 12.5%/40%。最后检查 Bootstrap 的采样单位是 Task，而不是 Trial。
+> 手算一个 `n=5,c=2,k=3` 的例子，再打开报告核对 `pass@3=0.9`、`pass^3=0`。随后比较总报告中的 55%/75%、95%/100% 和 12.5%/40%。最后对照 `[20%, 20%]` 的发布证据与 `[-5.83%, 9.17%]` 的非计分案例，检查二者的采样单位都是 Task，并解释为什么后一组只能得到 `inconclusive`。
 
 这个实验支持“不同指标回答不同问题”和“成对任务差值可以进入区间估计”。固定策略、固定成功表和退化区间不能证明 Candidate 在真实随机模型上有统计显著优势。
 
@@ -462,6 +465,7 @@ delta(task) = candidate_pass_1(task) - baseline_pass_1(task)
 - 受保护文件修改必须为 0；
 - 环境错误必须为 0；
 - Candidate 总体 `pass@1` 不低于 Baseline；
+- Regression split 不得低于 Baseline；Capability split 只观察趋势，不用困难探索题阻塞发布；
 - 任一切片下降不得超过 0.10；
 - 如果成对差值区间整体为负，判定失败；
 - 如果区间跨越 0，判定证据不足。
@@ -555,7 +559,7 @@ MT-Bench 的研究讨论了位置、冗长、自我增强和推理能力等偏�
 >
 > 报告同时给出离线 Judge 的一致率、Coverage、answered-only accuracy、Unknown 比例、混淆矩阵，以及 Candidate 的发布结论。修改 `chapter13/fixtures/judge-calibration.json` 中预测标签，观察总体一致率可能相同而混淆方向发生变化。
 
-可选 Live Judge 位于 [judge.py](../chapter13/judge.py)。只有调用 `run_live_judge` 并显式传入 Base URL 与模型时，它才读取 `EVAL_JUDGE_API_KEY`。本章没有执行该入口，也不会把密钥、模型响应或估算成本写入规范报告。
+可选 Live Judge 位于 [judge.py](../chapter13/judge.py)。只有调用 `run_live_judge` 并显式传入 Base URL 与模型时，它才读取 `EVAL_JUDGE_API_KEY`。返回响应会被收束为 `label` 与字符串 `evidence` 列表；缺字段、非法标签或畸形 JSON 都以 `invalid_live_judge_response` 失败关闭。本章没有执行网络入口，也不会把密钥、模型响应或估算成本写入规范报告。
 
 ## 三种成熟框架怎样表达同一套概念
 

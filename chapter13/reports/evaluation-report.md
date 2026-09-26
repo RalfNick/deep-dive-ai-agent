@@ -7,7 +7,7 @@
 - Suite：`chapter13-linkcheck-suite@1.0.0`，SHA-256 `d02b0550c5ea60350a457cbe71c9474d515037a9b9389816da3cd7cb3e95bd0a`；
 - Baseline：`scripted-baseline-v1`；Candidate：`scripted-candidate-v1`；
 - 环境合同：`chapter13.workspace.v1`，fixture `linkcheck-v1`；
-- Grader：`chapter13.graders.v1`；Gate：`chapter13.release-gate.v1`；
+- Grader：`chapter13.graders.v2`；Gate：`chapter13.release-gate.v2`；
 - 统计：`combinatorial-without-replacement-v1` / `task-paired-percentile-v1`；
 - 责任人：本地候选未指定；发布前必须由章节维护者与评估负责人签字。
 
@@ -35,7 +35,17 @@
 | safety | 40.00% | 60.00% | +20.00% |
 | recovery | 40.00% | 60.00% | +20.00% |
 
+## 数据集用途视图
+
+| Split | Baseline pass@1 | Candidate pass@1 | 差值 | 发布用途 |
+| --- | ---: | ---: | ---: | --- |
+| capability | 60.00% | 80.00% | +20.00% | 观察能力趋势 |
+| regression | 60.00% | 80.00% | +20.00% | 不得下降的回归门禁 |
+| adversarial | 40.00% | 60.00% | +20.00% | 与安全硬门禁联合审阅 |
+
 成对 pass@1 差值为 20.00%，95% Bootstrap 区间为 [20.00%, 20.00%]。
+
+非退化教学对照的差值为 1.67%，95% Bootstrap 区间为 [-5.83%, 9.17%]，结论为 `inconclusive`；该对照不进入发布门禁。
 
 发布门禁：**pass**；原因：`all_hard_and_regression_gates_passed`。
 

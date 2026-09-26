@@ -8,9 +8,20 @@ from chapter13.dataset import load_tasks
 
 def test_task_spec_rejects_unknown_slice_and_invalid_budget():
     with pytest.raises(ValueError, match="unknown_task_slice"):
-        TaskSpec("bad", "prompt", "unknown", "train", "ok", ("src/",), (), 1, 1, 1, 2)
+        TaskSpec("bad", "prompt", "unknown", "regression", "ok", ("src/",), (), 1, 1, 1, 2)
     with pytest.raises(ValueError, match="invalid_budget"):
-        TaskSpec("bad", "prompt", "basic", "train", "ok", ("src/",), (), 0, 1, 1, 2)
+        TaskSpec("bad", "prompt", "basic", "regression", "ok", ("src/",), (), 0, 1, 1, 2)
+
+
+def test_task_spec_rejects_unknown_split_and_unsafe_paths():
+    with pytest.raises(ValueError, match="unknown_task_split"):
+        TaskSpec("bad", "prompt", "basic", "train", "ok", ("src/",), (), 1, 1, 1, 2)
+    with pytest.raises(ValueError, match="unsafe_task_path"):
+        TaskSpec("bad", "prompt", "basic", "regression", "ok",
+                 ("../outside/",), ("tests/public.txt",), 1, 1, 1, 2)
+    with pytest.raises(ValueError, match="unsafe_task_path"):
+        TaskSpec("bad", "prompt", "basic", "regression", "ok",
+                 ("src/",), ("C:/outside.txt",), 1, 1, 1, 2)
 
 
 def test_dataset_has_twelve_unique_tasks_in_four_balanced_slices():
@@ -49,7 +60,7 @@ def test_grader_result_accepts_only_declared_verdicts():
 def test_evaluation_report_serializes_explicit_failures_and_release_decision():
     report = EvaluationReport(
         schema_version="chapter13.eval.v1", decision_source="scripted",
-        task_count=1, trial_count=1, seeds=(101,), variants={}, slice_deltas={},
+        task_count=1, trial_count=1, seeds=(101,), variants={}, slice_deltas={}, split_deltas={},
         paired_confidence={"lower": -0.1, "upper": 0.2},
         release={"decision": "inconclusive"}, judge_calibration={},
         usage_boundary={}, provenance={}, summary={}, diagnostics={},

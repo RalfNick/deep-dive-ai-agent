@@ -4,13 +4,16 @@ import json
 from copy import deepcopy
 from pathlib import Path
 
+import pytest
+from jsonschema import Draft202012Validator, ValidationError
+
 from chapter13.dataset import load_tasks
 from chapter13.experiments import _variant_summary, build_evaluation, main, run_group
 
 
 def test_full_evaluation_runs_120_trials_and_produces_expected_teaching_delta(tmp_path):
     report = build_evaluation(tmp_path / "work")
-    assert report["schema_version"] == "chapter13.eval.v1"
+    assert report["schema_version"] == "chapter13.eval.v2"
     assert report["trial_count"] == 120
     assert report["variants"]["baseline"]["pass_1"] == 0.55
     assert report["variants"]["candidate"]["pass_1"] == 0.75
@@ -25,11 +28,26 @@ def test_full_evaluation_runs_120_trials_and_produces_expected_teaching_delta(tm
     assert all("trial_id" in item and "failed_graders" in item
                for item in report["failures"])
     assert report["provenance"]["suite"]["sha256"]
-    assert report["provenance"]["gate"]["version"] == "chapter13.release-gate.v1"
+    assert report["provenance"]["gate"]["version"] == "chapter13.release-gate.v2"
     assert report["summary"]["trial_statuses"] == {"completed": 105, "agent_failed": 15}
     assert report["summary"]["failure_count"] == len(report["failures"])
     assert report["diagnostics"]["environment_error_trial"]["status"] == "environment_error"
     assert report["diagnostics"]["scored_in_suite_metrics"] is False
+    assert report["variants"]["baseline"]["splits"] == {
+        "capability": 0.6, "regression": 0.6, "adversarial": 0.4,
+    }
+    assert report["variants"]["candidate"]["splits"] == {
+        "capability": 0.8, "regression": 0.8, "adversarial": 0.6,
+    }
+    assert report["split_deltas"] == {
+        "capability": 0.2, "regression": 0.2, "adversarial": 0.2,
+    }
+    heterogeneous = report["diagnostics"]["heterogeneous_bootstrap_example"]
+    assert heterogeneous["paired_confidence"] == {
+        "estimate": 0.016667, "lower": -0.058333, "upper": 0.091667,
+        "iterations": 10000, "seed": 20260924,
+    }
+    assert heterogeneous["interpretation"] == "inconclusive"
 
 
 def test_reports_are_reproducible_and_do_not_leak_workspace_paths(tmp_path):
@@ -69,6 +87,9 @@ def test_five_groups_have_evidence_and_explicit_limits(tmp_path):
     group_two = run_group(2, tmp_path / "group-two-again")
     assert group_two["observations"]["environment_error_is_separate_status"] is True
     assert group_two["observations"]["environment_error_example"]["status"] == "environment_error"
+    group_four = run_group(4, tmp_path / "group-four-again")
+    assert group_four["observations"]["splits"]["candidate"]["regression"] == 0.8
+    assert group_four["observations"]["heterogeneous_example"]["interpretation"] == "inconclusive"
 
 
 def test_cli_refuses_overwrite_and_replace_archives_previous_output(tmp_path, capsys):
@@ -92,9 +113,10 @@ def test_cli_refuses_overwrite_and_replace_archives_previous_output(tmp_path, ca
 
 def test_versioned_json_schema_covers_every_stable_report_field(tmp_path):
     report = build_evaluation(tmp_path / "schema-work")
-    schema_path = Path(__file__).resolve().parents[1] / "schemas" / "evaluation-report-v1.schema.json"
+    schema_path = Path(__file__).resolve().parents[1] / "schemas" / "evaluation-report-v2.schema.json"
+    assert schema_path.is_file()
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
-    assert schema["$id"].endswith("chapter13.eval.v1.schema.json")
+    assert schema["$id"].endswith("chapter13.eval.v2.schema.json")
     assert schema["additionalProperties"] is False
     assert set(schema["required"]) == set(report)
 
@@ -131,3 +153,34 @@ def test_versioned_json_schema_covers_every_stable_report_field(tmp_path):
     ]
     delta_schema = definitions["deltaMap"]["properties"]["safety"]
     assert delta_schema == {"type": "number", "minimum": -1, "maximum": 1}
+
+
+def test_generated_report_is_validated_against_v2_schema_and_rejects_mutations(tmp_path):
+    report = build_evaluation(tmp_path / "schema-validation-work")
+    schema_path = Path(__file__).resolve().parents[1] / "schemas" / "evaluation-report-v2.schema.json"
+    assert schema_path.is_file()
+    schema = json.loads(schema_path.read_text(encoding="utf-8"))
+    validator = Draft202012Validator(schema)
+    validator.validate(report)
+
+    mutations = []
+    wrong_type = deepcopy(report)
+    wrong_type["variants"]["baseline"]["pass_1"] = "bad"
+    mutations.append(wrong_type)
+    illegal_status = deepcopy(report)
+    illegal_status["trials"][0]["status"] = "mystery"
+    mutations.append(illegal_status)
+    nested_unknown = deepcopy(report)
+    nested_unknown["trials"][0]["unexpected"] = True
+    mutations.append(nested_unknown)
+    invalid_delta = deepcopy(report)
+    invalid_delta["slice_deltas"]["safety"] = -1.01
+    mutations.append(invalid_delta)
+
+    for mutation in mutations:
+        with pytest.raises(ValidationError):
+            validator.validate(mutation)
+
+    valid_negative_delta = deepcopy(report)
+    valid_negative_delta["slice_deltas"]["safety"] = -0.12
+    validator.validate(valid_negative_delta)

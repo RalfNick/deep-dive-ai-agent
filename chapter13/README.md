@@ -6,7 +6,7 @@
 
 ## 环境与依赖
 
-运行时代码只使用 Python 标准库。测试固定使用 Python 3.11 与 pytest；本地 HTML 预览另外使用 Markdown。
+运行时代码只使用 Python 标准库。测试固定使用 Python 3.11、pytest 与 `jsonschema`；本地 HTML 预览另外使用 Markdown。
 
 ```powershell
 # 在仓库根目录执行
@@ -33,7 +33,7 @@ python -B -m chapter13.preview
 
 实验输出目录已经存在时，命令默认拒绝覆盖。若确实需要替换，可显式添加 `--replace`；旧目录会重命名为相邻的 `.previous-N`，不会被删除。
 
-## 12 个任务和四个切片
+## 12 个任务、四个内容切片与三个用途视图
 
 | 切片 | 数量 | 评估重点 |
 | --- | ---: | --- |
@@ -44,6 +44,8 @@ python -B -m chapter13.preview
 
 每道任务都有明确的写入范围、受保护路径、步骤预算和工具调用预算。每个 Trial 都从独立工作区开始；稳定报告只保存初始内容指纹，不保存临时绝对路径。
 
+同一批任务还按用途标记为 `capability`、`regression` 或 `adversarial`。报告会分别输出三个 split 的 Baseline、Candidate 和差值：Capability 用于观察新能力趋势，Regression 只要下降就阻止发布，Adversarial 与安全硬门禁联合审阅。
+
 ## 五组实验
 
 | 组 | 核心问题 | 主要证据 |
@@ -51,7 +53,7 @@ python -B -m chapter13.preview
 | 13-1 | 同一句“修复完成”为何可能一真一假 | final answer、Outcome、Trajectory、受保护路径 |
 | 13-2 | 测试篡改、隐藏答案和越界怎样被发现 | 策略违规事件、文件完整性、独立状态分类 |
 | 13-3 | 多个 Grader 怎样组合 | Outcome、Trajectory、Safety、Efficiency 与硬否决 |
-| 13-4 | 一次成功为何不能代表可靠 | `pass@1`、`pass@k`、`pass^k`、切片和 Bootstrap |
+| 13-4 | 一次成功为何不能代表可靠 | `pass@1`、`pass@k`、`pass^k`、切片、split 和两组 Bootstrap 对照 |
 | 13-5 | 新版本是否可以发布 | 成对回归、Judge 校准、三态门禁 |
 
 规范结果位于 `chapter13/reports/`。它包含全部 120 条 Trial 的稳定 JSON、便于阅读的 Markdown 摘要和五组实验报告。
@@ -63,13 +65,13 @@ python -B -m chapter13.preview
 - `GraderResult`：`pass / fail / unknown / not_applicable`、原因码和证据。
 - `EvaluationReport` / `evaluation-report.json`：版本化总报告、切片指标、可靠性指标、置信区间、失败清单和发布结论。
 
-稳定 JSON 的正式合同位于 `schemas/evaluation-report-v1.schema.json`。新增或改名字段必须发布新的 schema 版本，不能在同一个 `chapter13.eval.v1` 下静默改变含义。
+稳定 JSON 的当前合同位于 `schemas/evaluation-report-v2.schema.json`；v1 保留为历史合同。v2 新增 split 指标和非计分 Bootstrap 教学对照。新增或改名字段必须继续发布新的 schema 版本，不能在同一个版本下静默改变含义。测试会用 Draft 2020-12 验证完整报告及错误类型、非法状态、未知字段和差值边界等反例。
 
 `environment_error` 不进入能力指标分母，但会单独计数并阻止发布。没有 Provider Usage 时，Token 和费用字段保持 `null`，不会根据字符数伪造。
 
 ## 可选 Live Judge
 
-`chapter13/judge.py` 提供显式的 OpenAI-compatible 调用边界，但规范实验不会调用它。只有应用代码主动调用 `run_live_judge()` 时，函数才读取指定的环境变量并发起请求。API Key、模型名、真实响应和 live 报告不得进入版本库。
+`chapter13/judge.py` 提供显式的 OpenAI-compatible 调用边界，但规范实验不会调用它。只有应用代码主动调用 `run_live_judge()` 时，函数才读取指定的环境变量并发起请求；返回内容必须满足 `label ∈ {pass, fail, unknown}` 与字符串证据列表合同，否则失败关闭。API Key、模型名、真实响应和 live 报告不得进入版本库。
 
 ## 代码阅读顺序
 

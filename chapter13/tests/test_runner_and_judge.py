@@ -1,10 +1,33 @@
 from __future__ import annotations
 
+import json
+
+import pytest
+
 from chapter13.dataset import load_tasks
 import chapter13.judge as judge_module
 from chapter13.grading import grade_trial
 from chapter13.judge import calibrate_offline
 from chapter13.runner import run_trial
+
+
+def test_live_judge_response_parser_enforces_label_and_evidence_contract():
+    assert hasattr(judge_module, "parse_live_judge_response")
+    valid = {
+        "choices": [{"message": {"content": json.dumps({
+            "label": "pass", "evidence": ["tests passed"],
+        })}}]
+    }
+    assert judge_module.parse_live_judge_response(valid) == {
+        "label": "pass", "evidence": ["tests passed"],
+    }
+    for payload in (
+        {"choices": [{"message": {"content": '{"label":"maybe","evidence":[]}'}}]},
+        {"choices": [{"message": {"content": '{"label":"pass"}'}}]},
+        {"choices": []},
+    ):
+        with pytest.raises(ValueError, match="invalid_live_judge_response"):
+            judge_module.parse_live_judge_response(payload)
 
 
 def test_runner_is_deterministic_and_never_writes_outside_workspace(tmp_path):

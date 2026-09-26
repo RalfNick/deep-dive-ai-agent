@@ -1,0 +1,350 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wlxralf.com/schemas/chapter13.eval.v2.schema.json",
+  "title": "Chapter 13 Evaluation Report v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "decision_source", "task_count", "trial_count", "seeds",
+    "variants", "slice_deltas", "split_deltas", "paired_confidence", "release", "judge_calibration",
+    "usage_boundary", "provenance", "summary", "diagnostics", "failures", "trials", "limits"
+  ],
+  "properties": {
+    "schema_version": {"const": "chapter13.eval.v2"},
+    "decision_source": {"const": "deterministic_scripted_policy"},
+    "task_count": {"type": "integer", "minimum": 1},
+    "trial_count": {"type": "integer", "minimum": 1},
+    "seeds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "integer"}},
+    "variants": {
+      "type": "object", "additionalProperties": false,
+      "required": ["baseline", "candidate"],
+      "properties": {
+        "baseline": {"$ref": "#/$defs/variantSummary"},
+        "candidate": {"$ref": "#/$defs/variantSummary"}
+      }
+    },
+    "slice_deltas": {"$ref": "#/$defs/deltaMap"},
+    "split_deltas": {"$ref": "#/$defs/splitDeltaMap"},
+    "paired_confidence": {
+      "type": "object", "additionalProperties": false,
+      "required": ["estimate", "lower", "upper", "iterations", "seed"],
+      "properties": {
+        "estimate": {"type": "number"}, "lower": {"type": "number"},
+        "upper": {"type": "number"}, "iterations": {"type": "integer", "minimum": 1},
+        "seed": {"type": "integer"}
+      }
+    },
+    "release": {
+      "type": "object", "additionalProperties": false, "required": ["decision", "reasons"],
+      "properties": {
+        "decision": {"enum": ["pass", "fail", "inconclusive"]},
+        "reasons": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "judge_calibration": {"$ref": "#/$defs/judgeCalibration"},
+    "usage_boundary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["input_tokens", "output_tokens", "cost_usd", "reason"],
+      "properties": {
+        "input_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "output_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "cost_usd": {"type": ["number", "null"], "minimum": 0},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "provenance": {"$ref": "#/$defs/provenance"},
+    "summary": {"$ref": "#/$defs/summary"},
+    "diagnostics": {
+      "type": "object", "additionalProperties": false,
+      "required": ["environment_error_trial", "heterogeneous_bootstrap_example", "scored_in_suite_metrics", "purpose"],
+      "properties": {
+        "environment_error_trial": {"$ref": "#/$defs/trial"},
+        "heterogeneous_bootstrap_example": {"$ref": "#/$defs/bootstrapExample"},
+        "scored_in_suite_metrics": {"const": false},
+        "purpose": {"type": "string", "minLength": 1}
+      }
+    },
+    "failures": {"type": "array", "items": {"$ref": "#/$defs/failure"}},
+    "trials": {"type": "array", "items": {"$ref": "#/$defs/trial"}},
+    "limits": {"type": "array", "minItems": 1, "items": {"type": "string"}}
+  },
+  "$defs": {
+    "nullableRate": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "sliceMap": {
+      "type": "object", "additionalProperties": false,
+      "required": ["basic", "edge", "safety", "recovery"],
+      "properties": {
+        "basic": {"$ref": "#/$defs/nullableRate"}, "edge": {"$ref": "#/$defs/nullableRate"},
+        "safety": {"$ref": "#/$defs/nullableRate"}, "recovery": {"$ref": "#/$defs/nullableRate"}
+      }
+    },
+    "deltaMap": {
+      "type": "object", "additionalProperties": false,
+      "required": ["basic", "edge", "safety", "recovery"],
+      "properties": {
+        "basic": {"type": "number", "minimum": -1, "maximum": 1},
+        "edge": {"type": "number", "minimum": -1, "maximum": 1},
+        "safety": {"type": "number", "minimum": -1, "maximum": 1},
+        "recovery": {"type": "number", "minimum": -1, "maximum": 1}
+      }
+    },
+    "splitRateMap": {
+      "type": "object", "additionalProperties": false,
+      "required": ["capability", "regression", "adversarial"],
+      "properties": {
+        "capability": {"$ref": "#/$defs/nullableRate"},
+        "regression": {"$ref": "#/$defs/nullableRate"},
+        "adversarial": {"$ref": "#/$defs/nullableRate"}
+      }
+    },
+    "splitDeltaMap": {
+      "type": "object", "additionalProperties": false,
+      "required": ["capability", "regression", "adversarial"],
+      "properties": {
+        "capability": {"type": "number", "minimum": -1, "maximum": 1},
+        "regression": {"type": "number", "minimum": -1, "maximum": 1},
+        "adversarial": {"type": "number", "minimum": -1, "maximum": 1}
+      }
+    },
+    "bootstrapExample": {
+      "type": "object", "additionalProperties": false,
+      "required": ["task_deltas", "paired_confidence", "interpretation", "scored_in_release"],
+      "properties": {
+        "task_deltas": {
+          "type": "array", "minItems": 1,
+          "items": {"type": "number", "minimum": -1, "maximum": 1}
+        },
+        "paired_confidence": {
+          "type": "object", "additionalProperties": false,
+          "required": ["estimate", "lower", "upper", "iterations", "seed"],
+          "properties": {
+            "estimate": {"type": "number"}, "lower": {"type": "number"},
+            "upper": {"type": "number"}, "iterations": {"type": "integer", "minimum": 1},
+            "seed": {"type": "integer"}
+          }
+        },
+        "interpretation": {"enum": ["inconclusive", "decisive"]},
+        "scored_in_release": {"const": false}
+      }
+    },
+    "taskMetric": {
+      "type": "object", "additionalProperties": false,
+      "required": ["passes", "trials", "pass_1", "pass_at_3", "pass_all_3"],
+      "properties": {
+        "passes": {"type": "integer", "minimum": 0}, "trials": {"type": "integer", "minimum": 0},
+        "pass_1": {"$ref": "#/$defs/nullableRate"}, "pass_at_3": {"$ref": "#/$defs/nullableRate"},
+        "pass_all_3": {"$ref": "#/$defs/nullableRate"}
+      }
+    },
+    "variantSummary": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "task_count", "trial_count", "pass_1", "pass_at_3", "pass_all_3", "slices", "splits",
+        "safety_violations", "protected_mutations", "environment_errors", "invalid_records",
+        "median_steps", "median_tool_calls", "per_task"
+      ],
+      "properties": {
+        "task_count": {"type": "integer", "minimum": 1}, "trial_count": {"type": "integer", "minimum": 0},
+        "pass_1": {"$ref": "#/$defs/nullableRate"}, "pass_at_3": {"$ref": "#/$defs/nullableRate"},
+        "pass_all_3": {"$ref": "#/$defs/nullableRate"}, "slices": {"$ref": "#/$defs/sliceMap"},
+        "splits": {"$ref": "#/$defs/splitRateMap"},
+        "safety_violations": {"type": "integer", "minimum": 0},
+        "protected_mutations": {"type": "integer", "minimum": 0},
+        "environment_errors": {"type": "integer", "minimum": 0},
+        "invalid_records": {"type": "integer", "minimum": 0},
+        "median_steps": {"type": ["number", "null"], "minimum": 0},
+        "median_tool_calls": {"type": ["number", "null"], "minimum": 0},
+        "per_task": {"type": "object", "additionalProperties": {"$ref": "#/$defs/taskMetric"}}
+      }
+    },
+    "labelCounts": {
+      "type": "object", "additionalProperties": false, "required": ["pass", "fail", "unknown"],
+      "properties": {
+        "pass": {"type": "integer", "minimum": 0}, "fail": {"type": "integer", "minimum": 0},
+        "unknown": {"type": "integer", "minimum": 0}
+      }
+    },
+    "judgeCalibration": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "mode", "case_count", "agreement", "unknown_rate", "coverage", "answered_accuracy",
+        "confusion_matrix", "metadata", "limitations"
+      ],
+      "properties": {
+        "mode": {"const": "offline_fixture"}, "case_count": {"type": "integer", "minimum": 1},
+        "agreement": {"$ref": "#/$defs/nullableRate"}, "unknown_rate": {"$ref": "#/$defs/nullableRate"},
+        "coverage": {"$ref": "#/$defs/nullableRate"}, "answered_accuracy": {"$ref": "#/$defs/nullableRate"},
+        "confusion_matrix": {
+          "type": "object", "additionalProperties": false, "required": ["pass", "fail", "unknown"],
+          "properties": {
+            "pass": {"$ref": "#/$defs/labelCounts"}, "fail": {"$ref": "#/$defs/labelCounts"},
+            "unknown": {"$ref": "#/$defs/labelCounts"}
+          }
+        },
+        "metadata": {
+          "type": "object", "additionalProperties": false,
+          "required": ["rubric_id", "gold_source", "annotation_version", "judge_model", "prompt_version", "evidence_boundary"],
+          "properties": {
+            "rubric_id": {"type": "string"}, "gold_source": {"type": "string"},
+            "annotation_version": {"type": "string"}, "judge_model": {"type": "string"},
+            "prompt_version": {"type": "string"}, "evidence_boundary": {"type": "string"}
+          }
+        },
+        "limitations": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "provenance": {
+      "type": "object", "additionalProperties": false,
+      "required": ["suite", "subjects", "environment", "graders", "gate", "formulas"],
+      "properties": {
+        "suite": {
+          "type": "object", "additionalProperties": false, "required": ["id", "version", "sha256"],
+          "properties": {
+            "id": {"type": "string"}, "version": {"type": "string"},
+            "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+          }
+        },
+        "subjects": {
+          "type": "object", "additionalProperties": false, "required": ["baseline", "candidate"],
+          "properties": {
+            "baseline": {"$ref": "#/$defs/subject"}, "candidate": {"$ref": "#/$defs/subject"}
+          }
+        },
+        "environment": {
+          "type": "object", "additionalProperties": false,
+          "required": ["contract_version", "fixture_ids", "python_contract", "run_window", "run_window_reason"],
+          "properties": {
+            "contract_version": {"type": "string"},
+            "fixture_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+            "python_contract": {"type": "string"}, "run_window": {"type": ["string", "null"]},
+            "run_window_reason": {"type": "string"}
+          }
+        },
+        "graders": {
+          "type": "object", "additionalProperties": false, "required": ["version", "names"],
+          "properties": {
+            "version": {"type": "string"},
+            "names": {"type": "array", "items": {"enum": ["outcome", "trajectory", "safety", "efficiency"]}}
+          }
+        },
+        "gate": {
+          "type": "object", "additionalProperties": false,
+          "required": ["version", "max_slice_drop", "max_regression_split_drop", "environment_errors_allowed", "safety_violations_allowed"],
+          "properties": {
+            "version": {"type": "string"}, "max_slice_drop": {"type": "number", "minimum": 0},
+            "max_regression_split_drop": {"type": "number", "minimum": 0},
+            "environment_errors_allowed": {"type": "integer", "minimum": 0},
+            "safety_violations_allowed": {"type": "integer", "minimum": 0}
+          }
+        },
+        "formulas": {
+          "type": "object", "additionalProperties": false,
+          "required": ["pass_at_k", "pass_all_k", "bootstrap"],
+          "properties": {
+            "pass_at_k": {"type": "string"}, "pass_all_k": {"type": "string"},
+            "bootstrap": {"type": "string"}
+          }
+        }
+      }
+    },
+    "subject": {
+      "type": "object", "additionalProperties": false, "required": ["policy"],
+      "properties": {"policy": {"type": "string"}}
+    },
+    "statusCounts": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "completed": {"type": "integer", "minimum": 0}, "agent_failed": {"type": "integer", "minimum": 0},
+        "environment_error": {"type": "integer", "minimum": 0}, "invalid": {"type": "integer", "minimum": 0}
+      }
+    },
+    "verdictCounts": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "pass": {"type": "integer", "minimum": 0}, "fail": {"type": "integer", "minimum": 0},
+        "unknown": {"type": "integer", "minimum": 0}, "not_applicable": {"type": "integer", "minimum": 0}
+      }
+    },
+    "summary": {
+      "type": "object", "additionalProperties": false,
+      "required": ["trial_statuses", "grader_verdicts", "failure_count"],
+      "properties": {
+        "trial_statuses": {"$ref": "#/$defs/statusCounts"},
+        "grader_verdicts": {"$ref": "#/$defs/verdictCounts"},
+        "failure_count": {"type": "integer", "minimum": 0}
+      }
+    },
+    "failure": {
+      "type": "object", "additionalProperties": false,
+      "required": ["trial_id", "task_id", "variant", "status", "failed_graders", "error"],
+      "properties": {
+        "trial_id": {"type": "string"}, "task_id": {"type": "string"},
+        "variant": {"enum": ["baseline", "candidate"]},
+        "status": {"enum": ["completed", "agent_failed", "environment_error", "invalid"]},
+        "failed_graders": {"type": "array", "items": {"enum": ["outcome", "trajectory", "safety", "efficiency"]}},
+        "error": {"type": ["string", "null"]}
+      }
+    },
+    "event": {
+      "type": "object", "additionalProperties": false, "required": ["seq", "kind"],
+      "properties": {
+        "seq": {"type": "integer", "minimum": 1}, "kind": {"type": "string"},
+        "path": {"type": "string"}, "verdict": {"type": "string"}, "text": {"type": "string"}
+      }
+    },
+    "outcome": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "solution_matches": {"type": "boolean"}, "protected_paths_intact": {"type": "boolean"},
+        "workspace_contained": {"type": "boolean"}
+      }
+    },
+    "usage": {
+      "type": "object", "additionalProperties": false,
+      "required": ["steps", "tool_calls", "input_tokens", "output_tokens", "cost_usd"],
+      "properties": {
+        "steps": {"type": "integer", "minimum": 0}, "tool_calls": {"type": "integer", "minimum": 0},
+        "input_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "output_tokens": {"type": ["integer", "null"], "minimum": 0},
+        "cost_usd": {"type": ["number", "null"], "minimum": 0}
+      }
+    },
+    "graderMetrics": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "violation_count": {"type": "integer", "minimum": 0}, "finding_count": {"type": "integer", "minimum": 0},
+        "protected_paths_intact": {"type": "boolean"}, "integrity_evidence_present": {"type": "boolean"},
+        "workspace_contained": {"type": "boolean"}, "containment_evidence_present": {"type": "boolean"},
+        "steps": {"type": "integer", "minimum": 0}, "tool_calls": {"type": "integer", "minimum": 0}
+      }
+    },
+    "grader": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "verdict", "reason_codes", "evidence", "metrics"],
+      "properties": {
+        "name": {"enum": ["outcome", "trajectory", "safety", "efficiency"]},
+        "verdict": {"enum": ["pass", "fail", "unknown", "not_applicable"]},
+        "reason_codes": {"type": "array", "items": {"type": "string"}},
+        "evidence": {"type": "array", "items": {"type": "string"}},
+        "metrics": {"$ref": "#/$defs/graderMetrics"}
+      }
+    },
+    "trial": {
+      "type": "object", "additionalProperties": false,
+      "required": [
+        "task_id", "variant", "trial_id", "seed", "environment_id", "status", "final_answer",
+        "outcome", "events", "usage", "error", "graders"
+      ],
+      "properties": {
+        "task_id": {"type": "string"}, "variant": {"enum": ["baseline", "candidate"]},
+        "trial_id": {"type": "string"}, "seed": {"type": "integer"},
+        "environment_id": {"type": "string"},
+        "status": {"enum": ["completed", "agent_failed", "environment_error", "invalid"]},
+        "final_answer": {"type": "string"}, "outcome": {"$ref": "#/$defs/outcome"},
+        "events": {"type": "array", "items": {"$ref": "#/$defs/event"}},
+        "usage": {"$ref": "#/$defs/usage"}, "error": {"type": ["string", "null"]},
+        "graders": {"type": "array", "items": {"$ref": "#/$defs/grader"}}
+      }
+    }
+  }
+}

@@ -2,11 +2,27 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
+import posixpath
 from typing import Any
 
 TASK_SLICES = frozenset({"basic", "edge", "safety", "recovery"})
+TASK_SPLITS = frozenset({"capability", "regression", "adversarial"})
 TRIAL_STATUSES = frozenset({"completed", "agent_failed", "environment_error", "invalid"})
 GRADER_VERDICTS = frozenset({"pass", "fail", "unknown", "not_applicable"})
+
+
+def _safe_relative_path(value: str) -> bool:
+    normalized_input = value.replace("\\", "/")
+    parts = normalized_input.split("/")
+    normalized = posixpath.normpath(normalized_input)
+    return (
+        bool(value)
+        and not normalized_input.startswith("/")
+        and ":" not in parts[0]
+        and ".." not in parts
+        and normalized not in {".", ".."}
+        and not normalized.startswith("../")
+    )
 
 
 @dataclass(frozen=True)
@@ -30,6 +46,8 @@ class TaskSpec:
     def __post_init__(self) -> None:
         if self.slice not in TASK_SLICES:
             raise ValueError("unknown_task_slice")
+        if self.split not in TASK_SPLITS:
+            raise ValueError("unknown_task_split")
         if self.max_steps <= 0 or self.max_tool_calls <= 0:
             raise ValueError("invalid_budget")
         if not 0 <= self.baseline_successes <= 5 or not 0 <= self.candidate_successes <= 5:
@@ -38,6 +56,10 @@ class TaskSpec:
             raise ValueError("missing_task_field")
         if not self.fixture_id or not self.labels or not self.success_conditions or not self.seed_strategy:
             raise ValueError("missing_task_metadata")
+        if not self.allowed_write_prefixes or any(
+            not _safe_relative_path(path) for path in (*self.allowed_write_prefixes, *self.protected_paths)
+        ):
+            raise ValueError("unsafe_task_path")
 
 
 @dataclass(frozen=True)
@@ -108,6 +130,7 @@ class EvaluationReport:
     seeds: tuple[int, ...]
     variants: dict[str, Any]
     slice_deltas: dict[str, float]
+    split_deltas: dict[str, float]
     paired_confidence: dict[str, Any]
     release: dict[str, Any]
     judge_calibration: dict[str, Any]
@@ -134,6 +157,7 @@ class EvaluationReport:
             "seeds": list(self.seeds),
             "variants": self.variants,
             "slice_deltas": self.slice_deltas,
+            "split_deltas": self.split_deltas,
             "paired_confidence": self.paired_confidence,
             "release": self.release,
             "judge_calibration": self.judge_calibration,

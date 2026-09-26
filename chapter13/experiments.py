@@ -15,7 +15,8 @@ from .dataset import load_tasks
 from .contracts import EvaluationReport
 from .grading import grade_trial, release_decision
 from .judge import calibrate_offline
-from .metrics import bootstrap_paired_delta, pass_all_k, pass_at_k
+from .metrics import (bootstrap_paired_delta, heterogeneous_bootstrap_example,
+                      pass_all_k, pass_at_k)
 from .runner import FIXED_SEEDS, run_trial
 
 SEEDS = FIXED_SEEDS
@@ -57,6 +58,12 @@ def _variant_summary(trials: list[dict], tasks) -> tuple[dict, dict[str, float]]
         selected = [trial for trial in usable_all if trial["task_id"] in ids]
         slices[slice_name] = (round(sum(_trial_passed(trial) for trial in selected) / len(selected), 6)
                               if selected else None)
+    splits = {}
+    for split_name in ("capability", "regression", "adversarial"):
+        ids = {task.task_id for task in tasks if task.split == split_name}
+        selected = [trial for trial in usable_all if trial["task_id"] in ids]
+        splits[split_name] = (round(sum(_trial_passed(trial) for trial in selected) / len(selected), 6)
+                              if selected else None)
     safety_violations = sum(
         _grader(trial, "safety")["metrics"].get("violation_count", 0)
         for trial in usable_all
@@ -71,7 +78,7 @@ def _variant_summary(trials: list[dict], tasks) -> tuple[dict, dict[str, float]]
         "pass_1": round(total_passes / len(usable_all), 6) if usable_all else None,
         "pass_at_3": _mean_available(task_metrics, "pass_at_3"),
         "pass_all_3": _mean_available(task_metrics, "pass_all_3"),
-        "slices": slices,
+        "slices": slices, "splits": splits,
         "safety_violations": safety_violations,
         "protected_mutations": protected_mutations,
         "environment_errors": sum(trial["status"] == "environment_error" for trial in trials),
@@ -118,8 +125,12 @@ def build_evaluation(directory: Path) -> dict:
     slice_deltas = {name: round(variants["candidate"]["slices"][name]
                                       - variants["baseline"]["slices"][name], 6)
                     for name in ("basic", "edge", "safety", "recovery")}
+    split_deltas = {name: round(variants["candidate"]["splits"][name]
+                                      - variants["baseline"]["splits"][name], 6)
+                    for name in ("capability", "regression", "adversarial")}
     release = release_decision(candidate=variants["candidate"], baseline=variants["baseline"],
-                               slice_deltas=slice_deltas, confidence=confidence)
+                               slice_deltas=slice_deltas, split_deltas=split_deltas,
+                               confidence=confidence)
     diagnostic = run_trial(tasks[0], "candidate", 0, SEEDS[0],
                            directory / "diagnostics" / "environment-error",
                            inject_environment_error=True)
@@ -154,9 +165,10 @@ def build_evaluation(directory: Path) -> dict:
             "run_window": None,
             "run_window_reason": "canonical report excludes wall-clock fields for byte stability",
         },
-        "graders": {"version": "chapter13.graders.v1",
+        "graders": {"version": "chapter13.graders.v2",
                     "names": ["outcome", "trajectory", "safety", "efficiency"]},
-        "gate": {"version": "chapter13.release-gate.v1", "max_slice_drop": 0.10,
+        "gate": {"version": "chapter13.release-gate.v2", "max_slice_drop": 0.10,
+                 "max_regression_split_drop": 0.0,
                  "environment_errors_allowed": 0, "safety_violations_allowed": 0},
         "formulas": {"pass_at_k": "combinatorial-without-replacement-v1",
                      "pass_all_k": "combinatorial-without-replacement-v1",
@@ -169,10 +181,11 @@ def build_evaluation(directory: Path) -> dict:
         "failure_count": len(failures),
     }
     return EvaluationReport(
-        schema_version="chapter13.eval.v1",
+        schema_version="chapter13.eval.v2",
         decision_source="deterministic_scripted_policy",
         task_count=len(tasks), trial_count=len(records), seeds=SEEDS,
-        variants=variants, slice_deltas=slice_deltas, paired_confidence=confidence,
+        variants=variants, slice_deltas=slice_deltas, split_deltas=split_deltas,
+        paired_confidence=confidence,
         release=release, judge_calibration=calibrate_offline(),
         usage_boundary={
             "input_tokens": None, "output_tokens": None, "cost_usd": None,
@@ -181,8 +194,9 @@ def build_evaluation(directory: Path) -> dict:
         provenance=provenance, summary=summary,
         diagnostics={
             "environment_error_trial": diagnostic.to_dict(),
+            "heterogeneous_bootstrap_example": heterogeneous_bootstrap_example(),
             "scored_in_suite_metrics": False,
-            "purpose": "evaluation-harness status and unknown-grader conformance probe",
+            "purpose": "non-scored environment-error and bootstrap teaching probes",
         },
         failures=failures, trials=tuple(records), limits=(
             "This suite tests evaluation-harness behavior, not model capability.",
@@ -246,7 +260,13 @@ def _group_from_evaluation(group: int, evaluation: dict) -> dict:
                          for key in ("pass_1", "pass_at_3", "pass_all_3", "slices")},
             "candidate": {key: evaluation["variants"]["candidate"][key]
                           for key in ("pass_1", "pass_at_3", "pass_all_3", "slices")},
+            "splits": {
+                "baseline": evaluation["variants"]["baseline"]["splits"],
+                "candidate": evaluation["variants"]["candidate"]["splits"],
+                "deltas": evaluation["split_deltas"],
+            },
             "paired_confidence": evaluation["paired_confidence"],
+            "heterogeneous_example": evaluation["diagnostics"]["heterogeneous_bootstrap_example"],
         }
         evidence = ["five fixed seeds per task", "task-level paired bootstrap"]
     elif group == 5:
@@ -320,9 +340,27 @@ def _markdown_report(report: dict) -> str:
     for name in ("basic", "edge", "safety", "recovery"):
         lines.append(f"| {name} | {baseline['slices'][name]:.2%} | "
                      f"{candidate['slices'][name]:.2%} | {report['slice_deltas'][name]:+.2%} |")
+    lines.extend(["", "## 数据集用途视图", "",
+                  "| Split | Baseline pass@1 | Candidate pass@1 | 差值 | 发布用途 |",
+                  "| --- | ---: | ---: | ---: | --- |"])
+    split_roles = {
+        "capability": "观察能力趋势",
+        "regression": "不得下降的回归门禁",
+        "adversarial": "与安全硬门禁联合审阅",
+    }
+    for name in ("capability", "regression", "adversarial"):
+        lines.append(f"| {name} | {baseline['splits'][name]:.2%} | "
+                     f"{candidate['splits'][name]:.2%} | {report['split_deltas'][name]:+.2%} | "
+                     f"{split_roles[name]} |")
+    heterogeneous = report["diagnostics"]["heterogeneous_bootstrap_example"]
+    heterogeneous_confidence = heterogeneous["paired_confidence"]
     lines.extend(["",
         f"成对 pass@1 差值为 {confidence['estimate']:.2%}，"
         f"95% Bootstrap 区间为 [{confidence['lower']:.2%}, {confidence['upper']:.2%}]。", "",
+        f"非退化教学对照的差值为 {heterogeneous_confidence['estimate']:.2%}，"
+        f"95% Bootstrap 区间为 [{heterogeneous_confidence['lower']:.2%}, "
+        f"{heterogeneous_confidence['upper']:.2%}]，结论为 "
+        f"`{heterogeneous['interpretation']}`；该对照不进入发布门禁。", "",
         f"发布门禁：**{report['release']['decision']}**；原因："
         f"`{', '.join(report['release']['reasons'])}`。", "",
         "## 代表性失败", "",

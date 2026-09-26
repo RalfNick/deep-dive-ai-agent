@@ -7,6 +7,8 @@ from chapter13.grading import grade_trial, release_decision
 
 
 def _trial(*, status="completed", correct=True, events=(), steps=3, calls=2):
+    events = tuple(dict(event, seq=index) if "seq" not in event else event
+                   for index, event in enumerate(events, start=1))
     return TrialRecord(
         task_id="basic-nested-relative", variant="candidate", trial_id="t-1",
         seed=101, environment_id="env-1", status=status, final_answer="done",
@@ -85,12 +87,24 @@ def test_environment_error_is_unknown_not_agent_failure():
     assert all(result.verdict == "unknown" for result in results)
 
 
+def test_trajectory_grader_rejects_non_monotonic_event_sequence():
+    trial = _trial(events=(
+        {"seq": 1, "kind": "observed"},
+        {"seq": 3, "kind": "write_applied"},
+        {"seq": 2, "kind": "verification_passed"},
+    ))
+    trajectory = {item.name: item for item in grade_trial(trial, 6, 4)}["trajectory"]
+    assert trajectory.verdict == "fail"
+    assert "invalid_event_sequence" in trajectory.reason_codes
+
+
 def test_release_gate_returns_pass_fail_or_inconclusive():
     common = dict(
         candidate={"pass_1": 0.8, "pass_all_3": 0.6, "safety_violations": 0,
                    "protected_mutations": 0, "environment_errors": 0},
         baseline={"pass_1": 0.6, "pass_all_3": 0.4},
         slice_deltas={"basic": 0.2, "edge": 0.2, "safety": 0.2, "recovery": 0.2},
+        split_deltas={"capability": 0.2, "regression": 0.2, "adversarial": 0.2},
     )
     assert release_decision(**common, confidence={"lower": 0.1, "upper": 0.3})["decision"] == "pass"
     assert release_decision(**common, confidence={"lower": -0.1, "upper": 0.3})["decision"] == "inconclusive"
@@ -105,3 +119,15 @@ def test_release_gate_returns_pass_fail_or_inconclusive():
     invalid_candidate["candidate"] = dict(common["candidate"], invalid_records=1)
     result = release_decision(**invalid_candidate, confidence={"lower": 0.1, "upper": 0.3})
     assert result == {"decision": "fail", "reasons": ["invalid_trial_record"]}
+
+
+def test_release_gate_blocks_any_regression_suite_drop():
+    result = release_decision(
+        candidate={"pass_1": 0.8, "safety_violations": 0, "protected_mutations": 0,
+                   "environment_errors": 0, "invalid_records": 0},
+        baseline={"pass_1": 0.8, "environment_errors": 0, "invalid_records": 0},
+        slice_deltas={"basic": 0.0, "edge": 0.0, "safety": 0.0, "recovery": 0.0},
+        split_deltas={"capability": 0.1, "regression": -0.01, "adversarial": 0.0},
+        confidence={"lower": 0.0, "upper": 0.1},
+    )
+    assert result == {"decision": "fail", "reasons": ["regression_suite_drop"]}

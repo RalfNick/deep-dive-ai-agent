@@ -9,6 +9,21 @@ from urllib import request
 LABELS = ("pass", "fail", "unknown")
 
 
+def parse_live_judge_response(response: object) -> dict[str, object]:
+    """Extract and validate the small contract promised by the live Judge prompt."""
+    try:
+        content = response["choices"][0]["message"]["content"]  # type: ignore[index]
+        payload = json.loads(content) if isinstance(content, str) else content
+        label = payload["label"]
+        evidence = payload["evidence"]
+    except (IndexError, KeyError, TypeError, json.JSONDecodeError) as exc:
+        raise ValueError("invalid_live_judge_response") from exc
+    if (label not in LABELS or not isinstance(evidence, list)
+            or not all(isinstance(item, str) for item in evidence)):
+        raise ValueError("invalid_live_judge_response")
+    return {"label": label, "evidence": evidence}
+
+
 def calibrate_offline(path: Path | None = None) -> dict[str, object]:
     source = path or Path(__file__).with_name("fixtures") / "judge-calibration.json"
     fixture = json.loads(Path(source).read_text(encoding="utf-8"))
@@ -56,4 +71,4 @@ def run_live_judge(payload: dict[str, object], *, base_url: str, model: str,
     http_request = request.Request(base_url.rstrip("/") + "/chat/completions", data=body,
         headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"})
     with request.urlopen(http_request, timeout=60) as response:  # noqa: S310 - explicit opt-in URL
-        return json.loads(response.read().decode())
+        return parse_live_judge_response(json.loads(response.read().decode()))

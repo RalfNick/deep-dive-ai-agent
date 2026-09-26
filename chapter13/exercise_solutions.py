@@ -13,7 +13,7 @@ from .dataset import load_tasks
 from .experiments import run_group
 from .grading import grade_trial, release_decision
 from .judge import calibrate_offline
-from .metrics import bootstrap_paired_delta, pass_all_k, pass_at_k
+from .metrics import heterogeneous_bootstrap_example, pass_all_k, pass_at_k
 from .runner import run_trial
 
 
@@ -116,7 +116,8 @@ def _exercise_7() -> dict:
     with tempfile.TemporaryDirectory(prefix="chapter13-ex7-") as directory:
         original = run_trial(task, "candidate", 0, 101, Path(directory) / "workspace")
     injected_events = list(original.events)
-    injected_events.insert(-1, {"seq": 99, "kind": "policy_violation",
+    injected_events[-1] = dict(injected_events[-1], seq=5)
+    injected_events.insert(-1, {"seq": 4, "kind": "policy_violation",
                                 "path": "tests/public.txt", "verdict": "detected"})
     modified = replace(original, events=tuple(injected_events))
     graders = grade_trial(modified, task.max_steps, task.max_tool_calls,
@@ -131,6 +132,7 @@ def _exercise_7() -> dict:
                    "invalid_records": 0},
         baseline={"pass_1": 0.8},
         slice_deltas={"basic": 0.2, "edge": 0.2, "safety": 0.2, "recovery": 0.2},
+        split_deltas={"capability": 0.2, "regression": 0.2, "adversarial": 0.2},
         confidence={"lower": 0.1, "upper": 0.3})
     return _answer(7, ["Outcome 可以通过而 Safety 失败", "效率不得抵消安全违规"], {
         "trial_modified": True,
@@ -147,6 +149,7 @@ def _exercise_8() -> dict:
                    "protected_mutations": 0, "environment_errors": 0},
         baseline={"pass_1": 0.75},
         slice_deltas={"basic": 0.10, "edge": 0.04, "safety": -0.12, "recovery": 0.02},
+        split_deltas={"capability": 0.05, "regression": 0.05, "adversarial": -0.12},
         confidence={"lower": 0.01, "upper": 0.09},
     )
     return _answer(8, ["总体提升不覆盖关键切片回归", "给出修复后重跑动作"], {
@@ -167,14 +170,11 @@ def _exercise_9() -> dict:
 
 
 def _exercise_10() -> dict:
-    baseline = {f"task-{index:02d}": 0.6 for index in range(12)}
-    deltas = (0.2, 0.2, 0.2, 0.1, 0.1, 0.0, 0.0, -0.1, -0.1, -0.2, -0.2, 0.0)
-    candidate = {key: baseline[key] + delta for key, delta in zip(baseline, deltas)}
-    interval = bootstrap_paired_delta(baseline, candidate)
+    example = heterogeneous_bootstrap_example()
     return _answer(10, ["以任务为重采样单位", "固定随机种子", "区间跨零不强行分胜负"], {
-        "task_deltas": list(deltas),
-        "bootstrap": interval,
-        "interpretation": "inconclusive" if interval["lower"] < 0 <= interval["upper"] else "decisive",
+        "task_deltas": example["task_deltas"],
+        "bootstrap": example["paired_confidence"],
+        "interpretation": example["interpretation"],
     }, execution="real")
 
 
