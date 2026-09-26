@@ -109,12 +109,10 @@ class BenchmarkCard:
     score: float | None = None
 
     def __post_init__(self) -> None:
-        for field_name in (
-            "benchmark_id", "benchmark_version", "task_subset", "task_period", "subject",
-            "harness", "model", "environment", "retry_policy", "metric",
-            "contamination_risk", "source",
-        ):
-            _required(getattr(self, field_name), f"missing_{field_name}")
+        # An audit must be able to represent an incomplete submission. The
+        # loader rejects incomplete repository fixtures; comparison reports
+        # missing submitted fields instead of making them unrepresentable.
+        _required(self.benchmark_id, "missing_benchmark_id")
         if self.step_budget <= 0 or self.timeout_ms <= 0 or self.attempts_per_task <= 0:
             raise ValueError("invalid_benchmark_budget")
         if self.token_budget is not None and self.token_budget <= 0:
