@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">Benchmark 可比性：先对齐测量合同</title>
+<desc id="desc">两个总分相同，也可能测量的是不同系统。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">Benchmark 可比性：先对齐测量合同</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">两个总分相同，也可能测量的是不同系统。</tspan></text>
+<path d="M 340.0 395.0 L 440.0 250.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 340.0 395.0 L 440.0 410.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 340.0 395.0 L 440.0 570.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 700.0 250.0 L 790.0 330.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 700.0 410.0 L 790.0 330.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 700.0 570.0 L 790.0 530.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1070.0 330.0 L 1190.0 405.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1070.0 530.0 L 1190.0 405.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="80" y="330" width="260" height="130" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="210.0" y="380.0">Submission A</tspan><tspan x="210.0" y="411.2">Resolved = 72%</tspan></text>
+<rect x="440" y="190" width="260" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="570.0" y="235.0">Dataset</tspan><tspan x="570.0" y="266.2">版本 · 子集 · 时段</tspan></text>
+<rect x="440" y="350" width="260" height="120" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="570.0" y="395.0">Harness</tspan><tspan x="570.0" y="426.2">工具 · 重试 · 沙箱</tspan></text>
+<rect x="440" y="510" width="260" height="120" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="570.0" y="555.0">Budget</tspan><tspan x="570.0" y="586.2">步骤 · Token · 超时</tspan></text>
+<rect x="790" y="270" width="280" height="120" rx="24" fill="#fff7c9" stroke="#9d7510" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="930.0" y="315.0">Environment</tspan><tspan x="930.0" y="346.2">依赖 · 资源 · 隔离</tspan></text>
+<rect x="790" y="470" width="280" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="930.0" y="515.0">Metric</tspan><tspan x="930.0" y="546.2">口径 · 尝试次数</tspan></text>
+<polygon points="1355.0,330 1520,405.0 1355.0,480 1190,405.0" fill="#fde3df" stroke="#b8443b" stroke-width="4" stroke-linejoin="round"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1355.0" y="390.0">Comparability</tspan><tspan x="1355.0" y="421.2">可比 / 部分可比 / 不可比</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">Benchmark Card 先回答“能否比较”，然后才轮到分数高低。</tspan></text>
+</svg>

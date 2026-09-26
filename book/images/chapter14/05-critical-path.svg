@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">关键路径：延迟不是 Span 时长相加</title>
+<desc id="desc">Span 总和 360 ms，大于端到端 331 ms；关键路径为 296 ms。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">关键路径：延迟不是 Span 时长相加</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">Span 总和 360 ms，大于端到端 331 ms；关键路径为 296 ms。</tspan></text>
+<path d="M 310.0 425.0 L 400.0 325.0" fill="none" stroke="#b8443b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="310.0" y="340.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="355.0" y="363.0">关键</tspan></text>
+<path d="M 310.0 425.0 L 400.0 575.0" fill="none" stroke="#59636e" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="310.0" y="465.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="355.0" y="488.0">并行</tspan></text>
+<path d="M 640.0 325.0 L 760.0 425.0" fill="none" stroke="#b8443b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="655.0" y="340.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="700.0" y="363.0">关键</tspan></text>
+<path d="M 640.0 575.0 L 760.0 425.0" fill="none" stroke="#59636e" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="655.0" y="465.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="700.0" y="488.0">汇合</tspan></text>
+<path d="M 1020.0 425.0 L 1130.0 425.0" fill="none" stroke="#b8443b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1030.0" y="390.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1075.0" y="413.0">关键</tspan></text>
+<path d="M 1360.0 425.0 L 1410.0 425.0" fill="none" stroke="#b8443b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1340.0" y="390.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1385.0" y="413.0">完成</tspan></text>
+<rect x="80" y="370" width="230" height="110" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="195.0" y="410.0">Model Plan</tspan><tspan x="195.0" y="441.2">70 ms</tspan></text>
+<rect x="400" y="270" width="240" height="110" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="520.0" y="310.0">Retrieval A</tspan><tspan x="520.0" y="341.2">86 ms</tspan></text>
+<rect x="400" y="520" width="240" height="110" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="520.0" y="560.0">Retrieval B</tspan><tspan x="520.0" y="591.2">64 ms</tspan></text>
+<rect x="760" y="370" width="260" height="110" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="890.0" y="410.0">Model Answer</tspan><tspan x="890.0" y="441.2">100 ms</tspan></text>
+<rect x="1130" y="370" width="230" height="110" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1245.0" y="410.0">Verifier</tspan><tspan x="1245.0" y="441.2">40 ms</tspan></text>
+<ellipse cx="1485.0" cy="425.0" rx="75.0" ry="55.0" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1485.0" y="410.0">Endpoint</tspan><tspan x="1485.0" y="441.2">331 ms</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">并行 Span 会重叠，嵌套 Span 会重复计数；关键路径只沿依赖 DAG 求最长工作链。</tspan></text>
+</svg>

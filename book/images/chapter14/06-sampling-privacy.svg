@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">采样与隐私：先脱敏，再采样</title>
+<desc id="desc">Tail Sample 用来找案例，不能直接充当总体错误率分母。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">采样与隐私：先脱敏，再采样</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">Tail Sample 用来找案例，不能直接充当总体错误率分母。</tspan></text>
+<path d="M 290.0 410.0 L 360.0 410.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="280.0" y="375.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="325.0" y="398.0">先脱敏</tspan></text>
+<path d="M 630.0 410.0 L 720.0 410.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="630.0" y="375.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="675.0" y="398.0">再采样</tspan></text>
+<path d="M 950.0 410.0 L 1040.0 410.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="950.0" y="375.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="995.0" y="398.0">保留</tspan></text>
+<path d="M 1270.0 410.0 L 1360.0 410.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1270.0" y="375.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1315.0" y="398.0">安全存储</tspan></text>
+<path d="M 290.0 410.0 L 690.0 710.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="10 9"/>
+<rect x="445.0" y="525.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="490.0" y="548.0">总体计数</tspan></text>
+<rect x="70" y="350" width="220" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="180.0" y="395.0">Record</tspan><tspan x="180.0" y="426.2">最小必要字段</tspan></text>
+<rect x="360" y="330" width="270" height="160" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="495.0" y="395.0">Redact</tspan><tspan x="495.0" y="426.2">凭据删 · 身份哈希</tspan></text>
+<rect x="720" y="350" width="230" height="120" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="835.0" y="395.0">Sample</tspan><tspan x="835.0" y="426.2">Head + Tail</tspan></text>
+<rect x="1040" y="350" width="230" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1155.0" y="395.0">Export</tspan><tspan x="1155.0" y="426.2">安全门禁</tspan></text>
+<rect x="1360" y="350" width="190" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1455.0" y="395.0">Store</tspan><tspan x="1455.0" y="426.2">受控 Trace</tspan></text>
+<rect x="690" y="650" width="300" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="840.0" y="695.0">Population Metrics</tspan><tspan x="840.0" y="726.2">请求数 · 失败数</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">正确顺序是先脱敏再采样；否则被丢弃的 Trace 也可能在缓冲区泄露敏感数据。</tspan></text>
+</svg>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">Session → Trace → Span：结构树与依赖边</title>
+<desc id="desc">Parent 表示结构归属；depends_on 表示执行依赖。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">Session → Trace → Span：结构树与依赖边</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">Parent 表示结构归属；depends_on 表示执行依赖。</tspan></text>
+<path d="M 650.0 225.0 L 610.0 430.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="585.0" y="292.5" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="630.0" y="315.5">归属树</tspan></text>
+<path d="M 950.0 225.0 L 990.0 430.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="925.0" y="292.5" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="970.0" y="315.5">归属树</tspan></text>
+<path d="M 460.0 490.0 L 205.0 650.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="278.5" y="535.0" width="108" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="332.5" y="558.0">parent</tspan></text>
+<path d="M 460.0 490.0 L 495.0 650.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="423.5" y="535.0" width="108" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="477.5" y="558.0">parent</tspan></text>
+<path d="M 1140.0 490.0 L 1075.0 650.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1053.5" y="535.0" width="108" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1107.5" y="558.0">parent</tspan></text>
+<path d="M 1140.0 490.0 L 1365.0 650.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1198.5" y="535.0" width="108" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1252.5" y="558.0">parent</tspan></text>
+<path d="M 320.0 700.0 L 380.0 700.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="10 9"/>
+<rect x="305.0" y="665.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="350.0" y="688.0">依赖</tspan></text>
+<path d="M 1190.0 700.0 L 1250.0 700.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="10 9"/>
+<rect x="1175.0" y="665.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1220.0" y="688.0">依赖</tspan></text>
+<rect x="650" y="170" width="300" height="110" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="800.0" y="210.0">Session</tspan><tspan x="800.0" y="241.2">一次连续工作</tspan></text>
+<rect x="310" y="370" width="300" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="460.0" y="415.0">Trace A</tspan><tspan x="460.0" y="446.2">一次用户请求</tspan></text>
+<rect x="990" y="370" width="300" height="120" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1140.0" y="415.0">Trace B</tspan><tspan x="1140.0" y="446.2">一次恢复请求</tspan></text>
+<rect x="90" y="650" width="230" height="100" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="205.0" y="685.0">Span</tspan><tspan x="205.0" y="716.2">Model</tspan></text>
+<rect x="380" y="650" width="230" height="100" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="495.0" y="685.0">Span</tspan><tspan x="495.0" y="716.2">Retrieval</tspan></text>
+<rect x="960" y="650" width="230" height="100" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1075.0" y="685.0">Span</tspan><tspan x="1075.0" y="716.2">Tool</tspan></text>
+<rect x="1250" y="650" width="230" height="100" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1365.0" y="685.0">Span</tspan><tspan x="1365.0" y="716.2">Verifier</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">树让人读懂结构，DAG 才能计算关键路径；两种边不能混用。</tspan></text>
+</svg>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">生产诊断闭环：从告警到回归</title>
+<desc id="desc">只有一个消融同时消除全部症状，才形成较强的根因证据。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">生产诊断闭环：从告警到回归</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">只有一个消融同时消除全部症状，才形成较强的根因证据。</tspan></text>
+<path d="M 320.0 405.0 L 390.0 255.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 660.0 255.0 L 740.0 215.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1000.0 215.0 L 1080.0 255.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1205.0 320.0 L 1370.0 520.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1240.0 585.0 L 1050.0 715.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 770.0 715.0 L 600.0 715.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 450.0 650.0 Q 395.4 477.2 215.0 460.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="10 9"/>
+<rect x="332.4" y="442.2" width="126" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="395.4" y="465.2">新故障继续进入</tspan></text>
+<rect x="110" y="350" width="210" height="110" rx="24" fill="#fde3df" stroke="#b8443b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="215.0" y="390.0">Detect</tspan><tspan x="215.0" y="421.2">确认症状</tspan></text>
+<rect x="390" y="190" width="270" height="130" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="525.0" y="240.0">Locate</tspan><tspan x="525.0" y="271.2">按版本和切片定位</tspan></text>
+<rect x="740" y="150" width="260" height="130" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="870.0" y="200.0">Replay</tspan><tspan x="870.0" y="231.2">重放代表性 Trace</tspan></text>
+<rect x="1080" y="190" width="250" height="130" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1205.0" y="240.0">Ablate</tspan><tspan x="1205.0" y="271.2">逐项移除假设</tspan></text>
+<rect x="1240" y="520" width="260" height="130" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1370.0" y="570.0">Verify</tspan><tspan x="1370.0" y="601.2">保留反证与未知</tspan></text>
+<rect x="770" y="650" width="280" height="130" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="910.0" y="700.0">Release</tspan><tspan x="910.0" y="731.2">修复 + 回归门禁</tspan></text>
+<rect x="300" y="650" width="300" height="130" rx="24" fill="#fff7c9" stroke="#9d7510" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="450.0" y="700.0">Regression Tasks</tspan><tspan x="450.0" y="731.2">把线上失败带回离线</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">诊断不是看一张图猜原因，而是症状、切片、反证、消融和回归组成的闭环。</tspan></text>
+</svg>

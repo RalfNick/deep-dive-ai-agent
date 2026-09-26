@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">离线绿色，线上红色：证据断层</title>
+<desc id="desc">分数说明受控条件下发生了什么，Trace 解释线上到底怎样发生。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">离线绿色，线上红色：证据断层</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">分数说明受控条件下发生了什么，Trace 解释线上到底怎样发生。</tspan></text>
+<path d="M 360.0 390.0 L 440.0 390.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="355.0" y="355.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="400.0" y="378.0">用途不同</tspan></text>
+<path d="M 720.0 390.0 L 800.0 390.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="715.0" y="355.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="760.0" y="378.0">审合同</tspan></text>
+<path d="M 1060.0 390.0 L 1180.0 390.0" fill="none" stroke="#b8443b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="10 9"/>
+<rect x="1075.0" y="355.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1120.0" y="378.0">证据断层</tspan></text>
+<path d="M 1180.0 390.0 L 980.0 680.0" fill="none" stroke="#c46b18" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1035.0" y="500.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1080.0" y="523.0">现场回放</tspan></text>
+<path d="M 815.0 610.0 L 930.0 460.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="10 9"/>
+<rect x="827.5" y="500.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="872.5" y="523.0">回归任务</tspan></text>
+<rect x="90" y="320" width="270" height="140" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="225.0" y="375.0">内部 Eval</tspan><tspan x="225.0" y="406.2">固定任务通过</tspan></text>
+<rect x="440" y="320" width="280" height="140" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="580.0" y="375.0">公共 Benchmark</tspan><tspan x="580.0" y="406.2">提供外部参照</tspan></text>
+<rect x="800" y="320" width="260" height="140" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="930.0" y="375.0">发布门禁</tspan><tspan x="930.0" y="406.2">分数仍是绿色</tspan></text>
+<rect x="1180" y="300" width="330" height="180" rx="24" fill="#fde3df" stroke="#b8443b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1345.0" y="375.0">生产现场</tspan><tspan x="1345.0" y="406.2">p95、成本、重试变红</tspan></text>
+<rect x="650" y="610" width="330" height="140" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="815.0" y="665.0">Tracing + Metrics</tspan><tspan x="815.0" y="696.2">补上运行证据</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">离线评估不是生产观测的替代品；二者必须用同一条证据链连接。</tspan></text>
+</svg>

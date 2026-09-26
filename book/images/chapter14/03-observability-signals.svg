@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">五类观测信号：各自回答什么</title>
+<desc id="desc">五类信号互补，没有一种单独等于“真相”。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">五类观测信号：各自回答什么</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">五类信号互补，没有一种单独等于“真相”。</tspan></text>
+<path d="M 390.0 280.0 L 620.0 425.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="442.0" y="317.5" width="126" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="505.0" y="340.5">告警 → 定位</tspan></text>
+<path d="M 390.0 620.0 L 620.0 425.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="433.0" y="487.5" width="144" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="505.0" y="510.5">事件 → 因果链</tspan></text>
+<path d="M 980.0 425.0 L 1210.0 280.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1032.0" y="317.5" width="126" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1095.0" y="340.5">轨迹 + 结果</tspan></text>
+<path d="M 980.0 425.0 L 1210.0 620.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1050.0" y="487.5" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1095.0" y="510.5">关联体验</tspan></text>
+<path d="M 800.0 650.0 L 800.0 500.0" fill="none" stroke="#b8443b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="692.0" y="540.0" width="216" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="800.0" y="563.0">从一个 Trace 开始</tspan></text>
+<rect x="120" y="220" width="270" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="255.0" y="265.0">Metrics</tspan><tspan x="255.0" y="296.2">有多严重？</tspan></text>
+<rect x="120" y="560" width="270" height="120" rx="24" fill="#edf0f2" stroke="#59636e" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="255.0" y="605.0">Logs</tspan><tspan x="255.0" y="636.2">发生了什么事件？</tspan></text>
+<rect x="620" y="350" width="360" height="150" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="800.0" y="410.0">Traces</tspan><tspan x="800.0" y="441.2">一条请求如何流动？</tspan></text>
+<rect x="1210" y="220" width="270" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1345.0" y="265.0">Evals</tspan><tspan x="1345.0" y="296.2">结果满足标准吗？</tspan></text>
+<rect x="1210" y="560" width="270" height="120" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1345.0" y="605.0">Feedback</tspan><tspan x="1345.0" y="636.2">用户感受如何？</tspan></text>
+<rect x="590" y="650" width="420" height="130" rx="24" fill="#fde3df" stroke="#b8443b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="800.0" y="700.0">生产问题</tspan><tspan x="800.0" y="731.2">慢、贵、卡住，但成功率没降</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">Metric 找症状，Trace 找路径，Eval 判结果，Feedback 补体验，Log 留事件细节。</tspan></text>
+</svg>
