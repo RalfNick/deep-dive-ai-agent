@@ -11,6 +11,14 @@
         "trace 中没有检索到 2026 版退款政策",
         "提供新版政策片段后，同一决策策略可以回答正确"
       ],
+      "repeated_across_tasks": false,
+      "missing_facts": true,
+      "deterministic_boundary_available": false,
+      "instruction_ambiguous": false,
+      "model_capacity_evidence": false,
+      "reusable_supervision": false,
+      "counterfactual_checks": ["只补充可检索事实，不改模型权重，错误消失"],
+      "evidence_refs": ["trace:refund-policy-old", "ablation:refund-policy-context"],
       "counterfactual_check": "只补充可检索事实，不改模型权重，错误消失。",
       "expected_intervention": "rag_context"
     },
@@ -23,6 +31,14 @@
         "模型输出了越界读取提议",
         "启用强制路径沙箱后副作用被阻断"
       ],
+      "repeated_across_tasks": false,
+      "missing_facts": false,
+      "deterministic_boundary_available": true,
+      "instruction_ambiguous": false,
+      "model_capacity_evidence": false,
+      "reusable_supervision": false,
+      "counterfactual_checks": ["保持模型提议不变，仅启用路径沙箱，违规副作用被阻断"],
+      "evidence_refs": ["trace:secret-scan-unbounded", "ablation:secret-scan-sandbox"],
       "counterfactual_check": "不改变模型输出，只改变执行边界，违规行为无法落地。",
       "expected_intervention": "harness"
     },
@@ -35,6 +51,14 @@
         "三名标注者给出不同成功条件",
         "将任务改写为只生成候选清单后分歧消失"
       ],
+      "repeated_across_tasks": false,
+      "missing_facts": false,
+      "deterministic_boundary_available": false,
+      "instruction_ambiguous": true,
+      "model_capacity_evidence": false,
+      "reusable_supervision": false,
+      "counterfactual_checks": ["澄清时间范围与只读验收标准后，标注分歧消失"],
+      "evidence_refs": ["annotation:database-cleanup-vague", "ablation:database-cleanup-clarified"],
       "counterfactual_check": "澄清指令与验收标准后，无需训练即可稳定完成。",
       "expected_intervention": "prompt_skill"
     },
@@ -47,6 +71,14 @@
         "加入相关上下文、工具和分步检查仍重复失败",
         "更强的既有模型在相同 Harness 与预算下通过"
       ],
+      "repeated_across_tasks": true,
+      "missing_facts": false,
+      "deterministic_boundary_available": false,
+      "instruction_ambiguous": false,
+      "model_capacity_evidence": true,
+      "reusable_supervision": false,
+      "counterfactual_checks": ["固定输入、工具、预算和验证器，只切换模型后成功"],
+      "evidence_refs": ["eval:architecture-small-model", "ablation:architecture-model-route"],
       "counterfactual_check": "保持输入、工具、预算和验证器不变，只切换模型后成功。",
       "expected_intervention": "model_route"
     },
@@ -60,6 +92,18 @@
         "事实完整、权限正确、指令明确且模型能力足够",
         "已积累同状态下读取优于写入的可复用偏好证据"
       ],
+      "repeated_across_tasks": true,
+      "missing_facts": false,
+      "deterministic_boundary_available": false,
+      "instruction_ambiguous": false,
+      "model_capacity_evidence": false,
+      "reusable_supervision": true,
+      "counterfactual_checks": [
+        "补充事实后仍出现相同工具排序错误",
+        "澄清指令后仍出现相同工具排序错误",
+        "收紧 Harness 后危险写入被阻断，但模型仍提出相同错误动作"
+      ],
+      "evidence_refs": ["eval:tool-choice-family", "trace:tool-choice-repeated"],
       "counterfactual_check": "补知识、改提示和收紧 Harness 均未纠正工具选择排序。",
       "expected_intervention": "post_training"
     }

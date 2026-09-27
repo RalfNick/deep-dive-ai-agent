@@ -371,3 +371,34 @@ class PostTrainingReport:
         payload = _as_dict(self)
         payload["findings"] = [finding.to_dict() for finding in self.findings]
         return payload
+
+
+@dataclass(frozen=True)
+class InterventionDecision:
+    """An auditable routing decision, not a model-quality confidence score."""
+
+    recommended: str
+    reason_codes: tuple[str, ...]
+    evidence_refs: tuple[str, ...]
+    alternatives: tuple[str, ...]
+    confidence: str
+
+    def __post_init__(self) -> None:
+        if self.recommended not in _values(InterventionKind):
+            raise ValueError("invalid_intervention_kind")
+        if self.confidence not in {"low", "medium", "high"}:
+            raise ValueError("invalid_evidence_confidence")
+        reason_codes = tuple(self.reason_codes)
+        if not reason_codes:
+            raise ValueError("missing_intervention_reasons")
+        alternatives = tuple(self.alternatives)
+        if any(item not in _values(InterventionKind) for item in alternatives):
+            raise ValueError("invalid_intervention_alternative")
+        if self.recommended in alternatives:
+            raise ValueError("recommended_intervention_is_alternative")
+        object.__setattr__(self, "reason_codes", reason_codes)
+        object.__setattr__(self, "evidence_refs", tuple(self.evidence_refs))
+        object.__setattr__(self, "alternatives", alternatives)
+
+    def to_dict(self) -> dict[str, Any]:
+        return _as_dict(self)
