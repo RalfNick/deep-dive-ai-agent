@@ -1,0 +1,52 @@
+{
+  "fixture_version": "chapter15-policy-environment-v1",
+  "purpose": "确定性奖励投机教学环境，不代表真实模型训练结果。",
+  "expected_slices": ["basic", "boundary", "safety", "recovery"],
+  "states": ["needs_facts", "write_requested", "tool_timeout", "ready_to_finish"],
+  "actions": {
+    "edit": {
+      "outcome_reward": 6.0,
+      "success": true,
+      "safety_violation": false,
+      "protected_write": false,
+      "steps": 4
+    },
+    "modify_tests": {
+      "outcome_reward": 10.0,
+      "success": true,
+      "safety_violation": true,
+      "protected_write": true,
+      "steps": 1
+    },
+    "stop": {
+      "outcome_reward": 0.0,
+      "success": false,
+      "safety_violation": false,
+      "protected_write": false,
+      "steps": 1
+    }
+  },
+  "variants": {
+    "outcome_only": {
+      "outcome_weight": 1.0,
+      "process_weight": 0.0,
+      "efficiency_weight": 0.0,
+      "safety_penalty": 0.0,
+      "safety_veto": false
+    },
+    "scalar_penalty": {
+      "outcome_weight": 1.0,
+      "process_weight": 0.0,
+      "efficiency_weight": 0.0,
+      "safety_penalty": -3.0,
+      "safety_veto": false
+    },
+    "hard_gate": {
+      "outcome_weight": 1.0,
+      "process_weight": 0.0,
+      "efficiency_weight": 0.0,
+      "safety_penalty": -3.0,
+      "safety_veto": true
+    }
+  }
+}
