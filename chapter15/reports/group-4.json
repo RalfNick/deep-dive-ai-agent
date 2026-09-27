@@ -1,0 +1,92 @@
+{
+  "group": 4,
+  "hand_example": {
+    "loss": 0.6209570477895322,
+    "margin": 0.1499999999999999,
+    "pair_id": "pair-write-requested"
+  },
+  "name": "dpo_mechanics",
+  "pairs": [
+    {
+      "beta": 0.5,
+      "chosen_action": "search",
+      "chosen_state_id": "needs_facts",
+      "confidence": 0.9,
+      "loss": 0.6443966600735709,
+      "margin": 0.10000000000000003,
+      "pair_id": "pair-needs-facts",
+      "policy_chosen_logp": -0.9,
+      "policy_rejected_logp": -1.1,
+      "preference_source": "outcome_and_process_rule",
+      "reference_chosen_logp": -1.0,
+      "reference_rejected_logp": -1.0,
+      "rejected_action": "edit",
+      "rejected_state_id": "needs_facts",
+      "source_trajectory_ids": [
+        "traj-002",
+        "traj-007"
+      ]
+    },
+    {
+      "beta": 0.5,
+      "chosen_action": "read",
+      "chosen_state_id": "write_requested",
+      "confidence": 1.0,
+      "loss": 0.6209570477895322,
+      "margin": 0.1499999999999999,
+      "pair_id": "pair-write-requested",
+      "policy_chosen_logp": -0.8,
+      "policy_rejected_logp": -1.2,
+      "preference_source": "safety_rule",
+      "reference_chosen_logp": -1.0,
+      "reference_rejected_logp": -1.1,
+      "rejected_action": "modify_tests",
+      "rejected_state_id": "write_requested",
+      "source_trajectory_ids": [
+        "traj-010",
+        "traj-011"
+      ]
+    },
+    {
+      "beta": 0.5,
+      "chosen_action": "retry",
+      "chosen_state_id": "tool_timeout",
+      "confidence": 0.8,
+      "loss": 0.6443966600735709,
+      "margin": 0.10000000000000009,
+      "pair_id": "pair-tool-timeout",
+      "policy_chosen_logp": -1.0,
+      "policy_rejected_logp": -1.3,
+      "preference_source": "recovery_rule",
+      "reference_chosen_logp": -1.1,
+      "reference_rejected_logp": -1.2,
+      "rejected_action": "edit",
+      "rejected_state_id": "tool_timeout",
+      "source_trajectory_ids": [
+        "traj-007",
+        "traj-012"
+      ]
+    },
+    {
+      "beta": 0.5,
+      "chosen_action": "stop",
+      "chosen_state_id": "ready_to_finish",
+      "confidence": 0.95,
+      "loss": 0.5981388693815919,
+      "margin": 0.2,
+      "pair_id": "pair-ready-to-finish",
+      "policy_chosen_logp": -0.7,
+      "policy_rejected_logp": -1.4,
+      "preference_source": "verifier_rule",
+      "reference_chosen_logp": -0.9,
+      "reference_rejected_logp": -1.2,
+      "rejected_action": "edit",
+      "rejected_state_id": "ready_to_finish",
+      "source_trajectory_ids": [
+        "traj-011",
+        "traj-012"
+      ]
+    }
+  ],
+  "title": "同一状态下的偏好排序"
+}

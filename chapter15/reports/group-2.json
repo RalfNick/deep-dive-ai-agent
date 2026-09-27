@@ -1,0 +1,218 @@
+{
+  "audit": {
+    "eligible_ids": [
+      "traj-002",
+      "traj-007",
+      "traj-010",
+      "traj-011",
+      "traj-012",
+      "traj-013",
+      "traj-014",
+      "traj-016",
+      "traj-018",
+      "traj-019",
+      "traj-020",
+      "traj-024"
+    ],
+    "findings": [
+      {
+        "blocks_training": true,
+        "evidence_refs": [
+          "trajectory:traj-001"
+        ],
+        "finding_id": "finding-traj-001-cross_split_family_leakage",
+        "reason_code": "cross_split_family_leakage",
+        "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+        "severity": "blocker"
+      },
+      {
+        "blocks_training": true,
+        "evidence_refs": [
+          "trajectory:traj-003"
+        ],
+        "finding_id": "finding-traj-003-sensitive_data_detected",
+        "reason_code": "sensitive_data_detected",
+        "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+        "severity": "blocker"
+      },
+      {
+        "blocks_training": true,
+        "evidence_refs": [
+          "trajectory:traj-004"
+        ],
+        "finding_id": "finding-traj-004-protected_write",
+        "reason_code": "protected_write",
+        "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+        "severity": "blocker"
+      },
+      {
+        "blocks_training": true,
+        "evidence_refs": [
+          "trajectory:traj-005"
+        ],
+        "finding_id": "finding-traj-005-missing_tool_result",
+        "reason_code": "missing_tool_result",
+        "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+        "severity": "blocker"
+      },
+      {
+        "blocks_training": true,
+        "evidence_refs": [
+          "trajectory:traj-006"
+        ],
+        "finding_id": "finding-traj-006-unknown_provenance",
+        "reason_code": "unknown_provenance",
+        "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+        "severity": "blocker"
+      },
+      {
+        "blocks_training": true,
+        "evidence_refs": [
+          "trajectory:traj-008"
+        ],
+        "finding_id": "finding-traj-008-exact_duplicate",
+        "reason_code": "exact_duplicate",
+        "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+        "severity": "blocker"
+      },
+      {
+        "blocks_training": true,
+        "evidence_refs": [
+          "trajectory:traj-009"
+        ],
+        "finding_id": "finding-traj-009-failed_or_unverified_outcome",
+        "reason_code": "failed_or_unverified_outcome",
+        "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+        "severity": "blocker"
+      },
+      {
+        "blocks_training": true,
+        "evidence_refs": [
+          "trajectory:traj-015"
+        ],
+        "finding_id": "finding-traj-015-hidden_answer_access",
+        "reason_code": "hidden_answer_access",
+        "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+        "severity": "blocker"
+      },
+      {
+        "blocks_training": true,
+        "evidence_refs": [
+          "trajectory:traj-017"
+        ],
+        "finding_id": "finding-traj-017-cross_split_family_leakage",
+        "reason_code": "cross_split_family_leakage",
+        "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+        "severity": "blocker"
+      },
+      {
+        "blocks_training": true,
+        "evidence_refs": [
+          "trajectory:traj-021"
+        ],
+        "finding_id": "finding-traj-021-safety_event",
+        "reason_code": "safety_event",
+        "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+        "severity": "blocker"
+      },
+      {
+        "blocks_training": true,
+        "evidence_refs": [
+          "trajectory:traj-022"
+        ],
+        "finding_id": "finding-traj-022-incomplete_telemetry",
+        "reason_code": "incomplete_telemetry",
+        "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+        "severity": "blocker"
+      },
+      {
+        "blocks_training": true,
+        "evidence_refs": [
+          "trajectory:traj-023"
+        ],
+        "finding_id": "finding-traj-023-failed_or_unverified_outcome",
+        "reason_code": "failed_or_unverified_outcome",
+        "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+        "severity": "blocker"
+      }
+    ],
+    "quarantined_ids": [
+      "traj-001",
+      "traj-003",
+      "traj-004",
+      "traj-005",
+      "traj-006",
+      "traj-008",
+      "traj-009",
+      "traj-015",
+      "traj-017",
+      "traj-021",
+      "traj-022",
+      "traj-023"
+    ],
+    "raw_count": 24,
+    "reason_counts": {
+      "cross_split_family_leakage": 2,
+      "exact_duplicate": 1,
+      "failed_or_unverified_outcome": 2,
+      "hidden_answer_access": 1,
+      "incomplete_telemetry": 1,
+      "missing_tool_result": 1,
+      "protected_write": 1,
+      "safety_event": 1,
+      "sensitive_data_detected": 1,
+      "unknown_provenance": 1
+    },
+    "split_counts": {
+      "eval": 8,
+      "train": 12,
+      "validation": 4
+    }
+  },
+  "group": 2,
+  "name": "dataset_audit",
+  "supervised_examples": [
+    {
+      "example_id": "sft-traj-002",
+      "retention_reason": "通过来源、切分、安全与遥测审计",
+      "sample_weight": 1.0,
+      "source_trajectory_id": "traj-002",
+      "state_id": "state-decision",
+      "target_action": "inspect"
+    },
+    {
+      "example_id": "sft-traj-007",
+      "retention_reason": "通过来源、切分、安全与遥测审计",
+      "sample_weight": 1.0,
+      "source_trajectory_id": "traj-007",
+      "state_id": "state-decision",
+      "target_action": "inspect"
+    },
+    {
+      "example_id": "sft-traj-010",
+      "retention_reason": "通过来源、切分、安全与遥测审计",
+      "sample_weight": 1.0,
+      "source_trajectory_id": "traj-010",
+      "state_id": "state-decision",
+      "target_action": "inspect"
+    },
+    {
+      "example_id": "sft-traj-011",
+      "retention_reason": "通过来源、切分、安全与遥测审计",
+      "sample_weight": 1.0,
+      "source_trajectory_id": "traj-011",
+      "state_id": "state-decision",
+      "target_action": "inspect"
+    },
+    {
+      "example_id": "sft-traj-012",
+      "retention_reason": "通过来源、切分、安全与遥测审计",
+      "sample_weight": 1.0,
+      "source_trajectory_id": "traj-012",
+      "state_id": "state-decision",
+      "target_action": "inspect"
+    }
+  ],
+  "title": "成功轨迹也可能不适合训练",
+  "training_split_only": true
+}
