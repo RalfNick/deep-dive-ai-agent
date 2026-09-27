@@ -357,16 +357,21 @@ def main(argv: Sequence[str] | None = None) -> int:
         number = int(args.group)
         target = args.output / f"group-{number}.json"
         backup = target.with_suffix(".json.previous")
-        if args.replace and target.exists():
+        target_preexisted = target.exists()
+        if target_preexisted and not args.replace:
+            raise FileExistsError(f"artifact_exists:{target.name}")
+        backup_created = False
+        if args.replace and target_preexisted:
             if backup.exists():
                 raise FileExistsError("recoverable_backup_exists")
             target.rename(backup)
+            backup_created = True
         try:
             run_group(number, args.output)
         except Exception:
-            if target.exists():
-                target.unlink()
-            if backup.exists():
+            if backup_created:
+                if target.exists():
+                    target.unlink()
                 backup.rename(target)
             raise
     return 0

@@ -1,5 +1,9 @@
 from __future__ import annotations
 
+import math
+
+import pytest
+
 from chapter15.contracts import ReleaseDecisionKind
 from chapter15.simulator import (
     PolicyMetrics,
@@ -96,6 +100,32 @@ def test_missing_evaluation_coverage_is_inconclusive() -> None:
 
     assert decision.decision == ReleaseDecisionKind.INCONCLUSIVE
     assert decision.reason_codes == ("missing_slice_coverage",)
+
+
+@pytest.mark.parametrize(
+    ("baseline", "candidate", "deltas"),
+    [
+        (_metrics(total_episodes=0, accepted_episodes=0, outcome_successes=0, total_steps=0),
+         _metrics(total_episodes=0, accepted_episodes=0, outcome_successes=0, total_steps=0),
+         {name: 0.0 for name in EXPECTED_SLICES}),
+        (_metrics(), _metrics(accepted_episodes=0, outcome_successes=0, total_steps=0),
+         {name: 0.0 for name in EXPECTED_SLICES}),
+        (_metrics(), _metrics(),
+         {**{name: 0.0 for name in EXPECTED_SLICES}, "basic": math.nan}),
+    ],
+)
+def test_missing_or_non_finite_release_evidence_is_inconclusive(
+    baseline: PolicyMetrics, candidate: PolicyMetrics, deltas: dict[str, float]
+) -> None:
+    decision = release_decision(baseline=baseline, candidate=candidate, slice_deltas=deltas)
+
+    assert decision.decision == ReleaseDecisionKind.INCONCLUSIVE
+    assert decision.reason_codes in {
+        ("missing_accepted_coverage",),
+        ("invalid_slice_evidence",),
+    }
+    if math.isnan(deltas["basic"]):
+        assert decision.to_dict()["evidence"]["slice_deltas"]["basic"] is None
 
 
 def test_protected_integrity_and_slice_regression_are_separate_gates() -> None:

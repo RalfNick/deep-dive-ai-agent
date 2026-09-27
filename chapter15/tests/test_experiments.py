@@ -153,9 +153,50 @@ def test_schema_accepts_report_and_rejects_semantic_mutations(tmp_path: Path) ->
 def test_single_group_refuses_overwrite_and_replace_is_recoverable(tmp_path: Path) -> None:
     output = tmp_path / "groups"
     run_group(1, output)
+    original = (output / "group-1.json").read_bytes()
     with pytest.raises(FileExistsError, match="artifact_exists"):
         run_group(1, output)
+    with pytest.raises(FileExistsError, match="artifact_exists"):
+        main(["--group", "1", "--output", str(output)])
+    assert (output / "group-1.json").read_bytes() == original
+    assert not (output / "group-1.json.previous").exists()
 
     assert main(["--group", "1", "--output", str(output), "--replace"]) == 0
     assert (output / "group-1.json").exists()
     assert (output / "group-1.json.previous").exists()
+    assert (output / "group-1.json.previous").read_bytes() == original
+
+
+def test_single_group_refusal_does_not_touch_existing_backup(tmp_path: Path) -> None:
+    output = tmp_path / "groups"
+    run_group(1, output)
+    target = output / "group-1.json"
+    backup = output / "group-1.json.previous"
+    original = target.read_bytes()
+    backup.write_bytes(b"older evidence")
+
+    with pytest.raises(FileExistsError, match="artifact_exists"):
+        main(["--group", "1", "--output", str(output)])
+
+    assert target.read_bytes() == original
+    assert backup.read_bytes() == b"older evidence"
+
+
+def test_single_group_replace_restores_own_backup_on_failure(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    output = tmp_path / "groups"
+    run_group(1, output)
+    target = output / "group-1.json"
+    original = target.read_bytes()
+
+    def fail_after_partial_write(group: int, destination: Path) -> dict[str, object]:
+        (destination / f"group-{group}.json").write_bytes(b"partial")
+        raise RuntimeError("injected_failure")
+
+    monkeypatch.setattr("chapter15.experiments.run_group", fail_after_partial_write)
+    with pytest.raises(RuntimeError, match="injected_failure"):
+        main(["--group", "1", "--output", str(output), "--replace"])
+
+    assert target.read_bytes() == original
+    assert not (output / "group-1.json.previous").exists()

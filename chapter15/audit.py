@@ -87,7 +87,7 @@ def _base_reasons(record: TrajectoryRecord) -> set[str]:
     if any(step.tool_name is not None and step.tool_result is None for step in record.steps):
         reasons.add("missing_tool_result")
     provenance = (record.source_run_id, record.model_fingerprint, record.harness_fingerprint)
-    if any(value.casefold() in {"unknown", "unavailable", "n/a"} for value in provenance):
+    if any(value.strip().casefold() in {"unknown", "unavailable", "n/a"} for value in provenance):
         reasons.add("unknown_provenance")
     if record.outcome != "success" or not record.verifier_passed:
         reasons.add("failed_or_unverified_outcome")

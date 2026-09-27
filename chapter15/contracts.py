@@ -199,13 +199,25 @@ class TrajectoryRecord:
             _required(getattr(self, field_name), f"missing_{field_name}")
         if self.split not in _values(DataSplit):
             raise ValueError("invalid_data_split")
+        for field_name in (
+            "verifier_passed",
+            "contains_sensitive_data",
+            "accessed_hidden_answer",
+            "telemetry_complete",
+        ):
+            if type(getattr(self, field_name)) is not bool:
+                raise ValueError(f"invalid_trajectory_boolean:{field_name}")
         provenance = (
             self.source_run_id,
             self.model_fingerprint,
             self.harness_fingerprint,
         )
         history = tuple(self.transform_history)
-        if any(not isinstance(value, str) or not value.strip() for value in provenance) or not history:
+        if (
+            any(not isinstance(value, str) or not value.strip() for value in provenance)
+            or not history
+            or any(not isinstance(value, str) or not value.strip() for value in history)
+        ):
             raise ValueError("missing_trajectory_provenance")
         steps = tuple(self.steps)
         indexes = [step.step_index for step in steps]

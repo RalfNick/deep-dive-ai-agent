@@ -37,8 +37,8 @@
 
 | 命令或检查 | 结果 |
 | --- | --- |
-| `.venv-chapter15\Scripts\python.exe -B -m pytest chapter15/tests -q` | 87 项通过 |
-| `python -B -m chapter15.experiments --group all --output chapter15/.runs/repro-a` 与 `repro-b` | 两份 manifest 逐字节相同，且与规范报告一致 |
+| `.venv-chapter15\Scripts\python.exe -B -m pytest chapter15/tests -q` | 98 项通过；另以 `python -B -m pytest chapter15/tests tests -q` 验证 145 项与 89 个子测试通过 |
+| `python -B -m chapter15.experiments --group all --output chapter15/.runs/repro-a`、`repro-b` 与修订后的 `final-review-repro` | 三份 manifest 逐字节相同，且与规范报告一致 |
 | `python -B -m chapter15.exercise_solutions --all --output chapter15/.runs/exercises.json` | 13 道答案与规范结果逐字节一致，覆盖计算与设计判据 |
 | `.venv-chapter15\Scripts\python.exe -B -m chapter15.preview` 与 `node book/check_chapter15_preview.mjs` | 1440×1000 和 390×844：7/7 图、5/5 表，0 失效页内锚点和整页横向溢出；截图留在忽略目录 |
 | `python -B -m pytest tests -q`、`npm test --prefix book` | 仓库 47 项、89 个子测试与 Node 排版 4 项通过 |
@@ -51,8 +51,12 @@
 
 本候选没有证明：真实模型后训练后的任务质量；GPU 训练、PPO/GRPO/RFT 运行；固定 24 条轨迹代表生产分布；200 次回放代表生产违规概率；预置 split 自动完成安全切分；本地奖励模拟执行了 RL 参数更新；本地教学合同符合任何 Provider 或训练平台的完整 API。
 
+原设计规格还要求在有限状态环境中演示奖励驱动的策略更新、探索和预算约束。本候选的第 5 组实际是固定奖励排序与动作回放，未实现这一段更新过程；这是**明确的范围收缩**，不是已完成的 RL 训练实验。正式发布前需决定补做该教学实验，或接受当前只解释奖励投机与发布门禁的范围。
+
 ## 审稿与公开边界
 
 [双视角审稿](../reviews/chapter15-review-codex-v1.0-rc1.md)记录了读者和 AI/后训练工程两轮检查及 P1/P2 处理。第 1–14 章发布内容与历史 tag 保留；`book/manifest.json` 继续为 `0.14.0`，第 15 章状态仍为 `planned`。候选正文、实验、图片和答案不进入 `_web` 或公开 MkDocs 站点。本轮不推送、不合并、不创建发布 tag、PR、PDF 或网站部署。
+
+整分支只读复查又发现并已修复：单组实验拒绝覆盖时误删旧 JSON、轨迹四个布尔证据字段接受非布尔值、零样本或非有限切片差值可能通过发布门禁；同时加固了空白变换记录和带空格的 `unknown` 来源。修复均先由失败测试复现，再通过定向测试和全套回归。
 
 早期实施计划的一个历史 blob 曾包含用户指定的本机仓库根路径。当前计划已改为相对表述；历史扫描对该 blob 的第 619 行路径告警作精确豁免，仍扫描全部历史 Secret 和其他机器路径。候选历史没有重写。

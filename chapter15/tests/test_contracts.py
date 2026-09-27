@@ -138,10 +138,25 @@ def test_trajectory_rejects_duplicate_step_indexes() -> None:
         ("model_fingerprint", ""),
         ("harness_fingerprint", ""),
         ("transform_history", ()),
+        ("transform_history", ("raw", " ")),
     ],
 )
 def test_trajectory_requires_complete_provenance(field: str, value: object) -> None:
     with pytest.raises(ValueError, match="missing_trajectory_provenance"):
+        _trajectory(**{field: value})
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("verifier_passed", "false"),
+        ("contains_sensitive_data", None),
+        ("accessed_hidden_answer", 0),
+        ("telemetry_complete", "false"),
+    ],
+)
+def test_trajectory_rejects_non_boolean_evidence(field: str, value: object) -> None:
+    with pytest.raises(ValueError, match="invalid_trajectory_boolean"):
         _trajectory(**{field: value})
 
 

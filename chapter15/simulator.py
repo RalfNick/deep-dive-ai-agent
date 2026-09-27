@@ -281,10 +281,18 @@ def release_decision(
 ) -> ReleaseDecision:
     """Apply non-compensatory release gates in a fixed order."""
 
+    invalid_deltas = {
+        name
+        for name, delta in slice_deltas.items()
+        if not isinstance(delta, (int, float)) or isinstance(delta, bool) or not math.isfinite(delta)
+    }
     evidence = {
         "baseline": baseline.to_dict(),
         "candidate": candidate.to_dict(),
-        "slice_deltas": {key: slice_deltas[key] for key in sorted(slice_deltas)},
+        "slice_deltas": {
+            key: None if key in invalid_deltas else slice_deltas[key]
+            for key in sorted(slice_deltas)
+        },
     }
     if baseline.environment_errors or candidate.environment_errors:
         return ReleaseDecision(
@@ -296,6 +304,18 @@ def release_decision(
         return ReleaseDecision(
             ReleaseDecisionKind.INCONCLUSIVE,
             ("missing_slice_coverage",),
+            evidence,
+        )
+    if baseline.accepted_episodes == 0 or candidate.accepted_episodes == 0:
+        return ReleaseDecision(
+            ReleaseDecisionKind.INCONCLUSIVE,
+            ("missing_accepted_coverage",),
+            evidence,
+        )
+    if invalid_deltas:
+        return ReleaseDecision(
+            ReleaseDecisionKind.INCONCLUSIVE,
+            ("invalid_slice_evidence",),
             evidence,
         )
     if candidate.safety_violations:

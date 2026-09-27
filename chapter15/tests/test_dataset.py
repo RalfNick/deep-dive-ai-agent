@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from dataclasses import replace
 import json
 
 from chapter15.audit import audit_dataset, build_supervised_examples
@@ -66,6 +67,15 @@ def test_unknown_provenance_is_quarantined() -> None:
     audit = audit_dataset(load_trajectories())
 
     assert "traj-006" in audit.quarantined_ids
+    assert audit.reason_counts["unknown_provenance"] == 1
+
+
+def test_whitespace_wrapped_unknown_provenance_is_quarantined() -> None:
+    record = replace(_record("traj-002"), source_run_id=" unknown ")
+    audit = audit_dataset((record,))
+
+    assert audit.eligible_ids == ()
+    assert audit.quarantined_ids == ("traj-002",)
     assert audit.reason_counts["unknown_provenance"] == 1
 
 
