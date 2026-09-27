@@ -36,8 +36,12 @@
 9. [第 8 章：RAG 与知识库——让 Agent 先查证，再回答](./chapter8.md)
 10. [第 9 章：工具调用与 MCP——从“模型想做”到“系统真的做了”](./chapter9.md)
 11. [第 10 章：大规模工具集与异步任务](./chapter10.md)
+12. [第 11 章：Coding Agent——代码库就是它的环境](./chapter11.md)
+13. [第 12 章：手写一个 Mini Coding Agent](./chapter12.md)
+14. [第 13 章：Agent 评估——答案正确还不够](./chapter13.md)
+15. [第 14 章：Benchmark、Tracing 与生产诊断](./chapter14.md)
 
-每章末尾都连接正文、配套实验、参考答案和下一阅读位置。第 11–18 章只有[写作规划](./OUTLINE.md)，不把规划标题计为已发布章节。
+每章末尾都连接正文、配套实验、参考答案和下一阅读位置。第 15–18 章只有[写作规划](./OUTLINE.md)，不把规划标题计为已发布章节。
 
 ## 阅读路径
 
@@ -52,7 +56,7 @@
 
 ## 书稿状态
 
-当前为 2026-09-09 发布版。第 1–10 章已发布，第 10 章正式版本为 v1.1；第 1–9 章旧稿、旧图和既有 tag 均保留，第 10 章的 v1.0 与 v1.0-rc1 也保留在 Git 历史中。恢复入口见[章节版本记录](./versions/CHAPTER_VERSIONS.md)。
+当前为 2026-09-27 发布版。第 1–14 章已发布；第 11–14 章由各自最新 rc 候选验收后发布，旧稿、旧图、候选记录和既有 tag 均保留。恢复入口见[章节版本记录](./versions/CHAPTER_VERSIONS.md)。
 
 | 文件 | 状态 | 说明 |
 | --- | --- | --- |
@@ -67,6 +71,10 @@
 | [chapter8.md](./chapter8.md) | v1.4 | 片段引句标注、重排后资格与父摘要回查；真实请求入口；生产清单独立；71 项测试，20 个规范案例、14 题、8 张在用 SVG + 1 张主图，旧图保留 |
 | [chapter9.md](./chapter9.md) | editorial-v1 | 22 个 FAQ 移至配套材料；保留 8 张手绘图、21 个规范 Case、14 题与 47 项测试；协议冻结点不变 |
 | [chapter10.md](./chapter10.md) | v1.1 | 大规模工具发现与按需加载、有限并发、可恢复持久作业、租约、取消、超时和幂等；完整 quickstart、6 张原创图、5 组实验、14 题与 42 项测试 |
+| [chapter11.md](./chapter11.md) | v1.0 | Coding Agent 仓库调查、补丁、红灯门禁、验证、项目指令和恢复；7 幅图、5 组实验、14 题与 26 项测试 |
+| [chapter12.md](./chapter12.md) | v1.0 | 手写 Loop、工具合同、审批恢复、Verifier、Trace 与框架适配；7 幅图、5 组实验、14 题与 210 项测试 |
+| [chapter13.md](./chapter13.md) | v1.0 | 12 个任务、120 条 Trial、多评分器、统计区间、Judge 校准与三态发布门禁；7 幅图、14 题与 38 项测试 |
+| [chapter14.md](./chapter14.md) | v1.0 | Benchmark Card、72 条教学 Trace、采样、隐私、切片、反证与消融诊断；7 幅图、14 题与 69 项测试 |
 | [sources/chapter1-sources.md](./sources/chapter1-sources.md) | 已建立 | 第 1 章资料台账与更新策略 |
 | [sources/chapter2-sources.md](./sources/chapter2-sources.md) | 已建立 | 作者资料页级映射、论文、官方文档、书籍与前沿信息核对台账 |
 | [sources/chapter3-sources.md](./sources/chapter3-sources.md) | 已建立 | Agent 经典论文、OpenAI/Anthropic/LangChain 官方文档与出版前复核清单 |
@@ -75,6 +83,10 @@
 | [sources/chapter8-sources.md](./sources/chapter8-sources.md) | 已建立 | RAG 原始研究、检索算法、LangChain/LangGraph、OpenAI、Anthropic 与 Ragas 官方资料台账 |
 | [sources/chapter9-sources.md](./sources/chapter9-sources.md) | 已建立 | MCP 2026-07-28 规范、官方 Python SDK、Provider Tool Use 与本地工程证据台账 |
 | [sources/chapter10-sources.md](./sources/chapter10-sources.md) | 已建立 | 工具搜索、异步任务、幂等、取消、持久化与官方产品边界台账 |
+| [sources/chapter11-sources.md](./sources/chapter11-sources.md) | 已建立 | Coding Agent、Codex、Claude Code、项目指令、Skills、Hooks 与恢复边界台账 |
+| [sources/chapter12-sources.md](./sources/chapter12-sources.md) | 已建立 | Agent Loop、Pi、LangGraph、Agents SDK、执行隔离与框架责任台账 |
+| [sources/chapter13-sources.md](./sources/chapter13-sources.md) | 已建立 | Agent Evals、pass@k、pass^k、LLM Judge 与评估平台台账 |
+| [sources/chapter14-sources.md](./sources/chapter14-sources.md) | 已建立 | Benchmark、OpenTelemetry、Langfuse、Agents SDK Tracing 与 SRE 资料台账 |
 | [reviews/chapter4-review.md](./reviews/chapter4-review.md) | 已完成 | 普通读者与 AI 工程专家双视角问题清单、修订记录和证据边界 |
 | [reviews/chapter7-review-codex.md](./reviews/chapter7-review-codex.md) | 已完成 | 读者、AI Agent 专家、实验与资料时效四视角 Review 及修订证据 |
 | [reviews/chapter8-review-codex.md](./reviews/chapter8-review-codex.md) | 已完成 | 读者、AI 专家、工程证据与资料时效四视角 Review，包含发现处置与报告哈希 |
@@ -82,12 +94,16 @@
 | [reviews/chapter9-review-codex.md](./reviews/chapter9-review-codex.md) | 历史版本 | v1.0 首轮 Review，保留用于版本比较 |
 | [reviews/chapter10-review-v1.1.md](./reviews/chapter10-review-v1.1.md) | 已完成 | v1.1 复审：修复晚到重试的恢复语义，补齐完整 quickstart、状态表、图示限定与专项回归测试 |
 | [reviews/chapter10-review-codex.md](./reviews/chapter10-review-codex.md) | 已完成 | 读者、工程与事实边界自审；记录候选门禁、保留限制和正式发布复核 |
+| [reviews/chapter11-review-rc2.md](./reviews/chapter11-review-rc2.md) | 已完成 | v1.0-rc2 修订复核、26 项测试与产品证据边界 |
+| [reviews/chapter12-review-codex-v1.0-rc1.md](./reviews/chapter12-review-codex-v1.0-rc1.md) | 已完成 | 读者与 Agent 工程视角 Review，保留真实模型和容器隔离限制 |
+| [reviews/chapter13-review-codex-v1.0-rc2.md](./reviews/chapter13-review-codex-v1.0-rc2.md) | 已完成 | 评估专家复审、Schema 与统计门禁修订记录 |
+| [reviews/chapter14-review-codex-v1.0-rc2.md](./reviews/chapter14-review-codex-v1.0-rc2.md) | 已完成 | Benchmark、Tracing 与生产诊断精修复核 |
 | [WRITING_GUIDE.md](./WRITING_GUIDE.md) | 已建立 | 后续章节的篇幅、图表、实验和失败案例标准 |
 
 本目录中的插图均为本书重新绘制或生成的 SVG/PNG，便于后续导出 PDF、EPUB 和网页版本；用户提供的旧资料只作为知识线索和结构素材，不直接复用原图或原文。
 
-## 本地写作候选（未发布）
+## 2026-09-27 发布说明
 
-2026-09-10 修订[第 11 章 Coding Agent：代码库就是它的环境](./chapter11.md)，v1.0-rc2。约 2.03 万中文字符、7 幅在用原创手绘图、5 组无 API Key 实验、14 道练习与答案；补齐失败诊断、红灯门禁、练习独立入口和产品手动路线。入口见[配套实验](../chapter11/README.md)、[资料来源](./sources/chapter11-sources.md)与[修订复核](./reviews/chapter11-review-rc2.md)。rc1 正文、代码与[旧自审](./reviews/chapter11-review-codex.md)继续保留。公开网站与 manifest 仍是前 10 章，本候选未推送发布。
+第 11–14 章已经进入公开 manifest、站点导航和逐章实验表。正式版本分别冻结在 `book-chapter11-v1.0`、`book-chapter12-v1.0`、`book-chapter13-v1.0` 与 `book-chapter14-v1.0`；rc1/rc2 记录继续保留，便于核对候选到正式版的变化。第 15–18 章仍只按 [OUTLINE.md](./OUTLINE.md) 规划。
 
 后续核心章节的篇幅、插图、实验和失败案例密度统一遵守 [WRITING_GUIDE.md](./WRITING_GUIDE.md)。

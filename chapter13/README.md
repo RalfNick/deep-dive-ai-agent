@@ -1,5 +1,7 @@
 # 第 13 章实验包：Agent 评估
 
+配套正文：[Agent 评估：答案正确还不够](../book/chapter13.md)。
+
 这是《深入浅出 AI Agent》第 13 章的自包含配套工程。它用 12 个 Coding Agent 教学任务、两套确定性策略和 5 个固定种子，展示如何从最终回复逐步建立 Outcome、Trajectory、多评分器、可靠性指标、成对统计和发布门禁。
 
 本实验包验证的是 **Evaluation Harness 的机制**，不是模型能力。`baseline` 与 `candidate` 的决策和成功日程已经冻结；报告中的 55%、75% 等数字是教学夹具，不得写成模型、供应商或框架排名。

@@ -156,6 +156,15 @@ class RepositorySafetyTests(unittest.TestCase):
     def test_real_repository_passes_the_current_tree_gate(self) -> None:
         self.assertEqual((), run_checks(ROOT))
 
+    def test_named_virtualenv_directories_are_not_publishable(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            dependency = root / ".venv-chapter12" / "Lib" / "site-packages" / "example.py"
+            dependency.parent.mkdir(parents=True)
+            local_path = "".join(("D", r":\private\dependency"))
+            dependency.write_text(f'path = "{local_path}"', encoding="utf-8")
+            self.assertEqual((), check_author_paths(root))
+
 
 if __name__ == "__main__":
     unittest.main()

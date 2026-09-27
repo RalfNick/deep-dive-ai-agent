@@ -71,6 +71,7 @@ class GenerateMigrationManifestTests(unittest.TestCase):
             (root / "book" / "images").mkdir(parents=True)
             (root / "book" / "sources").mkdir()
             (root / "book" / "reviews").mkdir()
+            (root / "book" / "versions").mkdir()
             (root / "book" / "chapter1.md").write_text("migrated", encoding="utf-8")
             (root / "book" / "chapter7.md").write_text("new", encoding="utf-8")
             (root / "book" / "images" / "fig7-1.svg").write_text("<svg/>", encoding="utf-8")
@@ -78,6 +79,11 @@ class GenerateMigrationManifestTests(unittest.TestCase):
             (root / "book" / "reviews" / "chapter7-review.md").write_text("new", encoding="utf-8")
             (root / "book" / "manifest.json").write_text("{}", encoding="utf-8")
             (root / "book" / "images" / "deep-dive-ai-agent-cover.webp").write_bytes(b"new")
+            (root / "book" / "check_chapter12_preview.mjs").write_text("new", encoding="utf-8")
+            (root / "book" / "images" / "chapter12-prompts.md").write_text("new", encoding="utf-8")
+            (root / "book" / "images" / "chapter12").mkdir()
+            (root / "book" / "images" / "chapter12" / "diagram.png").write_bytes(b"new")
+            (root / "book" / "versions" / "chapter12-v1.0.md").write_text("new", encoding="utf-8")
 
             records = build_records(root, "a" * 40, "b" * 40)
 
@@ -100,6 +106,9 @@ class GenerateMigrationManifestTests(unittest.TestCase):
         self.assertIn("不导入 PDF、HTML", rendered)
         self.assertIn("作者既有工程文章", rendered)
         self.assertIn("chapter6/tests/test_pdf_release.py", rendered)
+
+        dated = render_manifest(records, verified_date="2026-09-27")
+        self.assertIn("校验字段更新于 2026-09-27", dated)
 
 
 if __name__ == "__main__":

@@ -3,6 +3,7 @@
 .env.*
 !.env.example
 .venv/
+.venv-*/
 chapter12/.runs/
 chapter13/.runs/
 chapter13/.test-tmp*/

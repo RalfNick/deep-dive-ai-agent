@@ -36,6 +36,12 @@ jobs:
             chapter1/requirements.txt
             chapter2/requirements.txt
             chapter9/requirements.txt
+            chapter12/requirements-dev.txt
+            chapter12/requirements-preview.txt
+            chapter13/requirements-dev.txt
+            chapter13/requirements-preview.txt
+            chapter14/requirements-dev.txt
+            chapter14/requirements-preview.txt
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -83,8 +89,23 @@ jobs:
           python -m unittest discover -s chapter9/tests -v
           python -m unittest discover -s chapter10/tests -v
 
-      - name: Run Chapter 11 candidate tests
+      - name: Run Chapter 11 tests
         run: python -B -m unittest discover -s chapter11/tests -v
+
+      - name: Run Chapter 12 tests in its locked environment
+        run: |
+          python -m venv .venv-chapter12
+          .venv-chapter12/bin/python -m pip install --require-hashes -r chapter12/requirements-dev.txt
+          .venv-chapter12/bin/python -m pip install -r chapter12/requirements-preview.txt
+          .venv-chapter12/bin/python -B -m pytest chapter12/tests -q
+
+      - name: Run Chapter 13 and Chapter 14 tests in their locked environment
+        run: |
+          python -m venv .venv-evaluation
+          .venv-evaluation/bin/python -m pip install --require-hashes -r chapter13/requirements-dev.txt -r chapter14/requirements-dev.txt
+          .venv-evaluation/bin/python -m pip install -r chapter13/requirements-preview.txt -r chapter14/requirements-preview.txt
+          .venv-evaluation/bin/python -B -m pytest chapter13/tests -q
+          .venv-evaluation/bin/python -B -m pytest chapter14/tests -q
 
       - name: Regenerate deterministic teaching reports
         run: |

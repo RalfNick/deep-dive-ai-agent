@@ -9,7 +9,7 @@ import pytest
 
 
 ROOT = Path(__file__).resolve().parents[2]
-VERSION = ROOT / "book" / "versions" / "chapter12-v1.0-rc1.md"
+VERSION = ROOT / "book" / "versions" / "chapter12-v1.0.md"
 
 
 def _project_file(path: Path) -> Path:
@@ -18,7 +18,7 @@ def _project_file(path: Path) -> Path:
     return path
 
 
-def test_public_manifest_stays_at_existing_release():
+def test_public_manifest_exposes_chapter12_release():
     current = _project_file(ROOT / "book" / "manifest.json").read_bytes()
     manifest = json.loads(current)
     chapter = next(
@@ -27,23 +27,24 @@ def test_public_manifest_stays_at_existing_release():
         for chapter in section["chapters"]
         if chapter["order"] == 12
     )
-    assert chapter["status"] == "planned"
-    assert "source" not in chapter
+    assert chapter["status"] == "published"
+    assert chapter["source"] == "chapter12.md"
+    assert chapter["experiment"] == "../chapter12/README.md"
+    assert chapter["answers"] == "../chapter12/reference-answers.md"
 
-def test_candidate_version_record_and_agent_status_are_explicit():
+def test_release_record_and_agent_status_are_explicit():
     record = _project_file(VERSION).read_text(encoding="utf-8")
     agents = _project_file(ROOT / "AGENTS.md").read_text(encoding="utf-8")
     for phrase in (
-        "v1.0-rc1",
-        "本地候选",
-        "未发布",
+        "v1.0",
+        "正式发布",
         "真实模型运行：未执行",
         "容器隔离：未验证",
-        "209 passed, 1 skipped",
+        "210 passed",
     ):
         assert phrase in record
-    assert "第 12 章已有 v1.0-rc1 本地候选" in agents
-    assert "公开 manifest 仍保持 10 章已发布" in agents
+    assert "第 1–14 章已有发布版本" in agents
+    assert "第 15–18 章仍是规划" in agents
 
     for name in ("offline-canonical.json", "framework-comparison.json",
                  "exercise-results.json"):

@@ -3,8 +3,8 @@
   "title": "深入浅出 AI Agent",
   "subtitle": "从大模型原理到手写 Coding Agent",
   "description": "从模型、上下文和工具出发，逐步搭建可运行、可验证、可持续改进的 AI Agent 工程体系。",
-  "version": "0.10.1",
-  "updated": "2026-09-09",
+  "version": "0.14.0",
+  "updated": "2026-09-27",
   "cover": "images/deep-dive-ai-agent-cover.webp",
   "repositoryUrl": "https://github.com/RalfNick/deep-dive-ai-agent",
   "totalChapters": 18,
@@ -150,15 +150,23 @@
           "order": 11,
           "slug": "chapter-11",
           "title": "Coding Agent：代码库就是它的环境",
-          "status": "planned",
-          "summary": "拆解 Coding Agent 的搜索、编辑、测试、权限控制和会话恢复机制。"
+          "status": "published",
+          "summary": "从一次文档链接修复出发，拆解 Coding Agent 的仓库调查、补丁、验证、项目指令与会话恢复边界。",
+          "source": "chapter11.md",
+          "experiment": "../chapter11/README.md",
+          "answers": "../chapter11/reference-answers.md",
+          "updated": "2026-09-27"
         },
         {
           "order": 12,
           "slug": "chapter-12",
           "title": "手写一个 Mini Coding Agent",
-          "status": "planned",
-          "summary": "从模型 API 和基础工具开始，加入计划、补丁、验证、压缩与审批。"
+          "status": "published",
+          "summary": "从确定性 Replay 和最小 Loop 开始，实现工具合同、补丁、审批、恢复、上下文控制、Verifier 与框架适配。",
+          "source": "chapter12.md",
+          "experiment": "../chapter12/README.md",
+          "answers": "../chapter12/reference-answers.md",
+          "updated": "2026-09-27"
         }
       ]
     },
@@ -171,15 +179,23 @@
           "order": 13,
           "slug": "chapter-13",
           "title": "Agent 评估：答案正确还不够",
-          "status": "planned",
-          "summary": "建立可复现任务集，并同时衡量结果、轨迹、工具、安全和成本。"
+          "status": "published",
+          "summary": "建立可复现任务集，用 Outcome、Trajectory、多评分器、重复试验与三态门禁同时衡量结果、过程、安全和效率。",
+          "source": "chapter13.md",
+          "experiment": "../chapter13/README.md",
+          "answers": "../chapter13/reference-answers.md",
+          "updated": "2026-09-27"
         },
         {
           "order": 14,
           "slug": "chapter-14",
           "title": "Benchmark、Tracing 与生产诊断",
-          "status": "planned",
-          "summary": "记录 Token、延迟、成本、错误与轨迹，设计消融和回归诊断。"
+          "status": "published",
+          "summary": "从可比 Benchmark、Trace 数据模型、分位数与采样出发，用切片、反证和消融定位生产退化。",
+          "source": "chapter14.md",
+          "experiment": "../chapter14/README.md",
+          "answers": "../chapter14/reference-answers.md",
+          "updated": "2026-09-27"
         }
       ]
     },

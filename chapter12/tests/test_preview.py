@@ -29,7 +29,7 @@ def test_candidate_preview_has_seven_figures_and_local_resources():
     page = build_preview(ROOT)
     text = page.read_text(encoding="utf-8")
     assert '<html lang="zh-CN">' in text
-    assert "第 12 章" in text and "本地候选" in text
+    assert "第 12 章" in text and "Mini Coding Agent" in text
     assert text.count("<figure>") == 7
     sources = re.findall(r'<img[^>]+src="([^"]+)"', text)
     assert len(sources) == 7

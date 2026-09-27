@@ -92,6 +92,8 @@ def iter_publishable_files(root: Path):
         lowered = {part.casefold() for part in relative.parts[:-1]}
         if lowered & {name.casefold() for name in SKIP_DIRECTORIES}:
             continue
+        if any(part.casefold().startswith(".venv-") for part in relative.parts[:-1]):
+            continue
         if relative.parts[:3] == ("tests", "fixtures", "safety"):
             continue
         if path.suffix.casefold() in TEXT_SUFFIXES or path.name in TEXT_NAMES:

@@ -22,7 +22,7 @@ def test_manuscript_depth_and_exercises():
 
 def test_manuscript_is_a_candidate_and_uses_only_observed_evidence():
     manuscript = text()
-    assert "状态：v1.0-rc2 候选稿，未发布" in manuscript
+    assert "状态：v1.0 正式发布版" in manuscript
     assert "真实模型运行：未执行" in manuscript
     assert "容器隔离仅说明理论合同与参考配置，不提供实测结论" in manuscript
     assert "ReplayModel" in manuscript and "离线回放" in manuscript

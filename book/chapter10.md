@@ -690,7 +690,8 @@ python -m chapter10.experiments --write
 - [运行第 10 章配套实验](../chapter10/README.md)
 - [查看第 10 章参考答案](../chapter10/reference-answers.md)
 - [查看第 10 章来源台账](./sources/chapter10-sources.md)
-- [查看第 11 章及后续写作规划](./OUTLINE.md)
+- [继续阅读第 11 章：Coding Agent——代码库就是它的环境](./chapter11.md)
+- [查看后续写作规划](./OUTLINE.md)
 
 [^openai-search]: OpenAI 官方文档：[Tool search](https://developers.openai.com/api/docs/guides/tools-tool-search)。核对日期：2026-09-07。这里引用托管/客户端搜索、延迟定义与命名空间边界，不固定支持模型列表。
 [^claude-search]: Anthropic 官方文档：[Tool search tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-search-tool)。核对日期：2026-09-07。区分请求中发送定义与模型上下文加载定义。

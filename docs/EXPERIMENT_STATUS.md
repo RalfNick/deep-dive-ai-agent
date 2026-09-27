@@ -1,5 +1,9 @@
 # 实验验证状态
 
+## 2026-09-27 第 11–14 章 v1.0 发布
+
+第 11–14 章已经进入公开 manifest、站点 allowlist 与 CI。发布基线分别通过 26、210、38、69 项章节测试；仓库合同、Node 排版合同、发布安全扫描和 MkDocs strict 构建作为共同门禁。四章继续保留候选记录中的 Non-claims：未用固定夹具评价真实模型或产品，第 12 章没有把理论容器合同写成隔离实测，第 13–14 章没有把教学任务、Trace 或成本单位外推到生产分布。
+
 ## 2026-09-09 第十章 v1.1
 
 第十章发布 v1.1。42 项章节测试通过：在 v1.0 基础上新增 4 个幂等/准入回归测试方法和 1 个完整 quickstart 命令测试；五组实验与三份规范报告仍可重复生成。发布门禁同时覆盖仓库合同、已发布章节回归、Node 排版合同、MkDocs strict 构建和仓库安全检查。下方记录给出本章精确边界，不把固定夹具结果解释为真实模型或分布式系统评测。
@@ -32,6 +36,10 @@
 | 第 8 章 | `python -m unittest discover -s chapter8/tests -v` | v1.4 复审优化 | 71 通过 | `python -m chapter8.experiments.run_all --output chapter8/reports` | 18 篇虚构文档、20 个固定问题和确定性检索策略；验证治理、召回、证据、拒答与索引回查；状态结果区分符合性案例与失败探针，不比较真实模型或供应商 |
 | 第 9 章 | `python -m unittest discover -s chapter9/tests -v` | v1.0.3 发布版 | 47 通过 | `python -m chapter9.experiments.run_all --output chapter9/reports` | 5 组 21 个规范 Case；验证 Schema、策略、执行、回执、Loop 与 MCP SDK 合同；锁定 `mcp==2.1.1`，进程内 MCP 测试不代表模型质量或远程生产部署 |
 | 第 10 章 | `python -m unittest discover -s chapter10/tests -v` | v1.1 发布版 | 42 通过 | `python -m chapter10.experiments --write` | 5 组标准库实验；验证目录/加载、发现边界、有限并发、可恢复持久作业与故障语义；新增完整 quickstart 与晚到重试回归；不含真实模型、外部 SDK、HTTP 服务或分布式 exactly-once |
+| 第 11 章 | `python -B -m unittest discover -s chapter11/tests -v` | v1.0-rc2 | 26 通过 | `python -B -m chapter11.experiments --output chapter11/reports` | 固定操作序列与可信教学仓库；验证调查、红灯、补丁版本、验收与证据失效，不代表 Codex/Claude Code 实际能力或沙箱安全 |
+| 第 12 章 | `python -B -m pytest chapter12/tests -q` | v1.0-rc2 | 210 通过 | `python -B -m chapter12.experiments --group all --output <new-dir>` | Replay 驱动；真实加载 LangGraph 与 Agents SDK，但未执行真实模型；容器只保留理论合同与参考配置 |
+| 第 13 章 | `python -B -m pytest chapter13/tests -q` | v1.0-rc2 | 38 通过 | `python -B -m chapter13.experiments --group all --output <new-dir>` | 12 个固定任务、2 个确定性策略、120 条 Trial；验证评估机制，不代表真实模型或平台排名 |
+| 第 14 章 | `python -B -m pytest chapter14/tests -q` | v1.0-rc2 | 69 通过 | `python -B -m chapter14.experiments --group all --output <new-dir>` | 72 条确定性教学 Trace 与虚构成本单位；验证可比性、观测合同和诊断方法，不代表生产流量 |
 
 第 1、3 章迁移后各多 1 项测试，用于冻结规范报告时间戳。第 6 章排除了 4 项只验证未迁移 PDF 发布物、版本台账和二进制哈希的测试，同时增加 1 项跨平台路径保护回归；Markdown、图表、实验、来源、Claims/Non-claims 与发布门禁仍在公共测试中。
 
@@ -86,13 +94,15 @@ python chapter2/model_selection_demo.py
 
 目录 300/可发现 299/加载 2；全量 93,644 字节，按需载荷 1,412 字节；有限并发峰值 2；八月报表 3 条、6,000 分。测量口径与限制见 `chapter10/README.md`。这些字节数不是 Token 或生产成本。
 
-## 第 11 章本地候选（未发布）
+## 第 11–14 章发布验证
 
 2026-09-10，v1.0-rc1。17 项章节检查，其中一项预览检查依赖可选 Markdown 包；本机已安装并运行。五组实验分别覆盖修复、项目指令清单、过期补丁、验收反例和旧证据失效。规范 JSON 与 Markdown 经两次生成并与仓库文件逐字节比较。
 
-入口：`python -B -m chapter11.quickstart`；完整检查：`python -B -m unittest discover -s chapter11/tests -v`。不需要 API Key；操作来自固定序列，产品遵循、模型质量、沙箱安全字段不伪填得分。公开统计仍为 10 章；本节不是发布公告。
+入口：`python -B -m chapter11.quickstart`；完整检查：`python -B -m unittest discover -s chapter11/tests -v`。不需要 API Key；操作来自固定序列，产品遵循、模型质量、沙箱安全字段不伪填得分。
 
-2026-09-10，v1.0-rc2 修订：章节检查增至 26 项，新增工作台 Review 回归 4 项和练习 CLI 检查 5 项；原有文稿检查加强脚注双向与片段校验。结果与 stdout/stderr 分流，保留断言差异，未知测试数不记为零；目标红灯确认后才冻结并修复。练习 6–10 各有独立临时现场，第 9 题支持预先声明缺失链接验收合同。规范报告重新运行并逐字节复现；rc1 的报告、正文和代码历史保留。详见 [rc2 复核](../book/reviews/chapter11-review-rc2.md)。未执行产品端修复，未发布。
+2026-09-10，v1.0-rc2 修订：章节检查增至 26 项，新增工作台 Review 回归 4 项和练习 CLI 检查 5 项；原有文稿检查加强脚注双向与片段校验。结果与 stdout/stderr 分流，保留断言差异，未知测试数不记为零；目标红灯确认后才冻结并修复。练习 6–10 各有独立临时现场，第 9 题支持预先声明缺失链接验收合同。规范报告重新运行并逐字节复现；rc1 的报告、正文和代码历史保留。详见 [rc2 复核](../book/reviews/chapter11-review-rc2.md)。未执行产品端修复。
+
+第 12 章以 v1.0-rc2 为发布基线：210 项测试通过，离线规范报告两次重建一致；真实模型运行未执行，容器隔离未验证。第 13 章以 v1.0-rc2 为发布基线：38 项测试通过，报告 Schema、任务切片、成对区间、Judge 校准与三态门禁均由固定输入验证。第 14 章以 v1.0-rc2 为发布基线：69 项测试通过，Trace 结构、关键路径、采样隐私顺序、反证与消融诊断均由确定性夹具验证。完整环境、哈希和 Non-claims 见各章 [正式版本记录](../book/versions/) 与 rc2 历史记录。
 
 ## 统一证据边界
 
@@ -101,4 +111,4 @@ python chapter2/model_selection_demo.py
 - 测试全绿不代表生产安全、成本、延迟或用户目标已经被完整覆盖。
 - 未在公共 CI 中执行真实 provider、浏览器、GPU 或 PDF 二进制发布验收。
 
-来源冻结点：第 1–4 章为 `93931cc43b862e525e5c1c77473a2024af09b162`；第 5–6 章为 `faa56e968affe2469ef828b62bf0947c6e9ebdbb`；第 7–10 章为独立书库新增实现，来源与非声明边界分别记录在对应章节资料台账中；第 9 章来源于 2026-09-01 复核，第 10 章来源于 2026-09-07 复核。
+来源冻结点：第 1–4 章为 `93931cc43b862e525e5c1c77473a2024af09b162`；第 5–6 章为 `faa56e968affe2469ef828b62bf0947c6e9ebdbb`；第 7–14 章为独立书库新增实现，来源与非声明边界分别记录在对应章节资料台账中。第 9、10、11、13、14 章的快变资料分别按各自来源台账记录的核对日期冻结；正式发布不承诺产品文档此后保持不变。

@@ -6,12 +6,16 @@
 
 ## 当前状态
 
-- 简体中文是唯一权威正文，已发布第 1–10 章；第 1–6 章已完成复审，第 7–10 章已完成 Review、实验与发布门禁。
-- 第 1–10 章都包含配套实验、测试、固定报告或结果，以及参考答案。
-- 第 11–18 章仍在规划中。
+- 简体中文是唯一权威正文，已发布第 1–14 章；每章均经过读者或工程视角 Review、实验与发布门禁。
+- 第 1–14 章都包含配套实验、测试、固定报告或结果，以及参考答案。
+- 第 15–18 章仍在规划中。
 - 英文版状态为 `planned`，当前没有译文章节；暂不建立繁体中文版。
 - 在线阅读已发布：<https://wlxralf.com/books/deep-dive-ai-agent>。
 - PDF/EPUB 尚未在本仓库发布，未来只通过 GitHub Releases 提供。
+
+## 2026-09-27 第 11–14 章发布
+
+本次把四个连续候选正式接入公开阅读路径：第 11 章从使用者视角拆解 Coding Agent，第 12 章从零实现 Mini Coding Agent，第 13 章建立结果、轨迹、安全与统计评估，第 14 章把 Benchmark、Tracing 和生产诊断连接起来。发布保留全部 rc 历史，不扩大实验结论：第 11 章没有实测产品端修复；第 12 章没有执行真实模型或完整容器隔离；第 13–14 章使用确定性教学数据，不代表真实模型、产品或平台排名。
 
 ## 2026-09-09 第 10 章 v1.1 发布
 
@@ -35,6 +39,10 @@
 | 第 8 章 RAG 与知识库：让 Agent 先查证，再回答 | [正文](book/chapter8.md) | [实验](chapter8/README.md) | [答案](chapter8/reference-answers.md) | [71 项测试通过](docs/EXPERIMENT_STATUS.md) |
 | 第 9 章 工具调用与 MCP：从“模型想做”到“系统真的做了” | [正文](book/chapter9.md) | [实验](chapter9/README.md) | [答案](chapter9/reference-answers.md) | [47 项测试通过](docs/EXPERIMENT_STATUS.md) |
 | 第 10 章 大规模工具集与异步任务 | [正文](book/chapter10.md) | [实验](chapter10/README.md) | [答案](chapter10/reference-answers.md) | [42 项测试通过](docs/EXPERIMENT_STATUS.md) |
+| 第 11 章 Coding Agent：代码库就是它的环境 | [正文](book/chapter11.md) | [实验](chapter11/README.md) | [答案](chapter11/reference-answers.md) | [26 项测试通过](docs/EXPERIMENT_STATUS.md) |
+| 第 12 章 手写一个 Mini Coding Agent | [正文](book/chapter12.md) | [实验](chapter12/README.md) | [答案](chapter12/reference-answers.md) | [210 项测试通过](docs/EXPERIMENT_STATUS.md) |
+| 第 13 章 Agent 评估：答案正确还不够 | [正文](book/chapter13.md) | [实验](chapter13/README.md) | [答案](chapter13/reference-answers.md) | [38 项测试通过](docs/EXPERIMENT_STATUS.md) |
+| 第 14 章 Benchmark、Tracing 与生产诊断 | [正文](book/chapter14.md) | [实验](chapter14/README.md) | [答案](chapter14/reference-answers.md) | [69 项测试通过](docs/EXPERIMENT_STATUS.md) |
 
 建议先读[全书介绍](book/introduction.md)，再按[中文阅读顺序](book/README.md)推进。详细来源、Review 和版本记录均保留在 `book/` 中。
 
@@ -61,7 +69,7 @@
 17. 多模态与实时 Agent
 18. Multi-Agent 与最终系统
 
-每章范围和前后依赖见[完整大纲](book/OUTLINE.md)。未发布章节的标题是规划，不代表正文或实验已经完成。
+每章范围和前后依赖见[完整大纲](book/OUTLINE.md)。第 15–18 章的标题仍是规划，不代表正文或实验已经完成。
 
 ## 实验证据的四种状态
 

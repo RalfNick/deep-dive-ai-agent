@@ -2,7 +2,7 @@
 
 > 阅读提示：本章采用“先完整做一次，再逐步解释”的顺序。你只需要知道怎样运行 Python 命令、怎样阅读一个小函数。第一遍先跟着文档链接检查器完成修改，再读项目指令、扩展和会话恢复；产品配置细节可以留到动手时查阅。
 >
-> 当前为 v1.0-rc2 修订候选，尚未发布。产品资料核对日期为 2026 年 9 月 10 日。标准实验需要 Python 3.11 及以上版本和 Git，不需要 API Key。
+> 当前为 v1.0 正式发布版，由 v1.0-rc2 候选验收后发布。产品资料核对日期为 2026 年 9 月 10 日。标准实验需要 Python 3.11 及以上版本和 Git，不需要 API Key。
 
 同事把一个小问题交给你：“文档目录里有些链接明明能打开，检查脚本却一直说文件不存在。帮我看一下。”
 
@@ -868,7 +868,8 @@ Coding Agent 的工作也因此具有了具体形状。它从仓库和用户那�
 - [练习参考答案](../chapter11/reference-answers.md)
 - [产品观察指南](../chapter11/product-walkthrough.md)
 - [资料来源与事实边界](./sources/chapter11-sources.md)
-- [全书总纲与第 12 章规划](./OUTLINE.md)
+- [继续阅读第 12 章：手写一个 Mini Coding Agent](./chapter12.md)
+- [查看全书总纲](./OUTLINE.md)
 
 [^swe-agent]: Yang 等，2024，[SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering](https://arxiv.org/abs/2405.15793)。用于说明软件工程 Agent 的交互接口值得独立设计，不引用其分数作为本章实验证据。
 [^codex-practices]: OpenAI，[Best practices](https://learn.chatgpt.com/guides/best-practices)。通过官方 Codex 手册核对，日期 2026-09-10；用于任务上下文、项目指导和验证工作流。

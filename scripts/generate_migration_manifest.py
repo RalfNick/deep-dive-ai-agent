@@ -31,7 +31,14 @@ GENERATED_DIRECTORY_NAMES = {
 POST_MIGRATION_BOOK_FILES = {
     "book/manifest.json",
     "book/images/deep-dive-ai-agent-cover.webp",
+    "book/images/fig1-0-how-llms-work-v2.png",
+    "book/reviews/editorial-review-2026-09-06.md",
+    "book/sources/fig1-0-v2-prompt.md",
 }
+POST_MIGRATION_AUX_RE = re.compile(
+    r"^book/(?:check_chapter(?P<preview>\d+)_preview\.mjs|"
+    r"images/chapter(?P<image>\d+)(?:/|-))"
+)
 POST_MIGRATION_CHAPTER_RE = re.compile(
     r"^book/(?:chapter(?P<chapter>\d+)\.md|"
     r"images/fig(?P<figure>\d+)-|"
@@ -56,6 +63,15 @@ def _source_for(target: str) -> str:
 def _is_post_migration_book_file(target: str) -> bool:
     if target in POST_MIGRATION_BOOK_FILES:
         return True
+    if target.startswith("book/versions/") and target != "book/versions/CHAPTER_VERSIONS.md":
+        return True
+    auxiliary = POST_MIGRATION_AUX_RE.match(target)
+    if auxiliary is not None:
+        chapter_number = next(
+            int(value) for value in auxiliary.groupdict().values() if value is not None
+        )
+        if chapter_number > 6:
+            return True
     match = POST_MIGRATION_CHAPTER_RE.match(target)
     if match is None:
         return False
@@ -110,10 +126,21 @@ def build_records(
     return tuple(sorted(records, key=lambda record: record.target))
 
 
-def render_manifest(records: tuple[ManifestRecord, ...]) -> str:
+def render_manifest(
+    records: tuple[ManifestRecord, ...], verified_date: str | None = None
+) -> str:
     lines = [
         "# 迁移清单",
         "",
+    ]
+    if verified_date:
+        lines.extend(
+            [
+                f"校验字段更新于 {verified_date}：`bytes` 与 `sha256` 校验当前工作版本；`source` 和 `commit` 仅保留最初迁移来源，不表示修改后的正文仍与来源提交逐字一致。迁移时的清单与本轮修订前的正文可从 Git 历史恢复。",
+                "",
+            ]
+        )
+    lines.extend([
         "本清单记录独立书籍仓库中从原工程迁移的文件。`source` 是可移植的来源标签；",
         "`commit` 是迁移时冻结的来源提交；文本按 `.gitattributes` 的 LF 规范化后计算字节数与 SHA-256，二进制保持原字节。",
         "",
@@ -124,7 +151,7 @@ def render_manifest(records: tuple[ManifestRecord, ...]) -> str:
         "",
         "| target | source | commit | bytes | sha256 |",
         "| --- | --- | --- | ---: | --- |",
-    ]
+    ])
     lines.extend(
         f"| `{record.target}` | `{record.source}` | `{record.commit}` | "
         f"{record.size} | `{record.sha256}` |"
@@ -139,11 +166,16 @@ def main() -> int:
     parser.add_argument("--current-commit", required=True)
     parser.add_argument("--later-commit", required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--verified-date")
     args = parser.parse_args()
     records = build_records(args.root, args.current_commit, args.later_commit)
     output = args.output if args.output.is_absolute() else args.root / args.output
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(render_manifest(records), encoding="utf-8", newline="\n")
+    output.write_text(
+        render_manifest(records, verified_date=args.verified_date),
+        encoding="utf-8",
+        newline="\n",
+    )
     return 0
 
 

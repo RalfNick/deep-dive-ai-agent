@@ -71,6 +71,10 @@ nav:
       - 第 8 章 RAG 与知识库: book/chapter8.md
       - 第 9 章 工具调用与 MCP: book/chapter9.md
       - 第 10 章 大规模工具集与异步任务: book/chapter10.md
+      - 第 11 章 Coding Agent: book/chapter11.md
+      - 第 12 章 手写 Mini Coding Agent: book/chapter12.md
+      - 第 13 章 Agent 评估: book/chapter13.md
+      - 第 14 章 Benchmark、Tracing 与生产诊断: book/chapter14.md
       - 18 章写作地图: book/OUTLINE.md
   - 配套实验:
       - 第 1 章实验: chapter1/index.md
@@ -83,6 +87,10 @@ nav:
       - 第 8 章实验: chapter8/index.md
       - 第 9 章实验: chapter9/index.md
       - 第 10 章实验: chapter10/index.md
+      - 第 11 章实验: chapter11/index.md
+      - 第 12 章实验: chapter12/index.md
+      - 第 13 章实验: chapter13/index.md
+      - 第 14 章实验: chapter14/index.md
   - 验证与贡献:
       - 实验状态: docs/EXPERIMENT_STATUS.md
       - 发布规则: docs/RELEASES.md

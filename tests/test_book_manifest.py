@@ -8,9 +8,9 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class BookManifestTest(unittest.TestCase):
-    def test_manifest_exposes_ten_published_and_eight_unpublished_chapters(self):
+    def test_manifest_exposes_fourteen_published_and_four_unpublished_chapters(self):
         manifest = validate_manifest(ROOT)
-        self.assertEqual("0.10.1", manifest["version"])
+        self.assertEqual("0.14.0", manifest["version"])
         chapters = [
             chapter
             for section in manifest["sections"]
@@ -19,10 +19,9 @@ class BookManifestTest(unittest.TestCase):
 
         self.assertEqual(18, len(chapters))
         self.assertEqual(list(range(1, 19)), [chapter["order"] for chapter in chapters])
-        self.assertEqual(10, sum(chapter["status"] == "published" for chapter in chapters))
-        self.assertEqual("published", chapters[8]["status"])
-        self.assertEqual("published", chapters[9]["status"])
-        self.assertTrue(all(chapter["status"] == "planned" for chapter in chapters[10:]))
+        self.assertEqual(14, sum(chapter["status"] == "published" for chapter in chapters))
+        self.assertTrue(all(chapter["status"] == "published" for chapter in chapters[:14]))
+        self.assertTrue(all(chapter["status"] == "planned" for chapter in chapters[14:]))
 
         chapter9 = chapters[8]
         # Later editorial updates may advance the date; never regress before
@@ -39,6 +38,16 @@ class BookManifestTest(unittest.TestCase):
         self.assertIn("发现", chapter10["summary"])
         self.assertIn("异步", chapter10["summary"])
         self.assertIn("可恢复", chapter10["summary"])
+
+        for chapter in chapters[10:14]:
+            self.assertGreaterEqual(chapter["updated"], "2026-09-27")
+            self.assertEqual(f"chapter{chapter['order']}.md", chapter["source"])
+            self.assertEqual(
+                f"../chapter{chapter['order']}/README.md", chapter["experiment"]
+            )
+            self.assertEqual(
+                f"../chapter{chapter['order']}/reference-answers.md", chapter["answers"]
+            )
 
     def test_every_published_entry_has_reachable_publication_files(self):
         manifest = validate_manifest(ROOT)

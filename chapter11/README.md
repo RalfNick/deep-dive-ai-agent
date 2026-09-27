@@ -1,6 +1,6 @@
 # 第 11 章：Coding Agent 的仓库工作台
 
-配套正文：[Coding Agent：代码库就是它的环境](../book/chapter11.md)。当前为 **v1.0-rc2 本地候选**，未发布。rc1 书稿与代码保留在 Git 提交 2ad0791，旧规范报告另存于 [rc1 报告目录](reports/versions/v1.0-rc1/repository-work.md)。
+配套正文：[Coding Agent：代码库就是它的环境](../book/chapter11.md)。当前为 **v1.0 正式发布版**，由 v1.0-rc2 验收候选发布。rc1 书稿与代码保留在 Git 提交 2ad0791，旧规范报告另存于 [rc1 报告目录](reports/versions/v1.0-rc1/repository-work.md)。
 
 ## 先运行完整修复
 

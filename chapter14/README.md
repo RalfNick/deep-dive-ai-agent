@@ -1,5 +1,7 @@
 # 第 14 章实验包：Benchmark、Tracing 与生产诊断
 
+配套正文：[Benchmark、Tracing 与生产诊断](../book/chapter14.md)。
+
 这是《深入浅出 AI Agent》第 14 章的自包含配套工程。它用两组 Benchmark Card 和 72 条确定性 Trace，展示怎样审计分数可比性，计算延迟、关键路径、用量与重试指标，在脱敏后执行 Head/Tail 采样，并通过切片、反证与消融把一次生产退化固化成回归任务。
 
 本实验包验证的是 **Production Diagnostics Harness 的机制**，不是模型或观测平台能力。所有 Trace 都是固定教学夹具；`cost_units` 来自本地费率卡，不是美元或任何供应商价格。
@@ -100,7 +102,7 @@ python -B -m chapter14.exercise_solutions `
   --output chapter14/.runs/exercise-results.json
 ```
 
-生成本地候选预览后，可用可选的 Playwright 依赖执行桌面端与移动端检查：
+生成本地 HTML 预览后，可用可选的 Playwright 依赖执行桌面端与移动端检查：
 
 ```powershell
 python -B -m chapter14.preview
