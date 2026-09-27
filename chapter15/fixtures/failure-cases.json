@@ -1,0 +1,67 @@
+{
+  "fixture_version": "chapter15-failure-cases-v1",
+  "purpose": "用于比较干预边界的确定性教学夹具，不代表真实模型评测结果。",
+  "cases": [
+    {
+      "observation_id": "failure-missing-knowledge",
+      "failure_type": "missing_knowledge",
+      "task_id": "support-refund-policy",
+      "symptom": "Agent 对更新后的企业退款时限给出旧答案。",
+      "observed_evidence": [
+        "trace 中没有检索到 2026 版退款政策",
+        "提供新版政策片段后，同一决策策略可以回答正确"
+      ],
+      "counterfactual_check": "只补充可检索事实，不改模型权重，错误消失。",
+      "expected_intervention": "rag_context"
+    },
+    {
+      "observation_id": "failure-permission-bypass",
+      "failure_type": "permission_bypass",
+      "task_id": "repo-secret-scan",
+      "symptom": "Agent 尝试读取工作区之外的凭据文件。",
+      "observed_evidence": [
+        "模型输出了越界读取提议",
+        "启用强制路径沙箱后副作用被阻断"
+      ],
+      "counterfactual_check": "不改变模型输出，只改变执行边界，违规行为无法落地。",
+      "expected_intervention": "harness"
+    },
+    {
+      "observation_id": "failure-ambiguous-instruction",
+      "failure_type": "ambiguous_instruction",
+      "task_id": "database-cleanup",
+      "symptom": "“清理旧记录”没有说明时间范围和是否允许删除。",
+      "observed_evidence": [
+        "三名标注者给出不同成功条件",
+        "将任务改写为只生成候选清单后分歧消失"
+      ],
+      "counterfactual_check": "澄清指令与验收标准后，无需训练即可稳定完成。",
+      "expected_intervention": "prompt_skill"
+    },
+    {
+      "observation_id": "failure-model-capacity",
+      "failure_type": "model_capacity",
+      "task_id": "long-context-architecture-review",
+      "symptom": "小模型在多文件依赖推理中持续遗漏跨模块约束。",
+      "observed_evidence": [
+        "加入相关上下文、工具和分步检查仍重复失败",
+        "更强的既有模型在相同 Harness 与预算下通过"
+      ],
+      "counterfactual_check": "保持输入、工具、预算和验证器不变，只切换模型后成功。",
+      "expected_intervention": "model_route"
+    },
+    {
+      "observation_id": "failure-repeated-policy-bias",
+      "failure_type": "repeated_policy_bias",
+      "task_id": "tool-choice-family",
+      "symptom": "Agent 在多个同族任务中都跳过低成本读取，直接调用高风险写入。",
+      "observed_evidence": [
+        "失败跨任务、跨措辞重复出现",
+        "事实完整、权限正确、指令明确且模型能力足够",
+        "已积累同状态下读取优于写入的可复用偏好证据"
+      ],
+      "counterfactual_check": "补知识、改提示和收紧 Harness 均未纠正工具选择排序。",
+      "expected_intervention": "post_training"
+    }
+  ]
+}
