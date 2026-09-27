@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">轨迹数据工厂：从运行证据到训练样本</title>
+<desc id="desc">先保留 provenance，再脱敏、审计、去重和隔离评测集。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">轨迹数据工厂：从运行证据到训练样本</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">先保留 provenance，再脱敏、审计、去重和隔离评测集。</tspan></text>
+<path d="M 300.0 420.0 L 360.0 280.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 300.0 420.0 L 360.0 570.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 610.0 280.0 L 700.0 415.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 610.0 570.0 L 700.0 415.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1000.0 415.0 L 1080.0 250.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1000.0 415.0 L 1080.0 570.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1330.0 250.0 L 1380.0 425.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1330.0 570.0 L 1380.0 425.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="70" y="350" width="230" height="140" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="185.0" y="405.0">1 Raw Trace</tspan><tspan x="185.0" y="436.2">结果 + 过程 + 来源</tspan></text>
+<rect x="360" y="220" width="250" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="485.0" y="265.0">2 Normalize</tspan><tspan x="485.0" y="296.2">结构与状态对齐</tspan></text>
+<rect x="360" y="510" width="250" height="120" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="485.0" y="555.0">3 Redact</tspan><tspan x="485.0" y="586.2">凭据与身份脱敏</tspan></text>
+<rect x="700" y="340" width="300" height="150" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="850.0" y="400.0">4 Audit</tspan><tspan x="850.0" y="431.2">回执 · 越界 · 隐藏答案</tspan></text>
+<rect x="1080" y="190" width="250" height="120" rx="24" fill="#fff7c9" stroke="#9d7510" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1205.0" y="235.0">5 Dedupe</tspan><tspan x="1205.0" y="266.2">精确 + 语义家族</tspan></text>
+<rect x="1080" y="510" width="250" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1205.0" y="555.0">6 Split</tspan><tspan x="1205.0" y="586.2">Train / Val / Eval</tspan></text>
+<rect x="1380" y="350" width="180" height="150" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1470.0" y="410.0">7 Samples</tspan><tspan x="1470.0" y="441.2">SFT / Preference / Reward</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">成功轨迹不自动等于好训练数据；任何安全或泄漏发现都先隔离。</tspan></text>
+</svg>

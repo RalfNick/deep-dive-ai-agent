@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">三类目标地图：SFT、偏好优化与 RL</title>
+<desc id="desc">三类目标使用不同监督信号，但都不能替代独立验收。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">三类目标地图：SFT、偏好优化与 RL</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">三类目标使用不同监督信号，但都不能替代独立验收。</tspan></text>
+<path d="M 360.0 430.0 L 500.0 265.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 360.0 430.0 L 500.0 485.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 360.0 430.0 L 500.0 705.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 770.0 265.0 L 1000.0 265.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 770.0 485.0 L 1000.0 490.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 770.0 705.0 L 1000.0 710.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1280.0 265.0 L 1320.0 465.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1280.0 490.0 L 1320.0 465.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1280.0 710.0 L 1320.0 465.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<polygon points="225.0,370 360,430.0 225.0,490 90,430.0" fill="#fde3df" stroke="#b8443b" stroke-width="4" stroke-linejoin="round"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="225.0" y="430.0">1 想改变什么行为？</tspan></text>
+<rect x="500" y="180" width="270" height="170" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="635.0" y="235.0">2 SFT</tspan><tspan x="635.0" y="266.2">输入：目标动作</tspan><tspan x="635.0" y="297.5">更新：模仿概率</tspan></text>
+<rect x="500" y="400" width="270" height="170" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="635.0" y="455.0">3 Preference</tspan><tspan x="635.0" y="486.2">输入：chosen / rejected</tspan><tspan x="635.0" y="517.5">更新：相对间隔</tspan></text>
+<rect x="500" y="620" width="270" height="170" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="635.0" y="675.0">4 RL</tspan><tspan x="635.0" y="706.2">输入：环境回报</tspan><tspan x="635.0" y="737.5">更新：策略回报</tspan></text>
+<rect x="1000" y="190" width="280" height="150" rx="24" fill="#fff7c9" stroke="#9d7510" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1140.0" y="235.0">5 风险</tspan><tspan x="1140.0" y="266.2">复制坏示范</tspan><tspan x="1140.0" y="297.5">状态覆盖不足</tspan></text>
+<rect x="1000" y="420" width="280" height="140" rx="24" fill="#fff7c9" stroke="#9d7510" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1140.0" y="475.0">6 风险</tspan><tspan x="1140.0" y="506.2">伪偏好 · 跨状态配对</tspan></text>
+<rect x="1000" y="640" width="280" height="140" rx="24" fill="#fde3df" stroke="#b8443b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1140.0" y="695.0">7 风险</tspan><tspan x="1140.0" y="726.2">奖励投机 · 信用错配</tspan></text>
+<rect x="1320" y="390" width="240" height="150" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1440.0" y="465.0">8 冻结评测 + 安全门禁</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">目标函数决定模型被鼓励成为什么；评测与门禁决定它是否可以发布。</tspan></text>
+</svg>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">训练—评测—发布闭环</title>
+<desc id="desc">候选策略只有与数据、评测、门禁和回滚证据绑定，才是可发布系统。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">训练—评测—发布闭环</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">候选策略只有与数据、评测、门禁和回滚证据绑定，才是可发布系统。</tspan></text>
+<path d="M 330.0 370.0 L 410.0 255.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 690.0 255.0 L 790.0 240.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1060.0 240.0 L 1170.0 340.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1305.0 410.0 L 1260.0 570.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1130.0 635.0 L 1000.0 715.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 730.0 715.0 L 590.0 660.0" fill="none" stroke="#b8443b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="10 9"/>
+<rect x="615.0" y="652.5" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="660.0" y="675.5">异常</tspan></text>
+<path d="M 445.0 590.0 L 205.0 440.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="10 9"/>
+<rect x="280.0" y="480.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="325.0" y="503.0">新数据回流</tspan></text>
+<rect x="80" y="300" width="250" height="140" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="205.0" y="355.0">1 Data Version</tspan><tspan x="205.0" y="386.2">来源 · 许可 · 切分</tspan></text>
+<rect x="410" y="180" width="280" height="150" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="550.0" y="240.0">2 Train Candidate</tspan><tspan x="550.0" y="271.2">SFT / Preference / RL</tspan></text>
+<rect x="790" y="170" width="270" height="140" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="925.0" y="225.0">3 Frozen Eval</tspan><tspan x="925.0" y="256.2">能力 + 回归切片</tspan></text>
+<polygon points="1305.0,270 1440,340.0 1305.0,410 1170,340.0" fill="#fff0d8" stroke="#c46b18" stroke-width="4" stroke-linejoin="round"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1305.0" y="325.0">4 Safety Gate</tspan><tspan x="1305.0" y="356.2">零违规 · 零污染</tspan></text>
+<rect x="1130" y="570" width="260" height="130" rx="24" fill="#fff7c9" stroke="#9d7510" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1260.0" y="620.0">5 Canary</tspan><tspan x="1260.0" y="651.2">小流量 + 可观测</tspan></text>
+<rect x="730" y="650" width="270" height="130" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="865.0" y="700.0">6 Release</tspan><tspan x="865.0" y="731.2">版本与证据绑定</tspan></text>
+<rect x="300" y="590" width="290" height="140" rx="24" fill="#fde3df" stroke="#b8443b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="445.0" y="645.0">7 Rollback</tspan><tspan x="445.0" y="676.2">恢复模型与 Harness</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">后训练不是一次离线作业，而是数据—训练—评测—灰度—回滚的版本化闭环。</tspan></text>
+</svg>

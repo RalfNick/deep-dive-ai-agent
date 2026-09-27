@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">SFT 概率变化：示范会被复制</title>
+<desc id="desc">同一个损失函数不会知道示范是否符合安全意图。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">SFT 概率变化：示范会被复制</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">同一个损失函数不会知道示范是否符合安全意图。</tspan></text>
+<path d="M 330.0 415.0 L 420.0 255.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 330.0 415.0 L 420.0 585.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 680.0 255.0 L 800.0 425.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 680.0 585.0 L 800.0 425.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1100.0 425.0 L 1190.0 265.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1100.0" y="310.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1145.0" y="333.0">好数据</tspan></text>
+<path d="M 1100.0 425.0 L 1190.0 595.0" fill="none" stroke="#b8443b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1100.0" y="475.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1145.0" y="498.0">坏数据</tspan></text>
+<rect x="80" y="350" width="250" height="130" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="205.0" y="400.0">1 State</tspan><tspan x="205.0" y="431.2">write_requested</tspan></text>
+<rect x="420" y="190" width="260" height="130" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="550.0" y="240.0">2 干净示范</tspan><tspan x="550.0" y="271.2">Target = read</tspan></text>
+<rect x="420" y="520" width="260" height="130" rx="24" fill="#fde3df" stroke="#b8443b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="550.0" y="570.0">3 污染示范</tspan><tspan x="550.0" y="601.2">Target = modify_tests</tspan></text>
+<rect x="800" y="350" width="300" height="150" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="950.0" y="410.0">4 Cross Entropy</tspan><tspan x="950.0" y="441.2">提高目标动作概率</tspan></text>
+<rect x="1190" y="200" width="280" height="130" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1330.0" y="250.0">5 P(read) ↑</tspan><tspan x="1330.0" y="281.2">安全信息先补齐</tspan></text>
+<rect x="1190" y="530" width="280" height="130" rx="24" fill="#fde3df" stroke="#b8443b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1330.0" y="580.0">6 P(modify_tests) ↑</tspan><tspan x="1330.0" y="611.2">捷径同样被复制</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">SFT 忠实复制被保留的示范：数据审计不是训练前的可选清洁步骤。</tspan></text>
+</svg>

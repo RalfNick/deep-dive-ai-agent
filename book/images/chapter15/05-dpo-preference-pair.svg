@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">DPO 偏好对：扩大同状态下的相对间隔</title>
+<desc id="desc">偏好比较必须来自同一状态，参考策略用于衡量相对漂移。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">DPO 偏好对：扩大同状态下的相对间隔</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">偏好比较必须来自同一状态，参考策略用于衡量相对漂移。</tspan></text>
+<path d="M 330.0 415.0 L 420.0 255.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 330.0 415.0 L 420.0 605.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 670.0 255.0 L 790.0 245.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 670.0 605.0 L 790.0 595.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1050.0 245.0 L 1160.0 330.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1050.0 595.0 L 1160.0 330.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1310.0 400.0 L 1310.0 520.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="80" y="350" width="250" height="130" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="205.0" y="400.0">1 同一 State</tspan><tspan x="205.0" y="431.2">write_requested</tspan></text>
+<rect x="420" y="180" width="250" height="150" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="545.0" y="225.0">2 Chosen</tspan><tspan x="545.0" y="256.2">read</tspan><tspan x="545.0" y="287.5">log π = -0.8</tspan></text>
+<rect x="420" y="530" width="250" height="150" rx="24" fill="#fde3df" stroke="#b8443b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="545.0" y="575.0">3 Rejected</tspan><tspan x="545.0" y="606.2">modify_tests</tspan><tspan x="545.0" y="637.5">log π = -1.2</tspan></text>
+<rect x="790" y="180" width="260" height="130" rx="24" fill="#fff7c9" stroke="#9d7510" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="920.0" y="230.0">4 Reference</tspan><tspan x="920.0" y="261.2">间隔 = 0.1</tspan></text>
+<rect x="790" y="530" width="260" height="130" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="920.0" y="580.0">5 Candidate</tspan><tspan x="920.0" y="611.2">间隔 = 0.4</tspan></text>
+<rect x="1160" y="260" width="300" height="140" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1310.0" y="315.0">6 β = 0.5</tspan><tspan x="1310.0" y="346.2">DPO margin = 0.15</tspan></text>
+<rect x="1160" y="520" width="300" height="140" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1310.0" y="575.0">7 Loss ≈ 0.620957</tspan><tspan x="1310.0" y="606.2">扩大相对偏好</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">DPO 不是给回答打绝对分，而是扩大 chosen 相对 rejected 的改进间隔。</tspan></text>
+</svg>

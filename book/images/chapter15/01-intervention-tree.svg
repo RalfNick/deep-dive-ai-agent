@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">干预决策树：先修哪一层</title>
+<desc id="desc">从最小、最可验证的干预开始；证据不足时返回 inconclusive。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">干预决策树：先修哪一层</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">从最小、最可验证的干预开始；证据不足时返回 inconclusive。</tspan></text>
+<path d="M 310.0 415.0 L 390.0 240.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="305.0" y="292.5" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="350.0" y="315.5">反事实 1</tspan></text>
+<path d="M 310.0 415.0 L 390.0 420.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="305.0" y="382.5" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="350.0" y="405.5">反事实 2</tspan></text>
+<path d="M 310.0 415.0 L 390.0 600.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="305.0" y="472.5" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="350.0" y="495.5">反事实 3</tspan></text>
+<path d="M 640.0 240.0 L 790.0 315.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="670.0" y="242.5" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="715.0" y="265.5">事实已完整</tspan></text>
+<path d="M 640.0 420.0 L 790.0 315.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="670.0" y="332.5" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="715.0" y="355.5">边界已正确</tspan></text>
+<path d="M 640.0 600.0 L 790.0 565.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="670.0" y="547.5" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="715.0" y="570.5">指令已澄清</tspan></text>
+<path d="M 925.0 380.0 L 925.0 500.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="880.0" y="405.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="925.0" y="428.0">能力足够</tspan></text>
+<path d="M 1060.0 565.0 L 1210.0 445.0" fill="none" stroke="#b8443b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1090.0" y="470.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1135.0" y="493.0">证据齐全</tspan></text>
+<rect x="80" y="350" width="230" height="130" rx="24" fill="#fde3df" stroke="#b8443b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="195.0" y="400.0">1 观察失败</tspan><tspan x="195.0" y="431.2">先固定证据</tspan></text>
+<rect x="390" y="180" width="250" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="515.0" y="225.0">2 缺事实？</tspan><tspan x="515.0" y="256.2">RAG / Context</tspan></text>
+<rect x="390" y="360" width="250" height="120" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="515.0" y="405.0">3 可确定阻断？</tspan><tspan x="515.0" y="436.2">Harness</tspan></text>
+<rect x="390" y="540" width="250" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="515.0" y="585.0">4 指令含糊？</tspan><tspan x="515.0" y="616.2">Prompt / Skill</tspan></text>
+<rect x="790" y="250" width="270" height="130" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="925.0" y="300.0">5 能力缺口？</tspan><tspan x="925.0" y="331.2">Model Route</tspan></text>
+<polygon points="925.0,500 1060,565.0 925.0,630 790,565.0" fill="#fff7c9" stroke="#9d7510" stroke-width="4" stroke-linejoin="round"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="925.0" y="550.0">6 跨任务重复？</tspan><tspan x="925.0" y="581.2">可复用监督？</tspan></text>
+<rect x="1210" y="370" width="300" height="150" rx="24" fill="#fde3df" stroke="#b8443b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1360.0" y="430.0">7 Post-training</tspan><tspan x="1360.0" y="461.2">最后的可验证选项</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">后训练不是失败的默认答案，而是上游解释被排除后的工程选择。</tspan></text>
+</svg>
