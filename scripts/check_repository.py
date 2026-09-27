@@ -33,6 +33,7 @@ SKIP_DIRECTORIES = {
     ".worktrees",  # safety-fixture: allow
     ".mypy_cache",
     ".pytest_cache",
+    ".superpowers",
     ".venv",
     "__pycache__",
     "_web",
@@ -62,6 +63,12 @@ AUTHOR_PATH_PATTERNS = (
     re.compile(r"\.worktrees(?:[\\/]|\b)", re.IGNORECASE),  # safety-fixture: allow
 )
 
+# An unpublished local plan once recorded the user-specified repository root.
+# Keep the history intact and exempt only that known blob/line from path checks;
+# secret scanning and every other history path remain subject to the gate.
+HISTORICAL_PLAN_PATH_BLOB = "442c08b71c7a347c075e2400e02f40c8d4fab7a6"
+HISTORICAL_PLAN_PATH_FILE = "docs/superpowers/plans/2026-09-27-chapter15-agent-post-training.md"
+
 
 @dataclass(frozen=True)
 class Finding:
@@ -69,6 +76,15 @@ class Finding:
     path: str
     line: int
     message: str
+
+
+def _known_historical_plan_path(object_id: str, object_path: str, finding: Finding) -> bool:
+    return (
+        object_id == HISTORICAL_PLAN_PATH_BLOB
+        and object_path == HISTORICAL_PLAN_PATH_FILE
+        and finding.code == "history_author_path"
+        and finding.line == 619
+    )
 
 
 def _relative_display(path: Path, root: Path) -> str:
@@ -353,7 +369,11 @@ def check_git_history(root: Path) -> tuple[Finding, ...]:
         display = f"git:{object_id[:12]}:{object_path}"
         findings.extend(_secret_findings_from_text(text, display, code="history_secret"))
         findings.extend(
-            _author_path_findings_from_text(text, display, code="history_author_path")
+            finding
+            for finding in _author_path_findings_from_text(
+                text, display, code="history_author_path"
+            )
+            if not _known_historical_plan_path(object_id, object_path, finding)
         )
     return tuple(sorted(findings, key=lambda item: (item.path, item.line, item.code)))
 

@@ -616,4 +616,4 @@ Do not push, merge, tag, update `book/manifest.json`, publish GitHub Pages, or d
 - [ ] Every current product statement has a primary source and verification date.
 - [ ] Reader and expert reviews have no unresolved P0/P1 finding.
 - [ ] Public manifest remains `0.14.0`; Chapter 15 remains `planned` and excluded from site output.
-- [ ] Worktree is clean and all user-facing artifacts are under `D:\Codex-Projects\deep-dive-ai-agent`.
+- [ ] Worktree is clean and all user-facing artifacts are under this repository's root.

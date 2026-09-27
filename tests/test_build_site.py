@@ -5,6 +5,7 @@ import unittest
 
 
 from scripts.build_site import build_site
+from scripts.validate_book_manifest import validate_manifest
 
 
 def write(path: Path, text: str) -> None:
@@ -96,6 +97,28 @@ class BuildSiteTests(unittest.TestCase):
 
             with self.assertRaisesRegex(ValueError, "output must stay inside repository"):
                 build_site(root, root.parent / "outside")
+
+    def test_unpublished_chapter_fifteen_stays_out_of_public_tree(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.make_repository(root)
+            write(root / "book" / "chapter15.md", "# Local candidate\n")
+            write(root / "book" / "images" / "chapter15" / "01-local.svg", "<svg/>\n")
+            write(root / "chapter15" / "README.md", "# Local lab\n")
+            write(root / "chapter15" / "reference-answers.md", "# Local answers\n")
+            write(root / "chapter15" / "reports" / "candidate.json", "{}\n")
+
+            output = root / "_web"
+            build_site(root, output)
+            published = snapshot(output)
+
+            self.assertFalse(any("chapter15" in path for path in published))
+            for number in range(1, 15):
+                self.assertIn(f"book/chapter{number}.md", published)
+                self.assertIn(f"chapter{number}/index.md", published)
+            manifest = validate_manifest(Path(__file__).resolve().parents[1])
+            self.assertEqual("0.14.0", manifest["version"])
+            self.assertEqual("planned", manifest["sections"][4]["chapters"][0]["status"])
 
     def test_chapter_nine_supplement_remains_readable_after_extraction(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

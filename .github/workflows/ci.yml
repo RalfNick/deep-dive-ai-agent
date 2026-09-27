@@ -42,6 +42,8 @@ jobs:
             chapter13/requirements-preview.txt
             chapter14/requirements-dev.txt
             chapter14/requirements-preview.txt
+            chapter15/requirements-dev.txt
+            chapter15/requirements-preview.txt
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -106,6 +108,13 @@ jobs:
           .venv-evaluation/bin/python -m pip install -r chapter13/requirements-preview.txt -r chapter14/requirements-preview.txt
           .venv-evaluation/bin/python -B -m pytest chapter13/tests -q
           .venv-evaluation/bin/python -B -m pytest chapter14/tests -q
+
+      - name: Run Chapter 15 candidate tests in its locked environment
+        run: |
+          python -m venv .venv-chapter15
+          .venv-chapter15/bin/python -m pip install --require-hashes -r chapter15/requirements-dev.txt
+          .venv-chapter15/bin/python -m pip install -r chapter15/requirements-preview.txt
+          .venv-chapter15/bin/python -B -m pytest chapter15/tests -q
 
       - name: Regenerate deterministic teaching reports
         run: |

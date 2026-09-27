@@ -69,7 +69,12 @@ def _allowlisted_sources(root: Path) -> tuple[Path, ...]:
         sources.extend(
             path
             for path in sorted(images.rglob("*"))
-            if path.is_file() and path.suffix.casefold() in IMAGE_SUFFIXES
+            if path.is_file()
+            and path.suffix.casefold() in IMAGE_SUFFIXES
+            and not any(
+                re.fullmatch(r"chapter(?:1[5-9]|[2-9][0-9])", part)
+                for part in path.relative_to(images).parts
+            )
         )
     for number in range(1, 15):
         reports = root / f"chapter{number}" / "reports"

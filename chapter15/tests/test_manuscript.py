@@ -106,6 +106,20 @@ def test_part_ii_teaches_sft_dpo_and_rl_with_pinned_numbers() -> None:
     ))
 
 
+def test_rl_mechanism_and_simulation_boundary_are_explicit() -> None:
+    text = _text()
+
+    assert all(term in text for term in (
+        "探索与利用",
+        "信用分配",
+        "参考策略",
+        "PPO",
+        "GRPO",
+        "不执行 RL 参数更新",
+        "split 在夹具中预先标注",
+    ))
+
+
 def test_part_ii_has_five_experiment_commands_and_failure_samples() -> None:
     text = _text()
 

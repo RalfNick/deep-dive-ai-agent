@@ -5,6 +5,8 @@ import unittest
 
 
 from scripts.check_repository import (
+    Finding,
+    _known_historical_plan_path,
     check_author_paths,
     check_chapter_mapping,
     check_git_history,
@@ -87,6 +89,27 @@ class RepositorySafetyTests(unittest.TestCase):
             )
 
         self.assertEqual((), findings)
+
+    def test_ignored_execution_workspace_is_not_publishable(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            scratch = root / ".superpowers" / "sdd" / "task" / "brief.md"
+            scratch.parent.mkdir(parents=True)
+            local_path = "".join(("D", r":\local\scratch"))
+            scratch.write_text(f"workspace = {local_path}\n", encoding="utf-8")
+
+            self.assertEqual((), check_author_paths(root))
+
+    def test_known_historical_plan_path_exception_is_exact(self) -> None:
+        blob = "442c08b71c7a347c075e2400e02f40c8d4fab7a6"
+        plan = "docs/superpowers/plans/2026-09-27-chapter15-agent-post-training.md"
+        finding = Finding("history_author_path", "ignored", 619, "author-machine path")
+
+        self.assertTrue(_known_historical_plan_path(blob, plan, finding))
+        self.assertFalse(_known_historical_plan_path("0" * 40, plan, finding))
+        self.assertFalse(_known_historical_plan_path(blob, "book/chapter15.md", finding))
+        self.assertFalse(_known_historical_plan_path(blob, plan, Finding("history_author_path", "ignored", 620, "author-machine path")))
+        self.assertFalse(_known_historical_plan_path(blob, plan, Finding("history_secret", "ignored", 619, "secret")))
 
     def test_chapter_mapping_rejects_missing_and_duplicate_readme_links(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
