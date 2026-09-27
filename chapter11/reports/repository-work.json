@@ -73,7 +73,7 @@
         },
         "tests_unchanged": true,
         "snapshot_stable": true,
-        "snapshot": "50f021c4182b794367298071213894a9fd7d7b9195e213d60d025f43e89ff146",
+        "snapshot_recorded": true,
         "accepted": true
       },
       "diff": "diff --git a/linkcheck.py b/linkcheck.py\nindex 6d253cd..9719c7f 100644\n--- a/linkcheck.py\n+++ b/linkcheck.py\n@@ -5,7 +5,7 @@ LINK = re.compile(r\"(?<!!)\\[[^\\]\\n]+\\]\\(([^()\\s]+)\\)\")\n \n \n def resolve_link(root: Path, document: Path, target: str) -> Path:\n-    base = root\n+    base = document.parent\n     return (base / target).resolve()\n \n \ndiff --git a/tests/test_links.py b/tests/test_links.py\nindex c066e7f..db43ef9 100644\n--- a/tests/test_links.py\n+++ b/tests/test_links.py\n@@ -14,3 +14,6 @@ class LinkTests(unittest.TestCase):\n \n     def test_external_link_is_skipped(self):\n         self.assertEqual([], broken_links(ROOT, ROOT / \"external-example.md\"))\n+\n+    def test_nested_document(self):\n+        self.assertEqual([], broken_links(ROOT, ROOT / \"docs/guide/start.md\"))\n"
@@ -139,7 +139,7 @@
         },
         "tests_unchanged": true,
         "snapshot_stable": true,
-        "snapshot": "b79989c0e6a24ee25eb95f8b7b522b2411c11fd09f9f93729e157daecf9c0dbb",
+        "snapshot_recorded": true,
         "accepted": false
       },
       "zero_tests": {
@@ -168,7 +168,7 @@
         },
         "tests_unchanged": true,
         "snapshot_stable": true,
-        "snapshot": "b79989c0e6a24ee25eb95f8b7b522b2411c11fd09f9f93729e157daecf9c0dbb",
+        "snapshot_recorded": true,
         "accepted": false
       },
       "tampered_tests": {
@@ -197,7 +197,7 @@
         },
         "tests_unchanged": false,
         "snapshot_stable": true,
-        "snapshot": "595c8f9547eff757ca5b2a0224805159d099527f6dff8ff9de598ae0a16538e0",
+        "snapshot_recorded": true,
         "accepted": false
       }
     },
@@ -230,7 +230,7 @@
         },
         "tests_unchanged": true,
         "snapshot_stable": true,
-        "snapshot": "b79989c0e6a24ee25eb95f8b7b522b2411c11fd09f9f93729e157daecf9c0dbb",
+        "snapshot_recorded": true,
         "accepted": false
       }
     }

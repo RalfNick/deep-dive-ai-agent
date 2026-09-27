@@ -92,6 +92,27 @@ GROUPS = {"repair": repair, "instructions": instructions, "conflict": conflict,
           "verification": verification, "resume": resume}
 
 
+def _portable_report(value):
+    """Remove run-local fingerprints while preserving the evidence contract.
+
+    The raw workspace digest is still used by ``verify`` and
+    ``evidence_is_current`` during each run.  It is deliberately not persisted
+    in the canonical report because filesystem-level details can make that
+    digest host-specific even when the observed behavior is identical.
+    """
+    if isinstance(value, dict):
+        portable = {}
+        for key, item in value.items():
+            if key == "snapshot":
+                portable["snapshot_recorded"] = bool(item)
+            else:
+                portable[key] = _portable_report(item)
+        return portable
+    if isinstance(value, list):
+        return [_portable_report(item) for item in value]
+    return value
+
+
 def run_all(group: str | None = None) -> dict:
     with tempfile.TemporaryDirectory(prefix="book-ch11-") as folder:
         selected = {group: GROUPS[group]} if group else GROUPS
@@ -103,7 +124,7 @@ def run_all(group: str | None = None) -> dict:
 
 
 def write_reports(output: Path) -> None:
-    report = run_all()
+    report = _portable_report(run_all())
     output.mkdir(parents=True, exist_ok=True)
     payload = json.dumps(report, ensure_ascii=False, indent=2) + "\n"
     (output / "repository-work.json").write_text(payload, encoding="utf-8", newline="\n")

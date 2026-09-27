@@ -34,6 +34,10 @@ class ExperimentTests(unittest.TestCase):
                 self.assertEqual(a, canonical.read_bytes(), "committed report must match execution")
                 self.assertNotIn(b"\r\n", a)
                 self.assertNotIn(str(root).encode(), a)
+            report = json.loads((root / "one" / "repository-work.json").read_text(encoding="utf-8"))
+            serialized = json.dumps(report)
+            self.assertNotIn('"snapshot"', serialized)
+            self.assertIn('"snapshot_recorded": true', serialized)
 
     def test_quickstart_module_emits_red_green_and_diff(self):
         result = subprocess.run([sys.executable, "-B", "-m", "chapter11.quickstart"],
