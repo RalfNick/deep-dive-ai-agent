@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+from dataclasses import replace
 import hashlib
 import json
 from pathlib import Path
@@ -14,10 +15,11 @@ from chapter15.contracts import (
     ReleaseDecisionKind,
     SupervisedExample,
 )
-from chapter15.dataset import load_trajectories
+from chapter15.dataset import load_trajectories, redact_record
 from chapter15.intervention import load_failure_cases, recommend_intervention
 from chapter15.objectives import cross_entropy, dpo_loss, dpo_margin, load_preference_pairs, sft_step
 from chapter15.policy import TabularPolicy
+from chapter15.reinforcement import train_reward_policy
 from chapter15.simulator import compare_policy_variants, release_decision, run_policy_variant
 
 
@@ -45,15 +47,9 @@ def _uniform_policy() -> TabularPolicy:
     )
 
 
-def _example(state: str, action: str, suffix: str) -> SupervisedExample:
-    return SupervisedExample(
-        example_id=f"experiment-{suffix}",
-        state_id=state,
-        target_action=action,
-        source_trajectory_id=f"audited-{suffix}",
-        sample_weight=1.0,
-        retention_reason="deterministic_objective_demonstration",
-    )
+def _audited_examples() -> tuple[SupervisedExample, ...]:
+    records = tuple(redact_record(record, salt="chapter15-demo-only") for record in load_trajectories())
+    return build_supervised_examples(audit_dataset(records))
 
 
 def _group_payload(group: int) -> dict[str, Any]:
@@ -77,7 +73,8 @@ def _group_payload(group: int) -> dict[str, Any]:
             },
         }
     if group == 2:
-        records = load_trajectories()
+        raw = load_trajectories()
+        records = tuple(redact_record(record, salt="chapter15-demo-only") for record in raw)
         audit = audit_dataset(records)
         examples = build_supervised_examples(audit)
         return {
@@ -87,11 +84,16 @@ def _group_payload(group: int) -> dict[str, Any]:
             "audit": audit.to_dict(),
             "supervised_examples": [item.to_dict() for item in examples],
             "training_split_only": True,
+            "redaction_preserves_source_quarantine": True,
         }
     if group == 3:
         policy = _uniform_policy()
-        clean = (_example("write_requested", "read", "clean"),)
-        contaminated = (_example("write_requested", "modify_tests", "contaminated"),)
+        examples = _audited_examples()
+        clean = (next(item for item in examples if item.source_trajectory_id == "traj-010"),)
+        contaminated = (replace(
+            clean[0], example_id="injected-contaminated-demo", target_action="modify_tests",
+            retention_reason="intentional_label_corruption_ablation_not_audited_data",
+        ),)
         clean_after = sft_step(policy, clean, learning_rate=0.5)
         contaminated_after = sft_step(policy, contaminated, learning_rate=0.5)
         return {
@@ -99,6 +101,7 @@ def _group_payload(group: int) -> dict[str, Any]:
             "name": "sft_mechanics",
             "title": "SFT 学习示范，包括坏示范",
             "clean_demo": {
+                "source_trajectory_id": clean[0].source_trajectory_id,
                 "target_action": "read",
                 "target_probability_before": policy.probability("write_requested", "read"),
                 "target_probability_after": clean_after.probability("write_requested", "read"),
@@ -106,6 +109,7 @@ def _group_payload(group: int) -> dict[str, Any]:
                 "loss_after": cross_entropy(clean_after, clean),
             },
             "contaminated_demo": {
+                "injection": "changed_target_label_after_audit_for_ablation_only",
                 "target_action": "modify_tests",
                 "target_probability_before": policy.probability("write_requested", "modify_tests"),
                 "target_probability_after": contaminated_after.probability("write_requested", "modify_tests"),
@@ -114,6 +118,12 @@ def _group_payload(group: int) -> dict[str, Any]:
                 "action": "retry",
                 "probability_before": policy.probability("tool_timeout", "retry"),
                 "probability_after": clean_after.probability("tool_timeout", "retry"),
+            },
+            "audited_batch": {
+                "source_trajectory_ids": [item.source_trajectory_id for item in examples],
+                "example_count": len(examples),
+                "loss_before": cross_entropy(policy, examples),
+                "loss_after": cross_entropy(sft_step(policy, examples, learning_rate=0.5), examples),
             },
         }
     if group == 4:
@@ -133,6 +143,9 @@ def _group_payload(group: int) -> dict[str, Any]:
             "name": "dpo_mechanics",
             "title": "同一状态下的偏好排序",
             "pairs": rows,
+            "source_context_validation": "passed",
+            "rejected_source_kind": "authored_counterexample_not_executed",
+            "log_probability_origin": "hand_calculation_not_model_measurement",
             "hand_example": {
                 "pair_id": hand["pair_id"],
                 "margin": hand["margin"],
@@ -163,6 +176,12 @@ def _group_payload(group: int) -> dict[str, Any]:
             "comparison": compare_policy_variants(tuple(results.values())),
             "unsafe_candidate_release": unsafe_candidate.to_dict(),
             "safe_candidate_release": safe_candidate.to_dict(),
+            "policy_updates": {
+                name: train_reward_policy(name, episodes=200, seed=1501, budget_steps=800)
+                for name in results
+            },
+            "budget_demo": train_reward_policy("hard_gate", episodes=200, seed=1501, budget_steps=12),
+            "release_evidence_kind": "static_gate_conformance_not_trained_policy_eval",
         }
     raise ValueError("group_must_be_1_to_5")
 
@@ -183,8 +202,8 @@ def _build_report(groups: dict[int, dict[str, Any]]) -> dict[str, Any]:
     findings = audit_dataset(load_trajectories()).findings
     final_release = groups[5]["safe_candidate_release"]
     contract = PostTrainingReport(
-        schema_version="chapter15.post-training.v1",
-        fixture_version="chapter15-fixtures-v1",
+        schema_version="chapter15.post-training.v2",
+        fixture_version="chapter15-fixtures-v2",
         data_summary={
             "raw_count": audit_payload["raw_count"],
             "eligible_count": len(audit_payload["eligible_ids"]),
@@ -200,10 +219,13 @@ def _build_report(groups: dict[int, dict[str, Any]]) -> dict[str, Any]:
                 "clean_demo": groups[3]["clean_demo"],
                 "contaminated_demo": groups[3]["contaminated_demo"],
                 "missing_recovery_slice": groups[3]["missing_recovery_slice"],
+                "audited_batch": groups[3]["audited_batch"],
             },
             "dpo": {
                 "pair_count": len(groups[4]["pairs"]),
                 "hand_example": groups[4]["hand_example"],
+                "source_context_validation": groups[4]["source_context_validation"],
+                "log_probability_origin": groups[4]["log_probability_origin"],
             },
         },
         simulation_summary={
@@ -213,6 +235,9 @@ def _build_report(groups: dict[int, dict[str, Any]]) -> dict[str, Any]:
             "comparison": groups[5]["comparison"],
             "unsafe_candidate_release": groups[5]["unsafe_candidate_release"],
             "safe_candidate_release": final_release,
+            "policy_updates": groups[5]["policy_updates"],
+            "budget_demo": groups[5]["budget_demo"],
+            "release_evidence_kind": groups[5]["release_evidence_kind"],
         },
         release_decision=ReleaseDecisionKind(final_release["decision"]),
         evidence_limits=EVIDENCE_LIMITS,
@@ -249,7 +274,7 @@ def _report_markdown(report: dict[str, Any]) -> str:
         f"- Quarantined trajectories: `{data['quarantined_count']}`",
         f"- Train-only SFT examples: `{data['supervised_example_count']}`",
         "",
-        "## Reward variants",
+        "## Static reward replay (not training)",
         "",
         "| Variant | Outcome rate | Safety violations | Protected writes | Mean steps |",
         "| --- | ---: | ---: | ---: | ---: |",
@@ -263,11 +288,27 @@ def _report_markdown(report: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
+            "## Reward-driven policy updates",
+            "",
+            "One-state bandit, categorical sampling, REINFORCE without baseline; no tools executed.",
+            "",
+            "| Variant | Updates | P(edit) after | P(modify_tests) after | Exploration safety events | Steps |",
+            "| --- | ---: | ---: | ---: | ---: | ---: |",
+            *(
+                f"| {name} | {run['updates']} | {run['probabilities_after']['edit']:.6f} | "
+                + (f"{run['probabilities_after']['modify_tests']:.6f}" if 'modify_tests' in run['probabilities_after'] else 'masked')
+                + f" | {run['safety_violations']} | {run['steps_used']} |"
+                for name, run in simulation["policy_updates"].items()
+            ),
+            "",
+            f"Budget demo: {simulation['budget_demo']['updates']} updates, {simulation['budget_demo']['steps_used']}/12 steps; conservative reservation stops further sampling.",
+            "",
             "## Release",
             "",
             f"- Final decision: `{report['release_decision']}`",
             f"- Unsafe candidate: `{simulation['unsafe_candidate_release']['decision']}`",
             f"- Stable schema: `{report['schema_version']}`",
+            "- The pass decision is static gate conformance, not independent evaluation of the learned policy or permission to publish a model.",
             "",
             "## Evidence limits",
             "",

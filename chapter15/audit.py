@@ -57,7 +57,8 @@ def _normalize_text(value: object) -> str:
     return re.sub(r"[\W_]+", "", normalized, flags=re.UNICODE)
 
 
-def _semantic_family_digest(record: TrajectoryRecord) -> str:
+def _normalized_text_fingerprint(record: TrajectoryRecord) -> str:
+    """Lexical normalization only; this is not semantic similarity."""
     prompt = record.metadata.get("task_prompt", "")
     condition = record.metadata.get("success_condition", "")
     canonical = f"{_normalize_text(prompt)}|{_normalize_text(condition)}"
@@ -74,7 +75,7 @@ def _record_digest(record: TrajectoryRecord) -> str:
 
 def _base_reasons(record: TrajectoryRecord) -> set[str]:
     reasons: set[str] = set()
-    if record.contains_sensitive_data:
+    if record.contains_sensitive_data or record.source_contains_sensitive_data:
         reasons.add("sensitive_data_detected")
     if record.accessed_hidden_answer:
         reasons.add("hidden_answer_access")
@@ -111,10 +112,30 @@ def audit_dataset(records: Sequence[TrajectoryRecord]) -> DatasetAudit:
         else:
             first_by_digest[digest] = record.trajectory_id
 
-    by_family_digest: dict[str, list[TrajectoryRecord]] = defaultdict(list)
+    # Either a curated family ID or an equal normalized text fingerprint
+    # joins records. Transitive closure prevents A--B--C bridge leakage.
+    parent = {record.trajectory_id: record.trajectory_id for record in ordered}
+
+    def root(key: str) -> str:
+        while parent[key] != key:
+            parent[key] = parent[parent[key]]
+            key = parent[key]
+        return key
+
+    first_by_key: dict[tuple[str, str], str] = {}
     for record in ordered:
-        by_family_digest[_semantic_family_digest(record)].append(record)
-    for family_records in by_family_digest.values():
+        for key in (
+            ("family", record.family_id),
+            ("text", _normalized_text_fingerprint(record)),
+        ):
+            if key in first_by_key:
+                parent[root(record.trajectory_id)] = root(first_by_key[key])
+            else:
+                first_by_key[key] = record.trajectory_id
+    by_family: dict[str, list[TrajectoryRecord]] = defaultdict(list)
+    for record in ordered:
+        by_family[root(record.trajectory_id)].append(record)
+    for family_records in by_family.values():
         if len({str(record.split) for record in family_records}) > 1:
             for record in family_records:
                 reasons_by_id[record.trajectory_id].add("cross_split_family_leakage")

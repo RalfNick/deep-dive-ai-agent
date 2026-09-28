@@ -1,0 +1,40 @@
+{
+  "artifacts": [
+    {
+      "bytes": 2168,
+      "name": "group-1.json",
+      "sha256": "f8174ca493e4c1df6d4e481ed421ff096b28810da0037da033e8e4abb7413d40"
+    },
+    {
+      "bytes": 6699,
+      "name": "group-2.json",
+      "sha256": "f1a599cfb8578f200551b938e31a8d79c91869b8fdf142925c3e30b365a20ee1"
+    },
+    {
+      "bytes": 648,
+      "name": "group-3.json",
+      "sha256": "d7cb73a9b47571cf6f3aabefe9d0a2bd43570221d57d88b184d10ffc1e0bdbc5"
+    },
+    {
+      "bytes": 2590,
+      "name": "group-4.json",
+      "sha256": "0b512d30cacd0a1b476c61cce5d24c5fe64bf125ce00eebea79986714bd5a749"
+    },
+    {
+      "bytes": 8639,
+      "name": "group-5.json",
+      "sha256": "e538cda697c62cddcdda7b1db9aa1d257a43f7ceaeb38e96466a7b69913c94f3"
+    },
+    {
+      "bytes": 17825,
+      "name": "post-training-report.json",
+      "sha256": "11061e9929e3384f0ecedeff2f9b3d67777ea1668f47869246f1843dd91895f9"
+    },
+    {
+      "bytes": 840,
+      "name": "post-training-report.md",
+      "sha256": "e5a3cca65178989378c0d643e891009235ca97db3ed58894de7e02d08a17da8d"
+    }
+  ],
+  "schema_version": "chapter15.artifact-manifest.v1"
+}

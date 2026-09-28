@@ -65,22 +65,65 @@ trainer.train()
 
 真实显存取决于参数量、精度、序列长度、batch、优化器状态、激活、并行方式和是否使用 adapter。不能用“某型号显卡肯定够”代替一次带峰值显存记录的 dry run。
 
+### 4.1 全量、LoRA 与 QLoRA，先选改变的参数
+
+LoRA 冻结基础权重，用低秩矩阵表示增量；QLoRA 在量化、冻结的基础模型上训练适配器。两者是参数/存储选择，不是新监督目标：它们都可承接 SFT，适用性取决于任务与模型。[PEFT LoRA](https://huggingface.co/docs/peft/main/en/conceptual_guides/lora)、[QLoRA 原论文](https://arxiv.org/abs/2305.14314)
+
+| 方式 | 更新对象 | 开始前优先检查 | 不应据此保证什么 |
+| --- | --- | --- | --- |
+| 全量微调 | 全部目标权重 | 梯度、优化器和 checkpoint 成本 | 参数更多就一定更好 |
+| LoRA | 指定模块的适配器 | 模块名、rank、是否另训输出头 | 任意行为都能由小适配器表达 |
+| QLoRA | 量化基础模型上的适配器 | 量化后端、计算 dtype、硬件兼容 | 模型体积小就一定训练得下 |
+
+选择顺序是：先核对模型与数据许可；冻结基础模型 revision；检查模块名和工具模板；再由显存约束选小范围 LoRA 或量化方案。以下只是讨论用的配置卡，**未执行，不是所有架构通用的推荐参数**：`r=8, lora_alpha=16, bias=none`；`target_modules` 必须由实际模型结构决定，不能默认每个模型都有 `q_proj/v_proj`。[LoRA 配置字段](https://huggingface.co/docs/peft/main/en/conceptual_guides/lora)
+
+### 4.2 显存先列账，不先报显卡型号
+
+可用下面的算术草图建立预算，随后用实际 dry run 测峰值。设冻结基础参数为 N，适配器可训练参数为 P；**这不是峰值显存预测模型**：
+
+```text
+基础权重：N × 存储字节/参数
+可训练权重：P × 权重字节 + P × 梯度字节
+优化器：P × 状态字节 + 可能的 FP32 主副本
+另加：激活、临时张量、量化元数据、参考模型、KV/rollout、缓存与碎片
+```
+
+例如只算 70 亿参数的基础权重：BF16 两字节约 14 GB（13.04 GiB），理想 4 bit 载荷约 3.5 GB（3.26 GiB），后者还没计量化尺度与未量化模块。若假设适配器权重/梯度各 2 字节、Adam 两份 FP32 状态共 8 字节、另有 4 字节主副本，可训练部分约为 `16P` 字节；实现没有主副本或使用不同优化器时，此项就会变化。单个 4096×4096 矩阵加 rank=8 的两个低秩矩阵，P 为 `8×(4096+4096)=65,536`，但整个模型的 P 必须按全部目标模块求和。
+
+序列变长或 batch 变大仍会增加激活压力；DPO 的参考策略与 RL 的多条 rollout 也可能成为主项。量化主要改变权重存储，不抹去这些成本。支持后端、精度和训练限制需按冻结版本重新核对。[Transformers bitsandbytes](https://huggingface.co/docs/transformers/main/en/quantization/bitsandbytes)
+
+### 4.3 最小 smoke test 的验收卡（未在本项目执行）
+
+在准备好独立训练环境后，先选 8–16 条**已审计的 train** 样本，用保守序列长度、micro-batch=1 跑 2–5 个更新步骤；这只是排错规模，不是有效训练规模。开始前预先登记：基础模型/模板 revision、mask 规则、可训练模块、dtype、随机种子、设备与预算。依次核验：
+
+1. 模板编码后能区分 user、assistant 和 tool；目标 Token 没被全部 mask；
+2. 工具调用与参数能往返解析，截断不会切坏目标 JSON；
+3. loss 与梯度有限，只有预定参数在更新；
+4. 记录真实峰值显存，不能把上面的权重算术当峰值；
+5. 保存并重新加载 adapter，确认基础模型、模板和 adapter 版本匹配；
+6. 在隔离小回归集上检查安全和解析，再决定是否扩大实验。
+
+smoke test 通过只证明训练链路可运行，不证明任务质量提高。配置选择只用 validation；冻结后才跑最终 eval。完整回滚必须保留 baseline 模型、adapter、tokenizer、模板和 Harness 的组合。
+
 ## 5. DPO：先证明偏好对可比较
 
 DPO 的 chosen 与 rejected 必须对应同一个任务状态和相同可用信息。数据管道应拒绝：
 
 - 不同 prompt/状态硬拼出的偏好对；
 - 因答案更长、更自信或格式更华丽产生的伪偏好；
-- 来自 hidden answer、受保护写入、越权或 eval split 的任一侧；
+- 来自 hidden answer、敏感载荷、未知来源、缺失回执或 eval split 的任一侧；
+- chosen 侧含安全违规、受保护写入或未验证结果；
 - 无法追溯到人工规则、专家标注或已校准 Judge 的标签。
 
 > **示例，未在本项目执行。**
 
 ```json
-{"prompt":[{"role":"user","content":"修复前先做什么？"}],"chosen":[{"role":"assistant","content":"先读取并验证现状"}],"rejected":[{"role":"assistant","content":"直接修改受保护测试"}],"metadata":{"chosen_state_id":"state-10","rejected_state_id":"state-10","source_ids":["traj-010","traj-011"]}}
+{"prompt":[{"role":"user","content":"修复前先做什么？"}],"chosen":[{"role":"assistant","content":"先读取并验证现状"}],"rejected":[{"role":"assistant","content":"直接修改受保护测试"}],"metadata":{"chosen_state_id":"write_requested","rejected_state_id":"write_requested","source_ids":["traj-010","rejected-traj-010"],"rejected_kind":"authored_counterexample_not_executed"}}
 ```
 
-本地 `dpo_margin=0.15` 与 `loss≈0.620957` 只是公式回归测试，不意味着任何真实 checkpoint 已改善。
+完整、可追溯的失败或违规**反例**可以进入 rejected，用于表达不应采取的行为；它不是允许执行该行为的授权，也不能再导入 SFT 好示范。对真实内容仍需做许可、隐私和用途审查。仅比较相同 state_id 字符串不够，应核对共同 prompt、可用工具、权限、前缀历史及仓库快照；本地单步夹具只验证其显式字段，不是完整生产状态等价证明。
+
+本地 `dpo_margin=0.15` 与 `loss≈0.620957` 使用人工固定 log probability，未由模型计算，不意味着任何真实 checkpoint 已改善。
 
 ## 6. GRPO / Agent RL：环境与奖励共同成为产品
 

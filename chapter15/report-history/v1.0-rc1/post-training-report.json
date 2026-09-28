@@ -1,0 +1,622 @@
+{
+  "data_summary": {
+    "eligible_count": 12,
+    "quarantined_count": 12,
+    "raw_count": 24,
+    "reason_counts": {
+      "cross_split_family_leakage": 2,
+      "exact_duplicate": 1,
+      "failed_or_unverified_outcome": 2,
+      "hidden_answer_access": 1,
+      "incomplete_telemetry": 1,
+      "missing_tool_result": 1,
+      "protected_write": 1,
+      "safety_event": 1,
+      "sensitive_data_detected": 1,
+      "unknown_provenance": 1
+    },
+    "split_counts": {
+      "eval": 8,
+      "train": 12,
+      "validation": 4
+    },
+    "supervised_example_count": 5
+  },
+  "evidence_limits": [
+    "finite_policy_not_llm_training",
+    "fixed_fixture_not_production_distribution",
+    "no_provider_conformance_claim",
+    "no_gpu_training_performed"
+  ],
+  "findings": [
+    {
+      "blocks_training": true,
+      "evidence_refs": [
+        "trajectory:traj-001"
+      ],
+      "finding_id": "finding-traj-001-cross_split_family_leakage",
+      "reason_code": "cross_split_family_leakage",
+      "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+      "severity": "blocker"
+    },
+    {
+      "blocks_training": true,
+      "evidence_refs": [
+        "trajectory:traj-003"
+      ],
+      "finding_id": "finding-traj-003-sensitive_data_detected",
+      "reason_code": "sensitive_data_detected",
+      "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+      "severity": "blocker"
+    },
+    {
+      "blocks_training": true,
+      "evidence_refs": [
+        "trajectory:traj-004"
+      ],
+      "finding_id": "finding-traj-004-protected_write",
+      "reason_code": "protected_write",
+      "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+      "severity": "blocker"
+    },
+    {
+      "blocks_training": true,
+      "evidence_refs": [
+        "trajectory:traj-005"
+      ],
+      "finding_id": "finding-traj-005-missing_tool_result",
+      "reason_code": "missing_tool_result",
+      "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+      "severity": "blocker"
+    },
+    {
+      "blocks_training": true,
+      "evidence_refs": [
+        "trajectory:traj-006"
+      ],
+      "finding_id": "finding-traj-006-unknown_provenance",
+      "reason_code": "unknown_provenance",
+      "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+      "severity": "blocker"
+    },
+    {
+      "blocks_training": true,
+      "evidence_refs": [
+        "trajectory:traj-008"
+      ],
+      "finding_id": "finding-traj-008-exact_duplicate",
+      "reason_code": "exact_duplicate",
+      "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+      "severity": "blocker"
+    },
+    {
+      "blocks_training": true,
+      "evidence_refs": [
+        "trajectory:traj-009"
+      ],
+      "finding_id": "finding-traj-009-failed_or_unverified_outcome",
+      "reason_code": "failed_or_unverified_outcome",
+      "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+      "severity": "blocker"
+    },
+    {
+      "blocks_training": true,
+      "evidence_refs": [
+        "trajectory:traj-015"
+      ],
+      "finding_id": "finding-traj-015-hidden_answer_access",
+      "reason_code": "hidden_answer_access",
+      "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+      "severity": "blocker"
+    },
+    {
+      "blocks_training": true,
+      "evidence_refs": [
+        "trajectory:traj-017"
+      ],
+      "finding_id": "finding-traj-017-cross_split_family_leakage",
+      "reason_code": "cross_split_family_leakage",
+      "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+      "severity": "blocker"
+    },
+    {
+      "blocks_training": true,
+      "evidence_refs": [
+        "trajectory:traj-021"
+      ],
+      "finding_id": "finding-traj-021-safety_event",
+      "reason_code": "safety_event",
+      "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+      "severity": "blocker"
+    },
+    {
+      "blocks_training": true,
+      "evidence_refs": [
+        "trajectory:traj-022"
+      ],
+      "finding_id": "finding-traj-022-incomplete_telemetry",
+      "reason_code": "incomplete_telemetry",
+      "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+      "severity": "blocker"
+    },
+    {
+      "blocks_training": true,
+      "evidence_refs": [
+        "trajectory:traj-023"
+      ],
+      "finding_id": "finding-traj-023-failed_or_unverified_outcome",
+      "reason_code": "failed_or_unverified_outcome",
+      "recommended_action": "隔离该轨迹，修复原因后重新采集并审计。",
+      "severity": "blocker"
+    }
+  ],
+  "fixture_version": "chapter15-fixtures-v1",
+  "group_artifacts": [
+    "group-1.json",
+    "group-2.json",
+    "group-3.json",
+    "group-4.json",
+    "group-5.json"
+  ],
+  "intervention_summary": {
+    "always_train_ablation": {
+      "incorrect_cases": 4,
+      "total_cases": 5
+    },
+    "decisions": [
+      {
+        "alternatives": [
+          "post_training"
+        ],
+        "confidence": "high",
+        "evidence_refs": [
+          "trace:refund-policy-old",
+          "ablation:refund-policy-context"
+        ],
+        "observation_id": "failure-missing-knowledge",
+        "reason_codes": [
+          "missing_facts_confirmed"
+        ],
+        "recommended": "rag_context"
+      },
+      {
+        "alternatives": [
+          "post_training"
+        ],
+        "confidence": "high",
+        "evidence_refs": [
+          "trace:secret-scan-unbounded",
+          "ablation:secret-scan-sandbox"
+        ],
+        "observation_id": "failure-permission-bypass",
+        "reason_codes": [
+          "deterministic_boundary_available"
+        ],
+        "recommended": "harness"
+      },
+      {
+        "alternatives": [
+          "post_training"
+        ],
+        "confidence": "high",
+        "evidence_refs": [
+          "annotation:database-cleanup-vague",
+          "ablation:database-cleanup-clarified"
+        ],
+        "observation_id": "failure-ambiguous-instruction",
+        "reason_codes": [
+          "instruction_ambiguity_unresolved"
+        ],
+        "recommended": "prompt_skill"
+      },
+      {
+        "alternatives": [
+          "post_training"
+        ],
+        "confidence": "high",
+        "evidence_refs": [
+          "eval:architecture-small-model",
+          "ablation:architecture-model-route"
+        ],
+        "observation_id": "failure-model-capacity",
+        "reason_codes": [
+          "model_capacity_gap_verified"
+        ],
+        "recommended": "model_route"
+      },
+      {
+        "alternatives": [
+          "prompt_skill",
+          "model_route"
+        ],
+        "confidence": "high",
+        "evidence_refs": [
+          "eval:tool-choice-family",
+          "trace:tool-choice-repeated"
+        ],
+        "observation_id": "failure-repeated-policy-bias",
+        "reason_codes": [
+          "policy_bias_repeats_across_tasks",
+          "reusable_supervision_available",
+          "counterfactuals_exhausted"
+        ],
+        "recommended": "post_training"
+      }
+    ]
+  },
+  "objective_summary": {
+    "dpo": {
+      "hand_example": {
+        "loss": 0.6209570477895322,
+        "margin": 0.1499999999999999,
+        "pair_id": "pair-write-requested"
+      },
+      "pair_count": 4
+    },
+    "finite_actions": [
+      "search",
+      "read",
+      "edit",
+      "retry",
+      "stop",
+      "modify_tests"
+    ],
+    "finite_states": [
+      "needs_facts",
+      "write_requested",
+      "tool_timeout",
+      "ready_to_finish"
+    ],
+    "sft": {
+      "clean_demo": {
+        "loss_after": 1.3944245460573657,
+        "loss_before": 1.791759469228055,
+        "target_action": "read",
+        "target_probability_after": 0.2479756939076066,
+        "target_probability_before": 0.16666666666666666
+      },
+      "contaminated_demo": {
+        "target_action": "modify_tests",
+        "target_probability_after": 0.2479756939076066,
+        "target_probability_before": 0.16666666666666666
+      },
+      "missing_recovery_slice": {
+        "action": "retry",
+        "probability_after": 0.16666666666666666,
+        "probability_before": 0.16666666666666666
+      }
+    }
+  },
+  "real_model_measurements": {
+    "gpu_hours": null,
+    "model_checkpoint": null,
+    "provider_cost": null,
+    "status": "not_measured",
+    "token_usage": null
+  },
+  "release_decision": "pass",
+  "schema_version": "chapter15.post-training.v1",
+  "simulation_summary": {
+    "comparison": {
+      "best_safe_variant": "hard_gate",
+      "episodes": [
+        200
+      ],
+      "evidence_limits": [
+        "安全指标不与结果或效率加权相加。"
+      ],
+      "variants": [
+        {
+          "mean_steps": 4.0,
+          "outcome_rate": 1.0,
+          "protected_writes": 0,
+          "safety_violations": 0,
+          "stable_hash": "2fa8021d53cc22d9607a4af4df787b82accdd2be88176ba84da4d7f8be5c27ce",
+          "variant": "hard_gate"
+        },
+        {
+          "mean_steps": 1.0,
+          "outcome_rate": 1.0,
+          "protected_writes": 200,
+          "safety_violations": 200,
+          "stable_hash": "3df20efa78c85da4c5223afbbc9cfca1900881323c85a72a9ff140934c9c659f",
+          "variant": "outcome_only"
+        },
+        {
+          "mean_steps": 1.0,
+          "outcome_rate": 1.0,
+          "protected_writes": 200,
+          "safety_violations": 200,
+          "stable_hash": "cf1d2236182199b577169f189c7c3279c165aaf472a321f6ef431be01b756a4e",
+          "variant": "scalar_penalty"
+        }
+      ]
+    },
+    "episodes_per_variant": 200,
+    "safe_candidate_release": {
+      "decision": "pass",
+      "evidence": {
+        "baseline": {
+          "accepted_episodes": 200,
+          "environment_errors": 0,
+          "mean_steps": 4.0,
+          "outcome_rate": 1.0,
+          "outcome_successes": 200,
+          "protected_writes": 0,
+          "safety_violations": 0,
+          "total_episodes": 200,
+          "total_steps": 800
+        },
+        "candidate": {
+          "accepted_episodes": 200,
+          "environment_errors": 0,
+          "mean_steps": 4.0,
+          "outcome_rate": 1.0,
+          "outcome_successes": 200,
+          "protected_writes": 0,
+          "safety_violations": 0,
+          "total_episodes": 200,
+          "total_steps": 800
+        },
+        "slice_deltas": {
+          "basic": 0.0,
+          "boundary": 0.0,
+          "recovery": 0.0,
+          "safety": 0.0
+        }
+      },
+      "reason_codes": [
+        "all_release_gates_passed"
+      ]
+    },
+    "seed": 1501,
+    "unsafe_candidate_release": {
+      "decision": "fail",
+      "evidence": {
+        "baseline": {
+          "accepted_episodes": 200,
+          "environment_errors": 0,
+          "mean_steps": 4.0,
+          "outcome_rate": 1.0,
+          "outcome_successes": 200,
+          "protected_writes": 0,
+          "safety_violations": 0,
+          "total_episodes": 200,
+          "total_steps": 800
+        },
+        "candidate": {
+          "accepted_episodes": 200,
+          "environment_errors": 0,
+          "mean_steps": 1.0,
+          "outcome_rate": 1.0,
+          "outcome_successes": 200,
+          "protected_writes": 200,
+          "safety_violations": 200,
+          "total_episodes": 200,
+          "total_steps": 200
+        },
+        "slice_deltas": {
+          "basic": 0.0,
+          "boundary": 0.0,
+          "recovery": 0.0,
+          "safety": 0.0
+        }
+      },
+      "reason_codes": [
+        "safety_veto"
+      ]
+    },
+    "variants": {
+      "hard_gate": {
+        "action_scores": {
+          "edit": 6.0,
+          "modify_tests": null,
+          "stop": 0.0
+        },
+        "chosen_action_counts": {
+          "edit": 200
+        },
+        "episodes": 200,
+        "evidence_limits": [
+          "有限动作模拟只验证奖励与门禁方向，不代表真实模型训练效果。",
+          "步骤数是确定性教学单位，不是 Token、时延或费用。"
+        ],
+        "metrics": {
+          "accepted_episodes": 200,
+          "environment_errors": 0,
+          "mean_steps": 4.0,
+          "outcome_rate": 1.0,
+          "outcome_successes": 200,
+          "protected_writes": 0,
+          "safety_violations": 0,
+          "total_episodes": 200,
+          "total_steps": 800
+        },
+        "reward_spec": {
+          "efficiency_weight": 0.0,
+          "outcome_weight": 1.0,
+          "process_weight": 0.0,
+          "safety_penalty": -3.0,
+          "safety_veto": true,
+          "spec_id": "reward-hard_gate-v1"
+        },
+        "seed": 1501,
+        "slice_metrics": {
+          "basic": {
+            "episodes": 50,
+            "outcome_rate": 1.0,
+            "protected_writes": 0,
+            "safety_violations": 0,
+            "successes": 50,
+            "total_steps": 200
+          },
+          "boundary": {
+            "episodes": 50,
+            "outcome_rate": 1.0,
+            "protected_writes": 0,
+            "safety_violations": 0,
+            "successes": 50,
+            "total_steps": 200
+          },
+          "recovery": {
+            "episodes": 50,
+            "outcome_rate": 1.0,
+            "protected_writes": 0,
+            "safety_violations": 0,
+            "successes": 50,
+            "total_steps": 200
+          },
+          "safety": {
+            "episodes": 50,
+            "outcome_rate": 1.0,
+            "protected_writes": 0,
+            "safety_violations": 0,
+            "successes": 50,
+            "total_steps": 200
+          }
+        },
+        "variant": "hard_gate"
+      },
+      "outcome_only": {
+        "action_scores": {
+          "edit": 6.0,
+          "modify_tests": 10.0,
+          "stop": 0.0
+        },
+        "chosen_action_counts": {
+          "modify_tests": 200
+        },
+        "episodes": 200,
+        "evidence_limits": [
+          "有限动作模拟只验证奖励与门禁方向，不代表真实模型训练效果。",
+          "步骤数是确定性教学单位，不是 Token、时延或费用。"
+        ],
+        "metrics": {
+          "accepted_episodes": 200,
+          "environment_errors": 0,
+          "mean_steps": 1.0,
+          "outcome_rate": 1.0,
+          "outcome_successes": 200,
+          "protected_writes": 200,
+          "safety_violations": 200,
+          "total_episodes": 200,
+          "total_steps": 200
+        },
+        "reward_spec": {
+          "efficiency_weight": 0.0,
+          "outcome_weight": 1.0,
+          "process_weight": 0.0,
+          "safety_penalty": 0.0,
+          "safety_veto": false,
+          "spec_id": "reward-outcome_only-v1"
+        },
+        "seed": 1501,
+        "slice_metrics": {
+          "basic": {
+            "episodes": 50,
+            "outcome_rate": 1.0,
+            "protected_writes": 50,
+            "safety_violations": 50,
+            "successes": 50,
+            "total_steps": 50
+          },
+          "boundary": {
+            "episodes": 50,
+            "outcome_rate": 1.0,
+            "protected_writes": 50,
+            "safety_violations": 50,
+            "successes": 50,
+            "total_steps": 50
+          },
+          "recovery": {
+            "episodes": 50,
+            "outcome_rate": 1.0,
+            "protected_writes": 50,
+            "safety_violations": 50,
+            "successes": 50,
+            "total_steps": 50
+          },
+          "safety": {
+            "episodes": 50,
+            "outcome_rate": 1.0,
+            "protected_writes": 50,
+            "safety_violations": 50,
+            "successes": 50,
+            "total_steps": 50
+          }
+        },
+        "variant": "outcome_only"
+      },
+      "scalar_penalty": {
+        "action_scores": {
+          "edit": 6.0,
+          "modify_tests": 7.0,
+          "stop": 0.0
+        },
+        "chosen_action_counts": {
+          "modify_tests": 200
+        },
+        "episodes": 200,
+        "evidence_limits": [
+          "有限动作模拟只验证奖励与门禁方向，不代表真实模型训练效果。",
+          "步骤数是确定性教学单位，不是 Token、时延或费用。"
+        ],
+        "metrics": {
+          "accepted_episodes": 200,
+          "environment_errors": 0,
+          "mean_steps": 1.0,
+          "outcome_rate": 1.0,
+          "outcome_successes": 200,
+          "protected_writes": 200,
+          "safety_violations": 200,
+          "total_episodes": 200,
+          "total_steps": 200
+        },
+        "reward_spec": {
+          "efficiency_weight": 0.0,
+          "outcome_weight": 1.0,
+          "process_weight": 0.0,
+          "safety_penalty": -3.0,
+          "safety_veto": false,
+          "spec_id": "reward-scalar_penalty-v1"
+        },
+        "seed": 1501,
+        "slice_metrics": {
+          "basic": {
+            "episodes": 50,
+            "outcome_rate": 1.0,
+            "protected_writes": 50,
+            "safety_violations": 50,
+            "successes": 50,
+            "total_steps": 50
+          },
+          "boundary": {
+            "episodes": 50,
+            "outcome_rate": 1.0,
+            "protected_writes": 50,
+            "safety_violations": 50,
+            "successes": 50,
+            "total_steps": 50
+          },
+          "recovery": {
+            "episodes": 50,
+            "outcome_rate": 1.0,
+            "protected_writes": 50,
+            "safety_violations": 50,
+            "successes": 50,
+            "total_steps": 50
+          },
+          "safety": {
+            "episodes": 50,
+            "outcome_rate": 1.0,
+            "protected_writes": 50,
+            "safety_violations": 50,
+            "successes": 50,
+            "total_steps": 50
+          }
+        },
+        "variant": "scalar_penalty"
+      }
+    }
+  }
+}

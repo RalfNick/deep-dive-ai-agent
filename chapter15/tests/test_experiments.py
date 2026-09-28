@@ -12,7 +12,7 @@ from chapter15.experiments import build_post_training_report, main, run_group
 
 
 ROOT = Path(__file__).resolve().parents[2]
-SCHEMA_PATH = ROOT / "chapter15" / "schemas" / "post-training-report-v1.schema.json"
+SCHEMA_PATH = ROOT / "chapter15" / "schemas" / "post-training-report-v2.schema.json"
 ARTIFACT_NAMES = [
     "group-1.json",
     "group-2.json",
@@ -65,7 +65,7 @@ def test_full_report_is_stable_safe_and_refuses_overwrite(
     report = build_post_training_report(first)
     build_post_training_report(second)
 
-    assert report["schema_version"] == "chapter15.post-training.v1"
+    assert report["schema_version"] == "chapter15.post-training.v2"
     assert sorted(path.name for path in first.iterdir()) == sorted(ARTIFACT_NAMES)
     assert {path.name: path.read_bytes() for path in first.iterdir()} == {
         path.name: path.read_bytes() for path in second.iterdir()
@@ -82,6 +82,10 @@ def test_full_report_is_stable_safe_and_refuses_overwrite(
         "gpu_hours": None,
         "provider_cost": None,
     }
+    assert report["objective_summary"]["sft"]["audited_batch"]["example_count"] == 5
+    assert report["objective_summary"]["dpo"]["source_context_validation"] == "passed"
+    assert report["simulation_summary"]["policy_updates"]["hard_gate"]["updates"] == 200
+    assert report["simulation_summary"]["release_evidence_kind"] == "static_gate_conformance_not_trained_policy_eval"
     with pytest.raises(FileExistsError, match="output_directory_not_empty"):
         build_post_training_report(first)
 
@@ -146,8 +150,20 @@ def test_schema_accepts_report_and_rejects_semantic_mutations(tmp_path: Path) ->
     unknown_top_level = deepcopy(report)
     unknown_top_level["surprise"] = True
     mutations.append(unknown_top_level)
+    fake_update = deepcopy(report)
+    fake_update["simulation_summary"]["policy_updates"]["hard_gate"]["tool_execution"] = "real"
+    mutations.append(fake_update)
+    missing_update = deepcopy(report)
+    del missing_update["simulation_summary"]["policy_updates"]
+    mutations.append(missing_update)
 
     assert all(list(validator.iter_errors(item)) for item in mutations)
+
+
+def test_archived_rc1_report_still_validates_against_its_original_schema() -> None:
+    report = _load(ROOT / "chapter15" / "report-history" / "v1.0-rc1" / "post-training-report.json")
+    schema = _load(ROOT / "chapter15" / "schemas" / "post-training-report-v1.schema.json")
+    assert list(Draft202012Validator(schema).iter_errors(report)) == []
 
 
 def test_single_group_refuses_overwrite_and_replace_is_recoverable(tmp_path: Path) -> None:

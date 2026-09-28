@@ -1,0 +1,264 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://wlxralf.com/schemas/chapter15/post-training-report-v2.schema.json",
+  "title": "Chapter 15 deterministic post-training report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "fixture_version",
+    "intervention_summary",
+    "data_summary",
+    "objective_summary",
+    "simulation_summary",
+    "release_decision",
+    "real_model_measurements",
+    "findings",
+    "group_artifacts",
+    "evidence_limits"
+  ],
+  "properties": {
+    "schema_version": {"const": "chapter15.post-training.v2"},
+    "fixture_version": {"const": "chapter15-fixtures-v2"},
+    "intervention_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decisions", "always_train_ablation"],
+      "properties": {
+        "decisions": {"type": "array", "minItems": 5, "maxItems": 5},
+        "always_train_ablation": {
+          "type": "object",
+          "required": ["total_cases", "incorrect_cases"],
+          "properties": {
+            "total_cases": {"const": 5},
+            "incorrect_cases": {"const": 4}
+          }
+        }
+      }
+    },
+    "data_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "raw_count",
+        "eligible_count",
+        "quarantined_count",
+        "split_counts",
+        "reason_counts",
+        "supervised_example_count"
+      ],
+      "properties": {
+        "raw_count": {"const": 24},
+        "eligible_count": {"type": "integer", "minimum": 1},
+        "quarantined_count": {"type": "integer", "minimum": 1},
+        "split_counts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["train", "validation", "eval"],
+          "properties": {
+            "train": {"const": 12},
+            "validation": {"const": 4},
+            "eval": {"const": 8}
+          }
+        },
+        "reason_counts": {"type": "object", "minProperties": 1},
+        "supervised_example_count": {"type": "integer", "minimum": 1}
+      }
+    },
+    "objective_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["finite_states", "finite_actions", "sft", "dpo"],
+      "properties": {
+        "finite_states": {"type": "array", "minItems": 4, "maxItems": 4, "uniqueItems": true},
+        "finite_actions": {"type": "array", "minItems": 6, "maxItems": 6, "uniqueItems": true},
+        "sft": {
+          "type": "object",
+          "required": ["clean_demo", "contaminated_demo", "missing_recovery_slice", "audited_batch"]
+        },
+        "dpo": {
+          "type": "object",
+          "required": ["pair_count", "hand_example", "source_context_validation", "log_probability_origin"],
+          "properties": {"pair_count": {"const": 4}, "source_context_validation": {"const": "passed"}, "log_probability_origin": {"const": "hand_calculation_not_model_measurement"}}
+        }
+      }
+    },
+    "simulation_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "episodes_per_variant",
+        "seed",
+        "variants",
+        "comparison",
+        "unsafe_candidate_release",
+        "safe_candidate_release",
+        "policy_updates",
+        "budget_demo",
+        "release_evidence_kind"
+      ],
+      "properties": {
+        "release_evidence_kind": {"const": "static_gate_conformance_not_trained_policy_eval"},
+        "policy_updates": {
+          "type": "object", "additionalProperties": false,
+          "required": ["outcome_only", "scalar_penalty", "hard_gate"],
+          "properties": {
+            "outcome_only": {"$ref": "#/$defs/banditTraining"},
+            "scalar_penalty": {"$ref": "#/$defs/banditTraining"},
+            "hard_gate": {"allOf": [{"$ref": "#/$defs/banditTraining"}, {"properties": {"safety_violations": {"const": 0}}}]}
+          }
+        },
+        "budget_demo": {"allOf": [{"$ref": "#/$defs/banditTraining"}, {"properties": {"budget_steps": {"const": 12}, "stop_reason": {"const": "budget_reservation_failed"}}}]},
+        "episodes_per_variant": {"const": 200},
+        "seed": {"const": 1501},
+        "variants": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["outcome_only", "scalar_penalty", "hard_gate"],
+          "properties": {
+            "outcome_only": {"$ref": "#/$defs/simulationResult"},
+            "scalar_penalty": {"$ref": "#/$defs/simulationResult"},
+            "hard_gate": {
+              "allOf": [
+                {"$ref": "#/$defs/simulationResult"},
+                {
+                  "properties": {
+                    "metrics": {
+                      "properties": {
+                        "safety_violations": {"const": 0},
+                        "protected_writes": {"const": 0}
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "comparison": {"type": "object"},
+        "unsafe_candidate_release": {"$ref": "#/$defs/releaseDecision"},
+        "safe_candidate_release": {
+          "allOf": [
+            {"$ref": "#/$defs/releaseDecision"},
+            {"properties": {"decision": {"const": "pass"}}}
+          ]
+        }
+      }
+    },
+    "release_decision": {"const": "pass"},
+    "real_model_measurements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "model_checkpoint", "token_usage", "gpu_hours", "provider_cost"],
+      "properties": {
+        "status": {"const": "not_measured"},
+        "model_checkpoint": {"type": "null"},
+        "token_usage": {"type": "null"},
+        "gpu_hours": {"type": "null"},
+        "provider_cost": {"type": "null"}
+      }
+    },
+    "findings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/blockingFinding"}
+    },
+    "group_artifacts": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": {
+        "enum": ["group-1.json", "group-2.json", "group-3.json", "group-4.json", "group-5.json"]
+      }
+    },
+    "evidence_limits": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "finite_policy_not_llm_training",
+          "fixed_fixture_not_production_distribution",
+          "no_provider_conformance_claim",
+          "no_gpu_training_performed"
+        ]
+      },
+      "allOf": [
+        {"contains": {"const": "finite_policy_not_llm_training"}},
+        {"contains": {"const": "fixed_fixture_not_production_distribution"}},
+        {"contains": {"const": "no_provider_conformance_claim"}},
+        {"contains": {"const": "no_gpu_training_performed"}}
+      ]
+    }
+  },
+  "$defs": {
+    "banditTraining": {
+      "type": "object",
+      "required": ["variant", "seed", "episode_limit", "updates", "learning_rate", "budget_steps", "steps_used", "stop_reason", "action_counts", "safety_violations", "probabilities_before", "probabilities_after", "expected_reward_before", "expected_reward_after", "history", "update_rule", "sampling", "tool_execution", "evidence_limits"],
+      "properties": {
+        "seed": {"const": 1501}, "episode_limit": {"const": 200},
+        "updates": {"type": "integer", "minimum": 0, "maximum": 200},
+        "learning_rate": {"const": 0.05}, "budget_steps": {"type": "integer", "minimum": 1},
+        "steps_used": {"type": "integer", "minimum": 0},
+        "safety_violations": {"type": "integer", "minimum": 0},
+        "stop_reason": {"enum": ["episode_limit", "budget_reservation_failed"]},
+        "probabilities_before": {"$ref": "#/$defs/probabilityMap"},
+        "probabilities_after": {"$ref": "#/$defs/probabilityMap"},
+        "history": {"type": "array"},
+        "update_rule": {"const": "single_step_reinforce_without_baseline"},
+        "sampling": {"const": "categorical_current_policy"},
+        "tool_execution": {"const": "none_fixture_transitions_only"}
+      }
+    },
+    "probabilityMap": {"type": "object", "minProperties": 1, "additionalProperties": {"type": "number", "minimum": 0, "maximum": 1}},
+    "simulationResult": {
+      "type": "object",
+      "required": ["variant", "episodes", "seed", "reward_spec", "action_scores", "chosen_action_counts", "slice_metrics", "metrics", "evidence_limits"],
+      "properties": {
+        "episodes": {"const": 200},
+        "seed": {"const": 1501},
+        "metrics": {"$ref": "#/$defs/policyMetrics"}
+      }
+    },
+    "policyMetrics": {
+      "type": "object",
+      "required": ["total_episodes", "accepted_episodes", "outcome_successes", "outcome_rate", "safety_violations", "protected_writes", "environment_errors", "total_steps", "mean_steps"],
+      "properties": {
+        "total_episodes": {"type": "integer", "minimum": 1},
+        "accepted_episodes": {"type": "integer", "minimum": 1},
+        "outcome_successes": {"type": "integer", "minimum": 0},
+        "outcome_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "safety_violations": {"type": "integer", "minimum": 0},
+        "protected_writes": {"type": "integer", "minimum": 0},
+        "environment_errors": {"type": "integer", "minimum": 0},
+        "total_steps": {"type": "integer", "minimum": 0},
+        "mean_steps": {"type": "number", "minimum": 0}
+      }
+    },
+    "releaseDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision", "reason_codes", "evidence"],
+      "properties": {
+        "decision": {"enum": ["pass", "fail", "inconclusive"]},
+        "reason_codes": {"type": "array", "minItems": 1},
+        "evidence": {"type": "object"}
+      }
+    },
+    "blockingFinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["finding_id", "severity", "reason_code", "evidence_refs", "recommended_action", "blocks_training"],
+      "properties": {
+        "finding_id": {"type": "string", "minLength": 1},
+        "severity": {"const": "blocker"},
+        "reason_code": {"type": "string", "minLength": 1},
+        "evidence_refs": {"type": "array", "minItems": 1},
+        "recommended_action": {"type": "string", "minLength": 1},
+        "blocks_training": {"const": true}
+      }
+    }
+  }
+}

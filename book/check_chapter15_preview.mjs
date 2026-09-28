@@ -50,6 +50,13 @@ try {
     }
     const label = `${viewport.width}x${viewport.height}`;
     await page.screenshot({ path: path.join(output, `chapter15-${label}-full.png`), fullPage: true });
+    if (viewport.width === 1440) {
+      for (const number of [2, 4, 5]) {
+        await page.locator('figure').nth(number - 1).screenshot({
+          path: path.join(output, `chapter15-figure-${number}-rc2.png`),
+        });
+      }
+    }
     audits.push(audit);
     await page.close();
   }

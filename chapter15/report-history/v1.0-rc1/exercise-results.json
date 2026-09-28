@@ -1,0 +1,316 @@
+{
+  "answers": [
+    {
+      "criteria": [
+        "按根因选择最小干预",
+        "每项保留待补证据"
+      ],
+      "evidence": {
+        "duplicate_write": {
+          "intervention": "harness",
+          "needed_evidence": "幂等键或重试边界能消除重复副作用"
+        },
+        "missing_field": {
+          "intervention": "post_training_candidate",
+          "needed_evidence": "格式约束和确定性校验后仍跨任务重复"
+        },
+        "missing_policy": {
+          "intervention": "rag_context",
+          "needed_evidence": "检索到最新政策后失败消失"
+        },
+        "rule": "先排除信息、指令、执行边界和模型路由问题，再把稳定策略偏差送入后训练"
+      },
+      "execution": "design",
+      "number": 1,
+      "status": "answered",
+      "title": "区分 Context、Harness 与后训练"
+    },
+    {
+      "criteria": [
+        "复用规范干预路由",
+        "解释训练为何不是默认项"
+      ],
+      "evidence": {
+        "always_train_incorrect_cases": 4,
+        "decisions": {
+          "failure-ambiguous-instruction": "prompt_skill",
+          "failure-missing-knowledge": "rag_context",
+          "failure-model-capacity": "model_route",
+          "failure-permission-bypass": "harness",
+          "failure-repeated-policy-bias": "post_training"
+        },
+        "post_training_cases": 1
+      },
+      "execution": "real",
+      "number": 2,
+      "status": "passed",
+      "title": "运行干预树"
+    },
+    {
+      "criteria": [
+        "结果与过程分开审计",
+        "训练只消费 eligible 且 train 的记录"
+      ],
+      "evidence": {
+        "eligible_count": 12,
+        "quarantined_count": 12,
+        "raw_count": 24,
+        "reasons": {
+          "hidden_answer_access": "使用评测不可见信息，破坏独立性",
+          "missing_tool_result": "轨迹不完整，动作与结果不可复核",
+          "protected_write": "成功来自改变验收规则，不能作为好示范"
+        },
+        "sft_example_count": 5
+      },
+      "execution": "real",
+      "number": 3,
+      "status": "passed",
+      "title": "解释数据隔离理由"
+    },
+    {
+      "criteria": [
+        "隔离单位覆盖近重复来源",
+        "split 后复查家族交叉"
+      ],
+      "evidence": {
+        "family_key": [
+          "normalized_task_intent",
+          "success_condition",
+          "repository_family"
+        ],
+        "isolation_unit": "repository_family",
+        "procedure": [
+          "先分组",
+          "组级分配 split",
+          "计算语义家族摘要",
+          "隔离跨 split 家族"
+        ],
+        "reason": "同一仓库的模板、修复模式和测试结构高度相关，按记录随机切分会把近重复送到 eval"
+      },
+      "execution": "design",
+      "number": 4,
+      "status": "answered",
+      "title": "设计任务家族切分"
+    },
+    {
+      "criteria": [
+        "写出可复算输入",
+        "区分训练目标与任务结果"
+      ],
+      "evidence": {
+        "action_count": 6,
+        "interpretation": "目标动作概率上升只证明有限策略按示范方向更新，不证明真实任务成功率提高",
+        "uniform_cross_entropy": 1.791759,
+        "uniform_probability": 0.166667
+      },
+      "execution": "real",
+      "number": 5,
+      "status": "passed",
+      "title": "手算 SFT 交叉熵"
+    },
+    {
+      "criteria": [
+        "覆盖 tool_timeout 状态",
+        "示范通过完整性与安全审计"
+      ],
+      "evidence": {
+        "example": {
+          "retention_reason": "audited_recovery_policy",
+          "state_id": "tool_timeout",
+          "target_action": "retry"
+        },
+        "required_checks": [
+          "tool result complete",
+          "retry is idempotent",
+          "budget remains",
+          "no protected write",
+          "no hidden answer access",
+          "known provenance",
+          "train split only"
+        ]
+      },
+      "execution": "design",
+      "number": 6,
+      "status": "answered",
+      "title": "补齐恢复切片"
+    },
+    {
+      "criteria": [
+        "chosen 与 rejected 来自同一状态",
+        "复算策略和参考策略间隔"
+      ],
+      "evidence": {
+        "beta": 0.5,
+        "loss": 0.620957,
+        "margin": 0.15,
+        "policy_margin": 0.4,
+        "reference_margin": 0.1,
+        "swap_effect": "交换 chosen/rejected 后 margin 变为 -0.15，loss 上升"
+      },
+      "execution": "real",
+      "number": 7,
+      "status": "passed",
+      "title": "手算 DPO"
+    },
+    {
+      "criteria": [
+        "偏好来源可追溯",
+        "允许证据不足为 Unknown"
+      ],
+      "evidence": {
+        "merge_rule": "安全规则先否决；确定性规则一致则保留；语义分歧进入人工抽样；证据不足返回 Unknown",
+        "sources": {
+          "human": [
+            "接近真实意图",
+            "成本高且标注者不一致"
+          ],
+          "llm_judge": [
+            "扩展快",
+            "可能有长度、风格和同源偏差"
+          ],
+          "safety_rule": [
+            "确定且可审计",
+            "覆盖不到未知风险"
+          ],
+          "verifier_rule": [
+            "可重复",
+            "Verifier 可能被投机"
+          ]
+        }
+      },
+      "execution": "design",
+      "number": 8,
+      "status": "answered",
+      "title": "审计偏好来源"
+    },
+    {
+      "criteria": [
+        "复算可抵消惩罚",
+        "用不可补偿门禁表达安全"
+      ],
+      "evidence": {
+        "gate": "if safety_violation or protected_write: release=fail; do not compute compensating total",
+        "hard_gate_safety_violations": 0,
+        "safe_edit_score": 6.0,
+        "safety_penalty": -3.0,
+        "scalar_penalty_score": 7.0,
+        "scalar_safety_violations": 200,
+        "unsafe_outcome_score": 10.0
+      },
+      "execution": "real",
+      "number": 9,
+      "status": "passed",
+      "title": "识别奖励投机"
+    },
+    {
+      "criteria": [
+        "覆盖四个切片",
+        "安全与关键切片先于总体均值"
+      ],
+      "evidence": {
+        "gates": [
+          "safety violations == 0",
+          "protected writes == 0",
+          "environment errors == 0",
+          "each critical slice delta >= -0.10",
+          "overall candidate >= baseline"
+        ],
+        "minimum_tasks": {
+          "basic": 3,
+          "boundary": 3,
+          "recovery": 4,
+          "safety": 4
+        },
+        "threshold_basis": "教学阈值；真实项目需由事故成本、样本量和置信区间共同校准"
+      },
+      "execution": "design",
+      "number": 10,
+      "status": "answered",
+      "title": "设计切片回归门禁"
+    },
+    {
+      "criteria": [
+        "数据卡包含治理字段",
+        "禁止用途明确"
+      ],
+      "evidence": {
+        "dataset_card": {
+          "known_gaps": [
+            "低频安全事件",
+            "新工具",
+            "非中文任务"
+          ],
+          "license_and_owner": "组织内部授权；数据所有者可追溯",
+          "privacy": "密钥删除，标识符盐化摘要，敏感正文隔离",
+          "prohibited": [
+            "训练未经审计原始 Trace",
+            "用 eval 数据选择 checkpoint",
+            "恢复原始身份"
+          ],
+          "retention": "候选数据 90 天，获批版本按治理策略保留",
+          "source": "经授权的内部 Agent Trace，经应用侧脱敏后导出",
+          "split": "按仓库与任务家族分组后切分"
+        }
+      },
+      "execution": "design",
+      "number": 11,
+      "status": "answered",
+      "title": "编写 Trace 数据卡"
+    },
+    {
+      "criteria": [
+        "区分环境错误与策略失败",
+        "关键切片退化不可由总体提升抵消"
+      ],
+      "evidence": {
+        "confirmed_decision": "fail",
+        "decision": "inconclusive_then_fail_if_confirmed",
+        "first_step": "修复或隔离 3% 环境超时并重跑成对评测",
+        "reason": "恢复切片下降 0.12 超过教学门槛 0.10；总体 +0.04 不能补偿",
+        "reason_codes": [
+          "evaluation_environment_error",
+          "slice_regression"
+        ]
+      },
+      "execution": "design",
+      "number": 12,
+      "status": "answered",
+      "title": "作出发布判断"
+    },
+    {
+      "criteria": [
+        "方案覆盖输入语义、训练、评测和回滚",
+        "不声称已经训练"
+      ],
+      "evidence": {
+        "checklist": [
+          "固定 tokenizer 与 chat template",
+          "转换 audited train 数据",
+          "验证 validation/eval 不回流",
+          "选择 LoRA/QLoRA 并记录配置",
+          "小批 smoke test",
+          "冻结候选 checkpoint",
+          "运行安全、切片和总体回归",
+          "灰度并保留 baseline 路由",
+          "触发门槛后回滚"
+        ],
+        "evidence_limit": "设计答案；未下载模型、未执行 GPU 训练、未证明 Provider 兼容性",
+        "example_base_model": "选择许可与硬件匹配的开源 instruct checkpoint"
+      },
+      "execution": "design",
+      "number": 13,
+      "status": "answered",
+      "title": "设计真实训练迁移清单"
+    }
+  ],
+  "limits": [
+    "design_answers_are_rubrics_not_unique_proofs",
+    "finite_policy_not_real_model_training",
+    "no_provider_conformance_claim"
+  ],
+  "schema_version": "chapter15.exercises.v1",
+  "summary": {
+    "all_passed": true,
+    "count": 13
+  }
+}

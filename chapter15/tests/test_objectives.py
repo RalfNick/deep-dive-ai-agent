@@ -5,7 +5,9 @@ import math
 import pytest
 
 from chapter15.contracts import PreferencePair, SupervisedExample
-from chapter15.audit import audit_dataset
+from dataclasses import replace
+
+from chapter15.audit import audit_dataset, build_supervised_examples
 from chapter15.dataset import load_trajectories
 from chapter15.objectives import cross_entropy, dpo_loss, dpo_margin, load_preference_pairs, sft_step
 from chapter15.policy import TabularPolicy
@@ -143,7 +145,9 @@ def test_preference_fixture_uses_same_state_and_known_actions() -> None:
 
 
 def test_preference_fixture_only_uses_audited_train_sources() -> None:
-    records = load_trajectories()
+    from chapter15.dataset import load_preference_sources
+
+    records = load_preference_sources()
     audit = audit_dataset(records)
     split_by_id = {item.trajectory_id: item.split for item in records}
     allowed = {
@@ -153,7 +157,64 @@ def test_preference_fixture_only_uses_audited_train_sources() -> None:
     }
 
     assert allowed
-    assert all(
-        set(pair.source_trajectory_ids) <= allowed
-        for pair in load_preference_pairs()
+    # The chosen side must be a safe success. A complete, controlled failed
+    # branch may be used ONLY as rejected evidence, never as an SFT target.
+    assert all(pair.source_trajectory_ids[0] in allowed for pair in load_preference_pairs())
+
+
+def test_audited_sft_examples_are_consumed_by_the_policy() -> None:
+    examples = build_supervised_examples(audit_dataset(load_trajectories()))
+    before = _uniform_policy()
+    after = sft_step(before, examples, learning_rate=0.5)
+
+    assert len(examples) == 5
+    assert cross_entropy(after, examples) < cross_entropy(before, examples)
+    assert {item.state_id for item in examples} <= set(STATES)
+    assert {item.target_action for item in examples} <= set(ACTIONS)
+
+
+def test_preference_sources_match_task_context_state_and_action() -> None:
+    from chapter15.dataset import load_preference_sources
+
+    by_id = {record.trajectory_id: record for record in load_preference_sources()}
+    for pair in load_preference_pairs():
+        chosen, rejected = (by_id[key] for key in pair.source_trajectory_ids)
+        assert chosen.task_id == rejected.task_id
+        assert chosen.family_id == rejected.family_id
+        assert chosen.steps[-1].observation == rejected.steps[-1].observation
+        assert chosen.steps[-1].state_id == pair.chosen_state_id
+        assert rejected.steps[-1].state_id == pair.rejected_state_id
+        assert chosen.steps[-1].action == pair.chosen_action
+        assert rejected.steps[-1].action == pair.rejected_action
+
+
+@pytest.mark.parametrize("mutation,reason", [
+    ({"task_id": "unrelated-task"}, "preference_context_mismatch"),
+    ({"split": "eval"}, "preference_source_not_train"),
+    ({"accessed_hidden_answer": True}, "ineligible_preference_rejection"),
+    ({"contains_sensitive_data": True}, "ineligible_preference_rejection"),
+    ({"telemetry_complete": False}, "ineligible_preference_rejection"),
+])
+def test_preference_loader_rejects_forged_or_ineligible_sources(mutation, reason) -> None:
+    from chapter15.dataset import load_preference_sources
+
+    pair = load_preference_pairs()[0]
+    records = tuple(
+        replace(record, **mutation) if record.trajectory_id == pair.source_trajectory_ids[1] else record
+        for record in load_preference_sources()
     )
+    with pytest.raises(ValueError, match=reason):
+        load_preference_pairs(records=records)
+
+
+def test_preference_loader_rejects_action_not_observed_in_source() -> None:
+    from chapter15.dataset import load_preference_sources
+
+    pair = load_preference_pairs()[0]
+    records = tuple(
+        replace(record, steps=(replace(record.steps[-1], action="stop"),))
+        if record.trajectory_id == pair.source_trajectory_ids[1] else record
+        for record in load_preference_sources()
+    )
+    with pytest.raises(ValueError, match="preference_action_mismatch"):
+        load_preference_pairs(records=records)

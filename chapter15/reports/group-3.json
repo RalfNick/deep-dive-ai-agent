@@ -1,12 +1,26 @@
 {
+  "audited_batch": {
+    "example_count": 5,
+    "loss_after": 1.676679824205489,
+    "loss_before": 1.791759469228055,
+    "source_trajectory_ids": [
+      "traj-002",
+      "traj-007",
+      "traj-010",
+      "traj-011",
+      "traj-012"
+    ]
+  },
   "clean_demo": {
     "loss_after": 1.3944245460573657,
     "loss_before": 1.791759469228055,
+    "source_trajectory_id": "traj-010",
     "target_action": "read",
     "target_probability_after": 0.2479756939076066,
     "target_probability_before": 0.16666666666666666
   },
   "contaminated_demo": {
+    "injection": "changed_target_label_after_audit_for_ablation_only",
     "target_action": "modify_tests",
     "target_probability_after": 0.2479756939076066,
     "target_probability_before": 0.16666666666666666

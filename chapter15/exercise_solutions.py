@@ -95,7 +95,7 @@ def _exercise_4() -> dict[str, object]:
         "family_key": ["normalized_task_intent", "success_condition", "repository_family"],
         "isolation_unit": "repository_family",
         "reason": "同一仓库的模板、修复模式和测试结构高度相关，按记录随机切分会把近重复送到 eval",
-        "procedure": ["先分组", "组级分配 split", "计算语义家族摘要", "隔离跨 split 家族"],
+        "procedure": ["人工家族分组", "组级分配 split", "规范化文本指纹辅助与传递闭包", "隔离跨 split 家族", "抽样补查同义近重复"],
     }, status="answered", execution="design")
 
 

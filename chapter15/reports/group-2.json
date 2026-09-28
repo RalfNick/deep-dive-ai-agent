@@ -171,46 +171,47 @@
   },
   "group": 2,
   "name": "dataset_audit",
+  "redaction_preserves_source_quarantine": true,
   "supervised_examples": [
     {
       "example_id": "sft-traj-002",
       "retention_reason": "通过来源、切分、安全与遥测审计",
       "sample_weight": 1.0,
       "source_trajectory_id": "traj-002",
-      "state_id": "state-decision",
-      "target_action": "inspect"
+      "state_id": "needs_facts",
+      "target_action": "search"
     },
     {
       "example_id": "sft-traj-007",
       "retention_reason": "通过来源、切分、安全与遥测审计",
       "sample_weight": 1.0,
       "source_trajectory_id": "traj-007",
-      "state_id": "state-decision",
-      "target_action": "inspect"
+      "state_id": "tool_timeout",
+      "target_action": "retry"
     },
     {
       "example_id": "sft-traj-010",
       "retention_reason": "通过来源、切分、安全与遥测审计",
       "sample_weight": 1.0,
       "source_trajectory_id": "traj-010",
-      "state_id": "state-decision",
-      "target_action": "inspect"
+      "state_id": "write_requested",
+      "target_action": "read"
     },
     {
       "example_id": "sft-traj-011",
       "retention_reason": "通过来源、切分、安全与遥测审计",
       "sample_weight": 1.0,
       "source_trajectory_id": "traj-011",
-      "state_id": "state-decision",
-      "target_action": "inspect"
+      "state_id": "ready_to_finish",
+      "target_action": "stop"
     },
     {
       "example_id": "sft-traj-012",
       "retention_reason": "通过来源、切分、安全与遥测审计",
       "sample_weight": 1.0,
       "source_trajectory_id": "traj-012",
-      "state_id": "state-decision",
-      "target_action": "inspect"
+      "state_id": "write_requested",
+      "target_action": "read"
     }
   ],
   "title": "成功轨迹也可能不适合训练",

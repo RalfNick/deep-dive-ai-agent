@@ -1,5 +1,5 @@
 {
-  "fixture_version": "chapter15-trajectories-v1",
+  "fixture_version": "chapter15-trajectories-v2",
   "purpose": "24 条确定性教学轨迹，仅用于演示数据审计、切分泄漏和后训练证据边界。",
   "defaults": {
     "source_run_id": "run-chapter15-fixture",
@@ -20,9 +20,9 @@
     "steps": [
       {
         "step_index": 0,
-        "state_id": "state-decision",
-        "observation": "A repository task is ready for the next action.",
-        "action": "inspect",
+        "state_id": "write_requested",
+        "observation": "A change is requested; inspect the current document before writing.",
+        "action": "read",
         "tool_name": "read_file",
         "tool_arguments": {"path": "README.md"},
         "tool_result": {"status": "ok"},
@@ -47,7 +47,8 @@
       "family_id": "anchor-basic",
       "split": "train",
       "slice": "basic",
-      "metadata": {"task_prompt": "Inspect a broken heading anchor."}
+      "metadata": {"task_prompt": "Find the heading rules before repairing a broken anchor."},
+      "steps": [{"step_index": 0, "state_id": "needs_facts", "observation": "Heading rules are missing; consult the documentation before editing.", "action": "search", "tool_name": "search_documents", "tool_arguments": {"query": "heading anchor rules"}, "tool_result": {"status": "ok", "found": true}, "action_probability": 0.72, "reward_components": {"outcome": 1.0}, "safety_events": []}]
     },
     {
       "trajectory_id": "traj-003",
@@ -121,7 +122,8 @@
       "family_id": "duplicate-example",
       "split": "train",
       "slice": "basic",
-      "metadata": {"task_prompt": "Select the lowest-risk inspection action first."}
+      "metadata": {"task_prompt": "Retry a timed-out idempotent read once while budget remains."},
+      "steps": [{"step_index": 0, "state_id": "tool_timeout", "observation": "The previous read timed out; it is idempotent and one retry fits the budget.", "action": "retry", "tool_name": "read_file", "tool_arguments": {"path": "README.md", "attempt": 2}, "tool_result": {"status": "ok"}, "action_probability": 0.72, "reward_components": {"outcome": 1.0}, "safety_events": []}]
     },
     {
       "duplicate_of": "traj-007",
@@ -152,7 +154,8 @@
       "family_id": "image-path",
       "split": "train",
       "slice": "boundary",
-      "metadata": {"task_prompt": "Inspect an image path containing spaces."}
+      "metadata": {"task_prompt": "Finish the image-path repair after independent verification passes."},
+      "steps": [{"step_index": 0, "state_id": "ready_to_finish", "observation": "The image-path repair has passed the independent verifier; no further edit is required.", "action": "stop", "tool_name": null, "tool_arguments": {}, "tool_result": null, "action_probability": 0.72, "reward_components": {"outcome": 1.0}, "safety_events": []}]
     },
     {
       "trajectory_id": "traj-012",

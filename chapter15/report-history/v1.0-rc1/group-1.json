@@ -1,0 +1,89 @@
+{
+  "always_train_ablation": {
+    "incorrect_cases": 4,
+    "total_cases": 5
+  },
+  "decisions": [
+    {
+      "alternatives": [
+        "post_training"
+      ],
+      "confidence": "high",
+      "evidence_refs": [
+        "trace:refund-policy-old",
+        "ablation:refund-policy-context"
+      ],
+      "observation_id": "failure-missing-knowledge",
+      "reason_codes": [
+        "missing_facts_confirmed"
+      ],
+      "recommended": "rag_context"
+    },
+    {
+      "alternatives": [
+        "post_training"
+      ],
+      "confidence": "high",
+      "evidence_refs": [
+        "trace:secret-scan-unbounded",
+        "ablation:secret-scan-sandbox"
+      ],
+      "observation_id": "failure-permission-bypass",
+      "reason_codes": [
+        "deterministic_boundary_available"
+      ],
+      "recommended": "harness"
+    },
+    {
+      "alternatives": [
+        "post_training"
+      ],
+      "confidence": "high",
+      "evidence_refs": [
+        "annotation:database-cleanup-vague",
+        "ablation:database-cleanup-clarified"
+      ],
+      "observation_id": "failure-ambiguous-instruction",
+      "reason_codes": [
+        "instruction_ambiguity_unresolved"
+      ],
+      "recommended": "prompt_skill"
+    },
+    {
+      "alternatives": [
+        "post_training"
+      ],
+      "confidence": "high",
+      "evidence_refs": [
+        "eval:architecture-small-model",
+        "ablation:architecture-model-route"
+      ],
+      "observation_id": "failure-model-capacity",
+      "reason_codes": [
+        "model_capacity_gap_verified"
+      ],
+      "recommended": "model_route"
+    },
+    {
+      "alternatives": [
+        "prompt_skill",
+        "model_route"
+      ],
+      "confidence": "high",
+      "evidence_refs": [
+        "eval:tool-choice-family",
+        "trace:tool-choice-repeated"
+      ],
+      "observation_id": "failure-repeated-policy-bias",
+      "reason_codes": [
+        "policy_bias_repeats_across_tasks",
+        "reusable_supervision_available",
+        "counterfactuals_exhausted"
+      ],
+      "recommended": "post_training"
+    }
+  ],
+  "group": 1,
+  "name": "intervention_boundary",
+  "title": "失败不等于需要训练"
+}

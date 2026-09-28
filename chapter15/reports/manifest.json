@@ -6,34 +6,34 @@
       "sha256": "f8174ca493e4c1df6d4e481ed421ff096b28810da0037da033e8e4abb7413d40"
     },
     {
-      "bytes": 6699,
+      "bytes": 6734,
       "name": "group-2.json",
-      "sha256": "f1a599cfb8578f200551b938e31a8d79c91869b8fdf142925c3e30b365a20ee1"
+      "sha256": "6cbfed71c187c9602d7aa56a1a6191ce3379fbd83193115390c8bec442c44acc"
     },
     {
-      "bytes": 648,
+      "bytes": 1010,
       "name": "group-3.json",
-      "sha256": "d7cb73a9b47571cf6f3aabefe9d0a2bd43570221d57d88b184d10ffc1e0bdbc5"
+      "sha256": "9dffe418f2e7c40035674ca5901450bcfb7db7bc9d76e6df3d08acf22e819e36"
     },
     {
-      "bytes": 2590,
+      "bytes": 2803,
       "name": "group-4.json",
-      "sha256": "0b512d30cacd0a1b476c61cce5d24c5fe64bf125ce00eebea79986714bd5a749"
+      "sha256": "085647c76b5b41e2a38eb0ce8b23b60a8ce2558b28d6dc03a9fee77863737ef9"
     },
     {
-      "bytes": 8639,
+      "bytes": 18150,
       "name": "group-5.json",
-      "sha256": "e538cda697c62cddcdda7b1db9aa1d257a43f7ceaeb38e96466a7b69913c94f3"
+      "sha256": "fbd9c5cc6f6e57447b2ba54aa876363c7e0da03df2569432ada4ee1eb0e0400e"
     },
     {
-      "bytes": 17825,
+      "bytes": 28573,
       "name": "post-training-report.json",
-      "sha256": "11061e9929e3384f0ecedeff2f9b3d67777ea1668f47869246f1843dd91895f9"
+      "sha256": "bcbe5cec952c8e5e11de5481d68cd1165ef64db62c457743ffb05ae2b5c1e62e"
     },
     {
-      "bytes": 840,
+      "bytes": 1506,
       "name": "post-training-report.md",
-      "sha256": "e5a3cca65178989378c0d643e891009235ca97db3ed58894de7e02d08a17da8d"
+      "sha256": "4c3cc1220259a7b4279a067fd4b9f61000f44ffcf33ae9a552dde076280128e1"
     }
   ],
   "schema_version": "chapter15.artifact-manifest.v1"

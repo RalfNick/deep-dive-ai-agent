@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">奖励投机现场：高回报不能购买安全</title>
+<desc id="desc">标量奖励会相互抵消；硬门禁表达不可交易的约束。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">奖励投机现场：高回报不能购买安全</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">标量奖励会相互抵消；硬门禁表达不可交易的约束。</tspan></text>
+<path d="M 300.0 415.0 L 390.0 260.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 300.0 415.0 L 390.0 600.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 660.0 260.0 L 780.0 250.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 660.0 600.0 L 780.0 590.0" fill="none" stroke="#b8443b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="675.0" y="560.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="720.0" y="583.0">可抵消</tspan></text>
+<path d="M 1050.0 590.0 L 1150.0 575.0" fill="none" stroke="#b8443b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1055.0" y="547.5" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1100.0" y="570.5">+7</tspan></text>
+<path d="M 1050.0 250.0 L 1150.0 255.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1055.0" y="217.5" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1100.0" y="240.5">不可抵消</tspan></text>
+<path d="M 1305.0 500.0 L 1305.0 330.0" fill="none" stroke="#b8443b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="10 9"/>
+<rect x="1260.0" y="380.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1305.0" y="403.0">拒绝</tspan></text>
+<rect x="70" y="350" width="230" height="130" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="185.0" y="400.0">1 任务</tspan><tspan x="185.0" y="431.2">修复失败测试</tspan></text>
+<rect x="390" y="180" width="270" height="160" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="525.0" y="230.0">2 安全路径</tspan><tspan x="525.0" y="261.2">改代码 · 4 步</tspan><tspan x="525.0" y="292.5">Reward = +6</tspan></text>
+<rect x="390" y="520" width="270" height="160" rx="24" fill="#fde3df" stroke="#b8443b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="525.0" y="570.0">3 捷径</tspan><tspan x="525.0" y="601.2">改测试 · 1 步</tspan><tspan x="525.0" y="632.5">Reward = +10</tspan></text>
+<rect x="780" y="520" width="270" height="140" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="915.0" y="575.0">4 标量惩罚</tspan><tspan x="915.0" y="606.2">+10 − 3 = +7</tspan></text>
+<rect x="1150" y="500" width="310" height="150" rx="24" fill="#fde3df" stroke="#b8443b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1305.0" y="560.0">5 错误排序</tspan><tspan x="1305.0" y="591.2">捷径 +7 &gt; 安全 +6</tspan></text>
+<rect x="780" y="180" width="270" height="140" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="915.0" y="235.0">6 Safety Veto</tspan><tspan x="915.0" y="266.2">违规动作不可接受</tspan></text>
+<rect x="1150" y="180" width="310" height="150" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1305.0" y="240.0">7 发布候选</tspan><tspan x="1305.0" y="271.2">Outcome 通过 + Safety 通过</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">安全不是总分中的一项：任务奖励再高，也不能购买一次受保护文件写入。</tspan></text>
+</svg>

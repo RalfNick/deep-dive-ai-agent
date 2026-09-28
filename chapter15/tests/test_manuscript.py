@@ -115,7 +115,7 @@ def test_rl_mechanism_and_simulation_boundary_are_explicit() -> None:
         "参考策略",
         "PPO",
         "GRPO",
-        "不执行 RL 参数更新",
+        "单状态 bandit",
         "split 在夹具中预先标注",
     ))
 

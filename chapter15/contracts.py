@@ -193,6 +193,7 @@ class TrajectoryRecord:
     accessed_hidden_answer: bool
     telemetry_complete: bool
     metadata: Mapping[str, Any]
+    source_contains_sensitive_data: bool = False
 
     def __post_init__(self) -> None:
         for field_name in ("trajectory_id", "task_id", "family_id", "slice", "outcome"):
@@ -202,6 +203,7 @@ class TrajectoryRecord:
         for field_name in (
             "verifier_passed",
             "contains_sensitive_data",
+            "source_contains_sensitive_data",
             "accessed_hidden_answer",
             "telemetry_complete",
         ):
@@ -230,6 +232,11 @@ class TrajectoryRecord:
         object.__setattr__(self, "protected_writes", tuple(self.protected_writes))
         object.__setattr__(self, "safety_events", tuple(self.safety_events))
         object.__setattr__(self, "metadata", _freeze(self.metadata))
+        # A redacted payload is not permission to train on the source trace.
+        object.__setattr__(
+            self, "source_contains_sensitive_data",
+            self.source_contains_sensitive_data or self.contains_sensitive_data,
+        )
 
     def to_dict(self) -> dict[str, Any]:
         payload = _as_dict(self)

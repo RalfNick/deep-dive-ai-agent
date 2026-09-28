@@ -37,6 +37,51 @@ def test_nested_secrets_are_redacted_deterministically_before_serialization() ->
     assert redacted_a.transform_history[-1].startswith("redacted:")
 
 
+def test_redaction_does_not_launder_training_eligibility() -> None:
+    """Removing payload secrets must not erase the source quarantine."""
+    redacted = redact_record(_record("traj-003"), salt="chapter15-test-salt")
+    audit = audit_dataset((redacted,))
+
+    assert audit.eligible_ids == ()
+    assert audit.reason_counts["sensitive_data_detected"] == 1
+    assert build_supervised_examples(audit) == ()
+
+
+def test_redaction_of_clean_record_still_allows_training() -> None:
+    clean = redact_record(_record("traj-002"), salt="chapter15-test-salt")
+    audit = audit_dataset((clean,))
+
+    assert audit.eligible_ids == ("traj-002",)
+    assert len(build_supervised_examples(audit)) == 1
+
+
+def test_known_secret_found_in_unmarked_record_is_still_quarantined() -> None:
+    record = replace(_record("traj-002"), metadata={"api_key": "DEMO_SECRET_DO_NOT_USE"})
+    redacted = redact_record(record, salt="chapter15-test-salt")
+    audit = audit_dataset((redacted,))
+    assert redacted.source_contains_sensitive_data is True
+    assert audit.eligible_ids == ()
+
+
+def test_explicit_family_id_blocks_differently_worded_cross_split_tasks() -> None:
+    train = _record("traj-002")
+    evaluation = replace(_record("traj-018"), family_id=train.family_id)
+    audit = audit_dataset((train, evaluation))
+
+    assert audit.eligible_ids == ()
+    assert audit.reason_counts["cross_split_family_leakage"] == 2
+
+
+def test_family_and_text_matches_form_transitive_leakage_group() -> None:
+    train = _record("traj-002")
+    bridge = replace(_record("traj-010"), family_id=train.family_id)
+    evaluation = replace(_record("traj-018"), metadata=bridge.metadata)
+    audit = audit_dataset((train, bridge, evaluation))
+
+    assert audit.eligible_ids == ()
+    assert audit.reason_counts["cross_split_family_leakage"] == 3
+
+
 def test_hidden_answer_access_is_quarantined() -> None:
     audit = audit_dataset(load_trajectories())
 

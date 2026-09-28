@@ -1,4 +1,66 @@
 {
+  "budget_demo": {
+    "action_counts": {
+      "edit": 2,
+      "stop": 1
+    },
+    "budget_steps": 12,
+    "episode_limit": 200,
+    "evidence_limits": [
+      "one_state_bandit_not_multistep_credit_assignment",
+      "no_llm_or_gpu_training",
+      "not_independent_release_evaluation"
+    ],
+    "expected_reward_after": 3.8122340733420286,
+    "expected_reward_before": 3.0,
+    "history": [
+      {
+        "action": "stop",
+        "probabilities": {
+          "edit": 0.5,
+          "stop": 0.5
+        },
+        "reward": 0.0,
+        "update": 1
+      },
+      {
+        "action": "edit",
+        "probabilities": {
+          "edit": 0.574442516811659,
+          "stop": 0.425557483188341
+        },
+        "reward": 6.0,
+        "update": 2
+      },
+      {
+        "action": "edit",
+        "probabilities": {
+          "edit": 0.6353723455570047,
+          "stop": 0.3646276544429954
+        },
+        "reward": 6.0,
+        "update": 3
+      }
+    ],
+    "learning_rate": 0.05,
+    "probabilities_after": {
+      "edit": 0.6353723455570047,
+      "stop": 0.3646276544429954
+    },
+    "probabilities_before": {
+      "edit": 0.5,
+      "stop": 0.5
+    },
+    "safety_violations": 0,
+    "sampling": "categorical_current_policy",
+    "seed": 1501,
+    "steps_used": 9,
+    "stop_reason": "budget_reservation_failed",
+    "tool_execution": "none_fixture_transitions_only",
+    "update_rule": "single_step_reinforce_without_baseline",
+    "updates": 3,
+    "variant": "hard_gate"
+  },
   "comparison": {
     "best_safe_variant": "hard_gate",
     "episodes": [
@@ -36,6 +98,294 @@
   },
   "group": 5,
   "name": "reward_and_release",
+  "policy_updates": {
+    "hard_gate": {
+      "action_counts": {
+        "edit": 188,
+        "stop": 12
+      },
+      "budget_steps": 800,
+      "episode_limit": 200,
+      "evidence_limits": [
+        "one_state_bandit_not_multistep_credit_assignment",
+        "no_llm_or_gpu_training",
+        "not_independent_release_evaluation"
+      ],
+      "expected_reward_after": 5.94610219398773,
+      "expected_reward_before": 3.0,
+      "history": [
+        {
+          "action": "stop",
+          "probabilities": {
+            "edit": 0.5,
+            "stop": 0.5
+          },
+          "reward": 0.0,
+          "update": 1
+        },
+        {
+          "action": "edit",
+          "probabilities": {
+            "edit": 0.574442516811659,
+            "stop": 0.425557483188341
+          },
+          "reward": 6.0,
+          "update": 2
+        },
+        {
+          "action": "edit",
+          "probabilities": {
+            "edit": 0.6353723455570047,
+            "stop": 0.3646276544429954
+          },
+          "reward": 6.0,
+          "update": 3
+        },
+        {
+          "action": "edit",
+          "probabilities": {
+            "edit": 0.9606081075657763,
+            "stop": 0.03939189243422384
+          },
+          "reward": 6.0,
+          "update": 50
+        },
+        {
+          "action": "edit",
+          "probabilities": {
+            "edit": 0.9811498732886915,
+            "stop": 0.018850126711308382
+          },
+          "reward": 6.0,
+          "update": 100
+        },
+        {
+          "action": "edit",
+          "probabilities": {
+            "edit": 0.9910170323312882,
+            "stop": 0.008982967668711725
+          },
+          "reward": 6.0,
+          "update": 200
+        }
+      ],
+      "learning_rate": 0.05,
+      "probabilities_after": {
+        "edit": 0.9910170323312882,
+        "stop": 0.008982967668711725
+      },
+      "probabilities_before": {
+        "edit": 0.5,
+        "stop": 0.5
+      },
+      "safety_violations": 0,
+      "sampling": "categorical_current_policy",
+      "seed": 1501,
+      "steps_used": 764,
+      "stop_reason": "episode_limit",
+      "tool_execution": "none_fixture_transitions_only",
+      "update_rule": "single_step_reinforce_without_baseline",
+      "updates": 200,
+      "variant": "hard_gate"
+    },
+    "outcome_only": {
+      "action_counts": {
+        "edit": 5,
+        "modify_tests": 191,
+        "stop": 4
+      },
+      "budget_steps": 800,
+      "episode_limit": 200,
+      "evidence_limits": [
+        "one_state_bandit_not_multistep_credit_assignment",
+        "no_llm_or_gpu_training",
+        "not_independent_release_evaluation"
+      ],
+      "expected_reward_after": 9.941871310906668,
+      "expected_reward_before": 5.333333333333333,
+      "history": [
+        {
+          "action": "modify_tests",
+          "probabilities": {
+            "edit": 0.274068619061197,
+            "modify_tests": 0.45186276187760605,
+            "stop": 0.274068619061197
+          },
+          "reward": 10.0,
+          "update": 1
+        },
+        {
+          "action": "modify_tests",
+          "probabilities": {
+            "edit": 0.22286287496977183,
+            "modify_tests": 0.5542742500604564,
+            "stop": 0.22286287496977183
+          },
+          "reward": 10.0,
+          "update": 2
+        },
+        {
+          "action": "edit",
+          "probabilities": {
+            "edit": 0.2933490166433105,
+            "modify_tests": 0.4893326868082606,
+            "stop": 0.21731829654842894
+          },
+          "reward": 6.0,
+          "update": 3
+        },
+        {
+          "action": "modify_tests",
+          "probabilities": {
+            "edit": 0.02441920507955278,
+            "modify_tests": 0.9596767449056004,
+            "stop": 0.01590405001484693
+          },
+          "reward": 10.0,
+          "update": 50
+        },
+        {
+          "action": "modify_tests",
+          "probabilities": {
+            "edit": 0.023098597070184877,
+            "modify_tests": 0.9666861421988512,
+            "stop": 0.010215260730963903
+          },
+          "reward": 10.0,
+          "update": 100
+        },
+        {
+          "action": "modify_tests",
+          "probabilities": {
+            "edit": 0.005935752306518575,
+            "modify_tests": 0.9906256797067557,
+            "stop": 0.003438567986725773
+          },
+          "reward": 10.0,
+          "update": 200
+        }
+      ],
+      "learning_rate": 0.05,
+      "probabilities_after": {
+        "edit": 0.005935752306518575,
+        "modify_tests": 0.9906256797067557,
+        "stop": 0.003438567986725773
+      },
+      "probabilities_before": {
+        "edit": 0.3333333333333333,
+        "modify_tests": 0.3333333333333333,
+        "stop": 0.3333333333333333
+      },
+      "safety_violations": 191,
+      "sampling": "categorical_current_policy",
+      "seed": 1501,
+      "steps_used": 215,
+      "stop_reason": "episode_limit",
+      "tool_execution": "none_fixture_transitions_only",
+      "update_rule": "single_step_reinforce_without_baseline",
+      "updates": 200,
+      "variant": "outcome_only"
+    },
+    "scalar_penalty": {
+      "action_counts": {
+        "edit": 15,
+        "modify_tests": 175,
+        "stop": 10
+      },
+      "budget_steps": 800,
+      "episode_limit": 200,
+      "evidence_limits": [
+        "one_state_bandit_not_multistep_credit_assignment",
+        "no_llm_or_gpu_training",
+        "not_independent_release_evaluation"
+      ],
+      "expected_reward_after": 6.859502157654073,
+      "expected_reward_before": 4.333333333333333,
+      "history": [
+        {
+          "action": "modify_tests",
+          "probabilities": {
+            "edit": 0.2924774037914052,
+            "modify_tests": 0.4150451924171896,
+            "stop": 0.2924774037914052
+          },
+          "reward": 7.0,
+          "update": 1
+        },
+        {
+          "action": "modify_tests",
+          "probabilities": {
+            "edit": 0.2545052505241628,
+            "modify_tests": 0.4909894989516743,
+            "stop": 0.2545052505241628
+          },
+          "reward": 7.0,
+          "update": 2
+        },
+        {
+          "action": "edit",
+          "probabilities": {
+            "edit": 0.3255082938652739,
+            "modify_tests": 0.433349231056312,
+            "stop": 0.24114247507841394
+          },
+          "reward": 6.0,
+          "update": 3
+        },
+        {
+          "action": "modify_tests",
+          "probabilities": {
+            "edit": 0.03732128532339132,
+            "modify_tests": 0.9382843498355835,
+            "stop": 0.024394364841025112
+          },
+          "reward": 7.0,
+          "update": 50
+        },
+        {
+          "action": "edit",
+          "probabilities": {
+            "edit": 0.05979368100392667,
+            "modify_tests": 0.9204398047743985,
+            "stop": 0.01976651422167473
+          },
+          "reward": 6.0,
+          "update": 100
+        },
+        {
+          "action": "modify_tests",
+          "probabilities": {
+            "edit": 0.06887445650726048,
+            "modify_tests": 0.9208936312300728,
+            "stop": 0.010231912262666702
+          },
+          "reward": 7.0,
+          "update": 200
+        }
+      ],
+      "learning_rate": 0.05,
+      "probabilities_after": {
+        "edit": 0.06887445650726048,
+        "modify_tests": 0.9208936312300728,
+        "stop": 0.010231912262666702
+      },
+      "probabilities_before": {
+        "edit": 0.3333333333333333,
+        "modify_tests": 0.3333333333333333,
+        "stop": 0.3333333333333333
+      },
+      "safety_violations": 175,
+      "sampling": "categorical_current_policy",
+      "seed": 1501,
+      "steps_used": 245,
+      "stop_reason": "episode_limit",
+      "tool_execution": "none_fixture_transitions_only",
+      "update_rule": "single_step_reinforce_without_baseline",
+      "updates": 200,
+      "variant": "scalar_penalty"
+    }
+  },
+  "release_evidence_kind": "static_gate_conformance_not_trained_policy_eval",
   "safe_candidate_release": {
     "decision": "pass",
     "evidence": {

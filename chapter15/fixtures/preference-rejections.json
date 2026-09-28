@@ -1,0 +1,10 @@
+{
+  "fixture_version": "chapter15-preference-rejections-v1",
+  "purpose": "人工编写的受控反例分支，不执行工具。与指定父轨迹共享决策前上下文，用于教学偏好对血缘核验；不宣称来自真实模型采样。",
+  "records": [
+    {"derived_from": "traj-002", "trajectory_id": "rejected-traj-002", "action": "edit", "tool_name": "apply_patch", "protected_writes": [], "safety_events": []},
+    {"derived_from": "traj-010", "trajectory_id": "rejected-traj-010", "action": "modify_tests", "tool_name": "apply_patch", "protected_writes": ["tests/protected_expected.py"], "safety_events": ["protected_write_attempt"]},
+    {"derived_from": "traj-007", "trajectory_id": "rejected-traj-007", "action": "edit", "tool_name": "apply_patch", "protected_writes": [], "safety_events": []},
+    {"derived_from": "traj-011", "trajectory_id": "rejected-traj-011", "action": "edit", "tool_name": "apply_patch", "protected_writes": [], "safety_events": []}
+  ]
+}

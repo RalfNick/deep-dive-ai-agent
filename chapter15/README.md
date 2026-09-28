@@ -2,7 +2,7 @@
 
 配套正文：[Agent 的后训练：什么时候 Prompt 已经不够](../book/chapter15.md)。
 
-这是《深入浅出 AI Agent》第 15 章的自包含教学工程。它用五类失败、24 条确定性轨迹、有限状态动作策略和 200 次固定模拟，回答三个问题：什么时候不该训练，怎样把 Trace 变成可信学习数据，以及为什么安全门禁不能被结果分或效率抵消。
+这是《深入浅出 AI Agent》第 15 章的自包含教学工程。它用五类失败、24 条确定性轨迹、有限状态动作策略、固定回放和单状态奖励更新，回答什么时候不该训练、怎样把 Trace 变成可信数据，以及为什么安全门禁不能被结果分抵消。当前为本地 `v1.0-rc2` 候选，未发布。
 
 本实验包验证的是数据与发布机制，不是模型排行榜。它不会下载模型、读取 API Key、访问网络或启动 GPU 训练。
 
@@ -53,7 +53,11 @@ python -B -m chapter15.preview
 4. `model_capacity_gap_verified`：先验证模型路由；
 5. `policy_bias_repeats_across_tasks` 且上游反事实均排除：才进入后训练候选。
 
-数据审计中的 `protected_write`、`hidden_answer_access`、`missing_tool_result`、敏感内容、未知来源、重复和跨 split 泄漏是隔离原因，不应通过修改最终 outcome 来“洗白”。实验 15-5 中 outcome-only 和 scalar-penalty 成功率同为 100%，但各有 200 次安全违规；只有 hard gate 保持 0 次违规。
+数据审计中的 `protected_write`、`hidden_answer_access`、`missing_tool_result`、敏感内容、未知来源、重复和跨 split 泄漏是隔离原因，不应通过修改 outcome 或清零脱敏后的载荷标记来“洗白”。审计同时检查原始敏感标记、人工 `family_id` 和规范化文本指纹；该指纹不是语义相似度模型。
+
+实验 15-3 消费审计生成的 5 条 train 样本；污染示范是审计后的明确标签故障注入。15-4 核验 chosen 和人工 rejected 分支的任务、上下文、状态、动作与数据用途；后者不执行工具，手算概率不冒充模型测量。
+
+15-5 的 `variants` 是静态对照：前两种奖励各有 200 次违规。`policy_updates` 才是固定种子的 200 次单状态策略更新，探索期间违规次数分别为 191、175、0；`budget_demo` 在 12 步总预算下只更新 3 次、消耗 9 步。两者不能混为成功率比较，报告的 pass 仅验证静态门禁合同，不是学后独立评测或真实模型发布许可。
 
 ## 代码阅读顺序
 
@@ -61,7 +65,7 @@ python -B -m chapter15.preview
 2. `contracts.py`：轨迹、偏好、奖励与报告合同；
 3. `dataset.py`、`audit.py`：夹具、脱敏、隔离、切分与 SFT 样本；
 4. `policy.py`、`objectives.py`：有限策略、交叉熵和 DPO 手算；
-5. `simulator.py`：奖励投机、切片指标和发布门禁；
+5. `reinforcement.py` 与 `simulator.py`：奖励驱动更新、预算，以及单独的静态对照和门禁；
 6. `experiments.py`：五组实验与稳定产物；
 7. `tests/`：可以执行的章节论证边界。
 
@@ -80,6 +84,8 @@ python -B -m chapter15.exercise_solutions `
 真实模型迁移前请阅读 [真实训练迁移指南](real-training-guide.md)；资料核对和固定来源见 [第 15 章来源台账](../book/sources/chapter15-sources.md)。
 
 ## 证据边界
+
+规范报告采用 `chapter15.post-training.v2`；[RC1 报告](report-history/v1.0-rc1/post-training-report.md)与 `schemas/post-training-report-v1.schema.json` 保留，不改写旧结果。
 
 - 24 条轨迹和 200 次 episode 都是确定性教学夹具，不代表生产分布；
 - 有限状态动作策略不是 Transformer，也没有执行真实模型训练；

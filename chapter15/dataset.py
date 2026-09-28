@@ -61,6 +61,9 @@ def _record_from_dict(payload: Mapping[str, Any]) -> TrajectoryRecord:
         accessed_hidden_answer=payload["accessed_hidden_answer"],
         telemetry_complete=payload["telemetry_complete"],
         metadata=payload["metadata"],
+        source_contains_sensitive_data=payload.get(
+            "source_contains_sensitive_data", payload["contains_sensitive_data"]
+        ),
     )
 
 
@@ -101,6 +104,37 @@ def load_trajectories(path: Path | None = None) -> tuple[TrajectoryRecord, ...]:
     return records
 
 
+def load_preference_sources() -> tuple[TrajectoryRecord, ...]:
+    """Add explicit, authored rejected branches without executing their tools.
+
+    The 24-record SFT corpus is unchanged in size. These four branches belong
+    to the preference fixture only and retain their audited parent context.
+    """
+    records = load_trajectories()
+    by_id = {record.trajectory_id: record for record in records}
+    payload = json.loads(
+        (DEFAULT_TRAJECTORIES.parent / "preference-rejections.json").read_text(encoding="utf-8")
+    )
+    branches = []
+    for item in payload["records"]:
+        parent = by_id[item["derived_from"]]
+        decision = replace(
+            parent.steps[-1], action=item["action"], tool_name=item["tool_name"],
+            tool_arguments={"fixture_only": True},
+            tool_result={"status": "controlled_rejected_branch", "executed": False},
+            action_probability=None, reward_components={}, safety_events=tuple(item["safety_events"]),
+        )
+        branches.append(replace(
+            parent, trajectory_id=item["trajectory_id"], steps=(decision,),
+            source_run_id=f"controlled-branch-{parent.trajectory_id}",
+            outcome="failure", verifier_passed=False,
+            protected_writes=tuple(item["protected_writes"]), safety_events=tuple(item["safety_events"]),
+            transform_history=parent.transform_history + ("authored_rejected_branch",),
+            metadata={**parent.metadata, "derived_from": parent.trajectory_id, "fixture_kind": "authored_counterexample"},
+        ))
+    return records + tuple(branches)
+
+
 def _redaction_marker(value: Any, salt: str) -> str:
     canonical = json.dumps(value, ensure_ascii=False, sort_keys=True, default=str)
     digest = hashlib.sha256(f"{salt}:{canonical}".encode("utf-8")).hexdigest()[:12]
@@ -120,7 +154,11 @@ def _redact_value(value: Any, *, salt: str, key: str | None = None) -> Any:
 
 
 def redact_record(record: TrajectoryRecord, *, salt: str) -> TrajectoryRecord:
-    """Return a redacted copy without exposing the salt or original values."""
+    """Remove known payload secrets, retaining source quarantine evidence.
+
+    This narrow fixture sanitizer is not a production PII detector or a
+    data-eligibility approval workflow.
+    """
 
     if not isinstance(salt, str) or not salt:
         raise ValueError("missing_redaction_salt")
@@ -134,6 +172,8 @@ def redact_record(record: TrajectoryRecord, *, salt: str) -> TrajectoryRecord:
         for step in record.steps
     )
     redacted_metadata = _redact_value(record.metadata, salt=salt)
+    original_payload = record.to_dict()
+    detected = _redact_value(original_payload, salt=salt) != original_payload
     digest = hashlib.sha256(
         json.dumps(redacted_metadata, ensure_ascii=False, sort_keys=True).encode("utf-8")
     ).hexdigest()[:12]
@@ -142,5 +182,6 @@ def redact_record(record: TrajectoryRecord, *, salt: str) -> TrajectoryRecord:
         steps=steps,
         metadata=redacted_metadata,
         contains_sensitive_data=False,
+        source_contains_sensitive_data=record.source_contains_sensitive_data or detected,
         transform_history=record.transform_history + (f"redacted:{digest}",),
     )

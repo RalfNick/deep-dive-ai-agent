@@ -56,13 +56,13 @@ def _intervention_tree() -> Scene:
 
 def _data_factory() -> Scene:
     nodes = (
-        Node("trace", "1 Raw Trace\n结果 + 过程 + 来源", 70, 350, 230, 140, "blue"),
+        Node("trace", "1 Raw Trace\n结果 · 过程\n来源", 70, 350, 230, 140, "blue"),
         Node("normalize", "2 Normalize\n结构与状态对齐", 360, 220, 250, 120, "green"),
-        Node("redact", "3 Redact\n凭据与身份脱敏", 360, 510, 250, 120, "violet"),
-        Node("audit", "4 Audit\n回执 · 越界 · 隐藏答案", 700, 340, 300, 150, "orange"),
-        Node("dedupe", "5 Dedupe\n精确 + 语义家族", 1080, 190, 250, 120, "yellow"),
-        Node("split", "6 Split\nTrain / Val / Eval", 1080, 510, 250, 120, "blue"),
-        Node("samples", "7 Samples\nSFT / Preference / Reward", 1380, 350, 180, 150, "green", "check-box"),
+        Node("redact", "3 Redact\n移除载荷\n保留原始敏感标记", 360, 510, 250, 140, "violet"),
+        Node("audit", "4 Audit\n回执 · 安全\n隐藏答案", 700, 340, 300, 150, "orange"),
+        Node("dedupe", "5 Dedupe\n家族 ID + 文本指纹", 1080, 190, 250, 120, "yellow"),
+        Node("split", "6 Split Check\n复查预置切分", 1080, 510, 250, 120, "blue"),
+        Node("samples", "7 Samples\nSFT · 偏好\n奖励数据", 1380, 350, 180, 150, "green", "check-box"),
     )
     edges = (
         Edge("e1", "trace", "normalize"), Edge("e2", "trace", "redact"),
@@ -104,17 +104,17 @@ def _objective_map() -> Scene:
 
 def _sft_shift() -> Scene:
     nodes = (
-        Node("state", "1 State\nwrite_requested", 80, 350, 250, 130, "blue"),
-        Node("clean", "2 干净示范\nTarget = read", 420, 190, 260, 130, "green"),
-        Node("bad", "3 污染示范\nTarget = modify_tests", 420, 520, 260, 130, "red"),
-        Node("ce", "4 Cross Entropy\n提高目标动作概率", 800, 350, 300, 150, "violet"),
-        Node("read_up", "5 P(read) ↑\n安全信息先补齐", 1190, 200, 280, 130, "green", "check-box"),
-        Node("hack_up", "6 P(modify_tests) ↑\n捷径同样被复制", 1190, 530, 280, 130, "red", "x-box"),
+        Node("state", "1 write_requested\n初始分布\nread = 0.166667\nmodify_tests = 0.166667\n其余 4 动作各 0.166667", 70, 300, 370, 290, "blue"),
+        Node("clean", "2 审计通过的 traj-010\nTarget = read", 560, 200, 340, 150, "green"),
+        Node("bad", "3 故障注入：篡改标签\nTarget = modify_tests", 560, 500, 340, 150, "red"),
+        Node("read_up", "4 一步更新后\nP(read) = 0.247976\n其余 5 动作各 0.150405", 1080, 180, 450, 200, "green", "check-box"),
+        Node("hack_up", "5 一步更新后\nP(modify_tests) = 0.247976\n其余 5 动作各 0.150405", 1080, 460, 450, 200, "red", "x-box"),
+        Node("unseen", "6 未覆盖状态：P(retry | tool_timeout) 仍为 0.166667\n本表策略不共享状态参数；不能外推神经网络的泛化", 460, 700, 1030, 100, "violet"),
     )
     edges = (
         Edge("e1", "state", "clean"), Edge("e2", "state", "bad"),
-        Edge("e3", "clean", "ce"), Edge("e4", "bad", "ce"),
-        Edge("e5", "ce", "read_up", "好数据"), Edge("e6", "ce", "hack_up", "坏数据", "red"),
+        Edge("e3", "clean", "read_up", "交叉熵 · lr = 0.5"),
+        Edge("e4", "bad", "hack_up", "相同更新规则", "red"),
     )
     return Scene(
         APPROVED_DIAGRAMS[3][0], APPROVED_DIAGRAMS[3][1],
@@ -129,7 +129,7 @@ def _dpo_pair() -> Scene:
         Node("state", "1 同一 State\nwrite_requested", 80, 350, 250, 130, "blue"),
         Node("chosen", "2 Chosen\nread\nlog π = -0.8", 420, 180, 250, 150, "green"),
         Node("rejected", "3 Rejected\nmodify_tests\nlog π = -1.2", 420, 530, 250, 150, "red"),
-        Node("reference", "4 Reference\n间隔 = 0.1", 790, 180, 260, 130, "yellow"),
+        Node("reference", "4 Reference log πref\nread: -1.0\nmodify_tests: -1.1\n间隔 = 0.1", 730, 160, 380, 200, "yellow"),
         Node("candidate", "5 Candidate\n间隔 = 0.4", 790, 530, 260, 130, "violet"),
         Node("margin", "6 β = 0.5\nDPO margin = 0.15", 1160, 260, 300, 140, "orange"),
         Node("loss", "7 Loss ≈ 0.620957\n扩大相对偏好", 1160, 520, 300, 140, "green", "check-box"),

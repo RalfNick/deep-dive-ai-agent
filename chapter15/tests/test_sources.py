@@ -7,7 +7,7 @@ import re
 ROOT = Path(__file__).resolve().parents[2]
 LEDGER = ROOT / "book" / "sources" / "chapter15-sources.md"
 GUIDE = ROOT / "chapter15" / "real-training-guide.md"
-VERIFIED_DATE = "2026-09-27"
+VERIFIED_DATES = ("2026-09-27", "2026-09-28")
 
 
 def _entries(text: str) -> dict[str, str]:
@@ -48,7 +48,7 @@ def test_every_entry_has_complete_claim_and_expiry_metadata() -> None:
         assert "- 标题：" in body, entry_id
         assert re.search(r"- URL：https://\S+", body), entry_id
         assert re.search(r"- 类型：(论文原文|官方文档|官方仓库|本地实验)", body), entry_id
-        assert f"- 核对日期：{VERIFIED_DATE}" in body, entry_id
+        assert any(f"- 核对日期：{date}" in body for date in VERIFIED_DATES), entry_id
         assert "- 用于：" in body, entry_id
         assert "- 不用于/过期边界：" in body, entry_id
 
@@ -76,7 +76,7 @@ def test_ledger_distinguishes_local_evidence_from_external_claims() -> None:
     entries = _entries(text)
 
     assert "local-post-training-report" in entries
-    assert "chapter15.post-training.v1" in entries["local-post-training-report"]
+    assert "chapter15.post-training.v2" in entries["local-post-training-report"]
     assert "有限动作" in entries["local-post-training-report"]
     assert "不代表真实大模型训练" in entries["local-post-training-report"]
     assert "论文中的结果没有在本仓库复现" in text

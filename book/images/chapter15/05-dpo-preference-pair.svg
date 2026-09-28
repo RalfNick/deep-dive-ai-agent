@@ -10,9 +10,9 @@
 <text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">偏好比较必须来自同一状态，参考策略用于衡量相对漂移。</tspan></text>
 <path d="M 330.0 415.0 L 420.0 255.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
 <path d="M 330.0 415.0 L 420.0 605.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
-<path d="M 670.0 255.0 L 790.0 245.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 670.0 255.0 L 730.0 260.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
 <path d="M 670.0 605.0 L 790.0 595.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
-<path d="M 1050.0 245.0 L 1160.0 330.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1110.0 260.0 L 1160.0 330.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
 <path d="M 1050.0 595.0 L 1160.0 330.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
 <path d="M 1310.0 400.0 L 1310.0 520.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
 <rect x="80" y="350" width="250" height="130" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
@@ -21,8 +21,8 @@
 <text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="545.0" y="225.0">2 Chosen</tspan><tspan x="545.0" y="256.2">read</tspan><tspan x="545.0" y="287.5">log π = -0.8</tspan></text>
 <rect x="420" y="530" width="250" height="150" rx="24" fill="#fde3df" stroke="#b8443b" stroke-width="4"/>
 <text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="545.0" y="575.0">3 Rejected</tspan><tspan x="545.0" y="606.2">modify_tests</tspan><tspan x="545.0" y="637.5">log π = -1.2</tspan></text>
-<rect x="790" y="180" width="260" height="130" rx="24" fill="#fff7c9" stroke="#9d7510" stroke-width="4"/>
-<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="920.0" y="230.0">4 Reference</tspan><tspan x="920.0" y="261.2">间隔 = 0.1</tspan></text>
+<rect x="730" y="160" width="380" height="200" rx="24" fill="#fff7c9" stroke="#9d7510" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="920.0" y="215.0">4 Reference log πref</tspan><tspan x="920.0" y="246.2">read: -1.0</tspan><tspan x="920.0" y="277.5">modify_tests: -1.1</tspan><tspan x="920.0" y="308.8">间隔 = 0.1</tspan></text>
 <rect x="790" y="530" width="260" height="130" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
 <text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="920.0" y="580.0">5 Candidate</tspan><tspan x="920.0" y="611.2">间隔 = 0.4</tspan></text>
 <rect x="1160" y="260" width="300" height="140" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>

@@ -1,6 +1,6 @@
 # 第 15 章来源台账
 
-本文件记录《深入浅出 AI Agent》第 15 章使用的一手论文、官方文档与本地证据。统一核对日期：**2026-09-27**。
+本文件记录《深入浅出 AI Agent》第 15 章使用的一手论文、官方文档与本地证据。基础来源核对日期：**2026-09-27**；RC2 新增资料与本地证据核对日期：**2026-09-28**，详见各条目。
 
 正文中的 24 条轨迹、12 条隔离记录、SFT/DPO 手算值和三种奖励变体全部来自本仓库确定性实验。论文中的结果没有在本仓库复现；产品文档只用于解释核对日可见的概念与迁移边界，不证明本项目兼容对应平台。
 
@@ -11,8 +11,8 @@
 - 标题：Chapter 15 deterministic post-training report
 - URL：https://github.com/RalfNick/deep-dive-ai-agent
 - 类型：本地实验
-- 核对日期：2026-09-27
-- 用于：`chapter15.post-training.v1` 报告、24 条固定轨迹、数据隔离、有限动作 SFT/DPO、奖励投机与安全门禁数字；仓库内实际来源是 `chapter15/reports/post-training-report.json`。
+- 核对日期：2026-09-28
+- 用于：`chapter15.post-training.v2` 报告、24 条固定轨迹、审计到 SFT 的链路、同上下文 DPO 来源、单状态奖励更新、静态投机与安全门禁数字；仓库内实际来源是 `chapter15/reports/post-training-report.json`。RC1/v1 报告另存于 `chapter15/report-history/v1.0-rc1/`。
 - 不用于/过期边界：有限动作模拟不代表真实大模型训练，不提供 Provider、GPU、Token、费用或模型能力结论；候选章节尚未发布到远端默认分支。
 
 ## 指令微调、偏好与 AI 反馈
@@ -158,7 +158,45 @@
 - 用于：说明训练/评测重叠会削弱评测解释，污染检测本身也需要方法假设；支持按任务家族隔离 split。
 - 不用于/过期边界：论文对特定模型与 Benchmark 的发现不能外推为本项目使用的模型已经污染；本章只验证本地重复与家族泄漏规则。
 
-## 更新规则
+## RC2 参数高效训练资料
+
+### reinforce-paper
+
+- 标题：Simple statistical gradient-following algorithms for connectionist reinforcement learning
+- URL：https://doi.org/10.1007/BF00992696
+- 类型：论文原文
+- 核对日期：2026-09-28
+- 用于：从采样回报更新随机策略的 REINFORCE 思路。本章的 softmax 手算由该思路简化为单状态、即时奖励。
+- 不用于/过期边界：不据此保证单个种子收敛，不声称本章实现多步 Agent RL、优势估计、KL、PPO 或 GRPO。
+
+### hf-peft-lora
+
+- 标题：LoRA — PEFT conceptual guide
+- URL：https://huggingface.co/docs/peft/main/en/conceptual_guides/lora
+- 类型：官方文档（main 分支页面；只使用概念与字段，不据此固定可运行版本）
+- 核对日期：2026-09-28
+- 用于：冻结基础权重、低秩适配器与 `r`、`target_modules`、`lora_alpha`、`bias` 的含义。
+- 不用于/过期边界：不保证任意模型都有相同模块名或 adapter 足以拟合任务；本项目未执行 PEFT。
+
+### qlora-paper
+
+- 标题：QLoRA: Efficient Finetuning of Quantized LLMs
+- URL：https://arxiv.org/abs/2305.14314
+- 类型：论文原文
+- 核对日期：2026-09-28
+- 用于：量化、冻结基础模型并训练低秩适配器的思路；不是把所有训练状态降成 4 bit。
+- 不用于/过期边界：论文硬件与模型成绩不作为本项目预算或效果保证。
+
+### hf-bitsandbytes
+
+- 标题：Bitsandbytes — Transformers
+- URL：https://huggingface.co/docs/transformers/main/en/quantization/bitsandbytes
+- 类型：官方文档（main 分支概念参考）
+- 核对日期：2026-09-28
+- 用于：权重量化、计算 dtype 与额外参数训练的边界；显存算术是本指南明确假设下的自算草图。
+- 不用于/过期边界：未安装或验证硬件后端，不提供“某张显卡肯定够”的承诺；实际实施应改用固定版本文档与实测峰值。
+
+## 台账维护规则
 
 1. 产品能力只在 2026-09-27 的官方页面状态下成立；发布前必须重新核对 deprecation、版本、许可和访问范围。
 2. 不用二手博客证明 API 字段、价格、模型白名单、硬件需求或合规承诺。

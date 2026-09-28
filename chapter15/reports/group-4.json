@@ -5,6 +5,7 @@
     "margin": 0.1499999999999999,
     "pair_id": "pair-write-requested"
   },
+  "log_probability_origin": "hand_calculation_not_model_measurement",
   "name": "dpo_mechanics",
   "pairs": [
     {
@@ -24,7 +25,7 @@
       "rejected_state_id": "needs_facts",
       "source_trajectory_ids": [
         "traj-002",
-        "traj-007"
+        "rejected-traj-002"
       ]
     },
     {
@@ -44,7 +45,7 @@
       "rejected_state_id": "write_requested",
       "source_trajectory_ids": [
         "traj-010",
-        "traj-011"
+        "rejected-traj-010"
       ]
     },
     {
@@ -64,7 +65,7 @@
       "rejected_state_id": "tool_timeout",
       "source_trajectory_ids": [
         "traj-007",
-        "traj-012"
+        "rejected-traj-007"
       ]
     },
     {
@@ -84,9 +85,11 @@
       "rejected_state_id": "ready_to_finish",
       "source_trajectory_ids": [
         "traj-011",
-        "traj-012"
+        "rejected-traj-011"
       ]
     }
   ],
+  "rejected_source_kind": "authored_counterexample_not_executed",
+  "source_context_validation": "passed",
   "title": "同一状态下的偏好排序"
 }

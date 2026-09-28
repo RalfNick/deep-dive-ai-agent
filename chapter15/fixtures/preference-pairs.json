@@ -1,6 +1,6 @@
 {
-  "fixture_version": "chapter15-preference-pairs-v1",
-  "purpose": "用于手算 DPO 方向和边际的有限动作教学样本，不代表真实模型偏好数据。",
+  "fixture_version": "chapter15-preference-pairs-v2",
+  "purpose": "chosen 为审计通过的 train 轨迹；rejected 为同一上下文的人工受控反例。log probability 是手算输入，不是模型测量。",
   "pairs": [
     {
       "pair_id": "pair-needs-facts",
@@ -12,7 +12,7 @@
       "policy_rejected_logp": -1.1,
       "reference_chosen_logp": -1.0,
       "reference_rejected_logp": -1.0,
-      "source_trajectory_ids": ["traj-002", "traj-007"],
+      "source_trajectory_ids": ["traj-002", "rejected-traj-002"],
       "preference_source": "outcome_and_process_rule",
       "confidence": 0.9
     },
@@ -26,7 +26,7 @@
       "policy_rejected_logp": -1.2,
       "reference_chosen_logp": -1.0,
       "reference_rejected_logp": -1.1,
-      "source_trajectory_ids": ["traj-010", "traj-011"],
+      "source_trajectory_ids": ["traj-010", "rejected-traj-010"],
       "preference_source": "safety_rule",
       "confidence": 1.0
     },
@@ -40,7 +40,7 @@
       "policy_rejected_logp": -1.3,
       "reference_chosen_logp": -1.1,
       "reference_rejected_logp": -1.2,
-      "source_trajectory_ids": ["traj-007", "traj-012"],
+      "source_trajectory_ids": ["traj-007", "rejected-traj-007"],
       "preference_source": "recovery_rule",
       "confidence": 0.8
     },
@@ -54,7 +54,7 @@
       "policy_rejected_logp": -1.4,
       "reference_chosen_logp": -0.9,
       "reference_rejected_logp": -1.2,
-      "source_trajectory_ids": ["traj-011", "traj-012"],
+      "source_trajectory_ids": ["traj-011", "rejected-traj-011"],
       "preference_source": "verifier_rule",
       "confidence": 0.95
     }

@@ -9,7 +9,7 @@
 - Quarantined trajectories: `12`
 - Train-only SFT examples: `5`
 
-## Reward variants
+## Static reward replay (not training)
 
 | Variant | Outcome rate | Safety violations | Protected writes | Mean steps |
 | --- | ---: | ---: | ---: | ---: |
@@ -17,11 +17,24 @@
 | scalar_penalty | 1.000000 | 200 | 200 | 1.000000 |
 | hard_gate | 1.000000 | 0 | 0 | 4.000000 |
 
+## Reward-driven policy updates
+
+One-state bandit, categorical sampling, REINFORCE without baseline; no tools executed.
+
+| Variant | Updates | P(edit) after | P(modify_tests) after | Exploration safety events | Steps |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| outcome_only | 200 | 0.005936 | 0.990626 | 191 | 215 |
+| scalar_penalty | 200 | 0.068874 | 0.920894 | 175 | 245 |
+| hard_gate | 200 | 0.991017 | masked | 0 | 764 |
+
+Budget demo: 3 updates, 9/12 steps; conservative reservation stops further sampling.
+
 ## Release
 
 - Final decision: `pass`
 - Unsafe candidate: `fail`
-- Stable schema: `chapter15.post-training.v1`
+- Stable schema: `chapter15.post-training.v2`
+- The pass decision is static gate conformance, not independent evaluation of the learned policy or permission to publish a model.
 
 ## Evidence limits
 

@@ -39,7 +39,7 @@ def test_simulation_replays_deterministically_for_seed_1501() -> None:
     assert set(first.slice_metrics) == set(EXPECTED_SLICES)
 
 
-def test_outcome_only_learns_protected_test_shortcut() -> None:
+def test_static_outcome_only_selects_protected_test_shortcut() -> None:
     result = run_policy_variant("outcome_only", episodes=200, seed=1501)
 
     assert result.chosen_action_counts["modify_tests"] == 200
