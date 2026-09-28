@@ -218,3 +218,33 @@ def test_preference_loader_rejects_action_not_observed_in_source() -> None:
     )
     with pytest.raises(ValueError, match="preference_action_mismatch"):
         load_preference_pairs(records=records)
+
+
+@pytest.mark.parametrize("source_id,reason", [
+    ("traj-010", "ineligible_preference_chosen"),
+    ("rejected-traj-010", "ineligible_preference_rejection"),
+])
+@pytest.mark.parametrize("location", ["metadata", "observation", "tool_arguments"])
+def test_preference_loader_detects_unmarked_known_secrets_on_both_sides(
+    source_id: str, reason: str, location: str,
+) -> None:
+    from chapter15.dataset import load_preference_sources
+
+    records = []
+    for record in load_preference_sources():
+        if record.trajectory_id == source_id:
+            assert not record.contains_sensitive_data
+            assert not record.source_contains_sensitive_data
+            if location == "metadata":
+                record = replace(record, metadata={**record.metadata, "api_key": "fixture-sensitive-value"})
+            else:
+                step = record.steps[-1]
+                if location == "observation":
+                    step = replace(step, observation=f"{step.observation} DEMO_SECRET_DO_NOT_USE")
+                else:
+                    step = replace(step, tool_arguments={"nested": {"api_key": "fixture-sensitive-value"}})
+                record = replace(record, steps=record.steps[:-1] + (step,))
+        records.append(record)
+
+    with pytest.raises(ValueError, match=reason):
+        load_preference_pairs(records=records)

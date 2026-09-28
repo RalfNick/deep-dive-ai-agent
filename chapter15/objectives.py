@@ -8,7 +8,7 @@ from typing import Sequence
 
 from chapter15.contracts import PreferencePair, SupervisedExample, TrajectoryRecord
 from chapter15.audit import audit_dataset
-from chapter15.dataset import load_preference_sources
+from chapter15.dataset import load_preference_sources, redact_record
 from chapter15.policy import TabularPolicy
 
 
@@ -106,6 +106,18 @@ def _validate_preference_sources(pair: PreferencePair, records: Sequence[Traject
         raise ValueError("preference_source_not_train")
     if not chosen.steps or not rejected.steps:
         raise ValueError("missing_preference_context")
+    audit = audit_dataset(records)
+    if chosen.trajectory_id not in audit.eligible_ids:
+        raise ValueError("ineligible_preference_chosen")
+    rejected_reasons = {
+        finding.reason_code for finding in audit.findings
+        if f"trajectory:{rejected.trajectory_id}" in finding.evidence_refs
+    }
+    # Controlled negative feedback may describe an unsafe/failed choice. It
+    # still must be complete, traceable, non-sensitive and isolated from eval.
+    permitted_negative_reasons = {"failed_or_unverified_outcome", "protected_write", "safety_event"}
+    if rejected_reasons - permitted_negative_reasons:
+        raise ValueError("ineligible_preference_rejection")
     left, right = chosen.steps[-1], rejected.steps[-1]
     context_fields = ("task_prompt", "success_condition")
     if any(not chosen.metadata.get(key) or not rejected.metadata.get(key) for key in context_fields):
@@ -119,18 +131,6 @@ def _validate_preference_sources(pair: PreferencePair, records: Sequence[Traject
         raise ValueError("preference_context_mismatch")
     if left.action != pair.chosen_action or right.action != pair.rejected_action:
         raise ValueError("preference_action_mismatch")
-    audit = audit_dataset(records)
-    if chosen.trajectory_id not in audit.eligible_ids:
-        raise ValueError("ineligible_preference_chosen")
-    rejected_reasons = {
-        finding.reason_code for finding in audit.findings
-        if f"trajectory:{rejected.trajectory_id}" in finding.evidence_refs
-    }
-    # Controlled negative feedback may describe an unsafe/failed choice. It
-    # still must be complete, traceable, non-sensitive and isolated from eval.
-    permitted_negative_reasons = {"failed_or_unverified_outcome", "protected_write", "safety_event"}
-    if rejected_reasons - permitted_negative_reasons:
-        raise ValueError("ineligible_preference_rejection")
 
 
 def load_preference_pairs(
@@ -155,7 +155,10 @@ def load_preference_pairs(
         )
         for item in payload["pairs"]
     )
-    sources = load_preference_sources() if records is None else records
+    raw_sources = load_preference_sources() if records is None else records
+    # Use the same narrow detector as SFT, including source-quarantine
+    # evidence; caller-supplied booleans alone are not data admission proof.
+    sources = tuple(redact_record(record, salt="chapter15-preference-audit-v1") for record in raw_sources)
     for pair in pairs:
         _validate_preference_sources(pair, sources)
     return pairs
