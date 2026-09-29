@@ -55,3 +55,11 @@ def test_partial_error_keeps_explainable_directory(lab, tmp_path, monkeypatch):
     with pytest.raises(OSError):
         write_report_bundle(run_all(lab),target,root=tmp_path)
     assert (target/"group-1.json").is_file() and (target/"PARTIAL-OUTPUT.txt").is_file()
+
+def test_existing_exercise_file_cannot_be_replaced(tmp_path):
+    target = tmp_path/"chapter16/.runs/answers.json"
+    write_new_json({"first":True},target,root=tmp_path)
+    before = target.read_bytes()
+    with pytest.raises(FileExistsError):
+        write_new_json({"second":True},target,root=tmp_path)
+    assert target.read_bytes() == before

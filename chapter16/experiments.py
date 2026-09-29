@@ -128,7 +128,8 @@ def main(argv=None):
     try:
         lab = load_fixtures()
         if args.group == "all":
-            paths = write_report_bundle(run_all(lab),Path(args.output),root=root)
+            from .exercise_solutions import payload
+            paths = write_report_bundle(run_all(lab),Path(args.output),root=root,exercises=payload())
         else:
             paths = (write_new_json(run_group(int(args.group),lab),Path(args.output),root=root),)
         print("created",len(paths),"stable local artifacts")
