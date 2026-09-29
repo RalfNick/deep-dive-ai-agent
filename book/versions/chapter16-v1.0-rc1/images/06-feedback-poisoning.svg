@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">改进通道也是攻击通道</title>
+<desc id="desc">来源血缘与独立真值，阻止危险文本变成持久经验。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">改进通道也是攻击通道</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">来源血缘与独立真值，阻止危险文本变成持久经验。</tspan></text>
+<path d="M 410.0 345.0 L 530.0 345.0" fill="none" stroke="#b8443b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="425.0" y="310.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="470.0" y="333.0">只作输入</tspan></text>
+<path d="M 910.0 345.0 L 1120.0 345.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="970.0" y="310.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1015.0" y="333.0">仅合格证据</tspan></text>
+<path d="M 720.0 410.0 L 660.0 600.0" fill="none" stroke="#c46b18" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="645.0" y="470.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="690.0" y="493.0">不合格</tspan></text>
+<path d="M 1310.0 410.0 L 1305.0 600.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1262.5" y="470.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1307.5" y="493.0">验收</tspan></text>
+<path d="M 360.0 665.0 L 460.0 665.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="10 9"/>
+<rect x="365.0" y="630.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="410.0" y="653.0">防自我洗白</tspan></text>
+<rect x="50" y="280" width="360" height="130" rx="24" fill="#fde3df" stroke="#b8443b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="230.0" y="330.0">关闭审批 / 复制隐藏答案</tspan><tspan x="230.0" y="361.2">伪装成经验建议</tspan></text>
+<rect x="530" y="280" width="380" height="130" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="720.0" y="330.0">来源 / 用途准入</tspan><tspan x="720.0" y="361.2">敏感血缘保留</tspan></text>
+<rect x="1120" y="280" width="380" height="130" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1310.0" y="330.0">有来源的候选</tspan><tspan x="1310.0" y="361.2">不能读隐藏真值</tspan></text>
+<rect x="460" y="600" width="400" height="130" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="660.0" y="650.0">隔离与 Unknown</tspan><tspan x="660.0" y="681.2">不提升为资产</tspan></text>
+<rect x="1090" y="600" width="430" height="130" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1305.0" y="650.0">独立真值 + 反例</tspan><tspan x="1305.0" y="681.2">发现过度泛化</tspan></text>
+<rect x="40" y="600" width="320" height="130" rx="24" fill="#edf0f2" stroke="#59636e" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="200.0" y="650.0">自生成总结不算新来源</tspan><tspan x="200.0" y="681.2">沿血缘追到根证据</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">文本不能自行提升权限；转述多次仍是同一根证据。</tspan></text>
+</svg>

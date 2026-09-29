@@ -10,17 +10,17 @@ BASE = "2bcfaf0250fdd8dbf8b1f051bc62d576bef52875"
 
 
 def test_local_candidate_has_truthful_version_record():
-    record = (ROOT / "book/versions/chapter16-v1.0-rc1.md").read_text(encoding="utf-8")
+    record = (ROOT / "book/versions/chapter16-v1.0-rc2.md").read_text(encoding="utf-8")
     assert all(word in record for word in ("本地", "未发布", "已证明", "未证明", "SHA-256"))
-    review = (ROOT / "book/reviews/chapter16-review-codex-v1.0-rc1.md").read_text(encoding="utf-8")
+    review = (ROOT / "book/reviews/chapter16-review-codex-v1.0-rc2.md").read_text(encoding="utf-8")
     assert "读者" in review and "专家" in review
     ledger = (ROOT / "book/versions/CHAPTER_VERSIONS.md").read_text(encoding="utf-8")
-    assert "## 第 16 章" in ledger and "chapter16-v1.0-rc1.md" in ledger
+    assert "## 第 16 章" in ledger and "chapter16-v1.0-rc2.md" in ledger
 
 
 def test_final_record_contains_actual_hashes_and_review_disposition():
-    record = (ROOT / "book/versions/chapter16-v1.0-rc1.md").read_text(encoding="utf-8")
-    review = (ROOT / "book/reviews/chapter16-review-codex-v1.0-rc1.md").read_text(encoding="utf-8")
+    record = (ROOT / "book/versions/chapter16-v1.0-rc2.md").read_text(encoding="utf-8")
+    review = (ROOT / "book/reviews/chapter16-review-codex-v1.0-rc2.md").read_text(encoding="utf-8")
     assert not any(marker in record + review for marker in
                    ("待派发", "待追加实际", "验收汇总尚在收尾"))
     for relative in ("book/chapter16.md", "book/sources/chapter16-sources.md",
@@ -28,8 +28,31 @@ def test_final_record_contains_actual_hashes_and_review_disposition():
                      "chapter16/reports/exercise-results.json",
                      "chapter16/schemas/improvement-report-v1.schema.json"):
         assert hashlib.sha256((ROOT / relative).read_bytes()).hexdigest() in record
-    assert "4 项 Important" in review and "2 项 Minor" in review
-    assert "未做第二次独立复审" in review
+
+
+def test_rc1_records_manuscript_figures_and_reports_remain_recoverable():
+    frozen = "c693d3aa94c1753c071994c4f769e9bd3097f2db"
+    def original(path):
+        return subprocess.run(["git", "show", f"{frozen}:{path}"], cwd=ROOT,
+                              check=True, capture_output=True).stdout
+    for path in ("book/versions/chapter16-v1.0-rc1.md",
+                 "book/reviews/chapter16-review-codex-v1.0-rc1.md"):
+        assert (ROOT / path).read_bytes().replace(b"\r\n", b"\n") == original(path)
+    archive = ROOT / "book/versions/chapter16-v1.0-rc1"
+    expected = original("book/chapter16.md").decode("utf-8").replace("images/chapter16/", "images/")
+    expected = expected.replace("../chapter16/", "../../../chapter16/")
+    expected = expected.replace("(sources/chapter16-sources.md)", "(../../sources/chapter16-sources.md)")
+    expected = expected.replace("(OUTLINE.md)", "(../../OUTLINE.md)")
+    expected = expected.replace("../../../chapter16/reports/improvement-report.json",
+                                "../../../chapter16/report-history/v1.0-rc1/improvement-report.json")
+    assert (archive / "chapter16.md").read_text(encoding="utf-8") == expected
+    images = tuple((archive / "images").glob("*.svg"))
+    reports = tuple((ROOT / "chapter16/report-history/v1.0-rc1").iterdir())
+    assert len(images) == 7 and len(reports) == 9
+    for image in images:
+        assert image.read_bytes() == original("book/images/chapter16/" + image.name)
+    for report in reports:
+        assert report.read_bytes() == original("chapter16/reports/" + report.name)
 
 
 def test_chapter16_stays_out_of_public_manifest():

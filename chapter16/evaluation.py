@@ -5,7 +5,7 @@ from .artifacts import validate_snapshot
 from .contracts import CLOCK, END, AssetEvidence, EvidenceBundle, EvaluationContext, GateDecision, GraderResult
 from .feedback import admit_feedback, within
 from .fixtures import validate_fixtures
-from .replay import replay, attribute
+from .replay import replay, attribute, verifies_discovery_condition
 from .serialization import body_hash, digest
 
 def environment_hash(documents, tasks, clock, replay_cases=()):
@@ -51,7 +51,8 @@ def asset_proofs(snapshot, context, *, blocked_families):
     if len(admissions) != len(context.admissions) or len(authorities) != len(context.authorities) or len(cases) != len(context.replay_cases):
         raise ValueError("duplicate provenance identity")
     role_carriers = {"document_owner":{"knowledge_rule", "step_skill"}, "user":{"scoped_memory"}}
-    keys = {"knowledge_rule":"selection", "step_skill":"steps", "scoped_memory":"answer_style"}
+    keys = {"knowledge_rule":("selection", "document_id"), "step_skill":("steps",),
+            "scoped_memory":("answer_style",)}
     causes = {"knowledge_rule":"knowledge_selection", "step_skill":"procedure_incomplete"}
     proofs = []
     for asset in snapshot.artifacts:
@@ -69,11 +70,15 @@ def asset_proofs(snapshot, context, *, blocked_families):
             elif (authority is None or not authority.permission or authority.revoked
                   or source.purpose != "discovery" or source.purpose not in authority.allowed_purposes
                   or asset.kind not in role_carriers.get(authority.role, set())
-                  or not within(asset.scope, source.scope) or not within(asset.scope, authority.scope)
-                  or keys[asset.kind] not in source.sanitized_payload):
+                  or not within(asset.scope, source.scope) or not within(asset.scope, authority.scope)):
                 status, reason = "fail", "source_carrier_or_scope_denied"
             elif source.family_id in blocked_families:
                 status, reason = "fail", "source_family_leakage"
+            elif any(key not in source.sanitized_payload or key not in asset.content
+                     or digest(asset.content[key]) != digest(source.sanitized_payload[key])
+                     for key in keys[asset.kind]):
+                # Bind behavior-bearing structured fields, not free-text wording.
+                status, reason = "fail", "source_content_mismatch"
             elif asset.kind in causes:
                 case = cases.get(ref)
                 if case is None:
@@ -84,6 +89,8 @@ def asset_proofs(snapshot, context, *, blocked_families):
                     result, attribution = replay(case), attribute(case)
                     if result.status != "replayed" or attribution.cause != causes[asset.kind] or attribution.unknown_reasons:
                         status, reason = "unknown", "unverified_source_replay"
+                    elif not verifies_discovery_condition(case, asset.kind, source.sanitized_payload):
+                        status, reason = "unknown", "discovery_condition_not_verified"
             proofs.append(AssetEvidence(asset.content_hash, ref, status, (reason,), case, result, attribution))
     return tuple(proofs)
 

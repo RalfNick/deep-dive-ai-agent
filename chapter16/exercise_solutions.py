@@ -10,20 +10,20 @@ from .feedback import admit_feedback
 from .fixtures import load_fixtures
 from .governance import make_approval,activate,assign_cohort,rollback
 from .lessons import propose_lessons
-from .replay import replay,attribute
+from .replay import replay,attribute,verifies_discovery_condition
 
 CRITERIA = (
  "指出四种改变对象、持久位置及消费者，不把一次正确回复说成持久学习。",
  "以可信来源注册表而不是payload自报身份决定准入；accepted不等于可激活。",
  "八报告仍保留，三同源计一个，加五独立根，共六份独立证据。",
  "覆盖7/10、子集修复5/7、未知3/10同时说明；不能只报子集成绩。",
- "单因素干预与冻结指纹；环境恢复不能归功于反思；缺回执不补造。",
+ "单因素干预与冻结指纹；变化不等于修复，须满足发现来源的正向条件；环境恢复不归功于反思。",
  "按原因选择消费者：知识、步骤、格式实际生效；其他载体仅提案。",
  "历史/租户/用户反例及移除资产回归；Skill不能扩大允许步骤。",
  "半开TTL、当前撤销优先；回滚只换指针，不能恢复旧许可。",
  "候选、证据、上下文绑定，重算新材料哈希不能复用旧批准；说明本地授权限制。",
- "安全fail优先，缺证据inconclusive，pass仍需批准。",
- "稳定4/12，无真实A/B因果结论；保留审计，回滚不逆转外部副作用。",
+ "安全fail优先，缺证据inconclusive；来源实际内容须支持资产，pass仍需批准。",
+ "稳定4/12；停用版本不能经rollback恢复，须重新验收批准；回滚不逆转外部副作用。",
  "敏感血缘不能洗白，隐藏真值与发现用途隔离，family交叉阻断。",
  "媒体授权引用/时序/工具回执与Unknown；提案模型不能授权或读取gold，独立验收后批准。",
 )
@@ -62,6 +62,13 @@ def solve(number):
         details = {"coverage":7/10,"verified_subset_repair":5/7,"unknown_share":3/10}
     elif number == 5:
         details = {c.case_id:{"status":replay(c).status,"cause":attribute(c).cause} for c in lab.replays}
+        carriers = {"F01":"knowledge_rule", "F03":"step_skill"}
+        sources = {r.feedback_id:r for r in rows}
+        for case in lab.replays:
+            if case.case_id in carriers:
+                details[case.case_id]["verified_discovery"] = verifies_discovery_condition(
+                    case, carriers[case.case_id], sources[case.case_id].sanitized_payload)
+                assert details[case.case_id]["verified_discovery"] is True
         assert details["F10"]["status"]=="unknown" and details["F01"]["cause"]=="knowledge_selection"
     elif number == 6:
         status,details = "answered",{"runtime_kinds":sorted(a.kind for a in candidate.artifacts),"proposals_only":["prompt","harness","training_candidate"]}
@@ -96,10 +103,21 @@ def solve(number):
             details = {"candidate_requests":list(cohort.values()).count("candidate"),"baseline_requests":list(cohort.values()).count("baseline"),
                        "active_after_rollback":back.active.revision_id,"audit_records":len(back.history)}
             assert details["candidate_requests"]==4 and details["audit_records"]==2
+            try:
+                rollback(back,candidate,reason="restore_stopped",now=CLOCK)
+            except ValueError:
+                details["stopped_restore_rejected"] = True
+            else:
+                raise AssertionError("rollback restored stopped revision without new verification")
     elif number == 10:
+        changed = replace(lab,feedback=tuple(replace(f,payload={"answer_style":"normal"})
+                                            if f.feedback_id=="F08" else f for f in lab.feedback))
+        unsupported = evaluate_pair(changed.tasks,changed.documents,changed.truth,baseline,candidate,
+                                    make_context(changed,policy))
         details = {"safe":decide_gate(evidence).status,"unknown":decide_gate(seal_evidence(replace(evidence,unknown_count=1))).status,
-                   "unsafe_unknown":decide_gate(seal_evidence(replace(evidence,unknown_count=1,violation_count=1))).status}
-        assert details == {"safe":"pass","unknown":"inconclusive","unsafe_unknown":"fail"}
+                   "unsafe_unknown":decide_gate(seal_evidence(replace(evidence,unknown_count=1,violation_count=1))).status,
+                   "unsupported_source":decide_gate(unsupported).status}
+        assert details == {"safe":"pass","unknown":"inconclusive","unsafe_unknown":"fail","unsupported_source":"fail"}
     elif number == 12:
         details = {r.feedback_id:{"status":r.disposition,"sensitive":r.source_sensitive} for r in rows if r.feedback_id in ("F09","F12")}
         try:

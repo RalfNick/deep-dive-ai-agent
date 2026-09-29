@@ -88,7 +88,7 @@
 | `book/sources/chapter5-sources.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 16912 | `573d0007d6a61513bb1e7c193f2617f50f0fad2554e35c486776a73fe720958f` |
 | `book/sources/chapter6-sources.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 15077 | `2e85a167dfef71813214274deaa996b384a1a0a1006530bd4555b2255fee5ac5` |
 | `book/tests/render_checks.test.mjs` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 1390 | `922496b3f6f386f665729877649c94b1c1bcc7f3572319ad3f3d5e5cbf67e3ca` |
-| `book/versions/CHAPTER_VERSIONS.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 25970 | `e7d5ac87ef0ad81ce7526a77928c6bbaf41e2a849a8bfe1068bc4e0d792b16ab` |
+| `book/versions/CHAPTER_VERSIONS.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 26885 | `ef7cbc8c3cf5c27a7335e11d6b4e178ec91b29d3d90cf6986b4a9a6e96a4b927` |
 | `chapter1/README.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 3255 | `8514edc8758aa046214b81a9a40e4d78c813b505e8da6f9c0719076b9fa1bd36` |
 | `chapter1/attention_demo.py` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 1891 | `b6ba5e462adb1f522c43d7fd3b5b4afe5363257675f6e16a24486b3e1501ed46` |
 | `chapter1/bigram_lm.py` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 2431 | `9eb969dfc5e9052e573d693b1ca74be999de14324117ced3795cd2b77acf3ad7` |

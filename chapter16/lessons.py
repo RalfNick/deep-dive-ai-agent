@@ -1,6 +1,6 @@
 """Author-written proposal rules; no gold lookup or automatic self-training."""
 from .contracts import LessonProposal
-from .replay import attribute
+from .replay import attribute, verifies_discovery_condition
 from .serialization import plain
 
 def propose_lessons(admissions, cases, *, blocked_families):
@@ -36,6 +36,8 @@ def propose_lessons(admissions, cases, *, blocked_families):
                     carrier = "environment"  # A recovered tool is not a verified behavior repair.
                 if cause == "unknown":
                     unknown = unknown or ("unresolved_cause",)
+                elif carrier in ("knowledge_rule", "step_skill") and not verifies_discovery_condition(case, carrier, payload):
+                    unknown = ("discovery_condition_not_verified",)
         proposals.append(LessonProposal("proposal-" + r.feedback_id, r.source_refs, r.purpose, r.family_id,
                          cause, carrier, r.scope, payload, r.evidence_refs, unknown))
     return tuple(proposals)
