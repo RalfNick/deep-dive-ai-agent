@@ -1,5 +1,6 @@
 """Local RC, old-content preservation and publication-boundary contracts."""
 import json
+import hashlib
 import re
 import subprocess
 from pathlib import Path
@@ -15,6 +16,20 @@ def test_local_candidate_has_truthful_version_record():
     assert "读者" in review and "专家" in review
     ledger = (ROOT / "book/versions/CHAPTER_VERSIONS.md").read_text(encoding="utf-8")
     assert "## 第 16 章" in ledger and "chapter16-v1.0-rc1.md" in ledger
+
+
+def test_final_record_contains_actual_hashes_and_review_disposition():
+    record = (ROOT / "book/versions/chapter16-v1.0-rc1.md").read_text(encoding="utf-8")
+    review = (ROOT / "book/reviews/chapter16-review-codex-v1.0-rc1.md").read_text(encoding="utf-8")
+    assert not any(marker in record + review for marker in
+                   ("待派发", "待追加实际", "验收汇总尚在收尾"))
+    for relative in ("book/chapter16.md", "book/sources/chapter16-sources.md",
+                     "chapter16/reports/manifest.json", "chapter16/reports/improvement-report.json",
+                     "chapter16/reports/exercise-results.json",
+                     "chapter16/schemas/improvement-report-v1.schema.json"):
+        assert hashlib.sha256((ROOT / relative).read_bytes()).hexdigest() in record
+    assert "4 项 Important" in review and "2 项 Minor" in review
+    assert "未做第二次独立复审" in review
 
 
 def test_chapter16_stays_out_of_public_manifest():
