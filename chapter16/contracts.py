@@ -245,3 +245,18 @@ class FixtureSet(Contract):
     tasks: tuple[TaskSpec, ...]
     truth: tuple[SuccessCondition, ...]
     replays: tuple[ReplayCase, ...]
+
+@dataclass(frozen=True)
+class AdmissionRecord(Contract):
+    feedback_id: str
+    source_id: str
+    purpose: str
+    family_id: str
+    scope: Scope
+    run_ref: str
+    disposition: str
+    reason_codes: tuple[str, ...]
+    sanitized_payload: Mapping
+    source_sensitive: bool
+    source_refs: tuple[str, ...]
+    evidence_refs: tuple[str, ...]
