@@ -37,6 +37,28 @@ def typed(value, annotation):
         return value is None
     return isinstance(value, annotation)
 
+
+def decode(value, annotation):
+    """Decode JSON containers recursively, never coerce authority scalars."""
+    origin, args = get_origin(annotation), get_args(annotation)
+    if origin is types.UnionType:
+        for alternative in args:
+            try:
+                return decode(value, alternative)
+            except ValueError:
+                continue
+        raise ValueError("invalid union value")
+    if isinstance(annotation, type) and issubclass(annotation, Contract):
+        return annotation.from_dict(value)
+    if origin in (tuple, frozenset):
+        if not isinstance(value, (list, tuple)):
+            raise ValueError("JSON array required")
+        members = tuple(decode(v, args[0]) for v in value)
+        return frozenset(members) if origin is frozenset else members
+    if not typed(value, annotation):
+        raise ValueError("invalid JSON field type")
+    return value
+
 class Contract:
     def __post_init__(self):
         hints = get_type_hints(type(self))
@@ -47,6 +69,8 @@ class Contract:
                 raise ValueError(f"invalid type: {field.name}")
             if isinstance(value, str) and not value:
                 raise ValueError(f"empty {field.name}")
+            if isinstance(value, (tuple, frozenset)) and any(type(v) is str and not v for v in value):
+                raise ValueError(f"empty reference/item: {field.name}")
             if field.name in ("valid_from", "valid_until", "frozen_clock", "issued_at"):
                 utc(value)
             if field.name.endswith("_count") and (type(value) is not int or value < 0):
@@ -67,15 +91,7 @@ class Contract:
         if not isinstance(value, dict) or set(value) != {f.name for f in fields(cls)}:
             raise ValueError(f"invalid fields for {cls.__name__}")
         hints = get_type_hints(cls)
-        decoded = {}
-        for name, item in value.items():
-            hint = hints[name]
-            origin, args = get_origin(hint), get_args(hint)
-            if isinstance(hint, type) and issubclass(hint, Contract):
-                item = hint.from_dict(item)
-            elif origin is tuple and isinstance(args[0], type) and issubclass(args[0], Contract):
-                item = tuple(args[0].from_dict(v) for v in item)
-            decoded[name] = item
+        decoded = {name: decode(item, hints[name]) for name, item in value.items()}
         return cls(**decoded)
 
 @dataclass(frozen=True)
@@ -233,7 +249,7 @@ class EvaluationContext(Contract):
     environment_hash: str
     safety_hash: str
     use_policy: UsePolicy
-    admissions: tuple[object, ...]
+    admissions: tuple["AdmissionRecord", ...]
     frozen_clock: str
     valid_until: str
 

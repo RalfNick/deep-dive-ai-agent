@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">反馈证据漏斗</title>
+<desc id="desc">输入十二条反馈，先核验再提案；状态不是四个分数。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">反馈证据漏斗</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">输入十二条反馈，先核验再提案；状态不是四个分数。</tspan></text>
+<path d="M 410.0 265.0 L 630.0 265.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 930.0 330.0 L 800.0 420.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 450.0 475.0 L 380.0 705.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 800.0 530.0 L 620.0 650.0" fill="none" stroke="#b8443b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 800.0 530.0 L 1020.0 650.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1150.0 475.0 L 1230.0 705.0" fill="none" stroke="#c46b18" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="110" y="200" width="300" height="130" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="260.0" y="250.0">原始反馈</tspan><tspan x="260.0" y="281.2">12 条</tspan></text>
+<rect x="630" y="200" width="600" height="130" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="930.0" y="250.0">类型 + 来源敏感检查</tspan><tspan x="930.0" y="281.2">脱敏仍保留标记</tspan></text>
+<rect x="450" y="420" width="700" height="110" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="800.0" y="460.0">来源 / 用途 / 权限</tspan><tspan x="800.0" y="491.2">范围 + 完整性 + 去重</tspan></text>
+<rect x="60" y="650" width="320" height="110" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="220.0" y="690.0">accepted 6</tspan><tspan x="220.0" y="721.2">证据，不等于资产</tspan></text>
+<rect x="460" y="650" width="320" height="110" rx="24" fill="#fde3df" stroke="#b8443b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="620.0" y="690.0">quarantined 3</tspan><tspan x="620.0" y="721.2">攻击 / 敏感 / 泄漏</tspan></text>
+<rect x="860" y="650" width="320" height="110" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1020.0" y="690.0">merged 1</tspan><tspan x="1020.0" y="721.2">保留血缘，不增独立数</tspan></text>
+<rect x="1230" y="650" width="300" height="110" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1380.0" y="690.0">Unknown 2</tspan><tspan x="1380.0" y="721.2">缺回执 / 冲突</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">反馈只能申请改变；权限来自可信注册表，Unknown 不能被改写为成功。</tspan></text>
+</svg>

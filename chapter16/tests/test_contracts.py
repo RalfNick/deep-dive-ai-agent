@@ -1,7 +1,7 @@
 from dataclasses import replace
 import math
 import pytest
-from chapter16.contracts import Scope, FeedbackRecord, RunResult
+from chapter16.contracts import Scope, FeedbackRecord, RunResult, FixtureSet, UsePolicy, EvaluationContext, EvidenceBundle, ReleaseState
 from chapter16.serialization import canonical_bytes, digest
 
 def test_strict_boolean_and_finite_values(lab):
@@ -31,3 +31,25 @@ def test_unknown_fields_and_clock_are_rejected(lab):
         replace(lab.tasks[0], frozen_clock="2026-09-28")
     with pytest.raises(ValueError):
         FeedbackRecord.from_dict({**lab.feedback[0].to_dict(), "trusted": True})
+
+
+def test_nested_contracts_round_trip_without_losing_types(lab, baseline, candidate, evaluation_context):
+    from chapter16.evaluation import evaluate_pair, decide_gate
+    policy = UsePolicy(frozenset({"retired-hash"}), frozenset({"old-source"}), ("export",))
+    assert UsePolicy.from_dict(policy.to_dict()) == policy
+    assert FixtureSet.from_dict(lab.to_dict()) == lab
+    decoded = EvaluationContext.from_dict(evaluation_context.to_dict())
+    assert decoded == evaluation_context
+    assert all(isinstance(a, type(evaluation_context.admissions[0])) for a in decoded.admissions)
+    evidence = evaluate_pair(lab.tasks, lab.documents, lab.truth, baseline, candidate, decoded)
+    restored = EvidenceBundle.from_dict(evidence.to_dict())
+    assert canonical_bytes(restored) == canonical_bytes(evidence)
+    assert decide_gate(restored).status == "pass"
+    state = ReleaseState(baseline, (), frozenset({"used-approval"}))
+    assert ReleaseState.from_dict(state.to_dict()) == state
+
+
+def test_array_fields_do_not_decode_strings_or_empty_references(lab):
+    for bad in ("ref", [""], [1]):
+        with pytest.raises(ValueError):
+            FeedbackRecord.from_dict({**lab.feedback[0].to_dict(), "evidence_refs": bad})

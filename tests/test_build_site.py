@@ -120,6 +120,23 @@ class BuildSiteTests(unittest.TestCase):
             self.assertEqual("0.14.0", manifest["version"])
             self.assertEqual("planned", manifest["sections"][4]["chapters"][0]["status"])
 
+    def test_chapter16_stays_out_of_public_tree(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.make_repository(root)
+            write(root / "book/chapter16.md", "# Local chapter 16\n")
+            write(root / "book/images/chapter16/01-local.svg", "<svg/>\n")
+            write(root / "chapter16/README.md", "# Local experiment\n")
+            write(root / "chapter16/reference-answers.md", "# Local answers\n")
+            write(root / "chapter16/reports/local.json", "{}\n")
+            write(root / "book/reviews/chapter16-review.md", "# Local review\n")
+            write(root / "book/versions/chapter16-v1.0-rc1.md", "# Local history\n")
+            output = root / "_web"
+            build_site(root, output)
+            self.assertFalse(any("chapter16" in path for path in snapshot(output)))
+            for number in range(1, 15):
+                self.assertTrue((output / f"book/chapter{number}.md").is_file())
+
     def test_chapter_nine_supplement_remains_readable_after_extraction(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

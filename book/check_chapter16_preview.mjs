@@ -34,7 +34,7 @@ try {
        (viewport.width===390&&(!audit.figureScrollable||audit.images.some(i=>i.width<700)))) throw new Error(JSON.stringify({audit,failures}));
     await page.screenshot({path:path.join(output,`chapter16-${viewport.width}x${viewport.height}-full.png`),fullPage:true});
     await page.screenshot({path:path.join(output,`chapter16-${viewport.width}x${viewport.height}-top.png`)});
-    if(viewport.width===1440) for(const number of [2,5,7]) await page.locator('figure').filter({has:page.locator(`img[alt^="图 16-${number} "]`)}).screenshot({path:path.join(output,`chapter16-figure-${number}.png`)});
+    if(viewport.width===1440) for(const number of [2,5,6,7]) await page.locator('figure').filter({has:page.locator(`img[alt^="图 16-${number} "]`)}).screenshot({path:path.join(output,`chapter16-figure-${number}.png`)});
     audits.push(audit);
     await page.close();
   }

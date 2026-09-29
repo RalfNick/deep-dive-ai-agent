@@ -59,7 +59,8 @@ SECRET_PATTERNS = (
 AUTHOR_PATH_PATTERNS = (
     re.compile(r"[A-Za-z]:[\\/]+Users[\\/]+", re.IGNORECASE),  # safety-fixture: allow
     re.compile(r"(?:^|[^A-Za-z0-9_])[DE]:[\\/]+", re.IGNORECASE),  # safety-fixture: allow
-    re.compile(r"file://", re.IGNORECASE),  # safety-fixture: allow
+    # A bare scheme in a regex is not a host path; real local URIs have a target.
+    re.compile(r"file://(?=[^\s\"'|)])", re.IGNORECASE),  # safety-fixture: allow
     re.compile(r"\.worktrees(?:[\\/]|\b)", re.IGNORECASE),  # safety-fixture: allow
 )
 

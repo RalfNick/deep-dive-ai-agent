@@ -176,6 +176,25 @@ class RepositorySafetyTests(unittest.TestCase):
         self.assertIn("history_secret", {item.code for item in findings})
         self.assertTrue(all(secret not in item.message for item in findings))
 
+    def test_bare_local_uri_regex_is_not_a_machine_path_but_real_uris_are(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            uri_prefix = "file" + "://"
+            (root / "guard.py").write_text(
+                'import re\npattern = re.compile(' + repr(r"[A-Za-z]:[\\/]|" + uri_prefix) + ')\n',
+                encoding="utf-8",
+            )
+            self.assertEqual((), check_author_paths(root))
+            subprocess.run(["git", "init", "-b", "main", root], check=True, capture_output=True)
+            subprocess.run(["git", "-C", root, "-c", "user.name=Safety Test", "-c", "user.email=safety@example.com",
+                            "add", "guard.py"], check=True, capture_output=True)
+            subprocess.run(["git", "-C", root, "-c", "user.name=Safety Test", "-c", "user.email=safety@example.com",
+                            "commit", "-m", "regex fixture"], check=True, capture_output=True)
+            self.assertEqual((), check_git_history(root))
+            for i, suffix in enumerate(("/tmp/private", "localhost/private", "/" + "D" + ":/private")):
+                (root / f"leak{i}.md").write_text(f'[private]({uri_prefix}{suffix})\n', encoding="utf-8")
+            self.assertEqual(3, len(check_author_paths(root)))
+
     def test_real_repository_passes_the_current_tree_gate(self) -> None:
         self.assertEqual((), run_checks(ROOT))
 

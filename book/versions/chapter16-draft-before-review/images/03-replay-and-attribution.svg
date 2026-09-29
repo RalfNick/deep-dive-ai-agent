@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">固定回放：一次只换一个条件</title>
+<desc id="desc">冻结输入、文档、权限、工具回执、Agent版本和时钟。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">固定回放：一次只换一个条件</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">冻结输入、文档、权限、工具回执、Agent版本和时钟。</tspan></text>
+<path d="M 790.0 360.0 L 790.0 430.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 560.0 495.0 L 410.0 705.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="404.0" y="565.0" width="162" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="485.0" y="588.0">selection</tspan></text>
+<path d="M 790.0 560.0 L 790.0 650.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="709.0" y="570.0" width="162" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="790.0" y="593.0">procedure</tspan></text>
+<path d="M 1020.0 295.0 L 1130.0 495.0" fill="none" stroke="#c46b18" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1030.0" y="360.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1075.0" y="383.0">缺失/超时</tspan></text>
+<path d="M 1320.0 560.0 L 1320.0 650.0" fill="none" stroke="#b8443b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1257.0" y="570.0" width="126" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1320.0" y="593.0">不能归功于修复</tspan></text>
+<rect x="560" y="230" width="460" height="130" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="790.0" y="280.0">相同冻结条件</tspan><tspan x="790.0" y="311.2">相同 frozen_hash</tspan></text>
+<rect x="560" y="430" width="460" height="130" rx="24" fill="#edf0f2" stroke="#59636e" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="790.0" y="480.0">基线</tspan><tspan x="790.0" y="511.2">旧文档 / 漏步骤</tspan></text>
+<rect x="60" y="650" width="350" height="110" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="235.0" y="690.0">只换选择策略</tspan><tspan x="235.0" y="721.2">F01 文档改变</tspan></text>
+<rect x="560" y="650" width="460" height="110" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="790.0" y="690.0">只换步骤策略</tspan><tspan x="790.0" y="721.2">F03 步骤改变</tspan></text>
+<rect x="1130" y="430" width="380" height="130" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1320.0" y="480.0">不完整条件</tspan><tspan x="1320.0" y="511.2">环境错误 / Unknown</tspan></text>
+<rect x="1130" y="650" width="380" height="110" rx="24" fill="#fde3df" stroke="#b8443b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1320.0" y="690.0">保留缺失</tspan><tspan x="1320.0" y="721.2">不补造回执</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">两份可回放 / 四份案例；因果假设只成立于这些固定教学条件。</tspan></text>
+</svg>
