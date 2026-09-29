@@ -24,3 +24,8 @@ def candidate(lab):
 def use_policy():
     from chapter16.contracts import STEPS, UsePolicy
     return UsePolicy(frozenset(), frozenset(), STEPS + ("open_settings", "export_csv"))
+
+@pytest.fixture
+def evaluation_context(lab, use_policy):
+    from chapter16.evaluation import make_context
+    return make_context(lab, use_policy)

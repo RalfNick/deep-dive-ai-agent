@@ -273,3 +273,30 @@ class AttributionResult(Contract):
     cause: str
     interventions: tuple[Mapping, ...]
     unknown_reasons: tuple[str, ...]
+
+@dataclass(frozen=True)
+class GraderResult(Contract):
+    task_id: str
+    status: str
+    reason_codes: tuple[str, ...]
+    evidence_refs: tuple[str, ...]
+
+@dataclass(frozen=True)
+class GateDecision(Contract):
+    status: str
+    reason_codes: tuple[str, ...]
+
+@dataclass(frozen=True)
+class EvidenceBundle(Contract):
+    baseline_hash: str
+    candidate_hash: str
+    context: EvaluationContext
+    provenance_closure: tuple[AdmissionRecord, ...]
+    paired_trials: tuple[Mapping, ...]
+    slices: Mapping
+    coverage: Mapping
+    unknown_count: int
+    environment_error_count: int
+    violation_count: int
+    unrelated_unknown_count: int
+    evidence_hash: str
