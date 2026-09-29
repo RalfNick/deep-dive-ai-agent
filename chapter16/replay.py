@@ -1,14 +1,21 @@
 """Fixed tool-result tape, not re-execution of external side effects."""
-from .contracts import AttributionResult, ReplayCase, ReplayResult, RunResult
+from .contracts import AttributionResult, ReplayCase, ReplayResult, RunResult, utc
 from .serialization import digest
 
 def replay(case: ReplayCase, *, selection="baseline", procedure="baseline") -> ReplayResult:
     if selection not in ("baseline", "scoped_current") or procedure not in ("baseline", "complete"):
         raise ValueError("unsupported intervention")
-    missing = tuple(sorted(set(case.missing) | ({"tool_receipt"} if not case.tool_tape else set())))
+    required = set(case.missing) | ({"tool_receipt"} if not case.tool_tape else set())
+    if f"tenant-{case.input.tenant_id}" not in case.permissions:
+        required.add("document_permission")
+    if case.agent_version != "deterministic-agent-v1":
+        required.add("unsupported_agent_version")
+    missing = tuple(sorted(required))
     status = "unknown" if missing else ("environment_error" if "timeout" in case.tool_tape else "replayed")
     request = case.input
-    docs = [d for d in case.documents if d.tenant_id == request.tenant_id and d.domain == request.domain]
+    docs = [d for d in case.documents if d.tenant_id == request.tenant_id and d.domain == request.domain
+            and f"tenant-{request.tenant_id}" in case.permissions
+            and utc(d.valid_from) <= utc(case.frozen_clock) < utc(d.valid_until)]
     if request.requested_version == "historical" or selection == "scoped_current":
         docs = [d for d in docs if d.version == request.requested_version]
     doc = docs[0] if docs else None

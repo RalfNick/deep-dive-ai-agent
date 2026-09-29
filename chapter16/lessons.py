@@ -27,8 +27,13 @@ def propose_lessons(admissions, cases, *, blocked_families):
             if r.feedback_id not in index:
                 unknown = ("missing_replay",)
             else:
-                attr = attribute(index[r.feedback_id])
+                case = index[r.feedback_id]
+                if case.family_id != r.family_id or case.family_id in blocked_families or not r.scope.matches(case.input):
+                    raise ValueError("replay source/family/scope binding mismatch")
+                attr = attribute(case)
                 cause, unknown = attr.cause, attr.unknown_reasons
+                if cause == "environment":
+                    carrier = "environment"  # A recovered tool is not a verified behavior repair.
                 if cause == "unknown":
                     unknown = unknown or ("unresolved_cause",)
         proposals.append(LessonProposal("proposal-" + r.feedback_id, r.source_refs, r.purpose, r.family_id,

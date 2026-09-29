@@ -252,6 +252,8 @@ class EvaluationContext(Contract):
     admissions: tuple["AdmissionRecord", ...]
     frozen_clock: str
     valid_until: str
+    replay_cases: tuple[ReplayCase, ...]
+    authorities: tuple[SourceAuthority, ...]
 
 @dataclass(frozen=True)
 class FixtureSet(Contract):
@@ -303,6 +305,16 @@ class GateDecision(Contract):
     reason_codes: tuple[str, ...]
 
 @dataclass(frozen=True)
+class AssetEvidence(Contract):
+    artifact_hash: str
+    source_ref: str
+    status: str
+    reason_codes: tuple[str, ...]
+    replay_case: ReplayCase | None
+    replay_result: ReplayResult | None
+    attribution: AttributionResult | None
+
+@dataclass(frozen=True)
 class EvidenceBundle(Contract):
     baseline_hash: str
     candidate_hash: str
@@ -316,6 +328,8 @@ class EvidenceBundle(Contract):
     violation_count: int
     unrelated_unknown_count: int
     evidence_hash: str
+    candidate_snapshot: ArtifactSnapshot
+    asset_evidence: tuple[AssetEvidence, ...]
 
 @dataclass(frozen=True)
 class ApprovalReceipt(Contract):

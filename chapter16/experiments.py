@@ -5,7 +5,7 @@ from dataclasses import replace
 from pathlib import Path
 from .agent import run_agent
 from .artifacts import build_candidate, empty_snapshot
-from .contracts import CLOCK, END, STEPS, ImprovementReport, ReleaseRecord, ReleaseState, UsePolicy
+from .contracts import CLOCK, END, STEPS, EvidenceBundle, ImprovementReport, ReleaseRecord, ReleaseState, UsePolicy
 from .evaluation import decide_gate, evaluate_pair, grade, make_context, seal_evidence
 from .feedback import admit_feedback
 from .fixtures import load_fixtures
@@ -114,6 +114,16 @@ def validate_report(report):
         or [g["group"] for g in report.groups] != list(range(1,6))
         or report.report_hash != body_hash(report,"report_hash") or not report.source_proof or not report.limits):
         raise ValueError("invalid improvement report contract/hash")
+    try:
+        evidence = EvidenceBundle.from_dict(report.to_dict()["groups"][3]["evidence"])
+        gate = decide_gate(evidence).status
+        if (evidence.evidence_hash != body_hash(evidence, "evidence_hash")
+            or gate != report.groups[3]["gates"]["scoped"]
+            or digest(report.groups[2]["paired_trials"]) != digest(evidence.paired_trials)
+            or report.summary["tasks"] != len(evidence.paired_trials)):
+            raise ValueError("inconsistent nested evaluation evidence")
+    except (KeyError, TypeError, ValueError) as exc:
+        raise ValueError("invalid nested report evidence") from exc
     from .output import safe_data
     safe_data(report)
     return report

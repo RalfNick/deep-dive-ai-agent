@@ -25,6 +25,6 @@ python -B -m chapter16.preview
 
 先读group1的准入状态；再读group2的回放/未知分母；group3看document_id、steps、answer_style与实际资产哈希；group4看三态门禁；group5看批准绑定、4/12离线分配和显式时钟变化后的stop/rollback。失败与未决是实验的一部分，不手改JSON“修分数”。
 
-知识规则、步骤Skill与范围记忆实际改变有限策略行为；Prompt/Harness/训练候选只是提案。这里证明机制合同，不证明模型能力、自动归因、盲测泛化或生产A/B收益。批准注册表是进程内受信任演练，不是签名/IAM服务；回滚不会撤销外部副作用。
+知识规则、步骤Skill与范围记忆实际改变有限策略行为；Prompt/Harness/训练候选只是提案。步骤按独立有序合同验收，逐资产核对来源角色/scope/回放；环境问题不能晋级行为资产，回放变化改变证据身份，停止后的旧证据不能因新签发时间再次生效。新上下文实际重新验收后允许合法再发布。这里证明机制合同，不证明模型能力、自动归因、盲测泛化或生产A/B收益。动作序列仍是内存模拟，不是外部操作回执。批准注册表是进程内受信任演练，不是签名/IAM服务；回滚不会撤销外部副作用。
 
 入口：[正文](../book/chapter16.md)、[参考答案](reference-answers.md)、[规范报告](reports/improvement-report.json)、[来源](../book/sources/chapter16-sources.md)。可选预览使用Markdown==3.10.2；HTML与截图只在忽略目录，不写公开站点。

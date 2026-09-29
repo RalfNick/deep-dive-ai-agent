@@ -17,7 +17,7 @@ def make_approval(candidate, evidence, *, approver_id, allowed_scopes, now, vali
     if set(allowed_scopes) != {a.scope for a in candidate.artifacts} or not set(allowed_scopes).issubset(TRUSTED_SCOPES):
         raise ValueError("approval scope mismatch")
     if (evidence.candidate_hash != candidate.snapshot_hash or decide_gate(evidence).status != "pass"
-        or not utc(now) < utc(valid_until) <= utc(evidence.context.valid_until)):
+        or not utc(evidence.context.frozen_clock) <= utc(now) < utc(valid_until) <= utc(evidence.context.valid_until)):
         raise ValueError("approval lacks passing current evidence")
     approval = ApprovalReceipt("pending", approver_id, candidate.snapshot_hash, evidence.evidence_hash,
                                digest(evidence.context), allowed_scopes, now, valid_until, "approved")
@@ -39,6 +39,12 @@ def activate(state, candidate, evidence, approval, context, *, now):
         if state.active.snapshot_hash == candidate.snapshot_hash:
             return state
         raise ValueError("used approval cannot reactivate after rollback")
+    if any(r.event == "activate" and r.evidence_ref == evidence.evidence_hash for r in state.history):
+        if state.active.snapshot_hash == candidate.snapshot_hash:
+            return state
+        raise ValueError("evidence already activated; fresh independent validation required")
+    if state.history and utc(now) < utc(state.history[-1].frozen_clock):
+        raise ValueError("activation clock predates release history")
     if state.active.snapshot_hash != evidence.baseline_hash or candidate.parent_revision_id != state.active.revision_id:
         raise ValueError("baseline pointer changed")
     row = ReleaseRecord("pending", "activate", state.active, candidate, approval.approval_id,

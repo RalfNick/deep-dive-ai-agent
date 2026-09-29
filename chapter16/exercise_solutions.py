@@ -112,7 +112,8 @@ def solve(number):
     else:
         status,details = "answered",{"replay_fields":["authorized_media_ref","timestamp_alignment","perception_version","tool_receipt","missing"],
                                     "boundary":"model proposes; trusted code grants scope; independent grader reads truth"}
-    return {"number":number,"difficulty":1 if number<=3 else (2 if number<=8 else 3),"status":status,"evidence":details,"criteria":CRITERIA[number-1]}
+    difficulties = {1:1, 2:1, 3:2, 4:2, 5:2, 6:2, 7:2, 8:2, 9:3, 10:3, 11:3, 12:3, 13:3}
+    return {"number":number,"difficulty":difficulties[number],"status":status,"evidence":details,"criteria":CRITERIA[number-1]}
 
 def payload():
     return {"schema_version":"chapter16.exercises.v1","answers":[solve(n) for n in range(1,14)]}

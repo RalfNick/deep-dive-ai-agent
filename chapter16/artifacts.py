@@ -45,6 +45,9 @@ def build_candidate(proposals, *, now):
             continue  # prompt/harness/environment are proposals, not runnable assets.
         if p.unknown_reasons or p.purpose != "discovery":
             raise ValueError("unresolved or non-discovery proposal")
+        causes = {"knowledge_rule":"knowledge_selection", "step_skill":"procedure_incomplete", "scoped_memory":"user_preference"}
+        if p.cause != causes[p.carrier]:
+            raise ValueError("carrier incompatible with verified cause")
         a = ArtifactRevision("asset-" + p.proposal_id, p.carrier, None, p.content, p.scope,
                              "atlas-maintainer", now, "2026-10-28T00:00:00Z", True, p.source_refs, "pending")
         assets.append(make_artifact(a))
