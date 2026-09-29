@@ -330,3 +330,12 @@ class ReleaseState(Contract):
     active: ArtifactSnapshot
     history: tuple[ReleaseRecord, ...]
     used_approvals: frozenset[str]
+
+@dataclass(frozen=True)
+class ImprovementReport(Contract):
+    schema_version: str
+    groups: tuple[Mapping, ...]
+    summary: Mapping
+    source_proof: Mapping
+    limits: tuple[str, ...]
+    report_hash: str

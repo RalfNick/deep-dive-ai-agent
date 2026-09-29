@@ -1,0 +1,20 @@
+{
+ "$schema":"https://json-schema.org/draft/2020-12/schema",
+ "$id":"chapter16.improvement.v1",
+ "type":"object","additionalProperties":false,
+ "required":["schema_version","groups","summary","source_proof","limits","report_hash"],
+ "properties":{
+  "schema_version":{"const":"chapter16.improvement.v1"},
+  "report_hash":{"type":"string","pattern":"^[0-9a-f]{64}$"},
+  "groups":{"type":"array","minItems":5,"maxItems":5,"prefixItems":[
+   {"type":"object","required":["group","title","counts","admissions"],"properties":{"group":{"const":1}}},
+   {"type":"object","required":["group","title","coverage","cases","proposals"],"properties":{"group":{"const":2}}},
+   {"type":"object","required":["group","title","snapshot","paired_trials","blind_control"],"properties":{"group":{"const":3}}},
+   {"type":"object","required":["group","title","gates","evidence","injection"],"properties":{"group":{"const":4}}},
+   {"type":"object","required":["group","title","approval","cohort","history","active_revision"],"properties":{"group":{"const":5}}}
+  ]},
+  "summary":{"type":"object","required":["tasks","baseline_pass","candidate_pass","gate"],"properties":{"tasks":{"const":16},"baseline_pass":{"type":"integer","minimum":0},"candidate_pass":{"type":"integer","minimum":0},"gate":{"enum":["pass","fail","inconclusive"]}}},
+  "source_proof":{"type":"object","required":["fixture_hash","clock","seed","policy"],"properties":{"fixture_hash":{"type":"string","pattern":"^[0-9a-f]{64}$"},"seed":{"const":1601}}},
+  "limits":{"type":"array","minItems":5,"items":{"type":"string","minLength":1}}
+ }
+}
