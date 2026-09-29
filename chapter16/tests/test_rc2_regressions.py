@@ -172,3 +172,76 @@ def test_exercise_solutions_recompute_new_discovery_provenance_and_restore_bound
     assert solve(5)["evidence"]["F03"]["verified_discovery"] is True
     assert solve(10)["evidence"]["unsupported_source"] == "fail"
     assert solve(11)["evidence"]["stopped_restore_rejected"] is True
+    assert solve(9)["evidence"]["unused_old_evidence_rejected"] is True
+
+
+@pytest.mark.parametrize("frozen_clock", [CLOCK, "2026-09-28T00:02:00Z"])
+def test_unused_evidence_precomputed_before_rollback_is_not_fresh_validation(lab, frozen_clock):
+    _, _, baseline, candidate, policy, context, original = prepare(lab)
+    saved_context = make_context(lab, policy, frozen_clock=frozen_clock,
+                                 valid_until="2026-09-28T12:00:00Z")
+    saved = evaluate_pair(lab.tasks, lab.documents, lab.truth, baseline, candidate, saved_context)
+    assert saved.evidence_hash != original.evidence_hash and decide_gate(saved).status == "pass"
+    active = activate(ReleaseState(baseline, (), frozenset()), candidate, original,
+                      approve(candidate, original), context, now=CLOCK)
+    back = rollback(active, baseline, reason="observed_fault", now="2026-09-28T00:01:00Z")
+    approval = make_approval(candidate, saved, approver_id="reviewer-local",
+                             allowed_scopes=tuple(a.scope for a in candidate.artifacts),
+                             now="2026-09-28T00:02:00Z", valid_until=saved_context.valid_until)
+    with pytest.raises(ValueError, match="fresh.*validation"):
+        activate(back, candidate, saved, approval, saved_context, now="2026-09-28T00:02:00Z")
+
+
+def test_notes_remain_in_admissions_but_not_in_executable_asset_content(lab):
+    changed = replace(lab, feedback=tuple(
+        replace(f, payload={**f.payload, "explanation":"The entry moved to the data page."})
+        if f.feedback_id == "F01" else f for f in lab.feedback))
+    admissions, proposals, _, candidate, _, _, evidence = prepare(changed)
+    assert next(a for a in admissions if a.feedback_id == "F01").sanitized_payload["explanation"]
+    proposal = next(p for p in proposals if p.source_refs == ("F01",))
+    assert set(proposal.content) == {"selection", "document_id"}
+    assert all("explanation" not in a.content for a in candidate.artifacts)
+    assert decide_gate(evidence).status == "pass"
+
+
+def test_stop_entry_records_control_event_and_requires_later_actual_validation(lab):
+    from chapter16.governance import stop
+    _, _, baseline, candidate, policy, context, evidence = prepare(lab)
+    # Save a future-labelled evaluation before the stop. A later clock label is not an issuance receipt.
+    late_context = make_context(lab, policy, frozen_clock="2026-09-28T00:03:00Z")
+    saved = evaluate_pair(lab.tasks, lab.documents, lab.truth, baseline, candidate, late_context)
+    active = activate(ReleaseState(baseline, (), frozenset()), candidate, evidence,
+                      approve(candidate, evidence), context, now=CLOCK)
+    stopped = stop(active, reason="observed_fault", now="2026-09-28T00:01:00Z")
+    assert stopped.active == candidate and [r.event for r in stopped.history] == ["activate", "stop"]
+    back = rollback(stopped, baseline, reason="recover_baseline", now="2026-09-28T00:02:00Z")
+    approval = make_approval(candidate, saved, approver_id="reviewer-local",
+                             allowed_scopes=tuple(a.scope for a in candidate.artifacts),
+                             now="2026-09-28T00:03:00Z", valid_until=END)
+    with pytest.raises(ValueError, match="fresh.*validation"):
+        activate(back, candidate, saved, approval, late_context, now="2026-09-28T00:03:00Z")
+    fresh = evaluate_pair(lab.tasks, lab.documents, lab.truth, baseline, candidate, late_context)
+    # Same frozen material as the unused saved result, but really evaluated after both stop events.
+    assert fresh.evidence_hash == saved.evidence_hash
+    new_approval = make_approval(candidate, fresh, approver_id="reviewer-local",
+                                 allowed_scopes=tuple(a.scope for a in candidate.artifacts),
+                                 now="2026-09-28T00:03:00Z", valid_until=END)
+    restored = activate(back, candidate, fresh, new_approval, late_context, now="2026-09-28T00:03:00Z")
+    assert restored.active == candidate and [r.event for r in restored.history] == ["activate", "stop", "rollback", "activate"]
+    assert activate(restored, candidate, fresh, new_approval, late_context, now="2026-09-28T00:03:00Z") is restored
+
+
+def test_precomputed_alternate_revision_also_requires_validation_after_release_interruption(lab):
+    from chapter16.artifacts import make_snapshot
+    _, _, baseline, candidate, policy, context, original = prepare(lab)
+    alternate = make_snapshot(candidate.artifacts, revision_id="candidate-precomputed-v2")
+    saved_context = make_context(lab, policy, frozen_clock="2026-09-28T00:02:00Z")
+    saved = evaluate_pair(lab.tasks, lab.documents, lab.truth, baseline, alternate, saved_context)
+    active = activate(ReleaseState(baseline, (), frozenset()), candidate, original,
+                      approve(candidate, original), context, now=CLOCK)
+    back = rollback(active, baseline, reason="observed_fault", now="2026-09-28T00:01:00Z")
+    approval = make_approval(alternate, saved, approver_id="reviewer-local",
+                             allowed_scopes=tuple(a.scope for a in alternate.artifacts),
+                             now="2026-09-28T00:02:00Z", valid_until=END)
+    with pytest.raises(ValueError, match="fresh.*validation"):
+        activate(back, alternate, saved, approval, saved_context, now="2026-09-28T00:02:00Z")

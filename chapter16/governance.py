@@ -5,6 +5,7 @@ from .artifacts import validate_snapshot
 from .contracts import ApprovalReceipt, ReleaseRecord, ReleaseState, Scope, utc
 from .evaluation import decide_gate
 from .serialization import body_hash, canonical_bytes, digest
+from .validation_receipts import _record_interruption, validated_after
 
 TRUSTED_SCOPES = (Scope("A",None,"export","current"), Scope("A",None,"procedure","current"),
                   Scope("A","user-A","export","current"))
@@ -56,6 +57,11 @@ def activate(state, candidate, evidence, approval, context, *, now):
                 and candidate.snapshot_hash not in stopped_revisions(state)):
             return state
         raise ValueError("evidence already activated; fresh independent validation required")
+    interruptions = tuple(r for r in state.history if r.event == "stop" or
+                          (r.event == "rollback" and r.from_revision.snapshot_hash != r.to_revision.snapshot_hash))
+    if interruptions and (not validated_after(evidence, interruptions)
+                          or utc(context.frozen_clock) <= max(utc(r.frozen_clock) for r in interruptions)):
+        raise ValueError("release interrupted; fresh independent validation after stop/rollback required")
     if state.history and utc(now) < utc(state.history[-1].frozen_clock):
         raise ValueError("activation clock predates release history")
     if state.active.snapshot_hash != evidence.baseline_hash or candidate.parent_revision_id != state.active.revision_id:
@@ -74,6 +80,23 @@ def assign_cohort(task_ids, *, seed=1601, candidate_count=4):
     chosen = set(ordered[:candidate_count])
     return {i:"candidate" if i in chosen else "baseline" for i in sorted(task_ids)}
 
+def stop(state, *, reason, now, cohort=None):
+    """Record a trusted control decision; no production traffic scheduler."""
+    clock = utc(now)
+    if not reason or (state.history and clock < utc(state.history[-1].frozen_clock)):
+        raise ValueError("missing stop reason or stop clock predates release history")
+    if state.active.snapshot_hash in stopped_revisions(state):
+        return state
+    previous = next((r for r in reversed(state.history) if r.event == "activate"
+                     and r.to_revision.snapshot_hash == state.active.snapshot_hash), None)
+    row = ReleaseRecord("pending", "stop", state.active, state.active,
+                        previous.approval_ref if previous else None, previous.evidence_ref if previous else None,
+                        cohort or {}, reason, now)
+    row = replace(row, record_id=body_hash(row, "record_id"))
+    _record_interruption(row)
+    return ReleaseState(state.active, state.history + (row,), state.used_approvals)
+
+
 def rollback(state, target, *, reason, now):
     validate_snapshot(target)
     clock = utc(now)
@@ -90,4 +113,5 @@ def rollback(state, target, *, reason, now):
         return state
     row = ReleaseRecord("pending", "rollback", state.active, target, None, None, {}, reason, now)
     row = replace(row, record_id=body_hash(row, "record_id"))
+    _record_interruption(row)
     return ReleaseState(target, state.history + (row,), state.used_approvals)

@@ -21,7 +21,7 @@ CRITERIA = (
  "按原因选择消费者：知识、步骤、格式实际生效；其他载体仅提案。",
  "历史/租户/用户反例及移除资产回归；Skill不能扩大允许步骤。",
  "半开TTL、当前撤销优先；回滚只换指针，不能恢复旧许可。",
- "候选、证据、上下文绑定，重算新材料哈希不能复用旧批准；说明本地授权限制。",
+ "材料绑定与新鲜性分开；未使用的旧备用证据也不能跳过停用后的实际验收；说明进程内限制。",
  "安全fail优先，缺证据inconclusive；来源实际内容须支持资产，pass仍需批准。",
  "稳定4/12；停用版本不能经rollback恢复，须重新验收批准；回滚不逆转外部副作用。",
  "敏感血缘不能洗白，隐藏真值与发现用途隔离，family交叉阻断。",
@@ -94,6 +94,19 @@ def solve(number):
                 details = {"rehashed_evidence_rejected":True}
             else:
                 raise AssertionError("old approval accepted changed evidence")
+            saved_context = make_context(lab,policy,valid_until="2026-09-28T12:00:00Z")
+            saved = evaluate_pair(lab.tasks,lab.documents,lab.truth,baseline,candidate,saved_context)
+            active = activate(state,candidate,evidence,approval,context,now=CLOCK)
+            back = rollback(active,baseline,reason="exercise_fault",now="2026-09-28T00:01:00Z")
+            saved_approval = make_approval(candidate,saved,approver_id="reviewer-local",
+                                allowed_scopes=tuple(a.scope for a in candidate.artifacts),
+                                now="2026-09-28T00:02:00Z",valid_until=saved_context.valid_until)
+            try:
+                activate(back,candidate,saved,saved_approval,saved_context,now="2026-09-28T00:02:00Z")
+            except ValueError:
+                details["unused_old_evidence_rejected"] = True
+            else:
+                raise AssertionError("unused saved evidence bypassed fresh validation after rollback")
         else:
             active = activate(state,candidate,evidence,approval,context,now=CLOCK)
             back = rollback(active,baseline,reason="exercise",now=CLOCK)

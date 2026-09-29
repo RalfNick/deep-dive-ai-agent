@@ -38,8 +38,12 @@ def propose_lessons(admissions, cases, *, blocked_families):
                     unknown = unknown or ("unresolved_cause",)
                 elif carrier in ("knowledge_rule", "step_skill") and not verifies_discovery_condition(case, carrier, payload):
                     unknown = ("discovery_condition_not_verified",)
+        behavior_fields = {"knowledge_rule":("selection", "document_id"), "step_skill":("steps",),
+                           "scoped_memory":("answer_style",)}
+        content = ({key:payload[key] for key in behavior_fields[carrier] if key in payload}
+                   if carrier in behavior_fields else payload)
         proposals.append(LessonProposal("proposal-" + r.feedback_id, r.source_refs, r.purpose, r.family_id,
-                         cause, carrier, r.scope, payload, r.evidence_refs, unknown))
+                         cause, carrier, r.scope, content, r.evidence_refs, unknown))
     return tuple(proposals)
 
 def export_training_candidates(proposals, *, blocked_families):

@@ -5,11 +5,11 @@ from dataclasses import replace
 from pathlib import Path
 from .agent import run_agent
 from .artifacts import build_candidate, empty_snapshot
-from .contracts import CLOCK, END, STEPS, EvidenceBundle, ImprovementReport, ReleaseRecord, ReleaseState, UsePolicy
+from .contracts import CLOCK, END, STEPS, EvidenceBundle, ImprovementReport, ReleaseState, UsePolicy
 from .evaluation import decide_gate, evaluate_pair, grade, make_context, seal_evidence
 from .feedback import admit_feedback
 from .fixtures import load_fixtures
-from .governance import activate, assign_cohort, make_approval, rollback
+from .governance import activate, assign_cohort, make_approval, rollback, stop
 from .lessons import export_training_candidates, propose_lessons
 from .replay import attribute, replay
 from .serialization import body_hash, digest
@@ -79,9 +79,7 @@ def run_group(group,lab):
         probe = next(t for t in lab.tasks if t.task_id == "S1")
         expired_clock = "2026-10-28T00:00:00Z"
         fault = run_agent(probe.agent_input,lab.documents,candidate,policy=policy,now=expired_clock)
-        stop = ReleaseRecord("pending","stop",candidate,candidate,approval.approval_id,evidence.evidence_hash,cohort,"expired_memory_probe",expired_clock)
-        stop = replace(stop,record_id=body_hash(stop,"record_id"))
-        state = replace(state,history=state.history+(stop,))
+        state = stop(state,reason="expired_memory_probe",now=expired_clock,cohort=cohort)
         back = rollback(state,baseline,reason="canary_expired_memory",now=expired_clock)
         result.update(approval=approval.to_dict(),cohort=cohort,cohort_counts=dict(Counter(cohort.values())),
                       canary_trials=canary_rows,changed_condition={"clock":expired_clock,"probe":"S1","result":fault.to_dict(),

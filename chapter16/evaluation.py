@@ -7,6 +7,7 @@ from .feedback import admit_feedback, within
 from .fixtures import validate_fixtures
 from .replay import replay, attribute, verifies_discovery_condition
 from .serialization import body_hash, digest
+from .validation_receipts import _record_validation
 
 def environment_hash(documents, tasks, clock, replay_cases=()):
     return digest({"documents":documents, "task_conditions":[(t.frozen_clock, t.revoked_source_ids) for t in tasks],
@@ -129,12 +130,14 @@ def evaluate_pair(tasks, documents, truth, baseline, candidate, context):
         counts["environment_error"] += bool(after.environment_error)
     coverage = {"expected":16, "observed":len(rows), "holdout":sum(t.split == "holdout" for t in tasks),
                 "targets":sum(t.target for t in tasks), "missing_provenance":sorted(refs - {a.feedback_id for a in closure})}
-    return seal_evidence(EvidenceBundle(baseline.snapshot_hash, candidate.snapshot_hash, context, closure, tuple(rows), slices, coverage,
+    evidence = seal_evidence(EvidenceBundle(baseline.snapshot_hash, candidate.snapshot_hash, context, closure, tuple(rows), slices, coverage,
                          sum(bool(r["candidate"]["unknown_reasons"]) for r in rows),
                          sum(bool(r["candidate"]["environment_error"]) for r in rows),
                          sum(bool(r["candidate"]["violations"]) for r in rows),
                          sum(a.disposition == "unknown" and a.feedback_id not in refs for a in context.admissions), "pending",
                          candidate, proofs))
+    _record_validation(evidence)
+    return evidence
 
 def decide_gate(evidence):
     def decision(status, reason):
