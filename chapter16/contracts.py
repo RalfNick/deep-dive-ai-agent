@@ -300,3 +300,33 @@ class EvidenceBundle(Contract):
     violation_count: int
     unrelated_unknown_count: int
     evidence_hash: str
+
+@dataclass(frozen=True)
+class ApprovalReceipt(Contract):
+    approval_id: str
+    approver_id: str
+    candidate_hash: str
+    evidence_hash: str
+    context_hash: str
+    allowed_scopes: tuple[Scope, ...]
+    issued_at: str
+    valid_until: str
+    decision: str
+
+@dataclass(frozen=True)
+class ReleaseRecord(Contract):
+    record_id: str
+    event: str
+    from_revision: ArtifactSnapshot
+    to_revision: ArtifactSnapshot
+    approval_ref: str | None
+    evidence_ref: str | None
+    cohort: Mapping
+    reason: str
+    frozen_clock: str
+
+@dataclass(frozen=True)
+class ReleaseState(Contract):
+    active: ArtifactSnapshot
+    history: tuple[ReleaseRecord, ...]
+    used_approvals: frozenset[str]
