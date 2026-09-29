@@ -1,0 +1,23 @@
+import re
+from pathlib import Path
+ROOT = Path(__file__).parents[2]
+
+def narrative_han_count(text):
+    text = re.sub(r"```.*?```", "", text, flags=re.S)
+    text = "\n".join(line for line in text.splitlines() if not re.match(r"\s*(#|\||\[\^)",line))
+    text = re.sub(r"\]\([^)]*\)", "]",text)
+    return len(re.findall(r"[\u4e00-\u9fff]",text))
+
+def test_manuscript_structure_and_reader_entry():
+    text = (ROOT/"book/chapter16.md").read_text(encoding="utf-8")
+    assert text.startswith("# 第 16 章 从失败中学习：持续改进系统")
+    assert len(re.findall(r"^## ",text,re.M)) == 14
+    assert 30 <= len(re.findall(r"^#{2,3} ",text,re.M)) <= 36
+    assert all(f"实验 16-{n}" in text for n in range(1,6))
+    assert len(re.findall(r"^\|\s*[-:]",text,re.M)) == 5
+    assert len(re.findall(r"!\[图 16-",text)) == 7
+    assert all(f"**{n}." in text for n in range(1,14))
+    assert text.count("失败样本") >= 5
+    assert "../chapter16/reference-answers.md" in text and "sources/chapter16-sources.md" in text
+    assert "OUTLINE.md" in text and "chapter17.md" not in text
+    assert 18000 <= narrative_han_count(text) <= 25000
