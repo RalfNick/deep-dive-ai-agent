@@ -1,0 +1,6 @@
+[
+ {"id":"F01","task":"K1","tape":["ok"],"missing":[]},
+ {"id":"F03","task":"P1","tape":["ok"],"missing":[]},
+ {"id":"F04","task":"P1","family":"discover-transient","tape":["timeout"],"missing":[]},
+ {"id":"F10","task":"P1","family":"missing-receipt","tape":[],"missing":["tool_receipt"]}
+]

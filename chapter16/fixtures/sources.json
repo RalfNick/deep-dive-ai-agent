@@ -1,0 +1,6 @@
+[
+ {"id":"owner-export","role":"document_owner","domain":"export","user":null},
+ {"id":"owner-procedure","role":"document_owner","domain":"procedure","user":null},
+ {"id":"owner-billing","role":"document_owner","domain":"billing","user":null},
+ {"id":"user-A","role":"user","domain":"export","user":"user-A"}
+]

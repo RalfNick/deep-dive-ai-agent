@@ -1,0 +1,8 @@
+[
+ {"id":"A-old","tenant":"A","domain":"export","version":"historical","answer":"历史版：在设置中导出 CSV。","steps":["open_settings","export_csv"]},
+ {"id":"A-current","tenant":"A","domain":"export","version":"current","answer":"当前版：打开项目的数据页，选择导出位置并检查回执。","steps":[]},
+ {"id":"A-steps","tenant":"A","domain":"procedure","version":"current","answer":"当前操作步骤。","steps":["open_project","open_data","choose_destination","export","verify_receipt"]},
+ {"id":"B-current","tenant":"B","domain":"export","version":"current","answer":"租户 B 当前版导出。","steps":[]},
+ {"id":"B-old","tenant":"B","domain":"export","version":"historical","answer":"租户 B 历史版导出。","steps":["open_settings","export_csv"]},
+ {"id":"B-steps","tenant":"B","domain":"procedure","version":"current","answer":"租户 B 的完整操作步骤。","steps":["open_project","open_data","choose_destination","export","verify_receipt"]}
+]

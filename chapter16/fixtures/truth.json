@@ -1,0 +1,12 @@
+[
+ {"ref":"current-A","doc":"A-current","tenant":"A","domain":"export"},
+ {"ref":"historical-A","doc":"A-old","tenant":"A","domain":"export","version":"historical"},
+ {"ref":"current-B","doc":"B-current","tenant":"B","domain":"export"},
+ {"ref":"steps-A","doc":"A-steps","tenant":"A","domain":"procedure","steps":["open_project","open_data","choose_destination","export","verify_receipt"]},
+ {"ref":"steps-B","doc":"B-steps","tenant":"B","domain":"procedure","steps":["open_project","open_data","choose_destination","export","verify_receipt"]},
+ {"ref":"historical-steps-A","doc":"A-old","tenant":"A","domain":"export","version":"historical","steps":["open_settings","export_csv"]},
+ {"ref":"concise-A","doc":null,"tenant":"A","domain":"export","user":"user-A","style":"concise"},
+ {"ref":"normal-A","doc":null,"tenant":"A","domain":"export","style":"normal"},
+ {"ref":"normal-B","doc":null,"tenant":"B","domain":"export","style":"normal"},
+ {"ref":"refusal","doc":null,"tenant":"A","domain":"export","refusal":"policy_denied"}
+]
