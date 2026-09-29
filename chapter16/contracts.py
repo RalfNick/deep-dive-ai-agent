@@ -260,3 +260,16 @@ class AdmissionRecord(Contract):
     source_sensitive: bool
     source_refs: tuple[str, ...]
     evidence_refs: tuple[str, ...]
+
+@dataclass(frozen=True)
+class ReplayResult(Contract):
+    status: str
+    outcome: RunResult
+    missing: tuple[str, ...]
+    evidence_refs: tuple[str, ...]
+
+@dataclass(frozen=True)
+class AttributionResult(Contract):
+    cause: str
+    interventions: tuple[Mapping, ...]
+    unknown_reasons: tuple[str, ...]
