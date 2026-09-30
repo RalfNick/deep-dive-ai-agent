@@ -1,0 +1,12 @@
+{
+  "schema_version": "chapter17.bundle.v1",
+  "sha256": {
+    "group-1.json": "1ce8fb295eda0620b571de650cff14885a1e9d349170d421a7c3537b728d5250",
+    "group-2.json": "32dc86706422628cbc04ea13c61ef80b544e48f4d828718df015634d3b06736a",
+    "group-3.json": "ef3eb59527930b13053a23674b040f801385a6fe1ed0d561cb61b8f4658b17bc",
+    "group-4.json": "0e6b8de90327c7d8aa4eee51926e8ce81c4ccaea80342ec0cc7f1f1f4232ad5b",
+    "group-5.json": "8eb66ab5df50ce51259c2e343549b9f3a0b325f19cccc92c370b8910b4a180eb",
+    "report.json": "deab89bf28d3e59437dfa76704d7923544298cb35056b4c9b715ccb3d4562092",
+    "summary.md": "f732ee2e6ea880eb01204979da52f1ed66e955de374a0e13d0549163cb8b6f17"
+  }
+}
