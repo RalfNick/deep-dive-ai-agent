@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">五类输入，统一证据链</title>
+<desc id="desc">每类媒体都有来源、时间和可见范围；转成文字不会自动提高可信度。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">五类输入，统一证据链</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">每类媒体都有来源、时间和可见范围；转成文字不会自动提高可信度。</tspan></text>
+<path d="M 380.0 270.0 L 550.0 530.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 380.0 410.0 L 550.0 530.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 380.0 550.0 L 550.0 530.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 380.0 690.0 L 550.0 530.0" fill="none" stroke="#c46b18" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 650.0 330.0 L 770.0 450.0" fill="none" stroke="#59636e" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 990.0 530.0 L 1100.0 530.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="991.0" y="495.0" width="108" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1045.0" y="518.0">证据仍须核验</tspan></text>
+<rect x="70" y="210" width="310" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="225.0" y="255.0">图像</tspan><tspan x="225.0" y="286.2">区域 + 像素来源</tspan></text>
+<rect x="70" y="350" width="310" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="225.0" y="395.0">文档页</tspan><tspan x="225.0" y="426.2">页码 + 版本</tspan></text>
+<rect x="70" y="490" width="310" height="120" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="225.0" y="535.0">屏幕</tspan><tspan x="225.0" y="566.2">帧 ID + 截取时刻</tspan></text>
+<rect x="70" y="630" width="310" height="120" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="225.0" y="675.0">音频</tspan><tspan x="225.0" y="706.2">片段 + 时间戳</tspan></text>
+<rect x="490" y="210" width="320" height="120" rx="24" fill="#edf0f2" stroke="#59636e" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="650.0" y="255.0">文本</tspan><tspan x="650.0" y="286.2">原文 + 权限域</tspan></text>
+<rect x="550" y="450" width="440" height="160" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="770.0" y="515.0">MediaRef + Observation</tspan><tspan x="770.0" y="546.2">来源 / 方法 / 不确定性</tspan></text>
+<rect x="1100" y="450" width="410" height="160" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1305.0" y="515.0">Decision</tspan><tspan x="1305.0" y="546.2">回答 / Unknown / 阻断 / 刷新</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">模型看到的内容是观察；能否回答还要看来源、冲突与边界。</tspan></text>
+</svg>

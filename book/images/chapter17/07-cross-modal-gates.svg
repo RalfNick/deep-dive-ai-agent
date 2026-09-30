@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">跨模态门禁与可回放证据包</title>
+<desc id="desc">不让一种模态的空缺由另一种模态的自信表述填补。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">跨模态门禁与可回放证据包</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">不让一种模态的空缺由另一种模态的自信表述填补。</tspan></text>
+<path d="M 360.0 310.0 L 620.0 520.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 360.0 510.0 L 620.0 520.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 360.0 710.0 L 620.0 520.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1050.0 520.0 L 1180.0 520.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1070.0" y="485.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1115.0" y="508.0">可追溯</tspan></text>
+<rect x="60" y="250" width="300" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="210.0" y="295.0">来源门</tspan><tspan x="210.0" y="326.2">身份 + 哈希 + 版本</tspan></text>
+<rect x="60" y="450" width="300" height="120" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="210.0" y="495.0">时间门</tspan><tspan x="210.0" y="526.2">帧新鲜度 + 事件序</tspan></text>
+<rect x="60" y="650" width="300" height="120" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="210.0" y="695.0">权限门</tspan><tspan x="210.0" y="726.2">允许范围 + 审批</tspan></text>
+<rect x="620" y="430" width="430" height="180" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="835.0" y="505.0">统一决策</tspan><tspan x="835.0" y="536.2">Answer / Unknown / Block / Refresh</tspan></text>
+<rect x="1180" y="430" width="340" height="180" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1350.0" y="505.0">回放包</tspan><tspan x="1350.0" y="536.2">输入摘要 + 中间态 + 原因</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">失败不是空白：保留缺证据的位置，下一次才知道该补什么。</tspan></text>
+</svg>
