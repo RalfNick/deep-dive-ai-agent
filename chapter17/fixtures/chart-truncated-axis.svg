@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="380" viewBox="0 0 520 380">
+  <text class="unit" x="24" y="30">千件</text>
+  <text class="legend" x="330" y="30">月销量</text>
+  <line x1="80" y1="300" x2="470" y2="300" stroke="#274b72"/>
+  <text class="tick" x="40" y="300">70</text>
+  <text class="tick" x="40" y="180">100</text>
+  <rect class="bar" x="140" y="260" width="70" height="40" fill="#4c8ccc"/>
+  <rect class="bar" x="320" y="180" width="70" height="120" fill="#5da987"/>
+  <text class="month" x="155" y="330">Jan</text>
+  <text class="month" x="335" y="330">Feb</text>
+</svg>
