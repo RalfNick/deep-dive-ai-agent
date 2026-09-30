@@ -1,0 +1,10 @@
+[
+  {"seq":1,"event_ms":1000,"session_id":"demo","turn_id":"turn-1","task_id":"lookup","kind":"task_started","payload":[]},
+  {"seq":2,"event_ms":1100,"session_id":"demo","turn_id":"turn-1","task_id":"lookup","kind":"speech_started","payload":[]},
+  {"seq":3,"event_ms":1110,"session_id":"demo","turn_id":"turn-1","task_id":"lookup","kind":"response_cancelled","payload":[]},
+  {"seq":4,"event_ms":1120,"session_id":"demo","turn_id":"turn-1","task_id":"lookup","kind":"playback_stopped","payload":[]},
+  {"seq":5,"event_ms":1130,"session_id":"demo","turn_id":"turn-1","task_id":"lookup","kind":"conversation_truncated","payload":[]},
+  {"seq":6,"event_ms":1140,"session_id":"demo","turn_id":"turn-1","task_id":"lookup","kind":"action_committed","payload":[["action_id","a1"]]},
+  {"seq":7,"event_ms":1150,"session_id":"demo","turn_id":"turn-1","task_id":"lookup","kind":"task_completed","payload":[]},
+  {"seq":8,"event_ms":1160,"session_id":"demo","turn_id":"turn-1","task_id":"lookup","kind":"task_cancelled","payload":[]}
+]
