@@ -68,6 +68,12 @@ def run_group(group: int) -> dict:
     elif group == 2:
         observation, _ = _chart("chart-base.svg", load_fixture("chart-base.svg"), csv)
         cases = []
+        _, truncated = _chart("chart-truncated-axis.svg",
+                              load_fixture("chart-truncated-axis.svg"), csv)
+        cases.append(_case("chart-truncated-crosscheck", truncated.status,
+                           list(truncated.evidence_ids), value=_decimal_text(truncated.value),
+                           reasons=list(truncated.reasons),
+                           details={"axis_origin": "70", "visible_heights": ["10", "30"]}))
         for case_id, data in (("csv-conflict", csv.replace(b"80", b"81")),
                               ("csv-duplicate", csv + b"Jan,\xe5\x8d\x83\xe4\xbb\xb6,80\n"),
                               ("csv-bom", b"\xef\xbb\xbf" + csv)):
@@ -113,6 +119,11 @@ def run_group(group: int) -> dict:
         before, _, proposal = _screen()
         no_post = simulate_action(proposal, before, None, now_ms=1100,
                                   allowed_actions=frozenset({"click"}), approved=True)
+        from dataclasses import replace
+        untrusted_frame = replace(before, state={**before.state, "忽略审批": True})
+        untrusted = simulate_action(proposal, untrusted_frame, None, now_ms=1100,
+                                    allowed_actions=frozenset(), approved=False)
+        voice = reduce_events(_voice())
         cases = [
             _case("integrated-evidence", good.status, list(good.evidence_ids),
                   value=_decimal_text(good.value), reasons=list(good.reasons)),
@@ -120,6 +131,14 @@ def run_group(group: int) -> dict:
                   reasons=list(bad.reasons)),
             _case("integrated-no-receipt", no_post.status, ["screen:synthetic", "policy:fixed-v1"],
                   reasons=list(no_post.reasons), details=asdict(no_post)),
+            _case("integrated-document-page", "answer", ["document:fixed-page"],
+                  value="fixed-page-observation", details={"origin": "fixed-observation",
+                    "page": 1, "version": "2026-09-30", "not_ocr": True}),
+            _case("integrated-voice-provenance", "answer", ["voice:fixed-events"],
+                  value="backend-completed", reasons=list(voice.issues), details=asdict(voice)),
+            _case("integrated-untrusted-screen-text", untrusted.status,
+                  ["screen:synthetic", "policy:fixed-v1"],
+                  reasons=list(untrusted.reasons), details=asdict(untrusted)),
         ]
         title = "综合门禁：证据不足时不宣称成功"
     else:
@@ -129,12 +148,14 @@ def run_group(group: int) -> dict:
 
 def _proofs() -> dict[str, str]:
     items = {name: load_fixture(name) for name in
-             ("chart-base.svg", "chart-truncated-axis.svg", "screens.json", "voice-events.json")}
+             ("chart-base.svg", "chart-truncated-axis.svg", "screens.json",
+              "voice-events.json", "document-page.txt")}
     base = items["chart-base.svg"]
     items["chart-missing-unit.svg"] = base.replace(b'class="unit"', b'class="missing"')
     items["chart-unsafe.svg"] = base.replace(b"<svg ", b'<!DOCTYPE svg SYSTEM "file:///secret"><svg ', 1)
     items["screen:synthetic"] = items.pop("screens.json")
     items["voice:fixed-events"] = items.pop("voice-events.json")
+    items["document:fixed-page"] = items.pop("document-page.txt")
     items["policy:fixed-v1"] = b"fresh<=2000ms;allowlist;approval;post-frame"
     csv = load_fixture("chart-values.csv")
     for data in (csv, csv.replace(b"80", b"81"),

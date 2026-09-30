@@ -40,3 +40,12 @@ def test_default_run_is_offline_and_does_not_read_key(monkeypatch):
     monkeypatch.setattr(socket.socket, "connect", lambda *args, **kwargs: (_ for _ in ()).throw(AssertionError("network")))
     monkeypatch.setattr(os, "getenv", lambda *args, **kwargs: (_ for _ in ()).throw(AssertionError("env")))
     assert run_group(1)["cases"][0]["status"] == "answer"
+
+
+def test_second_group_and_integrated_group_cover_specified_modalities():
+    second = {case["id"]: case for case in run_group(2)["cases"]}
+    assert second["chart-truncated-crosscheck"]["value"] == "25"
+    integrated = {case["id"]: case for case in run_group(5)["cases"]}
+    assert integrated["integrated-document-page"]["details"]["origin"] == "fixed-observation"
+    assert integrated["integrated-voice-provenance"]["details"]["backend_task"] == "completed"
+    assert integrated["integrated-untrusted-screen-text"]["status"] == "blocked"
