@@ -33,3 +33,10 @@ def test_prose_has_book_chapter_density():
     prose = "\n".join(line for line in text.splitlines()
                       if not line.startswith(("#", "|", "![", "[^") ) and not line.lstrip().startswith("- "))
     assert len(re.findall(r"[\u4e00-\u9fff]", prose)) >= 18000
+
+
+def test_experiment_five_matches_final_bundle_file_count():
+    text = BOOK.read_text(encoding="utf-8")
+    bundle = ROOT / "chapter17" / "reports" / "reference-rc1"
+    assert len(list(bundle.iterdir())) == 9
+    assert "比较九个规范文件的 SHA-256" in text

@@ -302,7 +302,7 @@ python -B -m chapter17.experiments --group 4 --output chapter17/.runs/reader-voi
 
 报告中的 `reasons` 也有两类用途。对用户，它们可映射成“数据不一致”“画面已变化”这样的友好说明；对工程师，它们是回归分析维度。若某版本上线后 `csv-duplicate-month-or-mixed-unit` 突增，可能是上游数据导出格式变了；若 `frame-id-changed` 增多，可能是 UI 更新更频繁或推理耗时拉长。用户不需要看内部原因码，工程系统却不能只存用户友好话术，否则会失去定位能力。本章固定案例不产生时序趋势，但报告结构为以后做这样的切片留下了位置。
 
-> **实验 17-5 ★★★：汇总并检查证据包。** 运行全组于两个从未使用的新目录，比较八个规范文件的 SHA-256；打开 `report.json` 手工数 20 个案例及各状态，检查每个 `evidence_ids` 是否能在 `source_proof` 里找到。再读 `integrated-unsafe-svg` 与 `integrated-no-receipt`，说明为什么二者虽同为 `unknown`，但前者需要修输入，后者需要查执行后验。
+> **实验 17-5 ★★★：汇总并检查证据包。** 运行全组于两个从未使用的新目录，比较九个规范文件的 SHA-256；打开 `report.json` 手工数 20 个案例及各状态，检查每个 `evidence_ids` 是否能在 `source_proof` 里找到。再读 `integrated-unsafe-svg` 与 `integrated-no-receipt`，说明为什么二者虽同为 `unknown`，但前者需要修输入，后者需要查执行后验。
 
 ```powershell
 python -B -m chapter17.experiments --group all --output chapter17/.runs/reader-all-a

@@ -70,6 +70,20 @@ AUTHOR_PATH_PATTERNS = (
 HISTORICAL_PLAN_PATH_BLOB = "442c08b71c7a347c075e2400e02f40c8d4fab7a6"
 HISTORICAL_PLAN_PATH_FILE = "docs/superpowers/plans/2026-09-27-chapter15-agent-post-training.md"
 
+# Early local Chapter 17 commits used external-entity test fixtures whose URI
+# looked like a host path to this scanner. The blobs and line numbers below
+# identify only those historical fixture lines; current-tree scanning and all
+# historical secret checks remain unchanged.
+HISTORICAL_CHAPTER17_FIXTURE_LINES = {
+    ("4dfee4b0c0d56d291aa7ebe2d92d796ef8c24186", "chapter17/experiments.py", 117),
+    ("4dfee4b0c0d56d291aa7ebe2d92d796ef8c24186", "chapter17/experiments.py", 155),
+    ("5775593ffb9bdbd6b491faf3d63b6fcdc75708b3", "chapter17/experiments.py", 117),
+    ("5775593ffb9bdbd6b491faf3d63b6fcdc75708b3", "chapter17/experiments.py", 155),
+    ("9102a411c48221909e271d491321450dd4b87e2c", "chapter17/experiments.py", 111),
+    ("9102a411c48221909e271d491321450dd4b87e2c", "chapter17/experiments.py", 135),
+    ("f18b434048d46c54433654f466b7fe71b6939cbf", "chapter17/tests/test_chart.py", 36),
+}
+
 
 @dataclass(frozen=True)
 class Finding:
@@ -85,6 +99,15 @@ def _known_historical_plan_path(object_id: str, object_path: str, finding: Findi
         and object_path == HISTORICAL_PLAN_PATH_FILE
         and finding.code == "history_author_path"
         and finding.line == 619
+    )
+
+
+def _known_historical_chapter17_fixture(
+    object_id: str, object_path: str, finding: Finding
+) -> bool:
+    return (
+        finding.code == "history_author_path"
+        and (object_id, object_path, finding.line) in HISTORICAL_CHAPTER17_FIXTURE_LINES
     )
 
 
@@ -375,6 +398,7 @@ def check_git_history(root: Path) -> tuple[Finding, ...]:
                 text, display, code="history_author_path"
             )
             if not _known_historical_plan_path(object_id, object_path, finding)
+            and not _known_historical_chapter17_fixture(object_id, object_path, finding)
         )
     return tuple(sorted(findings, key=lambda item: (item.path, item.line, item.code)))
 

@@ -114,7 +114,7 @@ def run_group(group: int) -> dict:
     elif group == 5:
         svg = load_fixture("chart-base.svg")
         _, good = _chart("chart-base.svg", svg, csv)
-        unsafe = svg.replace(b"<svg ", b'<!DOCTYPE svg SYSTEM "file:///secret"><svg ', 1)
+        unsafe = svg.replace(b"<svg ", b'<!DOCTYPE svg SYSTEM "https://example.invalid/secret"><svg ', 1)
         _, bad = _chart("chart-unsafe.svg", unsafe, csv)
         before, _, proposal = _screen()
         no_post = simulate_action(proposal, before, None, now_ms=1100,
@@ -152,7 +152,7 @@ def _proofs() -> dict[str, str]:
               "voice-events.json", "document-page.txt")}
     base = items["chart-base.svg"]
     items["chart-missing-unit.svg"] = base.replace(b'class="unit"', b'class="missing"')
-    items["chart-unsafe.svg"] = base.replace(b"<svg ", b'<!DOCTYPE svg SYSTEM "file:///secret"><svg ', 1)
+    items["chart-unsafe.svg"] = base.replace(b"<svg ", b'<!DOCTYPE svg SYSTEM "https://example.invalid/secret"><svg ', 1)
     items["screen:synthetic"] = items.pop("screens.json")
     items["voice:fixed-events"] = items.pop("voice-events.json")
     items["document:fixed-page"] = items.pop("document-page.txt")

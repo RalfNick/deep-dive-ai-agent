@@ -33,7 +33,7 @@ def test_truncated_axis_70_still_yields_25():
 @pytest.mark.parametrize("old,new", [
     (b'<text class="tick" x="45" y="300">0</text>', b""),
     (b'<text class="legend" x="330" y="30">', b'<text class="legend" x="330" y="30">other</text><text class="legend" x="330" y="30">'),
-    (b'<svg ', b'<!DOCTYPE svg SYSTEM "file:///etc/passwd"><svg '),
+    (b'<svg ', b'<!DOCTYPE svg SYSTEM "https://example.invalid/secret"><svg '),
     (b'</svg>', b'<image href="https://example.com/a.png"/></svg>'),
     (b'<rect class="bar"', b'<rect transform="scale(2)" class="bar"'),
 ])

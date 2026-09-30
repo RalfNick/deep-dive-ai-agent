@@ -6,6 +6,7 @@ import unittest
 
 from scripts.check_repository import (
     Finding,
+    _known_historical_chapter17_fixture,
     _known_historical_plan_path,
     check_author_paths,
     check_chapter_mapping,
@@ -110,6 +111,17 @@ class RepositorySafetyTests(unittest.TestCase):
         self.assertFalse(_known_historical_plan_path(blob, "book/chapter15.md", finding))
         self.assertFalse(_known_historical_plan_path(blob, plan, Finding("history_author_path", "ignored", 620, "author-machine path")))
         self.assertFalse(_known_historical_plan_path(blob, plan, Finding("history_secret", "ignored", 619, "secret")))
+
+    def test_known_historical_chapter17_fixture_exception_is_exact(self) -> None:
+        blob = "4dfee4b0c0d56d291aa7ebe2d92d796ef8c24186"
+        path = "chapter17/experiments.py"
+        finding = Finding("history_author_path", "ignored", 117, "local URI")
+
+        self.assertTrue(_known_historical_chapter17_fixture(blob, path, finding))
+        self.assertFalse(_known_historical_chapter17_fixture("0" * 40, path, finding))
+        self.assertFalse(_known_historical_chapter17_fixture(blob, "chapter17/other.py", finding))
+        self.assertFalse(_known_historical_chapter17_fixture(blob, path, Finding("history_author_path", "ignored", 118, "local URI")))
+        self.assertFalse(_known_historical_chapter17_fixture(blob, path, Finding("history_secret", "ignored", 117, "secret")))
 
     def test_chapter_mapping_rejects_missing_and_duplicate_readme_links(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
