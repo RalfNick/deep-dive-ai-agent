@@ -27,17 +27,25 @@ def _unknown(media: MediaRef, reason: str) -> Observation:
 
 
 def observe_svg_chart(svg: bytes, media: MediaRef) -> Observation:
-    upper = svg.upper()
-    if any(token in upper for token in (b"<!DOCTYPE", b"<!ENTITY", b"<SCRIPT", b"<?XML-STYLESHEET")):
+    try:
+        source = svg.decode("utf-8-sig")
+    except UnicodeError:
+        return _unknown(media, "unsupported-svg-encoding")
+    upper = source.upper()
+    if any(token in upper for token in ("<!DOCTYPE", "<!ENTITY", "<SCRIPT", "<?XML-STYLESHEET")):
         return _unknown(media, "unsafe-svg-declaration")
     try:
-        root = ET.fromstring(svg)
+        root = ET.fromstring(source)
         if root.tag != _SVG + "svg":
             return _unknown(media, "unsupported-svg-root")
+        if any(len(child) for child in root):
+            return _unknown(media, "nested-svg-coordinate-space")
         for element in root.iter():
             if not element.tag.startswith(_SVG):
                 return _unknown(media, "unsupported-svg-namespace")
             tag = element.tag[len(_SVG):]
+            if tag == "svg" and element is not root:
+                return _unknown(media, "nested-svg-coordinate-space")
             if tag not in _ALLOWED or set(element.attrib) - _ALLOWED[tag]:
                 return _unknown(media, "unsupported-svg-element-or-attribute")
         def nodes(name: str, cls: str):
@@ -91,7 +99,10 @@ def decide_chart(observation: Observation, csv_bytes: bytes) -> Decision:
     if observation.issues:
         return abstain("svg:" + ",".join(observation.issues))
     try:
-        table = list(csv.DictReader(StringIO(csv_bytes.decode("utf-8-sig"), newline=""), strict=True))
+        reader = csv.DictReader(StringIO(csv_bytes.decode("utf-8-sig"), newline=""), strict=True)
+        if reader.fieldnames != ["month", "unit", "count"]:
+            return abstain("csv-columns-or-duplicate-header")
+        table = list(reader)
         if len(table) != 2 or any(set(row) != {"month", "unit", "count"} for row in table):
             return abstain("csv-columns-or-row-count")
         data = {}
@@ -111,3 +122,13 @@ def decide_chart(observation: Observation, csv_bytes: bytes) -> Decision:
         return Decision("answer", result, "percent", (reason,), source_ids)
     except (UnicodeError, csv.Error, InvalidOperation, ValueError, TypeError, ZeroDivisionError):
         return abstain("unparseable-csv")
+
+
+def decide_chart_at(observation: Observation, csv_bytes: bytes, *,
+                    now_ms: int, max_age_ms: int) -> Decision:
+    """Apply a source-time gate before trusting otherwise valid chart arithmetic."""
+    captured = observation.media_ref.captured_at_ms
+    if now_ms < captured or max_age_ms < 0 or now_ms - captured > max_age_ms:
+        return Decision("refresh", None, None, ("chart-source-stale-or-future",),
+                        (observation.media_ref.source_id,))
+    return decide_chart(observation, csv_bytes)

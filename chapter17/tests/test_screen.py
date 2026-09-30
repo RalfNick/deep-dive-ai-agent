@@ -67,3 +67,22 @@ def test_post_state_and_frame_order_must_be_verified():
     b, a, p = frames()
     assert run(after=replace(a, state={"submitted": False})).status == "unknown"
     assert run(after=replace(a, frame_id="f1")).status == "unknown"
+
+
+def test_shrinking_edge_pixel_stays_inside_display():
+    b, a, p = frames()
+    b = replace(b, display_width=400, display_height=225,
+                targets={"submit": (798, 448, 799, 449)})
+    a = replace(a, display_width=400, display_height=225)
+    p = replace(p, image_x=799, image_y=449)
+    receipt = run(before=b, after=a, proposal=p)
+    assert receipt.status == "verified"
+    assert receipt.display_xy == (399, 224)
+
+
+def test_pre_action_frame_cannot_verify_this_action():
+    b, a, p = frames()
+    a = replace(a, captured_at_ms=1050)
+    receipt = run(before=b, after=a, proposal=p, now_ms=1100)
+    assert receipt.status == "unknown"
+    assert receipt.executed

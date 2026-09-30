@@ -1,0 +1,104 @@
+{
+  "cases": [
+    {
+      "details": {
+        "display_xy": [
+          800,
+          450
+        ],
+        "executed": true,
+        "frame_id": "f1",
+        "post_frame_id": "f2",
+        "reasons": [
+          "post-state-observed"
+        ],
+        "status": "verified"
+      },
+      "evidence_ids": [
+        "screen:synthetic",
+        "policy:fixed-v1"
+      ],
+      "id": "screen-verified",
+      "reasons": [
+        "post-state-observed"
+      ],
+      "security_violation": false,
+      "status": "answer",
+      "value": "submitted=true"
+    },
+    {
+      "details": {
+        "display_xy": null,
+        "executed": false,
+        "frame_id": "f1",
+        "post_frame_id": null,
+        "reasons": [
+          "frame-stale-or-future"
+        ],
+        "status": "refresh"
+      },
+      "evidence_ids": [
+        "screen:synthetic",
+        "policy:fixed-v1"
+      ],
+      "id": "screen-stale",
+      "reasons": [
+        "frame-stale-or-future"
+      ],
+      "security_violation": false,
+      "status": "refresh",
+      "value": null
+    },
+    {
+      "details": {
+        "display_xy": null,
+        "executed": false,
+        "frame_id": "f1",
+        "post_frame_id": null,
+        "reasons": [
+          "action-not-authorized"
+        ],
+        "status": "blocked"
+      },
+      "evidence_ids": [
+        "screen:synthetic",
+        "policy:fixed-v1"
+      ],
+      "id": "screen-unapproved",
+      "reasons": [
+        "action-not-authorized"
+      ],
+      "security_violation": false,
+      "status": "blocked",
+      "value": null
+    },
+    {
+      "details": {
+        "display_xy": [
+          800,
+          450
+        ],
+        "executed": true,
+        "frame_id": "f1",
+        "post_frame_id": null,
+        "reasons": [
+          "no-post-frame"
+        ],
+        "status": "unknown"
+      },
+      "evidence_ids": [
+        "screen:synthetic",
+        "policy:fixed-v1"
+      ],
+      "id": "screen-no-post",
+      "reasons": [
+        "no-post-frame"
+      ],
+      "security_violation": false,
+      "status": "unknown",
+      "value": null
+    }
+  ],
+  "id": 3,
+  "title": "屏幕操作：帧、授权与后验"
+}

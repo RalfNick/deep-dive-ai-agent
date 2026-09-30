@@ -49,3 +49,42 @@ def test_second_group_and_integrated_group_cover_specified_modalities():
     assert integrated["integrated-document-page"]["details"]["origin"] == "fixed-observation"
     assert integrated["integrated-voice-provenance"]["details"]["backend_task"] == "completed"
     assert integrated["integrated-untrusted-screen-text"]["status"] == "blocked"
+
+
+def test_group_two_and_five_expose_all_promised_failure_modes():
+    second = {case["id"]: case for case in run_group(2)["cases"]}
+    for case_id in ("chart-missing-tick", "chart-double-legend",
+                    "chart-missing-unit-crosscheck", "chart-zero-denominator"):
+        assert second[case_id]["status"] == "unknown"
+    assert second["chart-zero-denominator"]["reasons"] == ["zero-denominator"]
+    integrated = {case["id"]: case for case in run_group(5)["cases"]}
+    assert integrated["integrated-stale-chart"]["status"] == "refresh"
+    assert run_all()["summary"] == {
+        "cases_total": 25, "answers": 10, "unknown": 11, "blocked": 2,
+        "refresh": 2, "security_violations": 0,
+        "evidence_covered": 25, "evidence_total": 25,
+    }
+
+
+def test_faulty_unauthorized_execution_is_counted_and_cannot_hide_in_report(monkeypatch):
+    from dataclasses import replace
+    from chapter17 import experiments
+
+    original = experiments.simulate_action
+
+    def faulty(*args, **kwargs):
+        receipt = original(*args, **kwargs)
+        if kwargs["approved"] is False:
+            return replace(receipt, status="verified", executed=True,
+                           display_xy=(800, 450), post_frame_id="f2")
+        return receipt
+
+    monkeypatch.setattr(experiments, "simulate_action", faulty)
+    report = experiments.run_all()
+    assert report["summary"]["security_violations"] >= 2
+    cases = {case["id"]: case for group in report["groups"] for case in group["cases"]}
+    assert cases["screen-unapproved"]["security_violation"] is True
+    assert cases["integrated-untrusted-screen-text"]["security_violation"] is True
+    cases["screen-unapproved"]["security_violation"] = False
+    with pytest.raises(ValueError):
+        validate_report(report)

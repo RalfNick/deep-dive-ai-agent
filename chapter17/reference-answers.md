@@ -20,7 +20,7 @@
 
 9. **17-9。** 已模拟执行，`executed=true`；缺新帧，`status=unknown`，不能说已验证提交。若第一次请求其实被服务端接收，盲重试可能重复创建。真实系统可要求服务端返回唯一提交 ID，并按幂等键查询该 ID 的持久状态，再决定补偿或重试。
 
-10. **17-10。** 依序经过任务开始、用户开始说话、前台响应取消、播放停止、对话尾部截断，最终 `playback=stopped`、`conversation_tail=removed`、`backend_task=running`。删除第四个 `playback_stopped`，不能再声称扬声器已停止；只能说取消请求已发生。后台状态仍不自动变化。
+10. **17-10。** 完整序列归约为 `playback=stopped`、`conversation_tail=removed`、`backend_task=running`。删除第四个 `playback_stopped` 且保留序号 5，会出现缺号：事件历史不完整，归约器把后台设为 `unknown`，不能推断完整会话状态。若把剩余事件重新编号为连续 1–4，后台仍为 `running`、尾部仍被截断，但不能再声称扬声器已停止；`response_cancelled` 只是取消请求，不能替代停播回执。
 
 11. **17-11。** 同序号同内容的重复事件幂等，`committed_actions=("a1",)`；任务完成后晚到取消不能覆盖完成，`backend_task=completed`，但留下 `late-cancel-after-completion`。同序号异内容说明同一历史位置出现冲突，归约器应 `unknown` 并保留冲突；任意选一个会伪造确定历史。
 

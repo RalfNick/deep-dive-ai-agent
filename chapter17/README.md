@@ -1,6 +1,8 @@
 # 第 17 章：多模态与实时 Agent 离线实验
 
-这是《深入浅出 AI Agent》第 17 章的自包含教学包。Python 3.11+ 运行时仅用标准库；测试依赖版本及哈希在 `requirements-dev.txt`。默认不需要 API Key、网络、模型、麦克风或真实桌面控制。
+这是《深入浅出 AI Agent》第 17 章的自包含教学包。Python 3.11+ 实验运行时仅用标准库；测试依赖版本及哈希在 `requirements-dev.txt`，本地 HTML 预览与完整测试还需 `requirements-preview.txt` 中锁定的 Markdown 3.10.2。独立环境请先安装这两份依赖；只运行实验无需预览依赖。默认不需要 API Key、网络、模型、麦克风或真实桌面控制。
+
+若使用全新虚拟环境做完整测试与预览，先运行 `python -m pip install -r chapter17/requirements-dev.txt` 和 `python -m pip install -r chapter17/requirements-preview.txt`；只复现五组实验不需要安装这两份开发依赖。
 
 从仓库根目录运行：
 
@@ -12,7 +14,7 @@ python -B -m chapter17.exercise_solutions --all --output chapter17/.runs/answers
 python -B -m chapter17.preview
 ```
 
-输出目录必须是新的 `chapter17/.runs/` 或 `chapter17/reports/` 子目录；即使已有目录为空也拒绝覆盖。五组结果、十三题答案、总体报告、摘要和 SHA-256 manifest 使用确定性编码。完整 RC1 参考规范包在 `reports/reference-rc1/`；`reports/reference-v1/` 是此前的 16 案例历史样本。实际读者运行建议放 `.runs/`，该目录被 Git 忽略。本地预览只写 `preview-pages/index.html`，也不会进入公开站点。
+输出目录必须是新的 `chapter17/.runs/` 或 `chapter17/reports/` 子目录；即使已有目录为空也拒绝覆盖。五组结果、十三题答案、总体报告、摘要和 SHA-256 manifest 使用确定性编码。当前 RC2 参考规范包在 `reports/reference-rc2/`；`reports/reference-rc1/` 保存 20 案例冻结稿，`reports/reference-v1/` 是更早的 16 案例教学样本。实际读者运行建议放 `.runs/`，该目录被 Git 忽略。本地预览只写 `preview-pages/index.html`，也不会进入公开站点。
 
 | 文件 | 作用 |
 | --- | --- |

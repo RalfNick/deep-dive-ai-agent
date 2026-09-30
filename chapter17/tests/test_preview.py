@@ -22,3 +22,9 @@ def test_preview_does_not_touch_public_manifest():
 def test_preview_rejects_outside_path(tmp_path):
     with pytest.raises(ValueError):
         build_preview(ROOT, output=tmp_path / "outside.html")
+
+
+def test_preview_dependency_is_declared_for_fresh_environment():
+    requirements = ROOT / "chapter17" / "requirements-preview.txt"
+    assert requirements.read_text(encoding="utf-8").strip() == "Markdown==3.10.2"
+    assert "requirements-preview.txt" in (ROOT / "chapter17" / "README.md").read_text(encoding="utf-8")

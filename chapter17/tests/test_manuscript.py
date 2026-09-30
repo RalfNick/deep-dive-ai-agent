@@ -37,6 +37,8 @@ def test_prose_has_book_chapter_density():
 
 def test_experiment_five_matches_final_bundle_file_count():
     text = BOOK.read_text(encoding="utf-8")
-    bundle = ROOT / "chapter17" / "reports" / "reference-rc1"
+    bundle = ROOT / "chapter17" / "reports" / "reference-rc2"
     assert len(list(bundle.iterdir())) == 9
     assert "比较九个规范文件的 SHA-256" in text
+    assert "规范报告共 25 个案例" in text
+    assert "reference-rc2/report.json" in text

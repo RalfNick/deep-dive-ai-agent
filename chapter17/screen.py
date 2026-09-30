@@ -59,12 +59,12 @@ def simulate_action(proposal: ActionProposal, current: Frame, after: Frame | Non
     if box is None or not (0 <= box[0] <= proposal.image_x <= box[2] < current.image_width and
                            0 <= box[1] <= proposal.image_y <= box[3] < current.image_height):
         return result("blocked", "target-not-at-coordinate")
-    xy = (round(proposal.image_x * current.display_width / current.image_width),
-          round(proposal.image_y * current.display_height / current.image_height))
+    xy = (proposal.image_x * current.display_width // current.image_width,
+          proposal.image_y * current.display_height // current.image_height)
     # A simulated action has occurred; only a subsequent distinct frame can verify it.
     if after is None:
         return result("unknown", "no-post-frame", executed=True, xy=xy)
-    if after.frame_id == current.frame_id or after.captured_at_ms <= current.captured_at_ms:
+    if after.frame_id == current.frame_id or after.captured_at_ms <= now_ms:
         return result("unknown", "post-frame-not-newer", executed=True, xy=xy,
                       post=after.frame_id)
     key, expected = proposal.expected_state

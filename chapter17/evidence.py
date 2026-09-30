@@ -5,6 +5,21 @@ from __future__ import annotations
 from collections import Counter
 
 
+def case_security_violation(case: dict) -> bool:
+    """Check the declared hard gates of this fixed teaching suite."""
+    case_id = case.get("id")
+    status = case.get("status")
+    executed = bool(case.get("details", {}).get("executed"))
+    if case_id in {"screen-stale"}:
+        return status != "refresh" or executed
+    if case_id in {"screen-unapproved", "integrated-untrusted-screen-text"}:
+        return status != "blocked" or executed
+    if case_id in {"screen-no-post", "integrated-no-receipt",
+                   "integrated-unsafe-svg"}:
+        return status != "unknown"
+    return False
+
+
 def summarize(groups: list[dict]) -> dict:
     cases = [case for group in groups for case in group["cases"]]
     counts = Counter(case["status"] for case in cases)
@@ -50,6 +65,8 @@ def validate_report(report: dict) -> None:
                 raise ValueError("answer needs a value")
             if status != "answer" and case.get("value") is not None:
                 raise ValueError("non-answer must not carry value")
+            if case.get("security_violation") is not case_security_violation(case):
+                raise ValueError("security gate result is not derived from case evidence")
     if report.get("summary") != summarize(groups):
         raise ValueError("report summary is not derived from cases")
     if not isinstance(report.get("limits"), list) or not report["limits"]:

@@ -8,9 +8,9 @@ from hashlib import sha256
 import json
 from pathlib import Path
 
-from .chart import decide_chart, observe_svg_chart
+from .chart import decide_chart, decide_chart_at, observe_svg_chart
 from .contracts import EventRecord, make_media_ref
-from .evidence import summarize, validate_report
+from .evidence import case_security_violation, summarize, validate_report
 from .fixtures import load_fixture
 from .screen import ActionProposal, Frame, simulate_action
 from .voice import reduce_events
@@ -18,9 +18,11 @@ from .voice import reduce_events
 
 def _case(identifier: str, status: str, refs: list[str], *, value: str | None = None,
           reasons: list[str] | None = None, details: dict | None = None) -> dict:
-    return {"id": identifier, "status": status, "value": value,
+    case = {"id": identifier, "status": status, "value": value,
             "reasons": reasons or [], "evidence_ids": refs,
-            "details": details or {}, "security_violation": False}
+            "details": details or {}}
+    case["security_violation"] = case_security_violation(case)
+    return case
 
 
 def _decimal_text(value) -> str | None:
@@ -31,6 +33,27 @@ def _chart(name: str, svg: bytes, csv: bytes):
     media = make_media_ref("svg", name, svg, name, 0, "authored-fixture")
     observation = observe_svg_chart(svg, media)
     return observation, decide_chart(observation, csv)
+
+
+def _chart_variants() -> dict[str, bytes]:
+    base = load_fixture("chart-base.svg")
+    return {
+        "chart-missing-unit.svg": base.replace(b'class="unit"', b'class="missing"'),
+        "chart-missing-tick.svg": base.replace(
+            b'<text class="tick" x="45" y="300">0</text>', b""),
+        "chart-double-legend.svg": base.replace(
+            b'<text class="legend" x="330" y="30">',
+            b'<text class="legend" x="330" y="30">other</text><text class="legend" x="330" y="30">'),
+        "chart-zero.svg": base.replace(
+            b'<text class="tick" x="45" y="300">0</text>',
+            b'<text class="tick" x="35" y="300">-100</text>').replace(
+            b'<rect class="bar" x="140" y="140" width="70" height="160"',
+            b'<rect class="bar" x="140" y="200" width="70" height="100"'),
+    }
+
+
+def _zero_csv() -> bytes:
+    return "month,unit,count\nJan,千件,0\nFeb,千件,100\n".encode("utf-8")
 
 
 def _screen():
@@ -60,7 +83,7 @@ def run_group(group: int) -> dict:
                                reasons=list(decision.reasons),
                                details={"observed": {m: str(v) for m, v in observation.values},
                                         "unit": observation.unit}))
-        bad = load_fixture("chart-base.svg").replace(b'class="unit"', b'class="missing"')
+        bad = _chart_variants()["chart-missing-unit.svg"]
         _, decision = _chart("chart-missing-unit.svg", bad, csv)
         cases.append(_case("chart-missing-unit", decision.status, list(decision.evidence_ids),
                            reasons=list(decision.reasons)))
@@ -81,6 +104,15 @@ def run_group(group: int) -> dict:
             cases.append(_case(case_id, decision.status, list(decision.evidence_ids),
                                value=_decimal_text(decision.value),
                                reasons=list(decision.reasons)))
+        variants = _chart_variants()
+        for name, case_id in (("chart-missing-tick.svg", "chart-missing-tick"),
+                              ("chart-double-legend.svg", "chart-double-legend"),
+                              ("chart-missing-unit.svg", "chart-missing-unit-crosscheck"),
+                              ("chart-zero.svg", "chart-zero-denominator")):
+            data = _zero_csv() if name == "chart-zero.svg" else csv
+            _, decision = _chart(name, variants[name], data)
+            cases.append(_case(case_id, decision.status, list(decision.evidence_ids),
+                               value=_decimal_text(decision.value), reasons=list(decision.reasons)))
         title = "独立数据核验：冲突不是答案"
     elif group == 3:
         before, after, proposal = _screen()
@@ -124,6 +156,10 @@ def run_group(group: int) -> dict:
         untrusted = simulate_action(proposal, untrusted_frame, None, now_ms=1100,
                                     allowed_actions=frozenset(), approved=False)
         voice = reduce_events(_voice())
+        stale_ref = make_media_ref("svg", "chart-stale.svg", svg, "chart-stale.svg", 0,
+                                   "authored-fixture")
+        stale_observation = observe_svg_chart(svg, stale_ref)
+        stale = decide_chart_at(stale_observation, csv, now_ms=5000, max_age_ms=2000)
         cases = [
             _case("integrated-evidence", good.status, list(good.evidence_ids),
                   value=_decimal_text(good.value), reasons=list(good.reasons)),
@@ -136,9 +172,15 @@ def run_group(group: int) -> dict:
                     "page": 1, "version": "2026-09-30", "not_ocr": True}),
             _case("integrated-voice-provenance", "answer", ["voice:fixed-events"],
                   value="backend-completed", reasons=list(voice.issues), details=asdict(voice)),
-            _case("integrated-untrusted-screen-text", untrusted.status,
+            _case("integrated-untrusted-screen-text",
+                  "answer" if untrusted.status == "verified" else untrusted.status,
                   ["screen:synthetic", "policy:fixed-v1"],
+                  value="submitted=true" if untrusted.status == "verified" else None,
                   reasons=list(untrusted.reasons), details=asdict(untrusted)),
+            _case("integrated-stale-chart", stale.status, list(stale.evidence_ids),
+                  reasons=list(stale.reasons),
+                  details={"captured_at_ms": stale_ref.captured_at_ms,
+                           "now_ms": 5000, "max_age_ms": 2000}),
         ]
         title = "综合门禁：证据不足时不宣称成功"
     else:
@@ -151,7 +193,8 @@ def _proofs() -> dict[str, str]:
              ("chart-base.svg", "chart-truncated-axis.svg", "screens.json",
               "voice-events.json", "document-page.txt")}
     base = items["chart-base.svg"]
-    items["chart-missing-unit.svg"] = base.replace(b'class="unit"', b'class="missing"')
+    items.update(_chart_variants())
+    items["chart-stale.svg"] = base
     items["chart-unsafe.svg"] = base.replace(b"<svg ", b'<!DOCTYPE svg SYSTEM "https://example.invalid/secret"><svg ', 1)
     items["screen:synthetic"] = items.pop("screens.json")
     items["voice:fixed-events"] = items.pop("voice-events.json")
@@ -159,7 +202,8 @@ def _proofs() -> dict[str, str]:
     items["policy:fixed-v1"] = b"fresh<=2000ms;allowlist;approval;post-frame"
     csv = load_fixture("chart-values.csv")
     for data in (csv, csv.replace(b"80", b"81"),
-                 csv + b"Jan,\xe5\x8d\x83\xe4\xbb\xb6,80\n", b"\xef\xbb\xbf" + csv):
+                 csv + b"Jan,\xe5\x8d\x83\xe4\xbb\xb6,80\n", b"\xef\xbb\xbf" + csv,
+                 _zero_csv()):
         items["csv:" + sha256(data).hexdigest()] = data
     return {name: sha256(data).hexdigest() for name, data in sorted(items.items())}
 

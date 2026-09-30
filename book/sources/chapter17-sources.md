@@ -13,6 +13,6 @@
 | O4 | [OpenAI Getting started with GPT-Live](https://developers.openai.com/api/docs/guides/live)，官方指南，2026-09-30 核对 | 语音前台与后台委派职责分离，应用检查权限、确认并保存进度；后台可在打断后继续，由应用决定是否取消 | 不表示所有 Realtime API 会话都采用 GPT-Live，或某个打断自动撤销副作用 |
 | A1 | [Anthropic Computer use tool](https://platform.claude.com/docs/en/agents-and-tools/tool-use/computer-use-tool)，官方指南，2026-09-30 核对 | Claude 提出截图、鼠标、键盘工具请求，应用在受控环境执行；官方安全注意事项包括隔离、最小权限和人工确认 | 工具版本、模型覆盖范围会变化；不能把本章模拟器说成 Anthropic 工具的正式实现或安全认证 |
 | L1 | [本章受限 SVG 与独立 CSV 夹具](../../chapter17/fixtures/chart-base.svg)、[图表代码](../../chapter17/chart.py)，本分支 RC1 | 80→100、零/截断轴、歧义与冲突的可复算本地事实 | 不支持真实 OCR、多图表类型或视觉模型能力结论 |
-| L2 | [RC1 固定报告](../../chapter17/reports/reference-rc1/report.json)、[运行入口](../../chapter17/experiments.py)，Schema `chapter17.multimodal.v1` | 20 个确定性案例的状态、证据与覆盖分母；所有正文实验数值以运行报告为准 | 不支持真实 Token、费用、语音延迟、真实桌面安全性或跨模型胜负 |
+| L2 | [RC2 固定报告](../../chapter17/reports/reference-rc2/report.json)、[运行入口](../../chapter17/experiments.py)，Schema `chapter17.multimodal.v1` | 25 个确定性案例的状态、证据与覆盖分母；所有正文实验数值以运行报告为准，RC1 旧报告仍保留 | 不支持真实 Token、费用、语音延迟、真实桌面安全性或跨模型胜负 |
 
 **资料使用规则。** 引文只支持其直接陈述的机制或研究问题。实验结果单独来自本仓库代码和夹具。论文 benchmark、官方功能说明、作者设计判断三者不能互相冒充。没有真实 Provider Usage 时不补造成本与 Token；没有模型接入时不报模型正确率；没有录音和真实屏幕时不报实际感知能力。产品页名称或工具版本未来变化时，以链接中的当日官方文档为准，并更新本台账核对日期。

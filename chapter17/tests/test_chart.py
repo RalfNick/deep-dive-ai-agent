@@ -59,3 +59,52 @@ def test_ambiguous_csv_is_unknown(csv):
 def test_utf8_bom_csv_is_accepted():
     csv = b"\xef\xbb\xbf" + load_fixture("chart-values.csv")
     assert decide_chart(observed(), csv).value == Decimal("25")
+
+
+def test_utf16_entity_document_is_rejected_before_xml_parse():
+    source = load_fixture("chart-base.svg").decode("utf-8")
+    source = source.replace('<text class="tick" x="45" y="300">0</text>',
+                            '<text class="tick" x="45" y="300">&zero;</text>')
+    source = '<!DOCTYPE svg [<!ENTITY zero "0">]>' + source
+    assert observed(data=source.encode("utf-16")).issues
+
+
+def test_nested_svg_viewport_cannot_be_flattened_into_root_coordinates():
+    source = load_fixture("chart-base.svg")
+    start = b'<rect class="bar" x="140" y="140" width="70" height="160" fill="#4c8ccc"/>'
+    wrapped = b'<svg width="520" height="380" viewBox="0 0 1040 760">' + start + b'</svg>'
+    assert observed(data=source.replace(start, wrapped)).issues
+
+
+def test_nested_allowed_element_is_not_flattened_either():
+    source = load_fixture("chart-base.svg")
+    bar = b'<rect class="bar" x="140" y="140" width="70" height="160" fill="#4c8ccc"/>'
+    nested = b'<text x="0" y="0">' + bar + b'</text>'
+    assert observed(data=source.replace(bar, nested)).issues
+
+
+def test_duplicate_csv_header_is_unknown_before_dictreader_overwrites_it():
+    data = "month,unit,count,count\nJan,千件,999,80\nFeb,千件,999,100\n".encode()
+    assert decide_chart(observed(), data).status == "unknown"
+
+
+def test_zero_denominator_branch_is_reached_with_matching_chart_and_csv():
+    chart = load_fixture("chart-base.svg")
+    chart = chart.replace(b'<text class="tick" x="45" y="300">0</text>',
+                          b'<text class="tick" x="35" y="300">-100</text>')
+    chart = chart.replace(b'<rect class="bar" x="140" y="140" width="70" height="160"',
+                          b'<rect class="bar" x="140" y="200" width="70" height="100"')
+    csv = "month,unit,count\nJan,千件,0\nFeb,千件,100\n".encode()
+    observation = observed(data=chart)
+    assert dict(observation.values) == {"Jan": Decimal(0), "Feb": Decimal(100)}
+    assert decide_chart(observation, csv).reasons == ("zero-denominator",)
+
+
+def test_expired_chart_requires_refresh_before_arithmetic():
+    from chapter17.chart import decide_chart_at
+
+    observation = observed()
+    decision = decide_chart_at(observation, load_fixture("chart-values.csv"),
+                               now_ms=5000, max_age_ms=2000)
+    assert decision.status == "refresh"
+    assert "stale" in decision.reasons[0]

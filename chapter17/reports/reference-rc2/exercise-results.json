@@ -1,0 +1,103 @@
+{
+  "answers": [
+    {
+      "computed": {},
+      "criterion": "三层分开，最终回复不可代替来源和读数",
+      "number": 1,
+      "topic": "来源/观察/决策"
+    },
+    {
+      "computed": {
+        "absolute_increase_thousand": "20",
+        "new_as_percent_of_old": "125",
+        "relative_growth_percent": "25"
+      },
+      "criterion": "20 千件；25% 相对增长；二月为一月的 125%",
+      "number": 2,
+      "topic": "增长率"
+    },
+    {
+      "computed": {
+        "actual_growth_percent": "25",
+        "truncated_visual_growth_percent": "200"
+      },
+      "criterion": "露出高度误算 200%；业务值真实增长 25%",
+      "number": 3,
+      "topic": "截断轴"
+    },
+    {
+      "computed": {},
+      "criterion": "图 Jan 80、CSV Jan 81 应 unknown，保留两来源",
+      "number": 4,
+      "topic": "图/CSV 冲突"
+    },
+    {
+      "computed": {},
+      "criterion": "不支持的 transform/双轴等返回 unknown，不猜数值",
+      "number": 5,
+      "topic": "未知 SVG"
+    },
+    {
+      "computed": {
+        "nonuniform_display_xy": [
+          600,
+          450
+        ],
+        "uniform_display_xy": [
+          800,
+          450
+        ]
+      },
+      "criterion": "x=1.5 倍，y=2 倍；新点为 (600,450)",
+      "number": 6,
+      "topic": "非等比坐标"
+    },
+    {
+      "computed": {},
+      "criterion": "提议 f1 与当前 f-new 不符，应 refresh、无执行",
+      "number": 7,
+      "topic": "旧帧"
+    },
+    {
+      "computed": {},
+      "criterion": "画面/OCR 是低信任材料，不能扩大 allowlist 或审批",
+      "number": 8,
+      "topic": "屏幕伪指令"
+    },
+    {
+      "computed": {},
+      "criterion": "executed=true 而 status=unknown；先查服务端幂等回执",
+      "number": 9,
+      "topic": "缺后验"
+    },
+    {
+      "computed": {
+        "backend_task": "running",
+        "conversation_tail": "removed",
+        "playback": "stopped"
+      },
+      "criterion": "已停播、已截断、后台仍运行",
+      "number": 10,
+      "topic": "语音排序"
+    },
+    {
+      "computed": {},
+      "criterion": "同内容幂等；已提交副作用保留；晚到取消不覆盖完成",
+      "number": 11,
+      "topic": "重复和晚到"
+    },
+    {
+      "computed": {},
+      "criterion": "至少覆盖读图、单位、帧、越权、停播和后台六类反例",
+      "number": 12,
+      "topic": "真实评估"
+    },
+    {
+      "computed": {},
+      "criterion": "可信数据库优先；解释截图须看截图；中断播报不冒称任务取消",
+      "number": 13,
+      "topic": "系统取舍"
+    }
+  ],
+  "schema_version": "chapter17.exercises.v1"
+}
