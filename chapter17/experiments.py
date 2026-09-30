@@ -188,7 +188,8 @@ def main(argv: list[str] | None = None) -> int:
     root = Path(__file__).resolve().parents[1]
     destination = Path(args.output)
     if args.group == "all":
-        files = write_bundle(root, destination, run_all())
+        from .exercise_solutions import payload
+        files = write_bundle(root, destination, run_all(), payload())
     else:
         files = write_single_group(root, destination, run_group(int(args.group)), _proofs())
     for path in files:

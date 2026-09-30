@@ -1,0 +1,13 @@
+{
+  "schema_version": "chapter17.bundle.v1",
+  "sha256": {
+    "exercise-results.json": "519417409adf4a878827014292c5d1d1a0fb24cdf829e117dfe29c4b8556b6cd",
+    "group-1.json": "1ce8fb295eda0620b571de650cff14885a1e9d349170d421a7c3537b728d5250",
+    "group-2.json": "de4351c1040b6506df0d716791bf68c22274dc87c624d4c81bd51766ea8ebdd3",
+    "group-3.json": "ef3eb59527930b13053a23674b040f801385a6fe1ed0d561cb61b8f4658b17bc",
+    "group-4.json": "0e6b8de90327c7d8aa4eee51926e8ce81c4ccaea80342ec0cc7f1f1f4232ad5b",
+    "group-5.json": "c0ac0bd7e13a6ecba2f2b7e2f6c256a9df1572b49a0f3c0485191cac51fa10d8",
+    "report.json": "4fbd29967494a8d641760eb101bb862a8d492061f57c4e3221a145fdb5c6fbd2",
+    "summary.md": "cc3175f30552635c04e141727ba24186438f5bbc659298b5adfb3b413decf5e2"
+  }
+}

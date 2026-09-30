@@ -1,0 +1,122 @@
+{
+  "cases": [
+    {
+      "details": {},
+      "evidence_ids": [
+        "chart-base.svg",
+        "csv:e865ff6b4e34481c40fca7b8f9af558f606fef7099e829b79e93db3061f1fb43"
+      ],
+      "id": "integrated-evidence",
+      "reasons": [
+        "(100-80)/80*100=25.00"
+      ],
+      "security_violation": false,
+      "status": "answer",
+      "value": "25"
+    },
+    {
+      "details": {},
+      "evidence_ids": [
+        "chart-unsafe.svg",
+        "csv:e865ff6b4e34481c40fca7b8f9af558f606fef7099e829b79e93db3061f1fb43"
+      ],
+      "id": "integrated-unsafe-svg",
+      "reasons": [
+        "svg:unsafe-svg-declaration"
+      ],
+      "security_violation": false,
+      "status": "unknown",
+      "value": null
+    },
+    {
+      "details": {
+        "display_xy": [
+          800,
+          450
+        ],
+        "executed": true,
+        "frame_id": "f1",
+        "post_frame_id": null,
+        "reasons": [
+          "no-post-frame"
+        ],
+        "status": "unknown"
+      },
+      "evidence_ids": [
+        "screen:synthetic",
+        "policy:fixed-v1"
+      ],
+      "id": "integrated-no-receipt",
+      "reasons": [
+        "no-post-frame"
+      ],
+      "security_violation": false,
+      "status": "unknown",
+      "value": null
+    },
+    {
+      "details": {
+        "not_ocr": true,
+        "origin": "fixed-observation",
+        "page": 1,
+        "version": "2026-09-30"
+      },
+      "evidence_ids": [
+        "document:fixed-page"
+      ],
+      "id": "integrated-document-page",
+      "reasons": [],
+      "security_violation": false,
+      "status": "answer",
+      "value": "fixed-page-observation"
+    },
+    {
+      "details": {
+        "backend_task": "completed",
+        "committed_actions": [
+          "a1"
+        ],
+        "conversation_tail": "removed",
+        "issues": [
+          "late-cancel-after-completion"
+        ],
+        "playback": "stopped"
+      },
+      "evidence_ids": [
+        "voice:fixed-events"
+      ],
+      "id": "integrated-voice-provenance",
+      "reasons": [
+        "late-cancel-after-completion"
+      ],
+      "security_violation": false,
+      "status": "answer",
+      "value": "backend-completed"
+    },
+    {
+      "details": {
+        "display_xy": null,
+        "executed": false,
+        "frame_id": "f1",
+        "post_frame_id": null,
+        "reasons": [
+          "action-not-authorized"
+        ],
+        "status": "blocked"
+      },
+      "evidence_ids": [
+        "screen:synthetic",
+        "policy:fixed-v1"
+      ],
+      "id": "integrated-untrusted-screen-text",
+      "reasons": [
+        "action-not-authorized"
+      ],
+      "security_violation": false,
+      "status": "blocked",
+      "value": null
+    }
+  ],
+  "id": 5,
+  "title": "综合门禁：证据不足时不宣称成功"
+}

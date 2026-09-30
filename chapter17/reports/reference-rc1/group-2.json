@@ -1,0 +1,68 @@
+{
+  "cases": [
+    {
+      "details": {
+        "axis_origin": "70",
+        "visible_heights": [
+          "10",
+          "30"
+        ]
+      },
+      "evidence_ids": [
+        "chart-truncated-axis.svg",
+        "csv:e865ff6b4e34481c40fca7b8f9af558f606fef7099e829b79e93db3061f1fb43"
+      ],
+      "id": "chart-truncated-crosscheck",
+      "reasons": [
+        "(100-80)/80*100=25.00"
+      ],
+      "security_violation": false,
+      "status": "answer",
+      "value": "25"
+    },
+    {
+      "details": {},
+      "evidence_ids": [
+        "chart-base.svg",
+        "csv:8b810e1abe3692df8039d91f274c0f268a7ba7e569549c52252f438de5350ac1"
+      ],
+      "id": "csv-conflict",
+      "reasons": [
+        "chart-csv-conflict"
+      ],
+      "security_violation": false,
+      "status": "unknown",
+      "value": null
+    },
+    {
+      "details": {},
+      "evidence_ids": [
+        "chart-base.svg",
+        "csv:b6200c1516bda1cb0fa32d5207221289d22a5c9d14db441469b3f99744e57f42"
+      ],
+      "id": "csv-duplicate",
+      "reasons": [
+        "csv-columns-or-row-count"
+      ],
+      "security_violation": false,
+      "status": "unknown",
+      "value": null
+    },
+    {
+      "details": {},
+      "evidence_ids": [
+        "chart-base.svg",
+        "csv:ce7929bdbcdc48cbccd8b4e689dd0dafcb2d8aab86468d07d9c7bde03f755a1e"
+      ],
+      "id": "csv-bom",
+      "reasons": [
+        "(100-80)/80*100=25.00"
+      ],
+      "security_violation": false,
+      "status": "answer",
+      "value": "25"
+    }
+  ],
+  "id": 2,
+  "title": "独立数据核验：冲突不是答案"
+}

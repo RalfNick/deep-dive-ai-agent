@@ -8,9 +8,11 @@
 python -B -m pytest chapter17/tests -q
 python -B -m chapter17.experiments --group all --output chapter17/.runs/reader-first
 python -B -m chapter17.experiments --group 3 --output chapter17/.runs/reader-screen
+python -B -m chapter17.exercise_solutions --all --output chapter17/.runs/answers-reader.json
+python -B -m chapter17.preview
 ```
 
-输出目录必须是新的 `chapter17/.runs/` 或 `chapter17/reports/` 子目录；即使已有目录为空也拒绝覆盖。五组结果、总体报告、摘要和 SHA-256 manifest 使用确定性编码。参考规范包在 `reports/reference-v1/`，实际读者运行建议放 `.runs/`，该目录被 Git 忽略。
+输出目录必须是新的 `chapter17/.runs/` 或 `chapter17/reports/` 子目录；即使已有目录为空也拒绝覆盖。五组结果、十三题答案、总体报告、摘要和 SHA-256 manifest 使用确定性编码。完整 RC1 参考规范包在 `reports/reference-rc1/`；`reports/reference-v1/` 是此前的 16 案例历史样本。实际读者运行建议放 `.runs/`，该目录被 Git 忽略。本地预览只写 `preview-pages/index.html`，也不会进入公开站点。
 
 | 文件 | 作用 |
 | --- | --- |

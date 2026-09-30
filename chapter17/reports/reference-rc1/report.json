@@ -1,0 +1,449 @@
+{
+  "groups": [
+    {
+      "cases": [
+        {
+          "details": {
+            "observed": {
+              "Feb": "100",
+              "Jan": "80"
+            },
+            "unit": "千件"
+          },
+          "evidence_ids": [
+            "chart-base.svg",
+            "csv:e865ff6b4e34481c40fca7b8f9af558f606fef7099e829b79e93db3061f1fb43"
+          ],
+          "id": "chart-base",
+          "reasons": [
+            "(100-80)/80*100=25.00"
+          ],
+          "security_violation": false,
+          "status": "answer",
+          "value": "25"
+        },
+        {
+          "details": {
+            "observed": {
+              "Feb": "100",
+              "Jan": "80"
+            },
+            "unit": "千件"
+          },
+          "evidence_ids": [
+            "chart-truncated-axis.svg",
+            "csv:e865ff6b4e34481c40fca7b8f9af558f606fef7099e829b79e93db3061f1fb43"
+          ],
+          "id": "chart-truncated",
+          "reasons": [
+            "(100-80)/80*100=25.00"
+          ],
+          "security_violation": false,
+          "status": "answer",
+          "value": "25"
+        },
+        {
+          "details": {},
+          "evidence_ids": [
+            "chart-missing-unit.svg",
+            "csv:e865ff6b4e34481c40fca7b8f9af558f606fef7099e829b79e93db3061f1fb43"
+          ],
+          "id": "chart-missing-unit",
+          "reasons": [
+            "svg:missing-unit"
+          ],
+          "security_violation": false,
+          "status": "unknown",
+          "value": null
+        }
+      ],
+      "id": 1,
+      "title": "图表读数：形状、基线与单位"
+    },
+    {
+      "cases": [
+        {
+          "details": {
+            "axis_origin": "70",
+            "visible_heights": [
+              "10",
+              "30"
+            ]
+          },
+          "evidence_ids": [
+            "chart-truncated-axis.svg",
+            "csv:e865ff6b4e34481c40fca7b8f9af558f606fef7099e829b79e93db3061f1fb43"
+          ],
+          "id": "chart-truncated-crosscheck",
+          "reasons": [
+            "(100-80)/80*100=25.00"
+          ],
+          "security_violation": false,
+          "status": "answer",
+          "value": "25"
+        },
+        {
+          "details": {},
+          "evidence_ids": [
+            "chart-base.svg",
+            "csv:8b810e1abe3692df8039d91f274c0f268a7ba7e569549c52252f438de5350ac1"
+          ],
+          "id": "csv-conflict",
+          "reasons": [
+            "chart-csv-conflict"
+          ],
+          "security_violation": false,
+          "status": "unknown",
+          "value": null
+        },
+        {
+          "details": {},
+          "evidence_ids": [
+            "chart-base.svg",
+            "csv:b6200c1516bda1cb0fa32d5207221289d22a5c9d14db441469b3f99744e57f42"
+          ],
+          "id": "csv-duplicate",
+          "reasons": [
+            "csv-columns-or-row-count"
+          ],
+          "security_violation": false,
+          "status": "unknown",
+          "value": null
+        },
+        {
+          "details": {},
+          "evidence_ids": [
+            "chart-base.svg",
+            "csv:ce7929bdbcdc48cbccd8b4e689dd0dafcb2d8aab86468d07d9c7bde03f755a1e"
+          ],
+          "id": "csv-bom",
+          "reasons": [
+            "(100-80)/80*100=25.00"
+          ],
+          "security_violation": false,
+          "status": "answer",
+          "value": "25"
+        }
+      ],
+      "id": 2,
+      "title": "独立数据核验：冲突不是答案"
+    },
+    {
+      "cases": [
+        {
+          "details": {
+            "display_xy": [
+              800,
+              450
+            ],
+            "executed": true,
+            "frame_id": "f1",
+            "post_frame_id": "f2",
+            "reasons": [
+              "post-state-observed"
+            ],
+            "status": "verified"
+          },
+          "evidence_ids": [
+            "screen:synthetic",
+            "policy:fixed-v1"
+          ],
+          "id": "screen-verified",
+          "reasons": [
+            "post-state-observed"
+          ],
+          "security_violation": false,
+          "status": "answer",
+          "value": "submitted=true"
+        },
+        {
+          "details": {
+            "display_xy": null,
+            "executed": false,
+            "frame_id": "f1",
+            "post_frame_id": null,
+            "reasons": [
+              "frame-stale-or-future"
+            ],
+            "status": "refresh"
+          },
+          "evidence_ids": [
+            "screen:synthetic",
+            "policy:fixed-v1"
+          ],
+          "id": "screen-stale",
+          "reasons": [
+            "frame-stale-or-future"
+          ],
+          "security_violation": false,
+          "status": "refresh",
+          "value": null
+        },
+        {
+          "details": {
+            "display_xy": null,
+            "executed": false,
+            "frame_id": "f1",
+            "post_frame_id": null,
+            "reasons": [
+              "action-not-authorized"
+            ],
+            "status": "blocked"
+          },
+          "evidence_ids": [
+            "screen:synthetic",
+            "policy:fixed-v1"
+          ],
+          "id": "screen-unapproved",
+          "reasons": [
+            "action-not-authorized"
+          ],
+          "security_violation": false,
+          "status": "blocked",
+          "value": null
+        },
+        {
+          "details": {
+            "display_xy": [
+              800,
+              450
+            ],
+            "executed": true,
+            "frame_id": "f1",
+            "post_frame_id": null,
+            "reasons": [
+              "no-post-frame"
+            ],
+            "status": "unknown"
+          },
+          "evidence_ids": [
+            "screen:synthetic",
+            "policy:fixed-v1"
+          ],
+          "id": "screen-no-post",
+          "reasons": [
+            "no-post-frame"
+          ],
+          "security_violation": false,
+          "status": "unknown",
+          "value": null
+        }
+      ],
+      "id": 3,
+      "title": "屏幕操作：帧、授权与后验"
+    },
+    {
+      "cases": [
+        {
+          "details": {
+            "backend_task": "running",
+            "committed_actions": [],
+            "conversation_tail": "removed",
+            "issues": [],
+            "playback": "stopped"
+          },
+          "evidence_ids": [
+            "voice:fixed-events"
+          ],
+          "id": "voice-interruption",
+          "reasons": [],
+          "security_violation": false,
+          "status": "answer",
+          "value": "playback-stopped/backend-running"
+        },
+        {
+          "details": {
+            "backend_task": "cancelled",
+            "committed_actions": [],
+            "conversation_tail": "present",
+            "issues": [],
+            "playback": "idle"
+          },
+          "evidence_ids": [
+            "voice:fixed-events"
+          ],
+          "id": "voice-task-cancel",
+          "reasons": [],
+          "security_violation": false,
+          "status": "answer",
+          "value": "backend-cancelled"
+        },
+        {
+          "details": {
+            "backend_task": "unknown",
+            "committed_actions": [],
+            "conversation_tail": "present",
+            "issues": [
+              "conflicting-duplicate-sequence"
+            ],
+            "playback": "idle"
+          },
+          "evidence_ids": [
+            "voice:fixed-events"
+          ],
+          "id": "voice-conflict",
+          "reasons": [
+            "conflicting-duplicate-sequence"
+          ],
+          "security_violation": false,
+          "status": "unknown",
+          "value": null
+        }
+      ],
+      "id": 4,
+      "title": "语音事件：打断、停播与任务状态"
+    },
+    {
+      "cases": [
+        {
+          "details": {},
+          "evidence_ids": [
+            "chart-base.svg",
+            "csv:e865ff6b4e34481c40fca7b8f9af558f606fef7099e829b79e93db3061f1fb43"
+          ],
+          "id": "integrated-evidence",
+          "reasons": [
+            "(100-80)/80*100=25.00"
+          ],
+          "security_violation": false,
+          "status": "answer",
+          "value": "25"
+        },
+        {
+          "details": {},
+          "evidence_ids": [
+            "chart-unsafe.svg",
+            "csv:e865ff6b4e34481c40fca7b8f9af558f606fef7099e829b79e93db3061f1fb43"
+          ],
+          "id": "integrated-unsafe-svg",
+          "reasons": [
+            "svg:unsafe-svg-declaration"
+          ],
+          "security_violation": false,
+          "status": "unknown",
+          "value": null
+        },
+        {
+          "details": {
+            "display_xy": [
+              800,
+              450
+            ],
+            "executed": true,
+            "frame_id": "f1",
+            "post_frame_id": null,
+            "reasons": [
+              "no-post-frame"
+            ],
+            "status": "unknown"
+          },
+          "evidence_ids": [
+            "screen:synthetic",
+            "policy:fixed-v1"
+          ],
+          "id": "integrated-no-receipt",
+          "reasons": [
+            "no-post-frame"
+          ],
+          "security_violation": false,
+          "status": "unknown",
+          "value": null
+        },
+        {
+          "details": {
+            "not_ocr": true,
+            "origin": "fixed-observation",
+            "page": 1,
+            "version": "2026-09-30"
+          },
+          "evidence_ids": [
+            "document:fixed-page"
+          ],
+          "id": "integrated-document-page",
+          "reasons": [],
+          "security_violation": false,
+          "status": "answer",
+          "value": "fixed-page-observation"
+        },
+        {
+          "details": {
+            "backend_task": "completed",
+            "committed_actions": [
+              "a1"
+            ],
+            "conversation_tail": "removed",
+            "issues": [
+              "late-cancel-after-completion"
+            ],
+            "playback": "stopped"
+          },
+          "evidence_ids": [
+            "voice:fixed-events"
+          ],
+          "id": "integrated-voice-provenance",
+          "reasons": [
+            "late-cancel-after-completion"
+          ],
+          "security_violation": false,
+          "status": "answer",
+          "value": "backend-completed"
+        },
+        {
+          "details": {
+            "display_xy": null,
+            "executed": false,
+            "frame_id": "f1",
+            "post_frame_id": null,
+            "reasons": [
+              "action-not-authorized"
+            ],
+            "status": "blocked"
+          },
+          "evidence_ids": [
+            "screen:synthetic",
+            "policy:fixed-v1"
+          ],
+          "id": "integrated-untrusted-screen-text",
+          "reasons": [
+            "action-not-authorized"
+          ],
+          "security_violation": false,
+          "status": "blocked",
+          "value": null
+        }
+      ],
+      "id": 5,
+      "title": "综合门禁：证据不足时不宣称成功"
+    }
+  ],
+  "limits": [
+    "仅固定作者 SVG 和独立 CSV；不做通用 OCR/视觉理解评估",
+    "屏幕为合成帧和模拟回执，不控制真实桌面",
+    "语音为固定事件日志，不录音、不测模型或网络实时延迟"
+  ],
+  "schema_version": "chapter17.multimodal.v1",
+  "source_proof": {
+    "chart-base.svg": "1f7e9fb4a650f1a80e2ece3c512a373d13bb5c4f8aee921a34b0100343ea0c10",
+    "chart-missing-unit.svg": "4efe63f482c19a9b87e2436016d7ab2bd387f8be84dd566335d11ff72e316f66",
+    "chart-truncated-axis.svg": "c6a58b572b346a06efc0dd30bc7696d13f079227c74f062f03b3d93c05a2e289",
+    "chart-unsafe.svg": "e088f7d55fdc32cb8318b184e8d9ef3fbb07e7e29f2b8780dc220a236c7bda6e",
+    "csv:8b810e1abe3692df8039d91f274c0f268a7ba7e569549c52252f438de5350ac1": "8b810e1abe3692df8039d91f274c0f268a7ba7e569549c52252f438de5350ac1",
+    "csv:b6200c1516bda1cb0fa32d5207221289d22a5c9d14db441469b3f99744e57f42": "b6200c1516bda1cb0fa32d5207221289d22a5c9d14db441469b3f99744e57f42",
+    "csv:ce7929bdbcdc48cbccd8b4e689dd0dafcb2d8aab86468d07d9c7bde03f755a1e": "ce7929bdbcdc48cbccd8b4e689dd0dafcb2d8aab86468d07d9c7bde03f755a1e",
+    "csv:e865ff6b4e34481c40fca7b8f9af558f606fef7099e829b79e93db3061f1fb43": "e865ff6b4e34481c40fca7b8f9af558f606fef7099e829b79e93db3061f1fb43",
+    "document:fixed-page": "2671e5d55168dd2daced4f822a8f6be30872d0002c7a24726308e8eabfad85e2",
+    "policy:fixed-v1": "71594b7be77633a79d50aee7833c7c2e4eef51fd136ada72fe09d17236f850b9",
+    "screen:synthetic": "a59b198b2a68fb06107a4d180c0ffe39263871edffc8c5cc72b40330d08cbf73",
+    "voice:fixed-events": "9801fb6a4d161ec428752c5c1805afc18d03766228881c5863c8d137d51ae9e3"
+  },
+  "summary": {
+    "answers": 10,
+    "blocked": 2,
+    "cases_total": 20,
+    "evidence_covered": 20,
+    "evidence_total": 20,
+    "refresh": 1,
+    "security_violations": 0,
+    "unknown": 7
+  }
+}
