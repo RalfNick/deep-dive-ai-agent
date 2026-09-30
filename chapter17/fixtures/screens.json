@@ -1,0 +1,7 @@
+{
+  "fixture_kind": "synthetic_screen_not_real_desktop",
+  "frames": [
+    {"frame_id":"f1","captured_at_ms":1000,"image_width":800,"image_height":450,"display_width":1600,"display_height":900,"targets":{"submit":[380,205,420,245]},"state":{"submitted":false}},
+    {"frame_id":"f2","captured_at_ms":1200,"image_width":800,"image_height":450,"display_width":1600,"display_height":900,"targets":{},"state":{"submitted":true}}
+  ]
+}
