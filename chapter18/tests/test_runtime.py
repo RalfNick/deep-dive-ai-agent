@@ -126,3 +126,15 @@ def test_restarting_attempt_cannot_reset_existing_task_quota():
     with pytest.raises(ValueError):
         runtime.start(p, ScriptedPolicy(()), attempt_id="root-2")
     assert runtime.state.attempts[p.task_id] == "root-1"
+
+
+def test_policy_receives_exact_initial_context_snapshot():
+    from chapter18.context import assemble_context
+    from chapter18.fixtures import load_sources
+    from chapter18.tests.helpers import ROOT
+    from chapter18.policy import ScriptedPolicy
+    runtime, p = make_runtime()
+    child = child_of(p, 1)
+    context = assemble_context(child, load_sources(ROOT))
+    runtime.start(child, ScriptedPolicy(()), attempt_id="a-1", context=context)
+    assert runtime.observations[child.task_id].context is context

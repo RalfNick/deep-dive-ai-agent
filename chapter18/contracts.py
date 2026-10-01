@@ -116,6 +116,7 @@ class WorkerResult:
 class WorkerObservation:
     outcomes: tuple[ToolOutcome, ...] = ()
     results: tuple[WorkerResult, ...] = ()
+    context: ContextSnapshot | None = None
 
 
 @dataclass(frozen=True)

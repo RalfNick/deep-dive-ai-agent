@@ -2,7 +2,7 @@ from dataclasses import replace
 from typing import Callable
 
 from .budget import BudgetLedger
-from .contracts import Event, RunState, TaskPacket, ToolCall, ToolOutcome, WorkerObservation, WorkerResult, validate_packet
+from .contracts import ContextSnapshot, Event, RunState, TaskPacket, ToolCall, ToolOutcome, WorkerObservation, WorkerResult, validate_packet
 from .policy import DecisionPolicy, ScriptedPolicy
 
 
@@ -23,13 +23,15 @@ class TeamRuntime:
                       prior[-1].event_id if prior else None, tuple(sorted(data.items())))
         self.state.events += (event,)
 
-    def start(self, packet: TaskPacket, policy: DecisionPolicy, *, attempt_id: str) -> None:
+    def start(self, packet: TaskPacket, policy: DecisionPolicy, *, attempt_id: str, context: ContextSnapshot | None = None) -> None:
         if self.state.status == "stopped" or packet.task_id in self.state.tasks or not attempt_id:
             raise ValueError("stopped, duplicate task or missing attempt")
         parent = self.state.tasks.get(packet.parent_id) if packet.parent_id else None
         if packet.parent_id and parent is None:
             raise ValueError("parent task missing")
         validate_packet(packet, parent)
+        if context and (context.task_id, context.principal, context.target_version) != (packet.task_id, packet.principal, packet.target_version):
+            raise ValueError("context identity mismatch")
         if packet.principal != self.state.principal or packet.target_version != self.state.shared_version:
             raise ValueError("run identity/version mismatch")
         active_children = sum(p.parent_id is not None and key not in self._finished for key, p in self.state.tasks.items())
@@ -39,7 +41,7 @@ class TeamRuntime:
         self.state.attempts[packet.task_id] = attempt_id
         self._policies[packet.task_id] = policy
         self._decisions[packet.task_id] = self._calls[packet.task_id] = 0
-        self.observations[packet.task_id] = WorkerObservation()
+        self.observations[packet.task_id] = WorkerObservation(context=context)
         self.record("task_started", packet.task_id, worker=packet.worker_id, parent=packet.parent_id)
 
     def accept_result(self, result: WorkerResult) -> bool:
