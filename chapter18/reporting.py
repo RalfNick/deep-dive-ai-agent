@@ -78,6 +78,8 @@ def validate_case(case) -> None:
     if len(events) != len(case["trajectory"]):
         raise ValueError("duplicate event")
     attempts = case["input_proof"]["attempts"]
+    if set(attempts) != set(packets):
+        raise ValueError("each task needs exactly one attempt")
     sources = {s.source_id: s for s in load_sources(ROOT)}
     for event in events.values():
         if event["task_id"] not in packets or event["attempt_id"] != attempts[event["task_id"]]:
@@ -86,6 +88,10 @@ def validate_case(case) -> None:
         if parent is not None and (parent not in events or events[parent]["task_id"] != event["task_id"]
                                   or int(parent.rsplit(":e", 1)[1]) >= int(event["event_id"].rsplit(":e", 1)[1])):
             raise ValueError("invalid causal predecessor")
+    for p in packets.values():
+        starts = [e for e in events.values() if e["task_id"] == p.task_id and e["kind"] == "task_started"]
+        if len(starts) != 1 or starts[0]["data"] != {"worker": p.worker_id, "parent": p.parent_id}:
+            raise ValueError("task start evidence missing or mismatched")
     source_proof = set()
     for context in case["input_proof"]["context_digests"]:
         p = packets[context["task_id"]]
@@ -128,12 +134,66 @@ def validate_case(case) -> None:
         if result["worker_id"] != p.worker_id or result["attempt_id"] != attempts[p.task_id] or p.task_id in seen_results:
             raise ValueError("worker result identity mismatch")
         seen_results.add(p.task_id)
+        accepted = [e for e in events.values() if e["kind"] == "result_accepted" and e["task_id"] == p.task_id]
+        if len(accepted) != 1 or accepted[0]["data"]["worker_state"] != result["state"]:
+            raise ValueError("accepted worker result needs its acceptance event")
         actual_decisions = sum(e["kind"] == "decision" and e["task_id"] == p.task_id for e in events.values())
         actual_calls = sum(e["kind"] == "tool_returned" and e["task_id"] == p.task_id for e in events.values())
         if (result["decisions"], result["tool_calls"]) != (actual_decisions, actual_calls):
             raise ValueError("worker counters must match events")
         for row in result["claims"]:
             claims.append(Claim(row["key"], row["value"], tuple(EvidenceRef(**ref) for ref in row["evidence"])))
+    if {e["task_id"] for e in events.values() if e["kind"] == "result_accepted"} != seen_results:
+        raise ValueError("acceptance events and exported results disagree")
+    committed = [e for e in events.values() if e["kind"] == "action_committed"]
+    executed = [r for r in case["receipts"] if r["executed"]]
+    if len(committed) != len(executed) or len({r["action_id"] for r in executed}) != len(executed):
+        raise ValueError("every executed receipt needs one unique commit event")
+    for receipt in executed:
+        matches = [e for e in committed if e["data"]["action_id"] == receipt["action_id"]]
+        if len(matches) != 1:
+            raise ValueError("commit/receipt identity mismatch")
+        event = matches[0]
+        d = event["data"]
+        owner = packets.get(d.get("proposal_task_id"))
+        accepted_owner = next((r for r in case["worker_results"] if owner and r["task_id"] == owner.task_id), None)
+        if (event["task_id"] != root_packet.task_id or owner is None or accepted_owner is None
+                or d.get("proposal_attempt_id") != attempts[owner.task_id] or d.get("proposal_worker") != owner.worker_id
+                or receipt["proposal_id"] not in accepted_owner["patch_ids"]
+                or d.get("proposal_id") != receipt["proposal_id"]
+                or any(d.get(key) != receipt[key] for key in ("path", "before_digest", "after_digest"))
+                or receipt["path"] not in owner.allowed_writes or receipt["path"] not in root_packet.allowed_writes
+                or dict(owner.base_hashes).get(receipt["path"]) != receipt["before_digest"]):
+            raise ValueError("commit must correlate accepted producer, scope and before/after digests")
+    verification_events = [e for e in events.values() if e["kind"] == "verification"]
+    verified_receipts = [r for r in executed if r["verification"] is not None]
+    if bool(verification_events) != bool(verified_receipts) or len(verification_events) > 1:
+        raise ValueError("final verification and receipt evidence must both exist")
+    if verified_receipts:
+        v = verified_receipts[0]["verification"]
+        expected_event = {key: v[key] for key in ("tests_passed", "tests_total", "behavior_passed", "passed")}
+        expected_event.update(calls=2 if v["passed"] else metrics["verifier_calls"],
+                              evidence_digest=sha256("\n".join(v["evidence"]).encode()).hexdigest())
+        if (any(r["verification"] != v for r in verified_receipts)
+                or len(verified_receipts) != len(executed) or verification_events[0]["task_id"] != root_packet.task_id
+                or verification_events[0]["data"] != expected_event or v["evidence"] != case["acceptance"]):
+            raise ValueError("final verification event, calls and receipts must correlate")
+    # Tightened child allowance counts its whole subtree, including retries and real commits.
+    for p in packets.values():
+        if p.parent_id is None:
+            continue
+        descendants = set()
+        for other in packets.values():
+            cursor = other
+            while cursor:
+                if cursor.task_id == p.task_id:
+                    descendants.add(other.task_id)
+                    break
+                cursor = packets.get(cursor.parent_id)
+        spent = sum(e["kind"] == "tool_returned" and e["task_id"] in descendants for e in events.values())
+        spent += sum(e["data"]["proposal_task_id"] in descendants for e in committed)
+        if spent > p.limits.tool_calls - p.limits.verifier_reserve:
+            raise ValueError("child subtree spent tightened worker quota")
     verdict = check_claims(root_packet, tuple(claims), load_sources(ROOT))
     if encode(verdict) != case["evidence_verdict"]:
         raise ValueError("evidence verdict cannot be forged")

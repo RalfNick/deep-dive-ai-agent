@@ -53,8 +53,8 @@ class IntegrationGateway:
         before = sha256(target.read_bytes()).hexdigest()
         if before != proposal.before_digest:
             return self._deny(proposal, "conflict", "stale_patch")
-        if not self.ledger.charge(purpose="worker"):
-            return self._deny(proposal, "stopped", "global_budget_exhausted")
+        if not self.ledger.charge(purpose="worker", task_id=proposal.task_id):
+            return self._deny(proposal, "stopped", self.ledger.last_refusal)
         target.write_bytes(proposal.replacement.encode("utf-8"))
         receipt = ActionReceipt(proposal.proposal_id, proposal.action_id, proposal.path, tuple(sorted(self.packet.allowed_writes)),
                                 before, digest, True, None, "unknown", "executed_not_yet_verified")
@@ -62,7 +62,9 @@ class IntegrationGateway:
         self.state.tool_calls = self.ledger.used
         self.state.pending_approval = None
         self.state.status, self.state.reason_code = "unknown", "executed_not_yet_verified"
-        self._record("action_committed", action_id=proposal.action_id, path=proposal.path, before_digest=before, after_digest=digest)
+        self._record("action_committed", action_id=proposal.action_id, proposal_id=proposal.proposal_id,
+                     proposal_task_id=proposal.task_id, proposal_attempt_id=self.state.attempts.get(proposal.task_id, ""),
+                     proposal_worker=task.worker_id, path=proposal.path, before_digest=before, after_digest=digest)
         return receipt
 
     def finish(self) -> Verification:
@@ -79,7 +81,8 @@ class IntegrationGateway:
         self.state.tool_calls = self.ledger.used
         self._record("verification", calls=self.ledger.verifier_used - before_calls,
                      tests_passed=verification.tests_passed, tests_total=verification.tests_total,
-                     behavior_passed=verification.behavior_passed, passed=verification.passed)
+                     behavior_passed=verification.behavior_passed, passed=verification.passed,
+                     evidence_digest=sha256("\n".join(verification.evidence).encode()).hexdigest())
         status = "verified" if verification.passed else "unknown"
         self.state.receipts = tuple(replace(r, verification=verification, status=status,
                                           reason_code=verification.reason_code) if r.executed else r for r in self.state.receipts)

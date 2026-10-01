@@ -37,9 +37,9 @@ def run_case(case_id: str, *, root: Path, workdir: Path, order: tuple[str, ...] 
             session.run_workers((p.task_id,))
         else:
             worker = session.research("expert", source, key, missing_context=case_id == "context-not-forwarded")
-            session.run_workers((worker,))
             if case_id == "handoff-transfer":
-                r.handoff("expert", task_id=worker)
+                r.handoff("expert", task_id=p.task_id)
+            session.run_workers((worker,))
     elif case_id in {"parallel-separated", "one-worker-timeout"}:
         workers = [session.research("product", "parallel-product", "sharing")]
         if case_id == "parallel-separated":

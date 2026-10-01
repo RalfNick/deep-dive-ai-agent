@@ -1,0 +1,1019 @@
+{
+  "cases": [
+    {
+      "acceptance": [
+        "source:public-current:24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7"
+      ],
+      "case_id": "delegation-return",
+      "controller": "manager",
+      "evidence_verdict": {
+        "claims": [
+          {
+            "evidence": [
+              {
+                "digest": "24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7",
+                "eligible": true,
+                "location": "chapter18/fixtures/knowledge/public-current.md",
+                "quote": "答：支持工作区共享。共享前需由工作区管理员配置成员范围。",
+                "source_id": "public-current",
+                "version": "v2"
+              }
+            ],
+            "key": "sharing",
+            "value": "支持"
+          }
+        ],
+        "distinct_sources": [
+          "public-current"
+        ],
+        "missing": [],
+        "reason_code": "eligible_evidence_checked",
+        "status": "answer"
+      },
+      "group": 2,
+      "input_proof": {
+        "attempts": {
+          "expert": "expert-a1",
+          "root": "root-a1"
+        },
+        "context_digests": [
+          {
+            "principal": "public",
+            "redacted": false,
+            "sent": [
+              [
+                "public-current",
+                "答：支持工作区共享。共享前需由工作区管理员配置成员范围。"
+              ]
+            ],
+            "sent_digest": "dca14a89723d7fcbf1b334b1c3b4087e3376584861821063bf0d6ec81c2cca7a",
+            "source_digests": [
+              [
+                "public-current",
+                "24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7"
+              ]
+            ],
+            "target_version": "v2",
+            "task_id": "expert"
+          },
+          {
+            "principal": "public",
+            "redacted": false,
+            "sent": [
+              [
+                "parallel-product",
+                "团队版支持工作区共享。"
+              ],
+              [
+                "public-current",
+                "答：支持工作区共享。共享前需由工作区管理员配置成员范围。"
+              ]
+            ],
+            "sent_digest": "1a77b457b4077de1effe4de24af63ac8034db2bc28a3314e4f15dfcb470b5b17",
+            "source_digests": [
+              [
+                "parallel-product",
+                "4eefbc41ba5eaab5237dc534bf7caf9038d402a4b78e9acc95d7b2291b1c24db"
+              ],
+              [
+                "public-current",
+                "24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7"
+              ]
+            ],
+            "target_version": "v2",
+            "task_id": "root"
+          }
+        ],
+        "packets": [
+          {
+            "allowed_sources": [
+              "public-current"
+            ],
+            "allowed_tools": [
+              "knowledge",
+              "propose",
+              "read"
+            ],
+            "allowed_writes": [
+              "src/linkcheck.py",
+              "src/policy.py"
+            ],
+            "base_hashes": [],
+            "depth": 1,
+            "goal": "查证星舟工作台当前问答",
+            "input_refs": [
+              "sharing"
+            ],
+            "limits": {
+              "depth": 2,
+              "extra_retries": 1,
+              "handoffs": 4,
+              "inflight": 3,
+              "tool_calls": 16,
+              "verifier_reserve": 2,
+              "worker_decisions": 4
+            },
+            "output_requirements": [
+              "sharing"
+            ],
+            "parent_id": "root",
+            "principal": "public",
+            "target_version": "v2",
+            "task_id": "expert",
+            "worker_id": "expert"
+          },
+          {
+            "allowed_sources": [
+              "conflict-a",
+              "conflict-b",
+              "parallel-product",
+              "parallel-support",
+              "public-current",
+              "public-old"
+            ],
+            "allowed_tools": [
+              "knowledge",
+              "propose",
+              "read"
+            ],
+            "allowed_writes": [
+              "src/linkcheck.py",
+              "src/policy.py"
+            ],
+            "base_hashes": [],
+            "depth": 0,
+            "goal": "查证星舟工作台当前问答",
+            "input_refs": [
+              "sharing"
+            ],
+            "limits": {
+              "depth": 2,
+              "extra_retries": 1,
+              "handoffs": 4,
+              "inflight": 3,
+              "tool_calls": 16,
+              "verifier_reserve": 2,
+              "worker_decisions": 4
+            },
+            "output_requirements": [
+              "sharing"
+            ],
+            "parent_id": null,
+            "principal": "public",
+            "target_version": "v2",
+            "task_id": "root",
+            "worker_id": "manager"
+          }
+        ],
+        "source_digests": [
+          [
+            "parallel-product",
+            "4eefbc41ba5eaab5237dc534bf7caf9038d402a4b78e9acc95d7b2291b1c24db"
+          ],
+          [
+            "public-current",
+            "24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7"
+          ]
+        ]
+      },
+      "limits": [
+        "deterministic decision double, not model capability",
+        "logical schedule, not measured concurrency",
+        "trusted fixture, not OS sandbox"
+      ],
+      "metrics": {
+        "budget_limit": 16,
+        "budget_remaining": 15,
+        "coverage_denominator": 1,
+        "coverage_numerator": 1,
+        "decisions": 2,
+        "distinct_eligible_sources": 1,
+        "duplicate_tasks": 0,
+        "duplicate_writes": 0,
+        "policy_refusals": 0,
+        "security_violations": 0,
+        "stale_patch_refusals": 0,
+        "tool_calls": 1,
+        "unresolved_conflicts": 0,
+        "verifier_calls": 0
+      },
+      "reason_code": "eligible_evidence_checked",
+      "receipts": [],
+      "status": "answer",
+      "trajectory": [
+        {
+          "attempt_id": "expert-a1",
+          "data": {
+            "parent": "root",
+            "worker": "expert"
+          },
+          "event_id": "expert:e1",
+          "kind": "task_started",
+          "parent_event_id": null,
+          "task_id": "expert"
+        },
+        {
+          "attempt_id": "expert-a1",
+          "data": {
+            "controller": "manager",
+            "decision_kind": "tool"
+          },
+          "event_id": "expert:e2",
+          "kind": "decision",
+          "parent_event_id": "expert:e1",
+          "task_id": "expert"
+        },
+        {
+          "attempt_id": "expert-a1",
+          "data": {
+            "attempt": 1,
+            "call_id": "expert-read",
+            "outcome": "ok",
+            "tool": "knowledge"
+          },
+          "event_id": "expert:e3",
+          "kind": "tool_returned",
+          "parent_event_id": "expert:e2",
+          "task_id": "expert"
+        },
+        {
+          "attempt_id": "expert-a1",
+          "data": {
+            "controller": "manager",
+            "decision_kind": "result"
+          },
+          "event_id": "expert:e4",
+          "kind": "decision",
+          "parent_event_id": "expert:e3",
+          "task_id": "expert"
+        },
+        {
+          "attempt_id": "expert-a1",
+          "data": {
+            "worker_state": "done"
+          },
+          "event_id": "expert:e5",
+          "kind": "result_accepted",
+          "parent_event_id": "expert:e4",
+          "task_id": "expert"
+        },
+        {
+          "attempt_id": "root-a1",
+          "data": {
+            "parent": null,
+            "worker": "manager"
+          },
+          "event_id": "root:e1",
+          "kind": "task_started",
+          "parent_event_id": null,
+          "task_id": "root"
+        }
+      ],
+      "worker_results": [
+        {
+          "attempt_id": "expert-a1",
+          "claims": [
+            {
+              "evidence": [
+                {
+                  "digest": "24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7",
+                  "eligible": true,
+                  "location": "chapter18/fixtures/knowledge/public-current.md",
+                  "quote": "答：支持工作区共享。共享前需由工作区管理员配置成员范围。",
+                  "source_id": "public-current",
+                  "version": "v2"
+                }
+              ],
+              "key": "sharing",
+              "value": "支持"
+            }
+          ],
+          "decisions": 2,
+          "missing": [],
+          "patch_ids": [],
+          "state": "done",
+          "task_id": "expert",
+          "tool_calls": 1,
+          "worker_id": "expert"
+        }
+      ]
+    },
+    {
+      "acceptance": [
+        "source:public-current:24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7"
+      ],
+      "case_id": "handoff-transfer",
+      "controller": "expert",
+      "evidence_verdict": {
+        "claims": [
+          {
+            "evidence": [
+              {
+                "digest": "24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7",
+                "eligible": true,
+                "location": "chapter18/fixtures/knowledge/public-current.md",
+                "quote": "答：支持工作区共享。共享前需由工作区管理员配置成员范围。",
+                "source_id": "public-current",
+                "version": "v2"
+              }
+            ],
+            "key": "sharing",
+            "value": "支持"
+          }
+        ],
+        "distinct_sources": [
+          "public-current"
+        ],
+        "missing": [],
+        "reason_code": "eligible_evidence_checked",
+        "status": "answer"
+      },
+      "group": 2,
+      "input_proof": {
+        "attempts": {
+          "expert": "expert-a1",
+          "root": "root-a1"
+        },
+        "context_digests": [
+          {
+            "principal": "public",
+            "redacted": false,
+            "sent": [
+              [
+                "public-current",
+                "答：支持工作区共享。共享前需由工作区管理员配置成员范围。"
+              ]
+            ],
+            "sent_digest": "dca14a89723d7fcbf1b334b1c3b4087e3376584861821063bf0d6ec81c2cca7a",
+            "source_digests": [
+              [
+                "public-current",
+                "24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7"
+              ]
+            ],
+            "target_version": "v2",
+            "task_id": "expert"
+          },
+          {
+            "principal": "public",
+            "redacted": false,
+            "sent": [
+              [
+                "parallel-product",
+                "团队版支持工作区共享。"
+              ],
+              [
+                "public-current",
+                "答：支持工作区共享。共享前需由工作区管理员配置成员范围。"
+              ]
+            ],
+            "sent_digest": "1a77b457b4077de1effe4de24af63ac8034db2bc28a3314e4f15dfcb470b5b17",
+            "source_digests": [
+              [
+                "parallel-product",
+                "4eefbc41ba5eaab5237dc534bf7caf9038d402a4b78e9acc95d7b2291b1c24db"
+              ],
+              [
+                "public-current",
+                "24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7"
+              ]
+            ],
+            "target_version": "v2",
+            "task_id": "root"
+          }
+        ],
+        "packets": [
+          {
+            "allowed_sources": [
+              "public-current"
+            ],
+            "allowed_tools": [
+              "knowledge",
+              "propose",
+              "read"
+            ],
+            "allowed_writes": [
+              "src/linkcheck.py",
+              "src/policy.py"
+            ],
+            "base_hashes": [],
+            "depth": 1,
+            "goal": "查证星舟工作台当前问答",
+            "input_refs": [
+              "sharing"
+            ],
+            "limits": {
+              "depth": 2,
+              "extra_retries": 1,
+              "handoffs": 4,
+              "inflight": 3,
+              "tool_calls": 16,
+              "verifier_reserve": 2,
+              "worker_decisions": 4
+            },
+            "output_requirements": [
+              "sharing"
+            ],
+            "parent_id": "root",
+            "principal": "public",
+            "target_version": "v2",
+            "task_id": "expert",
+            "worker_id": "expert"
+          },
+          {
+            "allowed_sources": [
+              "conflict-a",
+              "conflict-b",
+              "parallel-product",
+              "parallel-support",
+              "public-current",
+              "public-old"
+            ],
+            "allowed_tools": [
+              "knowledge",
+              "propose",
+              "read"
+            ],
+            "allowed_writes": [
+              "src/linkcheck.py",
+              "src/policy.py"
+            ],
+            "base_hashes": [],
+            "depth": 0,
+            "goal": "查证星舟工作台当前问答",
+            "input_refs": [
+              "sharing"
+            ],
+            "limits": {
+              "depth": 2,
+              "extra_retries": 1,
+              "handoffs": 4,
+              "inflight": 3,
+              "tool_calls": 16,
+              "verifier_reserve": 2,
+              "worker_decisions": 4
+            },
+            "output_requirements": [
+              "sharing"
+            ],
+            "parent_id": null,
+            "principal": "public",
+            "target_version": "v2",
+            "task_id": "root",
+            "worker_id": "manager"
+          }
+        ],
+        "source_digests": [
+          [
+            "parallel-product",
+            "4eefbc41ba5eaab5237dc534bf7caf9038d402a4b78e9acc95d7b2291b1c24db"
+          ],
+          [
+            "public-current",
+            "24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7"
+          ]
+        ]
+      },
+      "limits": [
+        "deterministic decision double, not model capability",
+        "logical schedule, not measured concurrency",
+        "trusted fixture, not OS sandbox"
+      ],
+      "metrics": {
+        "budget_limit": 16,
+        "budget_remaining": 15,
+        "coverage_denominator": 1,
+        "coverage_numerator": 1,
+        "decisions": 2,
+        "distinct_eligible_sources": 1,
+        "duplicate_tasks": 0,
+        "duplicate_writes": 0,
+        "policy_refusals": 0,
+        "security_violations": 0,
+        "stale_patch_refusals": 0,
+        "tool_calls": 1,
+        "unresolved_conflicts": 0,
+        "verifier_calls": 0
+      },
+      "reason_code": "eligible_evidence_checked",
+      "receipts": [],
+      "status": "answer",
+      "trajectory": [
+        {
+          "attempt_id": "expert-a1",
+          "data": {
+            "parent": "root",
+            "worker": "expert"
+          },
+          "event_id": "expert:e1",
+          "kind": "task_started",
+          "parent_event_id": null,
+          "task_id": "expert"
+        },
+        {
+          "attempt_id": "expert-a1",
+          "data": {
+            "controller": "expert",
+            "decision_kind": "tool"
+          },
+          "event_id": "expert:e2",
+          "kind": "decision",
+          "parent_event_id": "expert:e1",
+          "task_id": "expert"
+        },
+        {
+          "attempt_id": "expert-a1",
+          "data": {
+            "attempt": 1,
+            "call_id": "expert-read",
+            "outcome": "ok",
+            "tool": "knowledge"
+          },
+          "event_id": "expert:e3",
+          "kind": "tool_returned",
+          "parent_event_id": "expert:e2",
+          "task_id": "expert"
+        },
+        {
+          "attempt_id": "expert-a1",
+          "data": {
+            "controller": "expert",
+            "decision_kind": "result"
+          },
+          "event_id": "expert:e4",
+          "kind": "decision",
+          "parent_event_id": "expert:e3",
+          "task_id": "expert"
+        },
+        {
+          "attempt_id": "expert-a1",
+          "data": {
+            "worker_state": "done"
+          },
+          "event_id": "expert:e5",
+          "kind": "result_accepted",
+          "parent_event_id": "expert:e4",
+          "task_id": "expert"
+        },
+        {
+          "attempt_id": "root-a1",
+          "data": {
+            "parent": null,
+            "worker": "manager"
+          },
+          "event_id": "root:e1",
+          "kind": "task_started",
+          "parent_event_id": null,
+          "task_id": "root"
+        },
+        {
+          "attempt_id": "root-a1",
+          "data": {
+            "controller": "expert",
+            "previous_controller": "manager"
+          },
+          "event_id": "root:e2",
+          "kind": "handoff",
+          "parent_event_id": "root:e1",
+          "task_id": "root"
+        }
+      ],
+      "worker_results": [
+        {
+          "attempt_id": "expert-a1",
+          "claims": [
+            {
+              "evidence": [
+                {
+                  "digest": "24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7",
+                  "eligible": true,
+                  "location": "chapter18/fixtures/knowledge/public-current.md",
+                  "quote": "答：支持工作区共享。共享前需由工作区管理员配置成员范围。",
+                  "source_id": "public-current",
+                  "version": "v2"
+                }
+              ],
+              "key": "sharing",
+              "value": "支持"
+            }
+          ],
+          "decisions": 2,
+          "missing": [],
+          "patch_ids": [],
+          "state": "done",
+          "task_id": "expert",
+          "tool_calls": 1,
+          "worker_id": "expert"
+        }
+      ]
+    },
+    {
+      "acceptance": [],
+      "case_id": "context-not-forwarded",
+      "controller": "manager",
+      "evidence_verdict": {
+        "claims": [],
+        "distinct_sources": [],
+        "missing": [
+          "sharing"
+        ],
+        "reason_code": "missing_or_invalid_evidence",
+        "status": "unknown"
+      },
+      "group": 2,
+      "input_proof": {
+        "attempts": {
+          "expert": "expert-a1",
+          "root": "root-a1"
+        },
+        "context_digests": [
+          {
+            "principal": "public",
+            "redacted": false,
+            "sent": [],
+            "sent_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "source_digests": [],
+            "target_version": "v2",
+            "task_id": "expert"
+          },
+          {
+            "principal": "public",
+            "redacted": false,
+            "sent": [
+              [
+                "parallel-product",
+                "团队版支持工作区共享。"
+              ],
+              [
+                "public-current",
+                "答：支持工作区共享。共享前需由工作区管理员配置成员范围。"
+              ]
+            ],
+            "sent_digest": "1a77b457b4077de1effe4de24af63ac8034db2bc28a3314e4f15dfcb470b5b17",
+            "source_digests": [
+              [
+                "parallel-product",
+                "4eefbc41ba5eaab5237dc534bf7caf9038d402a4b78e9acc95d7b2291b1c24db"
+              ],
+              [
+                "public-current",
+                "24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7"
+              ]
+            ],
+            "target_version": "v2",
+            "task_id": "root"
+          }
+        ],
+        "packets": [
+          {
+            "allowed_sources": [
+              "public-current"
+            ],
+            "allowed_tools": [
+              "knowledge",
+              "propose",
+              "read"
+            ],
+            "allowed_writes": [
+              "src/linkcheck.py",
+              "src/policy.py"
+            ],
+            "base_hashes": [],
+            "depth": 1,
+            "goal": "查证星舟工作台当前问答",
+            "input_refs": [],
+            "limits": {
+              "depth": 2,
+              "extra_retries": 1,
+              "handoffs": 4,
+              "inflight": 3,
+              "tool_calls": 16,
+              "verifier_reserve": 2,
+              "worker_decisions": 4
+            },
+            "output_requirements": [
+              "sharing"
+            ],
+            "parent_id": "root",
+            "principal": "public",
+            "target_version": "v2",
+            "task_id": "expert",
+            "worker_id": "expert"
+          },
+          {
+            "allowed_sources": [
+              "conflict-a",
+              "conflict-b",
+              "parallel-product",
+              "parallel-support",
+              "public-current",
+              "public-old"
+            ],
+            "allowed_tools": [
+              "knowledge",
+              "propose",
+              "read"
+            ],
+            "allowed_writes": [
+              "src/linkcheck.py",
+              "src/policy.py"
+            ],
+            "base_hashes": [],
+            "depth": 0,
+            "goal": "查证星舟工作台当前问答",
+            "input_refs": [
+              "sharing"
+            ],
+            "limits": {
+              "depth": 2,
+              "extra_retries": 1,
+              "handoffs": 4,
+              "inflight": 3,
+              "tool_calls": 16,
+              "verifier_reserve": 2,
+              "worker_decisions": 4
+            },
+            "output_requirements": [
+              "sharing"
+            ],
+            "parent_id": null,
+            "principal": "public",
+            "target_version": "v2",
+            "task_id": "root",
+            "worker_id": "manager"
+          }
+        ],
+        "source_digests": [
+          [
+            "parallel-product",
+            "4eefbc41ba5eaab5237dc534bf7caf9038d402a4b78e9acc95d7b2291b1c24db"
+          ],
+          [
+            "public-current",
+            "24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7"
+          ]
+        ]
+      },
+      "limits": [
+        "deterministic decision double, not model capability",
+        "logical schedule, not measured concurrency",
+        "trusted fixture, not OS sandbox"
+      ],
+      "metrics": {
+        "budget_limit": 16,
+        "budget_remaining": 15,
+        "coverage_denominator": 1,
+        "coverage_numerator": 0,
+        "decisions": 1,
+        "distinct_eligible_sources": 0,
+        "duplicate_tasks": 0,
+        "duplicate_writes": 0,
+        "policy_refusals": 0,
+        "security_violations": 0,
+        "stale_patch_refusals": 0,
+        "tool_calls": 1,
+        "unresolved_conflicts": 0,
+        "verifier_calls": 0
+      },
+      "reason_code": "missing_or_invalid_evidence",
+      "receipts": [],
+      "status": "unknown",
+      "trajectory": [
+        {
+          "attempt_id": "expert-a1",
+          "data": {
+            "parent": "root",
+            "worker": "expert"
+          },
+          "event_id": "expert:e1",
+          "kind": "task_started",
+          "parent_event_id": null,
+          "task_id": "expert"
+        },
+        {
+          "attempt_id": "expert-a1",
+          "data": {
+            "controller": "manager",
+            "decision_kind": "tool"
+          },
+          "event_id": "expert:e2",
+          "kind": "decision",
+          "parent_event_id": "expert:e1",
+          "task_id": "expert"
+        },
+        {
+          "attempt_id": "expert-a1",
+          "data": {
+            "attempt": 1,
+            "call_id": "expert-read",
+            "outcome": "permanent_error",
+            "tool": "knowledge"
+          },
+          "event_id": "expert:e3",
+          "kind": "tool_returned",
+          "parent_event_id": "expert:e2",
+          "task_id": "expert"
+        },
+        {
+          "attempt_id": "expert-a1",
+          "data": {
+            "worker_state": "failed"
+          },
+          "event_id": "expert:e4",
+          "kind": "result_accepted",
+          "parent_event_id": "expert:e3",
+          "task_id": "expert"
+        },
+        {
+          "attempt_id": "root-a1",
+          "data": {
+            "parent": null,
+            "worker": "manager"
+          },
+          "event_id": "root:e1",
+          "kind": "task_started",
+          "parent_event_id": null,
+          "task_id": "root"
+        }
+      ],
+      "worker_results": [
+        {
+          "attempt_id": "expert-a1",
+          "claims": [],
+          "decisions": 1,
+          "missing": [
+            "sharing"
+          ],
+          "patch_ids": [],
+          "state": "failed",
+          "task_id": "expert",
+          "tool_calls": 1,
+          "worker_id": "expert"
+        }
+      ]
+    },
+    {
+      "acceptance": [],
+      "case_id": "scope-escalation",
+      "controller": "manager",
+      "evidence_verdict": {
+        "claims": [],
+        "distinct_sources": [],
+        "missing": [
+          "sharing"
+        ],
+        "reason_code": "missing_or_invalid_evidence",
+        "status": "unknown"
+      },
+      "group": 2,
+      "input_proof": {
+        "attempts": {
+          "root": "root-a1"
+        },
+        "context_digests": [
+          {
+            "principal": "public",
+            "redacted": false,
+            "sent": [
+              [
+                "parallel-product",
+                "团队版支持工作区共享。"
+              ],
+              [
+                "public-current",
+                "答：支持工作区共享。共享前需由工作区管理员配置成员范围。"
+              ]
+            ],
+            "sent_digest": "1a77b457b4077de1effe4de24af63ac8034db2bc28a3314e4f15dfcb470b5b17",
+            "source_digests": [
+              [
+                "parallel-product",
+                "4eefbc41ba5eaab5237dc534bf7caf9038d402a4b78e9acc95d7b2291b1c24db"
+              ],
+              [
+                "public-current",
+                "24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7"
+              ]
+            ],
+            "target_version": "v2",
+            "task_id": "root"
+          }
+        ],
+        "packets": [
+          {
+            "allowed_sources": [
+              "conflict-a",
+              "conflict-b",
+              "parallel-product",
+              "parallel-support",
+              "public-current",
+              "public-old"
+            ],
+            "allowed_tools": [
+              "knowledge",
+              "propose",
+              "read"
+            ],
+            "allowed_writes": [
+              "src/linkcheck.py",
+              "src/policy.py"
+            ],
+            "base_hashes": [],
+            "depth": 0,
+            "goal": "查证星舟工作台当前问答",
+            "input_refs": [
+              "sharing"
+            ],
+            "limits": {
+              "depth": 2,
+              "extra_retries": 1,
+              "handoffs": 4,
+              "inflight": 3,
+              "tool_calls": 16,
+              "verifier_reserve": 2,
+              "worker_decisions": 4
+            },
+            "output_requirements": [
+              "sharing"
+            ],
+            "parent_id": null,
+            "principal": "public",
+            "target_version": "v2",
+            "task_id": "root",
+            "worker_id": "manager"
+          }
+        ],
+        "source_digests": [
+          [
+            "parallel-product",
+            "4eefbc41ba5eaab5237dc534bf7caf9038d402a4b78e9acc95d7b2291b1c24db"
+          ],
+          [
+            "public-current",
+            "24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7"
+          ]
+        ]
+      },
+      "limits": [
+        "deterministic decision double, not model capability",
+        "logical schedule, not measured concurrency",
+        "trusted fixture, not OS sandbox"
+      ],
+      "metrics": {
+        "budget_limit": 16,
+        "budget_remaining": 16,
+        "coverage_denominator": 1,
+        "coverage_numerator": 0,
+        "decisions": 1,
+        "distinct_eligible_sources": 0,
+        "duplicate_tasks": 0,
+        "duplicate_writes": 0,
+        "policy_refusals": 1,
+        "security_violations": 0,
+        "stale_patch_refusals": 0,
+        "tool_calls": 0,
+        "unresolved_conflicts": 0,
+        "verifier_calls": 0
+      },
+      "reason_code": "policy_refused",
+      "receipts": [],
+      "status": "blocked",
+      "trajectory": [
+        {
+          "attempt_id": "root-a1",
+          "data": {
+            "parent": null,
+            "worker": "manager"
+          },
+          "event_id": "root:e1",
+          "kind": "task_started",
+          "parent_event_id": null,
+          "task_id": "root"
+        },
+        {
+          "attempt_id": "root-a1",
+          "data": {
+            "controller": "manager",
+            "decision_kind": "delegate"
+          },
+          "event_id": "root:e2",
+          "kind": "decision",
+          "parent_event_id": "root:e1",
+          "task_id": "root"
+        },
+        {
+          "attempt_id": "root-a1",
+          "data": {
+            "reason": "scope_or_depth_or_inflight"
+          },
+          "event_id": "root:e3",
+          "kind": "policy_refused",
+          "parent_event_id": "root:e2",
+          "task_id": "root"
+        }
+      ],
+      "worker_results": []
+    }
+  ],
+  "group": 2
+}

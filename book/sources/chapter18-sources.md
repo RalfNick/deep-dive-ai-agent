@@ -18,7 +18,7 @@
 - [五组二十案](../../chapter18/cases.py)：固定策略测试边界；第一组同目标单控制器对照保持3项查询、3次工具调用与相同证据。
 - [系统](../../chapter18/system.py)：工具观察构造结果；实际上下文传递；验收重新加载来源；接纳补丁ID才进入业务提交路径。
 - [集成](../../chapter18/integration.py)与[验证](../../chapter18/verifier.py)：真实文件副作用、基线拒绝与可信测试/行为探针，不是罐装成功。
-- [规范总报告](../../chapter18/reports/reference-rc1/team-report.json)、[摘要](../../chapter18/reports/reference-rc1/summary.md)、[manifest](../../chapter18/reports/reference-rc1/manifest.json)：稳定字节与派生指标；实际工作区另在忽略目录，不进入规范包。
+- [规范总报告](../../chapter18/reports/reference-rc1-reviewed/team-report.json)、[摘要](../../chapter18/reports/reference-rc1-reviewed/summary.md)、[manifest](../../chapter18/reports/reference-rc1-reviewed/manifest.json)：稳定字节与派生指标；实际工作区另在忽略目录，不进入规范包。审稿前 reference-rc1 原包保留，不回填新事件字段。
 - [练习](../../chapter18/reference-answers.md)与[可复算入口](../../chapter18/exercise_solutions.py)：13题、计算与实际代码题证据。
 
 本地规范记录不会引入绝对机器路径、时钟、UUID、API Key或真实Provider响应。模型选择、价格和平台可用性不是本章实验变量。未实现项集中见[实现说明](../../chapter18/IMPLEMENTATION.md)，不将理论生产清单写成已完成交付。

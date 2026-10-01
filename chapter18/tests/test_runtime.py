@@ -26,8 +26,11 @@ def test_delegation_returns_but_handoff_transfers_controller():
     runtime.start(child, ScriptedPolicy((Decision("result", result=result),)), attempt_id="attempt-1")
     runtime.step(child.task_id)
     assert runtime.state.controller == "manager"
-    assert runtime.handoff(child.worker_id, task_id=child.task_id)
-    assert runtime.state.controller == "expert-1" and runtime.state.principal == "public"
+    assert not runtime.handoff(child.worker_id, task_id=p.task_id)  # A finished task cannot take over.
+    next_child = child_of(p, 2)
+    runtime.start(next_child, ScriptedPolicy(()), attempt_id="attempt-2")
+    assert runtime.handoff(next_child.worker_id, task_id=p.task_id)
+    assert runtime.state.controller == "expert-2" and runtime.state.principal == "public"
 
 
 def test_workers_observe_only_their_own_tool_outcomes():
@@ -77,7 +80,8 @@ def test_fifth_handoff_stops_without_resetting_counter():
     runtime, p = make_runtime()
     runtime.start(child_of(p, 1), ScriptedPolicy(()), attempt_id="expert-a1")
     for target in ("expert-1", "manager", "expert-1", "manager"):
-        assert runtime.handoff(target, task_id=p.task_id)
+        current_task = p.task_id if runtime.state.controller == "manager" else "child-1"
+        assert runtime.handoff(target, task_id=current_task)
     assert not runtime.handoff("manager", task_id=p.task_id)
     assert runtime.state.handoffs == 4 and runtime.state.status == "stopped"
 

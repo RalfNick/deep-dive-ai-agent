@@ -37,6 +37,7 @@ class TeamRuntime:
         active_children = sum(p.parent_id is not None and key not in self._finished for key, p in self.state.tasks.items())
         if packet.parent_id and active_children >= self.ledger.limits.inflight:
             raise ValueError("inflight limit")
+        self.ledger.register(packet)
         self.state.tasks[packet.task_id] = packet
         self.state.attempts[packet.task_id] = attempt_id
         self._policies[packet.task_id] = policy
@@ -71,9 +72,13 @@ class TeamRuntime:
                                            missing=packet.output_requirements))
             return
         self._decisions[task_id] += 1
-        self.record("decision", task_id, decision_kind=decision.kind)
+        self.record("decision", task_id, decision_kind=decision.kind, controller=self.state.controller)
         if decision.kind == "result":
-            self.accept_result(decision.result)
+            result = decision.result
+            if (result.task_id, result.attempt_id, result.worker_id) != (task_id, self.state.attempts[task_id], packet.worker_id):
+                self.record("result_rejected", task_id, reason="producer_identity_mismatch")
+            else:
+                self.accept_result(result)
         elif decision.kind == "handoff":
             self.handoff(decision.next_controller, task_id=task_id)
         elif decision.kind == "delegate":
@@ -101,8 +106,8 @@ class TeamRuntime:
             self.record("policy_refused", task_id, call_id=call.call_id, reason="tool_not_allowed")
         else:
             for attempt in range(packet.limits.extra_retries + 1):
-                if not self.ledger.charge(purpose="worker"):
-                    self.cancel("global_budget_exhausted")
+                if not self.ledger.charge(purpose="worker", task_id=task_id):
+                    self.cancel(self.ledger.last_refusal)
                     return
                 self._calls[task_id] += 1
                 self.state.tool_calls = self.ledger.used
@@ -132,15 +137,21 @@ class TeamRuntime:
     def handoff(self, target: str, *, task_id: str) -> bool:
         if self.state.status == "stopped":
             return False
-        if target not in {p.worker_id for p in self.state.tasks.values()}:
+        sender = self.state.tasks.get(task_id)
+        if sender is None or sender.worker_id != self.state.controller or task_id in self._finished:
+            if sender:
+                self.record("policy_refused", task_id, reason="not_current_controller")
+            return False
+        if target not in {p.worker_id for key, p in self.state.tasks.items() if key not in self._finished}:
             self.record("policy_refused", task_id, reason="unknown_controller")
             return False
         if self.state.handoffs >= self.ledger.limits.handoffs:
             self.cancel("handoff_limit")
             return False
         self.state.handoffs += 1
+        previous = self.state.controller
         self.state.controller = target
-        self.record("handoff", task_id, controller=target)
+        self.record("handoff", task_id, previous_controller=previous, controller=target)
         return True
 
     def cancel(self, reason: str) -> None:

@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Literal
 
 from .budget import BudgetLedger
-from .context import assemble_context
+from .context import assemble_context, eligible
 from .contracts import BudgetLimits, CaseResult, ContextSnapshot, Decision, RunState, TaskPacket, ToolCall, ToolOutcome, WorkerResult
 from .evidence import check_claims, claim_from_outcome, knowledge_tool
 from .fixtures import checked_path, create_workspace, load_sources
@@ -227,12 +227,19 @@ class Session:
 def run_system(kind: Literal["knowledge", "repair"], packet: TaskPacket, *, root: Path, workdir: Path, approved: bool = False) -> CaseResult:
     session = Session(root, workdir, packet)
     if kind == "knowledge":
-        workers = []
-        for index, key in enumerate(packet.output_requirements):
-            source = next((s for s in session.sources if s.source_id in packet.allowed_sources and key in dict(s.facts)), None)
-            if source:
-                workers.append(session.research(f"research-{index}", source.source_id, key))
-        session.run_workers(workers)
+        candidates = [(source.source_id, key) for key in packet.output_requirements
+                      for source in sorted(session.sources, key=lambda s: s.source_id)
+                      if eligible(packet, source) and key in dict(source.facts)]
+        # No source-order authority rule: conflicting current evidence must survive.
+        width = packet.limits.inflight
+        if candidates and width == 0:
+            session.runtime.record("policy_refused", packet.task_id, reason="inflight_limit")
+        for start in range(0, len(candidates), max(1, width)):
+            if session.runtime.state.status == "stopped" or width == 0:
+                break
+            workers = [session.research(f"research-{start + offset}", source, key)
+                       for offset, (source, key) in enumerate(candidates[start:start + width])]
+            session.run_workers(workers)
     elif kind == "repair":
         session.prepare_code()
         worker = session.coder("coder", "src/linkcheck.py")

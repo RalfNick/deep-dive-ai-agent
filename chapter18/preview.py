@@ -14,6 +14,8 @@ def build_preview(root: Path, *, output: Path | None = None) -> Path:
                                prefixes=("chapter18/preview-pages",))
     if destination.suffix != ".html":
         raise ValueError("preview output must be HTML")
+    if destination.parent != root / "chapter18/preview-pages":
+        raise ValueError("preview HTML must be directly inside chapter18/preview-pages")
     source = (root / "book/chapter18.md").read_text(encoding="utf-8")
     body = markdown.markdown(source, extensions=["extra", "toc", "footnotes"])
 

@@ -2,6 +2,7 @@ from pathlib import Path
 import json
 import shutil
 import subprocess
+import sys
 import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -29,3 +30,10 @@ def test_old_chapter_content_code_images_and_reports_are_preserved():
     result = subprocess.run(["git", "diff", "--name-only", BASE, "--", *protected], cwd=ROOT,
                             text=True, capture_output=True, check=True)
     assert not result.stdout.strip(), result.stdout
+
+
+def test_fixture_tests_are_inputs_not_repository_pytest_collection():
+    result = subprocess.run([sys.executable, "-B", "-m", "pytest", "--collect-only", "chapter18",
+                             "-q", "-p", "no:cacheprovider"], cwd=ROOT, capture_output=True, text=True)
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "fixtures/link-checker/tests/test_existing.py" not in result.stdout.replace("\\", "/")

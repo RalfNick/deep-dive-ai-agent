@@ -23,13 +23,15 @@ python -B -m chapter18.quickstart --mode repair --workdir chapter18/.runs/repair
 python -B -m chapter18.quickstart --mode repair --approve --workdir chapter18/.runs/repair-approved-reader
 ```
 
-预期分别为 answer、needs_approval、verified。批准修复：真实写入一次，可信测试4/4，独立行为探针通过；工具调用5，其中最终验证2。未批准不写入。知识路径仍须检查来源与访问资格。
+预期分别为 answer、needs_approval、verified。默认知识路径读取两份当前合格资料，覆盖1/1、工具调用2；冲突资料不会被首项选择掩盖，超过在途限额时分批。批准修复：真实写入一次，可信测试4/4，独立行为探针通过；工具调用5，其中最终验证2。未批准不写入。
 
 材料入口：
 
 - [书稿](../book/chapter18.md)与[来源台账](../book/sources/chapter18-sources.md)。
-- [规范摘要](reports/reference-rc1/summary.md)、[总报告](reports/reference-rc1/team-report.json)、[manifest](reports/reference-rc1/manifest.json)。
+- [审稿后规范摘要](reports/reference-rc1-reviewed/summary.md)、[总报告](reports/reference-rc1-reviewed/team-report.json)、[manifest](reports/reference-rc1-reviewed/manifest.json)。
 - [十三题参考答案](reference-answers.md)、[实现/未实现边界](IMPLEMENTATION.md)。
 - [七幅图的可编辑源与生成记录](../infographic/chapter18/README.md)。
 
 默认总工具额度16内含验证保留2；所有Worker共享14，不因委派或handoff重置。教学耗尽案明确使用8/2。场景使用虚构星舟问答和可信小仓库，不执行任意不可信代码，不提供操作系统沙箱、容器部署、跨进程恢复或生产审批服务。逻辑排程23/16不是实测延迟。公开站点未加入第18章。
+
+子任务收紧额度约束自身及后代的工具尝试和提交，仍扣共享账本；不创建新的验证池。旧 `reports/reference-rc1/` 是审稿前候选证据，原字节保留，不作为当前语义门禁的通过报告。正文与可运行代码的审稿前完整状态可从提交 `14493f9` 恢复；本次首次 RC1 冻结以 reviewed 包为准。
