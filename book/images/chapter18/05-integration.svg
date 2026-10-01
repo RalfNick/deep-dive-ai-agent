@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">并行提案，单写者集成</title>
+<desc id="desc">两个 Worker 各读独立快照；只有受控 Gateway 能修改集成工作区。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">并行提案，单写者集成</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">两个 Worker 各读独立快照；只有受控 Gateway 能修改集成工作区。</tspan></text>
+<path d="M 370.0 290.0 L 490.0 290.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 370.0 640.0 L 490.0 640.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 810.0 290.0 L 910.0 465.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 810.0 640.0 L 910.0 465.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1270.0 465.0 L 1300.0 680.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1240.0" y="537.5" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1285.0" y="560.5">提交后验收</tspan></text>
+<path d="M 1090.0 550.0 L 1050.0 660.0" fill="none" stroke="#b8443b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1025.0" y="570.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1070.0" y="593.0">哈希不符</tspan></text>
+<rect x="70" y="230" width="300" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="220.0" y="275.0">Worker A</tspan><tspan x="220.0" y="306.2">独立快照</tspan></text>
+<rect x="490" y="230" width="320" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="650.0" y="275.0">提案 A</tspan><tspan x="650.0" y="306.2">基线哈希 + 替换</tspan></text>
+<rect x="70" y="580" width="300" height="120" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="220.0" y="625.0">Worker B</tspan><tspan x="220.0" y="656.2">独立快照</tspan></text>
+<rect x="490" y="580" width="320" height="120" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="650.0" y="625.0">提案 B</tspan><tspan x="650.0" y="656.2">基线哈希 + 替换</tspan></text>
+<rect x="910" y="380" width="360" height="170" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1090.0" y="450.0">单写者 Gateway</tspan><tspan x="1090.0" y="481.2">范围 · 审批 · 当前哈希</tspan></text>
+<rect x="1300" y="600" width="250" height="160" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1425.0" y="665.0">最终集成验证</tspan><tspan x="1425.0" y="696.2">测试 + 行为探针</tspan></text>
+<rect x="900" y="660" width="300" height="100" rx="24" fill="#fde3df" stroke="#b8443b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1050.0" y="695.0">基线已变化</tspan><tspan x="1050.0" y="726.2">拒绝旧补丁</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">Worker 说 done 只代表提案返回；写入、集成正确与验收是另外三件事。</tspan></text>
+</svg>
