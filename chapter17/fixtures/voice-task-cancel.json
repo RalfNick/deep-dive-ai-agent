@@ -1,0 +1,4 @@
+[
+  {"seq":1,"event_ms":1000,"session_id":"demo","turn_id":"turn-1","task_id":"lookup","kind":"task_started","payload":[]},
+  {"seq":2,"event_ms":1100,"session_id":"demo","turn_id":"turn-1","task_id":"lookup","kind":"task_cancelled","payload":[]}
+]

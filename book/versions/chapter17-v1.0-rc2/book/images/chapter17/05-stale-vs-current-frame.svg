@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">同一坐标，不一定是同一控件</title>
+<desc id="desc">屏幕坐标只有在指定帧、尺寸和目标框之内才有意义。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">同一坐标，不一定是同一控件</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">屏幕坐标只有在指定帧、尺寸和目标框之内才有意义。</tspan></text>
+<path d="M 490.0 395.0 L 650.0 395.0" fill="none" stroke="#b8443b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="525.0" y="360.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="570.0" y="383.0">界面变化</tspan></text>
+<path d="M 295.0 480.0 L 295.0 600.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="250.0" y="505.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="295.0" y="528.0">绑定</tspan></text>
+<path d="M 1040.0 395.0 L 1110.0 515.0" fill="none" stroke="#c46b18" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1030.0" y="420.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1075.0" y="443.0">重新观察</tspan></text>
+<path d="M 490.0 665.0 L 1110.0 515.0" fill="none" stroke="#b8443b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="10 9"/>
+<rect x="755.0" y="555.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="800.0" y="578.0">帧不匹配</tspan></text>
+<rect x="100" y="310" width="390" height="170" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="295.0" y="380.0">旧帧 f1</tspan><tspan x="295.0" y="411.2">(400,225) = 提交</tspan></text>
+<rect x="650" y="310" width="390" height="170" rx="24" fill="#fde3df" stroke="#b8443b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="845.0" y="380.0">新帧 f-new</tspan><tspan x="845.0" y="411.2">(400,225) = 删除</tspan></text>
+<rect x="100" y="600" width="390" height="130" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="295.0" y="650.0">提议引用 f1</tspan><tspan x="295.0" y="681.2">动作 click submit</tspan></text>
+<rect x="1110" y="430" width="390" height="170" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1305.0" y="500.0">当前帧 ID 不同</tspan><tspan x="1305.0" y="531.2">返回 Refresh，不点击</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">坐标不是授权；画面文字也不能改变 allowlist 或审批决定。</tspan></text>
+</svg>

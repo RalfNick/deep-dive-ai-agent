@@ -52,3 +52,22 @@ def test_conflicting_duplicate_gap_and_reorder_are_unknown():
     for state in (conflict, gap, reverse):
         assert state.backend_task == "unknown"
         assert state.issues
+
+
+def test_response_cancel_confirmation_does_not_claim_playback_stopped():
+    state = reduce_events((event(1, "task_started"), event(2, "speech_started"),
+                           event(3, "response_cancelled")))
+    assert state.generation == "cancelled"
+    assert state.playback == "interrupted"
+    assert state.backend_task == "running"
+
+
+def test_cancel_request_requires_a_separate_confirmation():
+    requested = (event(1, "task_started"), event(2, "response_cancel_requested"))
+    state = reduce_events(requested)
+    assert state.generation == "cancel_requested"
+    assert state.playback == "idle"
+    assert state.backend_task == "running"
+    confirmed = reduce_events((*requested, event(3, "response_cancelled")))
+    assert confirmed.generation == "cancelled"
+    assert confirmed.playback == "idle"

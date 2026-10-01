@@ -65,8 +65,8 @@ def _screen():
     return before, after, proposal
 
 
-def _voice(name: str = "voice-events.json"):
-    raw = json.loads(load_fixture(name))
+def _voice():
+    raw = json.loads(load_fixture("voice-events.json"))
     return tuple(EventRecord(**{**row, "payload": tuple(tuple(p) for p in row["payload"])}) for row in raw)
 
 
@@ -129,19 +129,18 @@ def run_group(group: int) -> dict:
                                reasons=list(receipt.reasons), details=asdict(receipt)))
         title = "屏幕操作：帧、授权与后验"
     elif group == 4:
-        interrupted = reduce_events(_voice("voice-interruption.json"))
-        cancelled = reduce_events(_voice("voice-task-cancel.json"))
-        conflicted = reduce_events(_voice("voice-conflict.json"))
+        events = _voice()
+        interrupted = reduce_events(events[:5])
+        cancelled = reduce_events((events[0], EventRecord(2, 1100, "demo", "turn-1", "lookup", "task_cancelled", ())))
+        from dataclasses import replace
+        conflicted = reduce_events((events[0], replace(events[0], kind="task_completed")))
         cases = [
-            _case("voice-interruption", "answer", ["voice:interruption-events"],
-                  value="playback-stopped/backend-running",
-                  details={**asdict(interrupted), "event_source": "voice-interruption.json"}),
-            _case("voice-task-cancel", "answer", ["voice:cancel-events"],
-                  value="backend-cancelled",
-                  details={**asdict(cancelled), "event_source": "voice-task-cancel.json"}),
-            _case("voice-conflict", "unknown", ["voice:conflict-events"],
-                  reasons=list(conflicted.issues),
-                  details={**asdict(conflicted), "event_source": "voice-conflict.json"}),
+            _case("voice-interruption", "answer", ["voice:fixed-events"],
+                  value="playback-stopped/backend-running", details=asdict(interrupted)),
+            _case("voice-task-cancel", "answer", ["voice:fixed-events"],
+                  value="backend-cancelled", details=asdict(cancelled)),
+            _case("voice-conflict", "unknown", ["voice:fixed-events"],
+                  reasons=list(conflicted.issues), details=asdict(conflicted)),
         ]
         title = "语音事件：打断、停播与任务状态"
     elif group == 5:
@@ -199,10 +198,6 @@ def _proofs() -> dict[str, str]:
     items["chart-unsafe.svg"] = base.replace(b"<svg ", b'<!DOCTYPE svg SYSTEM "https://example.invalid/secret"><svg ', 1)
     items["screen:synthetic"] = items.pop("screens.json")
     items["voice:fixed-events"] = items.pop("voice-events.json")
-    for source_id, filename in (("voice:interruption-events", "voice-interruption.json"),
-                                ("voice:cancel-events", "voice-task-cancel.json"),
-                                ("voice:conflict-events", "voice-conflict.json")):
-        items[source_id] = load_fixture(filename)
     items["document:fixed-page"] = items.pop("document-page.txt")
     items["policy:fixed-v1"] = b"fresh<=2000ms;allowlist;approval;post-frame"
     csv = load_fixture("chart-values.csv")

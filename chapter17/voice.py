@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 from .contracts import EventRecord
 
-_KINDS = frozenset({"speech_started", "response_cancelled", "playback_stopped",
+_KINDS = frozenset({"speech_started", "response_cancel_requested", "response_cancelled", "playback_stopped",
                     "conversation_truncated", "task_started", "task_completed",
                     "task_cancelled", "action_committed"})
 
@@ -12,6 +12,7 @@ _KINDS = frozenset({"speech_started", "response_cancelled", "playback_stopped",
 @dataclass(frozen=True)
 class VoiceState:
     playback: str
+    generation: str
     conversation_tail: str
     backend_task: str
     committed_actions: tuple[str, ...]
@@ -20,6 +21,7 @@ class VoiceState:
 
 def reduce_events(events: tuple[EventRecord, ...]) -> VoiceState:
     playback = "idle"
+    generation = "unknown"
     tail = "present"
     task = "not_started"
     committed: list[str] = []
@@ -55,8 +57,10 @@ def reduce_events(events: tuple[EventRecord, ...]) -> VoiceState:
             continue
         if event.kind == "speech_started":
             playback = "interrupted"
+        elif event.kind == "response_cancel_requested":
+            generation = "cancel_requested"
         elif event.kind == "response_cancelled":
-            playback = "cancel_requested"
+            generation = "cancelled"
         elif event.kind == "playback_stopped":
             playback = "stopped"
         elif event.kind == "conversation_truncated":
@@ -89,5 +93,6 @@ def reduce_events(events: tuple[EventRecord, ...]) -> VoiceState:
             elif action_ids[0] not in committed:
                 committed.append(action_ids[0])
 
-    return VoiceState(playback, tail, "unknown" if ordering_broken else task,
+    return VoiceState(playback, "unknown" if ordering_broken else generation,
+                      tail, "unknown" if ordering_broken else task,
                       tuple(committed), tuple(issues))

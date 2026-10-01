@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">增长多少？先读刻度、单位和基线</title>
+<desc id="desc">零轴图和截断轴图都表示一月80千件、二月100千件，相对增长25%。</desc>
+<style>.t{font-family:KaiTi,STKaiti,Microsoft YaHei,sans-serif;fill:#17365d}.s{font-family:Microsoft YaHei,sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/><rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="t" x="800" y="100" text-anchor="middle" font-size="44" font-weight="700">增长多少？不能只看柱子的高差</text>
+<text class="s" x="800" y="153" text-anchor="middle" font-size="24">同一组数据，两种纵轴；读图之后再用独立数据手算。</text>
+<rect x="80" y="200" width="690" height="580" rx="28" fill="#eaf4ff" stroke="#155b9a" stroke-width="3"/>
+<text class="t" x="425" y="250" text-anchor="middle" font-size="31">零轴：柱形忠实从 0 开始</text>
+<text class="s" x="130" y="320" font-size="24">单位：千件</text>
+<line x1="170" y1="680" x2="710" y2="680" stroke="#17365d" stroke-width="4"/><text class="s" x="120" y="690" font-size="23">0</text>
+<line x1="170" y1="360" x2="710" y2="360" stroke="#8ba4bd" stroke-width="2" stroke-dasharray="8 7"/><text class="s" x="110" y="370" font-size="23">100</text>
+<rect x="270" y="424" width="115" height="256" rx="10" fill="#77b3e8" stroke="#155b9a" stroke-width="3"/>
+<rect x="485" y="360" width="115" height="320" rx="10" fill="#76c69a" stroke="#287a4b" stroke-width="3"/>
+<text class="t" x="327" y="408" text-anchor="middle" font-size="30">80</text><text class="t" x="542" y="344" text-anchor="middle" font-size="30">100</text>
+<text class="s" x="327" y="720" text-anchor="middle" font-size="25">一月</text><text class="s" x="542" y="720" text-anchor="middle" font-size="25">二月</text>
+<rect x="830" y="200" width="690" height="580" rx="28" fill="#f1eafa" stroke="#6846a5" stroke-width="3"/>
+<text class="t" x="1175" y="250" text-anchor="middle" font-size="31">截断轴：视觉差异被放大</text>
+<text class="s" x="880" y="320" font-size="24">单位：千件</text>
+<line x1="920" y1="680" x2="1460" y2="680" stroke="#17365d" stroke-width="4"/><text class="s" x="865" y="690" font-size="23">70</text>
+<line x1="920" y1="360" x2="1460" y2="360" stroke="#8ba4bd" stroke-width="2" stroke-dasharray="8 7"/><text class="s" x="860" y="370" font-size="23">100</text>
+<rect x="1020" y="573.333" width="115" height="106.667" rx="10" fill="#77b3e8" stroke="#155b9a" stroke-width="3"/>
+<rect x="1235" y="360" width="115" height="320" rx="10" fill="#76c69a" stroke="#287a4b" stroke-width="3"/>
+<text class="t" x="1077" y="555" text-anchor="middle" font-size="30">80</text><text class="t" x="1292" y="344" text-anchor="middle" font-size="30">100</text>
+<text class="s" x="1077" y="720" text-anchor="middle" font-size="25">一月</text><text class="s" x="1292" y="720" text-anchor="middle" font-size="25">二月</text>
+<rect x="180" y="825" width="1240" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="t" x="800" y="869" text-anchor="middle" font-size="29" font-weight="700">相对增长 = (100 − 80) ÷ 80 = 25%　两张图相同</text>
+</svg>

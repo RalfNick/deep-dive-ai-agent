@@ -1,0 +1,67 @@
+{
+  "cases": [
+    {
+      "details": {
+        "backend_task": "running",
+        "committed_actions": [],
+        "conversation_tail": "removed",
+        "event_source": "voice-interruption.json",
+        "generation": "cancelled",
+        "issues": [],
+        "playback": "stopped"
+      },
+      "evidence_ids": [
+        "voice:interruption-events"
+      ],
+      "id": "voice-interruption",
+      "reasons": [],
+      "security_violation": false,
+      "status": "answer",
+      "value": "playback-stopped/backend-running"
+    },
+    {
+      "details": {
+        "backend_task": "cancelled",
+        "committed_actions": [],
+        "conversation_tail": "present",
+        "event_source": "voice-task-cancel.json",
+        "generation": "unknown",
+        "issues": [],
+        "playback": "idle"
+      },
+      "evidence_ids": [
+        "voice:cancel-events"
+      ],
+      "id": "voice-task-cancel",
+      "reasons": [],
+      "security_violation": false,
+      "status": "answer",
+      "value": "backend-cancelled"
+    },
+    {
+      "details": {
+        "backend_task": "unknown",
+        "committed_actions": [],
+        "conversation_tail": "present",
+        "event_source": "voice-conflict.json",
+        "generation": "unknown",
+        "issues": [
+          "conflicting-duplicate-sequence"
+        ],
+        "playback": "idle"
+      },
+      "evidence_ids": [
+        "voice:conflict-events"
+      ],
+      "id": "voice-conflict",
+      "reasons": [
+        "conflicting-duplicate-sequence"
+      ],
+      "security_violation": false,
+      "status": "unknown",
+      "value": null
+    }
+  ],
+  "id": 4,
+  "title": "语音事件：打断、停播与任务状态"
+}

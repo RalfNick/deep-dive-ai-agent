@@ -67,7 +67,7 @@ def build_scenes() -> tuple[Scene, ...]:
         Scene("06-voice-double-timeline", "实时语音：两条时间线不能合并",
               "用户开始说话，播报可以停；后台任务要看独立事件。",
               (n("speech","用户 speech_started",60,240,"blue",340),
-               n("cancel","response_cancelled\n停止生成请求",490,240,"violet",340),
+               n("cancel","response_cancelled\n生成取消已确认",490,240,"violet",340),
                n("playback","playback_stopped\n扬声器不再播",1010,240,"orange",430),
                n("task","task_started\n后台仍 running",60,560,"green",340),
                n("commit","action_committed\n副作用已发生",490,560,"orange",340),

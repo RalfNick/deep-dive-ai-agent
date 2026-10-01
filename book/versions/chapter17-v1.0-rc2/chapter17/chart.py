@@ -48,13 +48,6 @@ def observe_svg_chart(svg: bytes, media: MediaRef) -> Observation:
                 return _unknown(media, "nested-svg-coordinate-space")
             if tag not in _ALLOWED or set(element.attrib) - _ALLOWED[tag]:
                 return _unknown(media, "unsupported-svg-element-or-attribute")
-        # This teaching grammar has one fixed, untransformed canvas. We do not
-        # render SVG, so accepting arbitrary viewports would hide cropping.
-        viewport = tuple(Decimal(v) for v in root.get("viewBox", "").split())
-        if (viewport != (Decimal(0), Decimal(0), Decimal(520), Decimal(380)) or
-                Decimal(root.get("width", "")) != 520 or
-                Decimal(root.get("height", "")) != 380):
-            return _unknown(media, "unsupported-svg-viewport")
         def nodes(name: str, cls: str):
             return [e for e in root.iter(_SVG + name) if e.get("class") == cls]
         units = nodes("text", "unit")
@@ -68,24 +61,6 @@ def observe_svg_chart(svg: bytes, media: MediaRef) -> Observation:
             return _unknown(media, "ambiguous-legend")
         if len(ticks) != 2 or len(bars) != 2 or len(months) != 2:
             return _unknown(media, "incomplete-or-ambiguous-plot")
-        if len(root) != 9 or len(list(root.iter(_SVG + "line"))) != 1:
-            return _unknown(media, "unsupported-svg-layer")
-        for element in root:
-            tag = element.tag[len(_SVG):]
-            if tag == "rect" and element.get("fill") not in {"#4c8ccc", "#5da987"}:
-                return _unknown(media, "unsupported-svg-paint")
-            if tag == "line":
-                points = [(Decimal(element.get("x" + n, "")),
-                           Decimal(element.get("y" + n, ""))) for n in ("1", "2")]
-            else:
-                x, y = Decimal(element.get("x", "")), Decimal(element.get("y", ""))
-                points = [(x, y)]
-                if tag == "rect":
-                    points.append((x + Decimal(element.get("width", "")),
-                                   y + Decimal(element.get("height", ""))))
-            if any(not x.is_finite() or not y.is_finite() or
-                   not (0 <= x <= 520 and 0 <= y <= 380) for x, y in points):
-                return _unknown(media, "svg-geometry-outside-viewport")
         tick_points = [(Decimal(e.get("y", "")), Decimal((e.text or "").strip())) for e in ticks]
         (y1, v1), (y2, v2) = tick_points
         if y1 == y2 or v1 == v2 or (y1 - y2) * (v1 - v2) >= 0:

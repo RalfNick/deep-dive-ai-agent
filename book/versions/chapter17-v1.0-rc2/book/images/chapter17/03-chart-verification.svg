@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">图表观察 → 算术验证 → 决策</title>
+<desc id="desc">柱形高度只是候选；CSV 是独立核验，不是隐藏答案属性。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">图表观察 → 算术验证 → 决策</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">柱形高度只是候选；CSV 是独立核验，不是隐藏答案属性。</tspan></text>
+<path d="M 350.0 390.0 L 430.0 390.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 730.0 390.0 L 830.0 430.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 730.0 620.0 L 830.0 430.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="735.0" y="490.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="780.0" y="513.0">独立核验</tspan></text>
+<path d="M 1130.0 430.0 L 1220.0 310.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1130.0" y="335.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1175.0" y="358.0">一致</tspan></text>
+<path d="M 1130.0 430.0 L 1220.0 620.0" fill="none" stroke="#b8443b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1130.0" y="490.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1175.0" y="513.0">冲突</tspan></text>
+<rect x="70" y="330" width="280" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="210.0" y="375.0">受控 SVG</tspan><tspan x="210.0" y="406.2">刻度 · 单位 · 月份</tspan></text>
+<rect x="430" y="330" width="300" height="120" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="580.0" y="375.0">几何取数</tspan><tspan x="580.0" y="406.2">Jan 80 / Feb 100</tspan></text>
+<rect x="430" y="560" width="300" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="580.0" y="605.0">独立 CSV</tspan><tspan x="580.0" y="636.2">month,unit,count</tspan></text>
+<rect x="830" y="350" width="300" height="160" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="980.0" y="415.0">同单位同月份</tspan><tspan x="980.0" y="446.2">数值逐项一致？</tspan></text>
+<rect x="1220" y="250" width="300" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1370.0" y="295.0">Answer</tspan><tspan x="1370.0" y="326.2">(100−80)/80=25%</tspan></text>
+<rect x="1220" y="560" width="300" height="120" rx="24" fill="#fde3df" stroke="#b8443b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1370.0" y="605.0">Unknown</tspan><tspan x="1370.0" y="636.2">缺项 / 冲突 / 零分母</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">读图是观察；算数可手算；任一必要证据不成立就明确弃答。</tspan></text>
+</svg>

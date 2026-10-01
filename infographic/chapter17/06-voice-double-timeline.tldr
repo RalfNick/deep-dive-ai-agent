@@ -179,7 +179,7 @@
         "dash": "draw",
         "size": "m",
         "font": "draw",
-        "text": "response_cancelled\n停止生成请求",
+        "text": "response_cancelled\n生成取消已确认",
         "align": "middle",
         "verticalAlign": "middle",
         "growY": 0,

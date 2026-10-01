@@ -20,7 +20,7 @@
 <rect x="60" y="240" width="340" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
 <text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="230.0" y="300.0">用户 speech_started</tspan></text>
 <rect x="490" y="240" width="340" height="120" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
-<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="660.0" y="285.0">response_cancelled</tspan><tspan x="660.0" y="316.2">生成取消已确认</tspan></text>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="660.0" y="285.0">response_cancelled</tspan><tspan x="660.0" y="316.2">停止生成请求</tspan></text>
 <rect x="1010" y="240" width="430" height="120" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
 <text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1225.0" y="285.0">playback_stopped</tspan><tspan x="1225.0" y="316.2">扬声器不再播</tspan></text>
 <rect x="60" y="560" width="340" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>

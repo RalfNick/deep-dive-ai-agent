@@ -88,3 +88,31 @@ def test_faulty_unauthorized_execution_is_counted_and_cannot_hide_in_report(monk
     cases["screen-unapproved"]["security_violation"] = False
     with pytest.raises(ValueError):
         validate_report(report)
+
+
+@pytest.mark.parametrize("case_id,filename,source_id,want_backend,want_issues", [
+    ("voice-interruption", "voice-interruption.json", "voice:interruption-events", "running", ()),
+    ("voice-task-cancel", "voice-task-cancel.json", "voice:cancel-events", "cancelled", ()),
+    ("voice-conflict", "voice-conflict.json", "voice:conflict-events", "unknown", ("conflicting-duplicate-sequence",)),
+])
+def test_voice_case_replays_the_exact_source_bound_by_its_proof(
+        case_id, filename, source_id, want_backend, want_issues):
+    from hashlib import sha256
+    import json
+    from chapter17.contracts import EventRecord
+    from chapter17.fixtures import load_fixture
+    from chapter17.voice import reduce_events
+
+    report = run_all()
+    case = next(c for c in report["groups"][3]["cases"] if c["id"] == case_id)
+    assert case["details"]["event_source"] == filename
+    assert case["evidence_ids"] == [source_id]
+    raw = load_fixture(filename)
+    assert report["source_proof"][source_id] == sha256(raw).hexdigest()
+    events = tuple(EventRecord(**{**row, "payload": tuple(tuple(p) for p in row["payload"])})
+                   for row in json.loads(raw))
+    state = reduce_events(events)
+    assert state.backend_task == want_backend
+    assert state.issues == want_issues
+    for key in ("playback", "generation", "conversation_tail", "backend_task", "committed_actions", "issues"):
+        assert case["details"][key] == getattr(state, key)

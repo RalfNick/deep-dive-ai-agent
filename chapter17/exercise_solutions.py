@@ -39,7 +39,8 @@ def payload() -> dict:
         ("旧帧", "提议 f1 与当前 f-new 不符，应 refresh、无执行", {}),
         ("屏幕伪指令", "画面/OCR 是低信任材料，不能扩大 allowlist 或审批", {}),
         ("缺后验", "executed=true 而 status=unknown；先查服务端幂等回执", {}),
-        ("语音排序", "已停播、已截断、后台仍运行", {
+        ("语音排序", "生成已取消、已停播、已截断、后台仍运行；取消请求不等于确认", {
+            "generation": state.generation,
             "playback": state.playback, "conversation_tail": state.conversation_tail,
             "backend_task": state.backend_task}),
         ("重复和晚到", "同内容幂等；已提交副作用保留；晚到取消不覆盖完成", {}),

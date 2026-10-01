@@ -44,7 +44,7 @@ try {
       throw new Error(JSON.stringify({ viewport, audit, errors }));
     }
     await page.screenshot({
-      path: path.join(captures, `chapter17-rc2-${viewport.width}x${viewport.height}-top.png`),
+      path: path.join(captures, `chapter17-rc3-${viewport.width}x${viewport.height}-top.png`),
     });
     results.push(audit);
     await page.close();

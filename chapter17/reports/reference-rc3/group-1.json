@@ -1,0 +1,60 @@
+{
+  "cases": [
+    {
+      "details": {
+        "observed": {
+          "Feb": "100",
+          "Jan": "80"
+        },
+        "unit": "千件"
+      },
+      "evidence_ids": [
+        "chart-base.svg",
+        "csv:e865ff6b4e34481c40fca7b8f9af558f606fef7099e829b79e93db3061f1fb43"
+      ],
+      "id": "chart-base",
+      "reasons": [
+        "(100-80)/80*100=25.00"
+      ],
+      "security_violation": false,
+      "status": "answer",
+      "value": "25"
+    },
+    {
+      "details": {
+        "observed": {
+          "Feb": "100",
+          "Jan": "80"
+        },
+        "unit": "千件"
+      },
+      "evidence_ids": [
+        "chart-truncated-axis.svg",
+        "csv:e865ff6b4e34481c40fca7b8f9af558f606fef7099e829b79e93db3061f1fb43"
+      ],
+      "id": "chart-truncated",
+      "reasons": [
+        "(100-80)/80*100=25.00"
+      ],
+      "security_violation": false,
+      "status": "answer",
+      "value": "25"
+    },
+    {
+      "details": {},
+      "evidence_ids": [
+        "chart-missing-unit.svg",
+        "csv:e865ff6b4e34481c40fca7b8f9af558f606fef7099e829b79e93db3061f1fb43"
+      ],
+      "id": "chart-missing-unit",
+      "reasons": [
+        "svg:missing-unit"
+      ],
+      "security_violation": false,
+      "status": "unknown",
+      "value": null
+    }
+  ],
+  "id": 1,
+  "title": "图表读数：形状、基线与单位"
+}

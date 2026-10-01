@@ -108,3 +108,19 @@ def test_expired_chart_requires_refresh_before_arithmetic():
                                now_ms=5000, max_age_ms=2000)
     assert decision.status == "refresh"
     assert "stale" in decision.reasons[0]
+
+
+@pytest.mark.parametrize("old,new", [
+    (b'fill="#4c8ccc"', b'fill="none"'),
+    (b'fill="#4c8ccc"', b'fill="#ffffff"'),
+    (b'fill="#4c8ccc"', b'fill="rgba(0,0,0,0)"'),
+    (b'viewBox="0 0 520 380"', b'viewBox="0 0 520 50"'),
+    (b'width="520" height="380"', b'width="520" height="50"'),
+    (b'class="unit" x="24" y="30"', b'class="unit" x="24" y="-30"'),
+    (b'</svg>', b'<rect x="80" y="80" width="400" height="260" fill="#ffffff"/></svg>'),
+])
+def test_hidden_cropped_or_overlaid_chart_cannot_be_called_visible(old, new):
+    svg = load_fixture("chart-base.svg").replace(old, new, 1)
+    decision = decide_chart(observed(data=svg), load_fixture("chart-values.csv"))
+    assert decision.status == "unknown"
+    assert decision.value is None
