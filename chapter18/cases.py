@@ -52,6 +52,14 @@ def run_case(case_id: str, *, root: Path, workdir: Path, order: tuple[str, ...] 
         durations = (7, 11, 5)
         extra["logical_schedule"] = {"durations": list(durations), "delegation_units": 2, "integration_units": 3,
                                       "serial_units": sum(durations), "parallel_units": max(durations) + 2 + 3, "unit": "logical_not_seconds"}
+        if case_id == "parallel-separated":
+            from .system import ObservedScriptedPolicy
+            control = Session(root, session.workdir.with_name(session.workdir.name + "-single-control"), p)
+            calls = tuple(ToolCall(f"single-{n}", "knowledge", (("source_id", source), ("key", key)))
+                          for n, (source, key) in enumerate((("parallel-product", "sharing"), ("parallel-product", "edition"), ("parallel-support", "support_hours"))))
+            control.runtime._policies[p.task_id] = ObservedScriptedPolicy(calls, "root-a1")
+            control.run_workers((p.task_id,))
+            extra["single_controller_control"] = control.result("parallel-separated-control", 1)
     elif case_id == "serial-dependency":
         first = session.research("edition", "parallel-product", "edition")
         session.run_workers((first,))

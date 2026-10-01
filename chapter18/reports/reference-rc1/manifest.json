@@ -1,0 +1,13 @@
+{
+  "files": {
+    "exercise-results.json": "fd13e2993687b93c7823191923baaf358d5db13d24c85cdee8f329aa1f69c415",
+    "group-1.json": "a6fdd6eaadb5c0cda1da62685fa8317e3c8d667fb7f2ca496be1daab1c9d7338",
+    "group-2.json": "efd47c12b193f3122f86d32f06cdf41edd062d5d54a008d7c7b5048c7f7b0aea",
+    "group-3.json": "292f291961e3b9b6d7760357dd58d833b178d7a95ee42859783a42426db41748",
+    "group-4.json": "930f3ec87434ced9c891508adb6b87058e28192129e83c2b0337a92d4e05d0be",
+    "group-5.json": "73e404994b1ca42b9a9aeeca9a55751bf3d74b282d2aea4a79e5cc6cfc6db3a6",
+    "summary.md": "519966458059e4f64c7d4093364ad13928f13b165a35bc40ea3085ee9530dd57",
+    "team-report.json": "3683d9c14425793e227f88a6cc9b63e4b3c67a776459f8bb11fff457d603d643"
+  },
+  "schema_version": "chapter18.team.v1"
+}

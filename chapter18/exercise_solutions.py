@@ -53,3 +53,28 @@ def solution_payload(*, root: Path, workdir: Path) -> ExerciseReport:
     return {"schema_version": "chapter18.exercises.v1", "answers": answers,
             "case_evidence": [{"case_id": result["case_id"], "status": result["status"], "metrics": result["metrics"],
                                "event_ids": [e["event_id"] for e in result["trajectory"]]} for result in cases.values()]}
+
+
+def main(argv: list[str] | None = None) -> int:
+    import argparse
+    from .fixtures import checked_path
+    from .output import write_answer
+    parser = argparse.ArgumentParser(description="Compute thirteen offline exercise answers")
+    parser.add_argument("--all", action="store_true", required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args(argv)
+    root = Path(__file__).resolve().parents[1]
+    try:
+        dest = checked_path(root, args.output, prefixes=("chapter18/.runs",), new=True)
+        workdir = root / "chapter18/.runs" / (dest.stem + "-workspaces")
+        checked_path(root, workdir, prefixes=("chapter18/.runs",), new=True)
+        answers = solution_payload(root=root, workdir=workdir)
+        write_answer(root, dest, answers)
+    except (ValueError, OSError) as error:
+        parser.exit(2, str(error) + "\n")
+    print("answers=13; schema=chapter18.exercises.v1")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

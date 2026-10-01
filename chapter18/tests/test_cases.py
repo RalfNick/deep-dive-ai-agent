@@ -15,6 +15,12 @@ def test_twenty_cases_show_evidence_not_role_count(results):
     assert results["single-sufficient"]["status"] == "answer"
     assert results["parallel-separated"]["logical_schedule"]["serial_units"] == 23
     assert results["parallel-separated"]["logical_schedule"]["parallel_units"] == 16
+    parallel = results["parallel-separated"]
+    single = parallel["single_controller_control"]
+    assert single["status"] == parallel["status"] == "answer"
+    assert single["evidence_verdict"] == parallel["evidence_verdict"]
+    assert single["metrics"]["coverage_denominator"] == parallel["metrics"]["coverage_denominator"] == 3
+    assert single["metrics"]["tool_calls"] == parallel["metrics"]["tool_calls"] == 3
     assert results["duplicate-research"]["metrics"]["duplicate_tasks"] == 1
     assert results["delegation-return"]["controller"] == "manager"
     assert results["handoff-transfer"]["controller"] == "expert"
@@ -101,3 +107,20 @@ def test_changed_source_after_worker_return_cannot_become_answer(tmp_path):
     path = root / "chapter18/fixtures/knowledge/public-current.md"
     path.write_text(path.read_text(encoding="utf-8") + "\n更正记录\n", encoding="utf-8")
     assert session.result("kb-changed", 5)["status"] == "unknown"
+
+
+def test_business_path_does_not_commit_unaccepted_worker_proposal(tmp_path, monkeypatch):
+    from chapter18.system import Session, new_packet, run_system
+    root = fixture_repo(tmp_path)
+    original = Session.run_workers
+
+    def discard_result(session, order):
+        original(session, order)
+        # The tool did produce a proposal, but no WorkerResult was accepted.
+        session.runtime.state.results = ()
+
+    monkeypatch.setattr(Session, "run_workers", discard_result)
+    result = run_system("repair", new_packet(output_requirements=("repair_correct",)),
+                        root=root, workdir=root / "chapter18/.runs/unaccepted", approved=True)
+    assert not any(r["executed"] for r in result["receipts"])
+    assert result["status"] == "unknown"

@@ -71,7 +71,9 @@ def derive_metrics(case: CaseResult) -> dict[str, int]:
     covered = sum(len(values.get(key, ())) == 1 for key in root["output_requirements"])
     if "repair_correct" in root["output_requirements"]:
         covered = int(case["status"] == "verified")
-    goals = [tuple(p["output_requirements"]) for p in packets if p["parent_id"] is not None]
+    goals = [(tuple(p["output_requirements"]), tuple(p["input_refs"]), tuple(p["allowed_sources"]),
+              tuple(p["allowed_writes"]) if "repair_correct" in p["output_requirements"] else ())
+             for p in packets if p["parent_id"] is not None]
     committed = [e["data"]["action_id"] for e in events if e["kind"] == "action_committed"]
     tool_calls = sum(e["kind"] in {"tool_returned", "action_committed"} for e in events)
     verifier_calls = sum(e["data"]["calls"] for e in events if e["kind"] == "verification")
@@ -210,6 +212,7 @@ class Session:
         events.sort(key=lambda e: (e["task_id"], int(e["event_id"].rsplit(":e", 1)[1])))
         result = {"case_id": case_id, "group": group, "status": state.status, "reason_code": state.reason_code,
             "controller": state.controller, "input_proof": {"packets": encode(tuple(state.tasks[k] for k in sorted(state.tasks))),
+                "attempts": dict(sorted(state.attempts.items())),
                 "source_digests": encode(tuple(sorted({pair for c in self.contexts.values() for pair in c.source_digests}))),
                 "context_digests": safe_contexts},
             "trajectory": events, "worker_results": encode(safe_results),
@@ -235,7 +238,10 @@ def run_system(kind: Literal["knowledge", "repair"], packet: TaskPacket, *, root
         worker = session.coder("coder", "src/linkcheck.py")
         session.run_workers((worker,))
         gateway = session.gateway()
+        accepted = {patch_id for result in session.runtime.state.results for patch_id in result.patch_ids}
         for proposal in session.proposals.values():
+            if proposal.proposal_id not in accepted:
+                continue
             gateway.apply(proposal, approved=approved)
         if approved:
             gateway.finish()

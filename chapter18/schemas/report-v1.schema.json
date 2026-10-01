@@ -1,0 +1,240 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Chapter 18 deterministic team evidence",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "groups",
+    "summary",
+    "limits"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "chapter18.team.v1"
+    },
+    "groups": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": [
+          "group",
+          "cases"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "group": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5
+          },
+          "cases": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": {
+              "$ref": "#/$defs/case"
+            }
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "cases_total",
+        "status_counts",
+        "coverage_numerator",
+        "coverage_denominator",
+        "duplicate_tasks",
+        "distinct_eligible_sources",
+        "unresolved_conflicts",
+        "policy_refusals",
+        "stale_patch_refusals",
+        "duplicate_writes",
+        "decisions",
+        "tool_calls",
+        "budget_limit",
+        "budget_remaining",
+        "verifier_calls",
+        "security_violations"
+      ],
+      "properties": {
+        "cases_total": {
+          "const": 20
+        },
+        "status_counts": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "limits": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "metrics": {
+      "type": "object",
+      "required": [
+        "coverage_numerator",
+        "coverage_denominator",
+        "duplicate_tasks",
+        "distinct_eligible_sources",
+        "unresolved_conflicts",
+        "policy_refusals",
+        "stale_patch_refusals",
+        "duplicate_writes",
+        "decisions",
+        "tool_calls",
+        "budget_limit",
+        "budget_remaining",
+        "verifier_calls",
+        "security_violations"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "coverage_numerator": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "coverage_denominator": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "duplicate_tasks": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "distinct_eligible_sources": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unresolved_conflicts": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "policy_refusals": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "stale_patch_refusals": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "duplicate_writes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "decisions": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tool_calls": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "budget_limit": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "budget_remaining": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "verifier_calls": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "security_violations": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "case": {
+      "type": "object",
+      "required": [
+        "case_id",
+        "group",
+        "status",
+        "reason_code",
+        "input_proof",
+        "trajectory",
+        "worker_results",
+        "receipts",
+        "metrics",
+        "acceptance",
+        "limits",
+        "evidence_verdict"
+      ],
+      "properties": {
+        "case_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "group": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "status": {
+          "enum": [
+            "answer",
+            "verified",
+            "unknown",
+            "blocked",
+            "conflict",
+            "needs_approval",
+            "stopped"
+          ]
+        },
+        "reason_code": {
+          "type": "string"
+        },
+        "input_proof": {
+          "type": "object",
+          "required": [
+            "packets",
+            "attempts",
+            "source_digests",
+            "context_digests"
+          ]
+        },
+        "trajectory": {
+          "type": "array"
+        },
+        "worker_results": {
+          "type": "array"
+        },
+        "receipts": {
+          "type": "array"
+        },
+        "metrics": {
+          "$ref": "#/$defs/metrics"
+        },
+        "acceptance": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "limits": {
+          "type": "array"
+        },
+        "evidence_verdict": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}
