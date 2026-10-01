@@ -1,0 +1,9 @@
+[
+  {"source_id":"public-current","location":"chapter18/fixtures/knowledge/public-current.md","version":"v2","principals":["public","staff"],"eligible":true,"facts":{"sharing":"支持"}},
+  {"source_id":"public-old","location":"chapter18/fixtures/knowledge/public-old.md","version":"v1","principals":["public","staff"],"eligible":false,"facts":{"sharing":"不支持"}},
+  {"source_id":"restricted-current","location":"chapter18/fixtures/knowledge/restricted-current.md","version":"v2","principals":["staff"],"eligible":true,"facts":{"internal_quota":"72"}},
+  {"source_id":"conflict-a","location":"chapter18/fixtures/knowledge/conflict-a.md","version":"v2","principals":["public","staff"],"eligible":true,"facts":{"retention":"30天"}},
+  {"source_id":"conflict-b","location":"chapter18/fixtures/knowledge/conflict-b.md","version":"v2","principals":["public","staff"],"eligible":true,"facts":{"retention":"90天"}},
+  {"source_id":"parallel-product","location":"chapter18/fixtures/knowledge/parallel-product.md","version":"v2","principals":["public","staff"],"eligible":true,"facts":{"sharing":"支持","edition":"团队版"}},
+  {"source_id":"parallel-support","location":"chapter18/fixtures/knowledge/parallel-support.md","version":"v2","principals":["public","staff"],"eligible":true,"facts":{"support_hours":"工作日09:00至18:00"}}
+]

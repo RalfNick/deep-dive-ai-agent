@@ -1,0 +1,7 @@
+[
+ {"group":1,"case_id":"single-sufficient"}, {"group":1,"case_id":"parallel-separated"}, {"group":1,"case_id":"serial-dependency"}, {"group":1,"case_id":"duplicate-research"},
+ {"group":2,"case_id":"delegation-return"}, {"group":2,"case_id":"handoff-transfer"}, {"group":2,"case_id":"context-not-forwarded"}, {"group":2,"case_id":"scope-escalation"},
+ {"group":3,"case_id":"source-version-conflict"}, {"group":3,"case_id":"same-source-three-votes"}, {"group":3,"case_id":"stale-patch"}, {"group":3,"case_id":"disjoint-patches"},
+ {"group":4,"case_id":"one-worker-timeout"}, {"group":4,"case_id":"global-budget-exhausted"}, {"group":4,"case_id":"cancel-late-result"}, {"group":4,"case_id":"handoff-cycle"},
+ {"group":5,"case_id":"kb-verified-answer"}, {"group":5,"case_id":"kb-permission-denied"}, {"group":5,"case_id":"repair-verified"}, {"group":5,"case_id":"repair-needs-approval"}
+]
