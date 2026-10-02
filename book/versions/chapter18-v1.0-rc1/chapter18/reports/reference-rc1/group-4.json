@@ -1,0 +1,1531 @@
+{
+  "cases": [
+    {
+      "acceptance": [],
+      "case_id": "one-worker-timeout",
+      "controller": "manager",
+      "evidence_verdict": {
+        "claims": [
+          {
+            "evidence": [
+              {
+                "digest": "4eefbc41ba5eaab5237dc534bf7caf9038d402a4b78e9acc95d7b2291b1c24db",
+                "eligible": true,
+                "location": "chapter18/fixtures/knowledge/parallel-product.md",
+                "quote": "团队版支持工作区共享。",
+                "source_id": "parallel-product",
+                "version": "v2"
+              }
+            ],
+            "key": "sharing",
+            "value": "支持"
+          }
+        ],
+        "distinct_sources": [
+          "parallel-product"
+        ],
+        "missing": [
+          "support_hours"
+        ],
+        "reason_code": "missing_or_invalid_evidence",
+        "status": "unknown"
+      },
+      "group": 4,
+      "input_proof": {
+        "attempts": {
+          "product": "product-a1",
+          "root": "root-a1",
+          "support": "support-a1"
+        },
+        "context_digests": [
+          {
+            "principal": "public",
+            "redacted": false,
+            "sent": [
+              [
+                "parallel-product",
+                "团队版支持工作区共享。"
+              ]
+            ],
+            "sent_digest": "fda1dfe5a7a57eaf747d282781e728d53968a09565ca3fb2f689328cb34c2553",
+            "source_digests": [
+              [
+                "parallel-product",
+                "4eefbc41ba5eaab5237dc534bf7caf9038d402a4b78e9acc95d7b2291b1c24db"
+              ]
+            ],
+            "target_version": "v2",
+            "task_id": "product"
+          },
+          {
+            "principal": "public",
+            "redacted": false,
+            "sent": [
+              [
+                "parallel-product",
+                "团队版支持工作区共享。"
+              ],
+              [
+                "parallel-support",
+                "人工支持时间为工作日09:00至18:00。"
+              ],
+              [
+                "public-current",
+                "答：支持工作区共享。共享前需由工作区管理员配置成员范围。"
+              ]
+            ],
+            "sent_digest": "8ca5d16ccb43af787fcd4989a1f9a9494489aa955cb56154bba72f85296d0a57",
+            "source_digests": [
+              [
+                "parallel-product",
+                "4eefbc41ba5eaab5237dc534bf7caf9038d402a4b78e9acc95d7b2291b1c24db"
+              ],
+              [
+                "parallel-support",
+                "7dd308fbaf64c2a8f6c00ffed2163e58854959800694b13a54bb7a7992e7d338"
+              ],
+              [
+                "public-current",
+                "24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7"
+              ]
+            ],
+            "target_version": "v2",
+            "task_id": "root"
+          },
+          {
+            "principal": "public",
+            "redacted": false,
+            "sent": [
+              [
+                "parallel-support",
+                "人工支持时间为工作日09:00至18:00。"
+              ]
+            ],
+            "sent_digest": "e1b2d3a49a19b00d75ea5eff91d07c8260d80f9620ea726e63107c0198aea552",
+            "source_digests": [
+              [
+                "parallel-support",
+                "7dd308fbaf64c2a8f6c00ffed2163e58854959800694b13a54bb7a7992e7d338"
+              ]
+            ],
+            "target_version": "v2",
+            "task_id": "support"
+          }
+        ],
+        "packets": [
+          {
+            "allowed_sources": [
+              "parallel-product"
+            ],
+            "allowed_tools": [
+              "knowledge",
+              "propose",
+              "read"
+            ],
+            "allowed_writes": [
+              "src/linkcheck.py",
+              "src/policy.py"
+            ],
+            "base_hashes": [],
+            "depth": 1,
+            "goal": "查证星舟工作台当前问答",
+            "input_refs": [
+              "sharing"
+            ],
+            "limits": {
+              "depth": 2,
+              "extra_retries": 1,
+              "handoffs": 4,
+              "inflight": 3,
+              "tool_calls": 16,
+              "verifier_reserve": 2,
+              "worker_decisions": 4
+            },
+            "output_requirements": [
+              "sharing"
+            ],
+            "parent_id": "root",
+            "principal": "public",
+            "target_version": "v2",
+            "task_id": "product",
+            "worker_id": "product"
+          },
+          {
+            "allowed_sources": [
+              "conflict-a",
+              "conflict-b",
+              "parallel-product",
+              "parallel-support",
+              "public-current",
+              "public-old"
+            ],
+            "allowed_tools": [
+              "knowledge",
+              "propose",
+              "read"
+            ],
+            "allowed_writes": [
+              "src/linkcheck.py",
+              "src/policy.py"
+            ],
+            "base_hashes": [],
+            "depth": 0,
+            "goal": "查证星舟工作台当前问答",
+            "input_refs": [
+              "sharing",
+              "support_hours"
+            ],
+            "limits": {
+              "depth": 2,
+              "extra_retries": 1,
+              "handoffs": 4,
+              "inflight": 3,
+              "tool_calls": 16,
+              "verifier_reserve": 2,
+              "worker_decisions": 4
+            },
+            "output_requirements": [
+              "sharing",
+              "support_hours"
+            ],
+            "parent_id": null,
+            "principal": "public",
+            "target_version": "v2",
+            "task_id": "root",
+            "worker_id": "manager"
+          },
+          {
+            "allowed_sources": [
+              "parallel-support"
+            ],
+            "allowed_tools": [
+              "knowledge",
+              "propose",
+              "read"
+            ],
+            "allowed_writes": [
+              "src/linkcheck.py",
+              "src/policy.py"
+            ],
+            "base_hashes": [],
+            "depth": 1,
+            "goal": "查证星舟工作台当前问答",
+            "input_refs": [
+              "support_hours"
+            ],
+            "limits": {
+              "depth": 2,
+              "extra_retries": 1,
+              "handoffs": 4,
+              "inflight": 3,
+              "tool_calls": 16,
+              "verifier_reserve": 2,
+              "worker_decisions": 4
+            },
+            "output_requirements": [
+              "support_hours"
+            ],
+            "parent_id": "root",
+            "principal": "public",
+            "target_version": "v2",
+            "task_id": "support",
+            "worker_id": "support"
+          }
+        ],
+        "source_digests": [
+          [
+            "parallel-product",
+            "4eefbc41ba5eaab5237dc534bf7caf9038d402a4b78e9acc95d7b2291b1c24db"
+          ],
+          [
+            "parallel-support",
+            "7dd308fbaf64c2a8f6c00ffed2163e58854959800694b13a54bb7a7992e7d338"
+          ],
+          [
+            "public-current",
+            "24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7"
+          ]
+        ]
+      },
+      "limits": [
+        "deterministic decision double, not model capability",
+        "logical schedule, not measured concurrency",
+        "trusted fixture, not OS sandbox"
+      ],
+      "logical_schedule": {
+        "delegation_units": 2,
+        "durations": [
+          7,
+          11,
+          5
+        ],
+        "integration_units": 3,
+        "parallel_units": 16,
+        "serial_units": 23,
+        "unit": "logical_not_seconds"
+      },
+      "metrics": {
+        "budget_limit": 16,
+        "budget_remaining": 14,
+        "coverage_denominator": 2,
+        "coverage_numerator": 1,
+        "decisions": 3,
+        "distinct_eligible_sources": 1,
+        "duplicate_tasks": 0,
+        "duplicate_writes": 0,
+        "policy_refusals": 0,
+        "security_violations": 0,
+        "stale_patch_refusals": 0,
+        "tool_calls": 2,
+        "unresolved_conflicts": 0,
+        "verifier_calls": 0
+      },
+      "reason_code": "missing_or_invalid_evidence",
+      "receipts": [],
+      "status": "unknown",
+      "trajectory": [
+        {
+          "attempt_id": "product-a1",
+          "data": {
+            "parent": "root",
+            "worker": "product"
+          },
+          "event_id": "product:e1",
+          "kind": "task_started",
+          "parent_event_id": null,
+          "task_id": "product"
+        },
+        {
+          "attempt_id": "product-a1",
+          "data": {
+            "decision_kind": "tool"
+          },
+          "event_id": "product:e2",
+          "kind": "decision",
+          "parent_event_id": "product:e1",
+          "task_id": "product"
+        },
+        {
+          "attempt_id": "product-a1",
+          "data": {
+            "attempt": 1,
+            "call_id": "product-read",
+            "outcome": "ok",
+            "tool": "knowledge"
+          },
+          "event_id": "product:e3",
+          "kind": "tool_returned",
+          "parent_event_id": "product:e2",
+          "task_id": "product"
+        },
+        {
+          "attempt_id": "product-a1",
+          "data": {
+            "decision_kind": "result"
+          },
+          "event_id": "product:e4",
+          "kind": "decision",
+          "parent_event_id": "product:e3",
+          "task_id": "product"
+        },
+        {
+          "attempt_id": "product-a1",
+          "data": {
+            "worker_state": "done"
+          },
+          "event_id": "product:e5",
+          "kind": "result_accepted",
+          "parent_event_id": "product:e4",
+          "task_id": "product"
+        },
+        {
+          "attempt_id": "root-a1",
+          "data": {
+            "parent": null,
+            "worker": "manager"
+          },
+          "event_id": "root:e1",
+          "kind": "task_started",
+          "parent_event_id": null,
+          "task_id": "root"
+        },
+        {
+          "attempt_id": "support-a1",
+          "data": {
+            "parent": "root",
+            "worker": "support"
+          },
+          "event_id": "support:e1",
+          "kind": "task_started",
+          "parent_event_id": null,
+          "task_id": "support"
+        },
+        {
+          "attempt_id": "support-a1",
+          "data": {
+            "decision_kind": "tool"
+          },
+          "event_id": "support:e2",
+          "kind": "decision",
+          "parent_event_id": "support:e1",
+          "task_id": "support"
+        },
+        {
+          "attempt_id": "support-a1",
+          "data": {
+            "attempt": 1,
+            "call_id": "support-read",
+            "outcome": "timeout",
+            "tool": "knowledge"
+          },
+          "event_id": "support:e3",
+          "kind": "tool_returned",
+          "parent_event_id": "support:e2",
+          "task_id": "support"
+        },
+        {
+          "attempt_id": "support-a1",
+          "data": {
+            "worker_state": "failed"
+          },
+          "event_id": "support:e4",
+          "kind": "result_accepted",
+          "parent_event_id": "support:e3",
+          "task_id": "support"
+        }
+      ],
+      "worker_results": [
+        {
+          "attempt_id": "product-a1",
+          "claims": [
+            {
+              "evidence": [
+                {
+                  "digest": "4eefbc41ba5eaab5237dc534bf7caf9038d402a4b78e9acc95d7b2291b1c24db",
+                  "eligible": true,
+                  "location": "chapter18/fixtures/knowledge/parallel-product.md",
+                  "quote": "团队版支持工作区共享。",
+                  "source_id": "parallel-product",
+                  "version": "v2"
+                }
+              ],
+              "key": "sharing",
+              "value": "支持"
+            }
+          ],
+          "decisions": 2,
+          "missing": [],
+          "patch_ids": [],
+          "state": "done",
+          "task_id": "product",
+          "tool_calls": 1,
+          "worker_id": "product"
+        },
+        {
+          "attempt_id": "support-a1",
+          "claims": [],
+          "decisions": 1,
+          "missing": [
+            "support_hours"
+          ],
+          "patch_ids": [],
+          "state": "failed",
+          "task_id": "support",
+          "tool_calls": 1,
+          "worker_id": "support"
+        }
+      ]
+    },
+    {
+      "acceptance": [],
+      "case_id": "global-budget-exhausted",
+      "controller": "manager",
+      "evidence_verdict": {
+        "claims": [],
+        "distinct_sources": [],
+        "missing": [
+          "sharing"
+        ],
+        "reason_code": "missing_or_invalid_evidence",
+        "status": "unknown"
+      },
+      "group": 4,
+      "input_proof": {
+        "attempts": {
+          "research-0": "a-0",
+          "research-1": "a-1",
+          "research-2": "a-2",
+          "root": "root-a1"
+        },
+        "context_digests": [
+          {
+            "principal": "public",
+            "redacted": false,
+            "sent": [
+              [
+                "parallel-product",
+                "团队版支持工作区共享。"
+              ],
+              [
+                "public-current",
+                "答：支持工作区共享。共享前需由工作区管理员配置成员范围。"
+              ]
+            ],
+            "sent_digest": "1a77b457b4077de1effe4de24af63ac8034db2bc28a3314e4f15dfcb470b5b17",
+            "source_digests": [
+              [
+                "parallel-product",
+                "4eefbc41ba5eaab5237dc534bf7caf9038d402a4b78e9acc95d7b2291b1c24db"
+              ],
+              [
+                "public-current",
+                "24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7"
+              ]
+            ],
+            "target_version": "v2",
+            "task_id": "root"
+          }
+        ],
+        "packets": [
+          {
+            "allowed_sources": [
+              "conflict-a",
+              "conflict-b",
+              "parallel-product",
+              "parallel-support",
+              "public-current",
+              "public-old"
+            ],
+            "allowed_tools": [
+              "knowledge",
+              "propose",
+              "read"
+            ],
+            "allowed_writes": [
+              "src/linkcheck.py",
+              "src/policy.py"
+            ],
+            "base_hashes": [],
+            "depth": 1,
+            "goal": "查证星舟工作台当前问答",
+            "input_refs": [
+              "sharing"
+            ],
+            "limits": {
+              "depth": 2,
+              "extra_retries": 1,
+              "handoffs": 4,
+              "inflight": 3,
+              "tool_calls": 8,
+              "verifier_reserve": 2,
+              "worker_decisions": 4
+            },
+            "output_requirements": [
+              "sharing"
+            ],
+            "parent_id": "root",
+            "principal": "public",
+            "target_version": "v2",
+            "task_id": "research-0",
+            "worker_id": "research-0"
+          },
+          {
+            "allowed_sources": [
+              "conflict-a",
+              "conflict-b",
+              "parallel-product",
+              "parallel-support",
+              "public-current",
+              "public-old"
+            ],
+            "allowed_tools": [
+              "knowledge",
+              "propose",
+              "read"
+            ],
+            "allowed_writes": [
+              "src/linkcheck.py",
+              "src/policy.py"
+            ],
+            "base_hashes": [],
+            "depth": 1,
+            "goal": "查证星舟工作台当前问答",
+            "input_refs": [
+              "sharing"
+            ],
+            "limits": {
+              "depth": 2,
+              "extra_retries": 1,
+              "handoffs": 4,
+              "inflight": 3,
+              "tool_calls": 8,
+              "verifier_reserve": 2,
+              "worker_decisions": 4
+            },
+            "output_requirements": [
+              "sharing"
+            ],
+            "parent_id": "root",
+            "principal": "public",
+            "target_version": "v2",
+            "task_id": "research-1",
+            "worker_id": "research-1"
+          },
+          {
+            "allowed_sources": [
+              "conflict-a",
+              "conflict-b",
+              "parallel-product",
+              "parallel-support",
+              "public-current",
+              "public-old"
+            ],
+            "allowed_tools": [
+              "knowledge",
+              "propose",
+              "read"
+            ],
+            "allowed_writes": [
+              "src/linkcheck.py",
+              "src/policy.py"
+            ],
+            "base_hashes": [],
+            "depth": 1,
+            "goal": "查证星舟工作台当前问答",
+            "input_refs": [
+              "sharing"
+            ],
+            "limits": {
+              "depth": 2,
+              "extra_retries": 1,
+              "handoffs": 4,
+              "inflight": 3,
+              "tool_calls": 8,
+              "verifier_reserve": 2,
+              "worker_decisions": 4
+            },
+            "output_requirements": [
+              "sharing"
+            ],
+            "parent_id": "root",
+            "principal": "public",
+            "target_version": "v2",
+            "task_id": "research-2",
+            "worker_id": "research-2"
+          },
+          {
+            "allowed_sources": [
+              "conflict-a",
+              "conflict-b",
+              "parallel-product",
+              "parallel-support",
+              "public-current",
+              "public-old"
+            ],
+            "allowed_tools": [
+              "knowledge",
+              "propose",
+              "read"
+            ],
+            "allowed_writes": [
+              "src/linkcheck.py",
+              "src/policy.py"
+            ],
+            "base_hashes": [],
+            "depth": 0,
+            "goal": "查证星舟工作台当前问答",
+            "input_refs": [
+              "sharing"
+            ],
+            "limits": {
+              "depth": 2,
+              "extra_retries": 1,
+              "handoffs": 4,
+              "inflight": 3,
+              "tool_calls": 8,
+              "verifier_reserve": 2,
+              "worker_decisions": 4
+            },
+            "output_requirements": [
+              "sharing"
+            ],
+            "parent_id": null,
+            "principal": "public",
+            "target_version": "v2",
+            "task_id": "root",
+            "worker_id": "manager"
+          }
+        ],
+        "source_digests": [
+          [
+            "parallel-product",
+            "4eefbc41ba5eaab5237dc534bf7caf9038d402a4b78e9acc95d7b2291b1c24db"
+          ],
+          [
+            "public-current",
+            "24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7"
+          ]
+        ]
+      },
+      "limits": [
+        "deterministic decision double, not model capability",
+        "logical schedule, not measured concurrency",
+        "trusted fixture, not OS sandbox"
+      ],
+      "metrics": {
+        "budget_limit": 8,
+        "budget_remaining": 2,
+        "coverage_denominator": 1,
+        "coverage_numerator": 0,
+        "decisions": 7,
+        "distinct_eligible_sources": 0,
+        "duplicate_tasks": 2,
+        "duplicate_writes": 0,
+        "policy_refusals": 0,
+        "security_violations": 0,
+        "stale_patch_refusals": 0,
+        "tool_calls": 6,
+        "unresolved_conflicts": 0,
+        "verifier_calls": 0
+      },
+      "reason_code": "global_budget_exhausted",
+      "receipts": [],
+      "status": "stopped",
+      "trajectory": [
+        {
+          "attempt_id": "a-0",
+          "data": {
+            "parent": "root",
+            "worker": "research-0"
+          },
+          "event_id": "research-0:e1",
+          "kind": "task_started",
+          "parent_event_id": null,
+          "task_id": "research-0"
+        },
+        {
+          "attempt_id": "a-0",
+          "data": {
+            "decision_kind": "tool"
+          },
+          "event_id": "research-0:e2",
+          "kind": "decision",
+          "parent_event_id": "research-0:e1",
+          "task_id": "research-0"
+        },
+        {
+          "attempt_id": "a-0",
+          "data": {
+            "attempt": 1,
+            "call_id": "call-0-0",
+            "outcome": "ok",
+            "tool": "knowledge"
+          },
+          "event_id": "research-0:e3",
+          "kind": "tool_returned",
+          "parent_event_id": "research-0:e2",
+          "task_id": "research-0"
+        },
+        {
+          "attempt_id": "a-0",
+          "data": {
+            "decision_kind": "tool"
+          },
+          "event_id": "research-0:e4",
+          "kind": "decision",
+          "parent_event_id": "research-0:e3",
+          "task_id": "research-0"
+        },
+        {
+          "attempt_id": "a-0",
+          "data": {
+            "attempt": 1,
+            "call_id": "call-0-1",
+            "outcome": "ok",
+            "tool": "knowledge"
+          },
+          "event_id": "research-0:e5",
+          "kind": "tool_returned",
+          "parent_event_id": "research-0:e4",
+          "task_id": "research-0"
+        },
+        {
+          "attempt_id": "a-0",
+          "data": {
+            "decision_kind": "tool"
+          },
+          "event_id": "research-0:e6",
+          "kind": "decision",
+          "parent_event_id": "research-0:e5",
+          "task_id": "research-0"
+        },
+        {
+          "attempt_id": "a-1",
+          "data": {
+            "parent": "root",
+            "worker": "research-1"
+          },
+          "event_id": "research-1:e1",
+          "kind": "task_started",
+          "parent_event_id": null,
+          "task_id": "research-1"
+        },
+        {
+          "attempt_id": "a-1",
+          "data": {
+            "decision_kind": "tool"
+          },
+          "event_id": "research-1:e2",
+          "kind": "decision",
+          "parent_event_id": "research-1:e1",
+          "task_id": "research-1"
+        },
+        {
+          "attempt_id": "a-1",
+          "data": {
+            "attempt": 1,
+            "call_id": "call-1-0",
+            "outcome": "ok",
+            "tool": "knowledge"
+          },
+          "event_id": "research-1:e3",
+          "kind": "tool_returned",
+          "parent_event_id": "research-1:e2",
+          "task_id": "research-1"
+        },
+        {
+          "attempt_id": "a-1",
+          "data": {
+            "decision_kind": "tool"
+          },
+          "event_id": "research-1:e4",
+          "kind": "decision",
+          "parent_event_id": "research-1:e3",
+          "task_id": "research-1"
+        },
+        {
+          "attempt_id": "a-1",
+          "data": {
+            "attempt": 1,
+            "call_id": "call-1-1",
+            "outcome": "ok",
+            "tool": "knowledge"
+          },
+          "event_id": "research-1:e5",
+          "kind": "tool_returned",
+          "parent_event_id": "research-1:e4",
+          "task_id": "research-1"
+        },
+        {
+          "attempt_id": "a-2",
+          "data": {
+            "parent": "root",
+            "worker": "research-2"
+          },
+          "event_id": "research-2:e1",
+          "kind": "task_started",
+          "parent_event_id": null,
+          "task_id": "research-2"
+        },
+        {
+          "attempt_id": "a-2",
+          "data": {
+            "decision_kind": "tool"
+          },
+          "event_id": "research-2:e2",
+          "kind": "decision",
+          "parent_event_id": "research-2:e1",
+          "task_id": "research-2"
+        },
+        {
+          "attempt_id": "a-2",
+          "data": {
+            "attempt": 1,
+            "call_id": "call-2-0",
+            "outcome": "ok",
+            "tool": "knowledge"
+          },
+          "event_id": "research-2:e3",
+          "kind": "tool_returned",
+          "parent_event_id": "research-2:e2",
+          "task_id": "research-2"
+        },
+        {
+          "attempt_id": "a-2",
+          "data": {
+            "decision_kind": "tool"
+          },
+          "event_id": "research-2:e4",
+          "kind": "decision",
+          "parent_event_id": "research-2:e3",
+          "task_id": "research-2"
+        },
+        {
+          "attempt_id": "a-2",
+          "data": {
+            "attempt": 1,
+            "call_id": "call-2-1",
+            "outcome": "ok",
+            "tool": "knowledge"
+          },
+          "event_id": "research-2:e5",
+          "kind": "tool_returned",
+          "parent_event_id": "research-2:e4",
+          "task_id": "research-2"
+        },
+        {
+          "attempt_id": "root-a1",
+          "data": {
+            "parent": null,
+            "worker": "manager"
+          },
+          "event_id": "root:e1",
+          "kind": "task_started",
+          "parent_event_id": null,
+          "task_id": "root"
+        },
+        {
+          "attempt_id": "root-a1",
+          "data": {
+            "reason": "global_budget_exhausted"
+          },
+          "event_id": "root:e2",
+          "kind": "stopped",
+          "parent_event_id": "root:e1",
+          "task_id": "root"
+        }
+      ],
+      "worker_results": []
+    },
+    {
+      "acceptance": [],
+      "case_id": "cancel-late-result",
+      "controller": "manager",
+      "evidence_verdict": {
+        "claims": [],
+        "distinct_sources": [],
+        "missing": [
+          "repair_correct"
+        ],
+        "reason_code": "missing_or_invalid_evidence",
+        "status": "unknown"
+      },
+      "group": 4,
+      "input_proof": {
+        "attempts": {
+          "coder-a": "coder-a-a1",
+          "root": "root-a1"
+        },
+        "context_digests": [
+          {
+            "principal": "public",
+            "redacted": false,
+            "sent": [
+              [
+                "src/linkcheck.py",
+                "\"\"\"Trusted teaching fixture, deliberately missing nested-relative resolution.\"\"\"\nimport posixpath\nfrom urllib.parse import urlsplit\nfrom policy import EXTERNAL_SCHEMES\n\n\ndef resolve_link(document: str, target: str) -> str | None:\n    if not target:\n        return None\n    parsed = urlsplit(target)\n    if parsed.scheme in EXTERNAL_SCHEMES:\n        return None\n    path = parsed.path\n    if path.startswith(\"/\"):\n        return path.lstrip(\"/\")\n    return path\n"
+              ]
+            ],
+            "sent_digest": "3168fa54e0c2e6d073e700ce3b34f7f1695cba5cde42622127931b8053b639b4",
+            "source_digests": [
+              [
+                "src/linkcheck.py",
+                "ecbf8203daa616753780ece9b235bda33397e3132cd3ba9525041e2fae897cfd"
+              ]
+            ],
+            "target_version": "v2",
+            "task_id": "coder-a"
+          },
+          {
+            "principal": "public",
+            "redacted": false,
+            "sent": [],
+            "sent_digest": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "source_digests": [],
+            "target_version": "v2",
+            "task_id": "root"
+          }
+        ],
+        "packets": [
+          {
+            "allowed_sources": [
+              "conflict-a",
+              "conflict-b",
+              "parallel-product",
+              "parallel-support",
+              "public-current",
+              "public-old"
+            ],
+            "allowed_tools": [
+              "knowledge",
+              "propose",
+              "read"
+            ],
+            "allowed_writes": [
+              "src/linkcheck.py"
+            ],
+            "base_hashes": [
+              [
+                "src/linkcheck.py",
+                "ecbf8203daa616753780ece9b235bda33397e3132cd3ba9525041e2fae897cfd"
+              ]
+            ],
+            "depth": 1,
+            "goal": "修复嵌套相对链接并保护旧行为",
+            "input_refs": [
+              "repair_correct"
+            ],
+            "limits": {
+              "depth": 2,
+              "extra_retries": 1,
+              "handoffs": 4,
+              "inflight": 3,
+              "tool_calls": 16,
+              "verifier_reserve": 2,
+              "worker_decisions": 4
+            },
+            "output_requirements": [
+              "repair_correct"
+            ],
+            "parent_id": "root",
+            "principal": "public",
+            "target_version": "v2",
+            "task_id": "coder-a",
+            "worker_id": "coder-a"
+          },
+          {
+            "allowed_sources": [
+              "conflict-a",
+              "conflict-b",
+              "parallel-product",
+              "parallel-support",
+              "public-current",
+              "public-old"
+            ],
+            "allowed_tools": [
+              "knowledge",
+              "propose",
+              "read"
+            ],
+            "allowed_writes": [
+              "src/linkcheck.py",
+              "src/policy.py"
+            ],
+            "base_hashes": [
+              [
+                "src/linkcheck.py",
+                "ecbf8203daa616753780ece9b235bda33397e3132cd3ba9525041e2fae897cfd"
+              ],
+              [
+                "src/policy.py",
+                "c05f91fa92b46eb017f31b318989e8f68ad01b1dd33d15507ea8ebb2d98dbecb"
+              ]
+            ],
+            "depth": 0,
+            "goal": "修复嵌套相对链接并保护旧行为",
+            "input_refs": [
+              "repair_correct"
+            ],
+            "limits": {
+              "depth": 2,
+              "extra_retries": 1,
+              "handoffs": 4,
+              "inflight": 3,
+              "tool_calls": 16,
+              "verifier_reserve": 2,
+              "worker_decisions": 4
+            },
+            "output_requirements": [
+              "repair_correct"
+            ],
+            "parent_id": null,
+            "principal": "public",
+            "target_version": "v2",
+            "task_id": "root",
+            "worker_id": "manager"
+          }
+        ],
+        "source_digests": [
+          [
+            "src/linkcheck.py",
+            "ecbf8203daa616753780ece9b235bda33397e3132cd3ba9525041e2fae897cfd"
+          ]
+        ]
+      },
+      "limits": [
+        "deterministic decision double, not model capability",
+        "logical schedule, not measured concurrency",
+        "trusted fixture, not OS sandbox"
+      ],
+      "metrics": {
+        "budget_limit": 16,
+        "budget_remaining": 13,
+        "coverage_denominator": 1,
+        "coverage_numerator": 0,
+        "decisions": 3,
+        "distinct_eligible_sources": 0,
+        "duplicate_tasks": 0,
+        "duplicate_writes": 0,
+        "policy_refusals": 0,
+        "security_violations": 0,
+        "stale_patch_refusals": 0,
+        "tool_calls": 3,
+        "unresolved_conflicts": 0,
+        "verifier_calls": 0
+      },
+      "reason_code": "cancelled_after_commit",
+      "receipts": [
+        {
+          "action_id": "coder-a-action",
+          "after_digest": "d2579bc75f16b8e1eb79069772234ace766cc2a4433df234018103fb7f4e6ba1",
+          "allowed_writes": [
+            "src/linkcheck.py",
+            "src/policy.py"
+          ],
+          "before_digest": "ecbf8203daa616753780ece9b235bda33397e3132cd3ba9525041e2fae897cfd",
+          "executed": true,
+          "path": "src/linkcheck.py",
+          "proposal_id": "coder-a-proposal",
+          "reason_code": "executed_not_yet_verified",
+          "status": "unknown",
+          "verification": null
+        }
+      ],
+      "status": "stopped",
+      "trajectory": [
+        {
+          "attempt_id": "coder-a-a1",
+          "data": {
+            "parent": "root",
+            "worker": "coder-a"
+          },
+          "event_id": "coder-a:e1",
+          "kind": "task_started",
+          "parent_event_id": null,
+          "task_id": "coder-a"
+        },
+        {
+          "attempt_id": "coder-a-a1",
+          "data": {
+            "decision_kind": "tool"
+          },
+          "event_id": "coder-a:e2",
+          "kind": "decision",
+          "parent_event_id": "coder-a:e1",
+          "task_id": "coder-a"
+        },
+        {
+          "attempt_id": "coder-a-a1",
+          "data": {
+            "attempt": 1,
+            "call_id": "coder-a-read",
+            "outcome": "ok",
+            "tool": "read"
+          },
+          "event_id": "coder-a:e3",
+          "kind": "tool_returned",
+          "parent_event_id": "coder-a:e2",
+          "task_id": "coder-a"
+        },
+        {
+          "attempt_id": "coder-a-a1",
+          "data": {
+            "decision_kind": "tool"
+          },
+          "event_id": "coder-a:e4",
+          "kind": "decision",
+          "parent_event_id": "coder-a:e3",
+          "task_id": "coder-a"
+        },
+        {
+          "attempt_id": "coder-a-a1",
+          "data": {
+            "attempt": 1,
+            "call_id": "coder-a-propose",
+            "outcome": "ok",
+            "tool": "propose"
+          },
+          "event_id": "coder-a:e5",
+          "kind": "tool_returned",
+          "parent_event_id": "coder-a:e4",
+          "task_id": "coder-a"
+        },
+        {
+          "attempt_id": "coder-a-a1",
+          "data": {
+            "decision_kind": "result"
+          },
+          "event_id": "coder-a:e6",
+          "kind": "decision",
+          "parent_event_id": "coder-a:e5",
+          "task_id": "coder-a"
+        },
+        {
+          "attempt_id": "coder-a-a1",
+          "data": {
+            "worker_state": "done"
+          },
+          "event_id": "coder-a:e7",
+          "kind": "result_accepted",
+          "parent_event_id": "coder-a:e6",
+          "task_id": "coder-a"
+        },
+        {
+          "attempt_id": "coder-a-a1",
+          "data": {
+            "reason": "late_duplicate_or_identity"
+          },
+          "event_id": "coder-a:e8",
+          "kind": "result_rejected",
+          "parent_event_id": "coder-a:e7",
+          "task_id": "coder-a"
+        },
+        {
+          "attempt_id": "root-a1",
+          "data": {
+            "parent": null,
+            "worker": "manager"
+          },
+          "event_id": "root:e1",
+          "kind": "task_started",
+          "parent_event_id": null,
+          "task_id": "root"
+        },
+        {
+          "attempt_id": "root-a1",
+          "data": {
+            "action_id": "coder-a-action",
+            "after_digest": "d2579bc75f16b8e1eb79069772234ace766cc2a4433df234018103fb7f4e6ba1",
+            "before_digest": "ecbf8203daa616753780ece9b235bda33397e3132cd3ba9525041e2fae897cfd",
+            "path": "src/linkcheck.py"
+          },
+          "event_id": "root:e2",
+          "kind": "action_committed",
+          "parent_event_id": "root:e1",
+          "task_id": "root"
+        },
+        {
+          "attempt_id": "root-a1",
+          "data": {
+            "reason": "cancelled_after_commit"
+          },
+          "event_id": "root:e3",
+          "kind": "stopped",
+          "parent_event_id": "root:e2",
+          "task_id": "root"
+        }
+      ],
+      "worker_results": [
+        {
+          "attempt_id": "coder-a-a1",
+          "claims": [],
+          "decisions": 3,
+          "missing": [],
+          "patch_ids": [
+            "coder-a-proposal"
+          ],
+          "state": "done",
+          "task_id": "coder-a",
+          "tool_calls": 2,
+          "worker_id": "coder-a"
+        }
+      ]
+    },
+    {
+      "acceptance": [],
+      "case_id": "handoff-cycle",
+      "controller": "manager",
+      "evidence_verdict": {
+        "claims": [],
+        "distinct_sources": [],
+        "missing": [
+          "sharing"
+        ],
+        "reason_code": "missing_or_invalid_evidence",
+        "status": "unknown"
+      },
+      "group": 4,
+      "input_proof": {
+        "attempts": {
+          "expert": "expert-a1",
+          "root": "root-a1"
+        },
+        "context_digests": [
+          {
+            "principal": "public",
+            "redacted": false,
+            "sent": [
+              [
+                "parallel-product",
+                "团队版支持工作区共享。"
+              ],
+              [
+                "public-current",
+                "答：支持工作区共享。共享前需由工作区管理员配置成员范围。"
+              ]
+            ],
+            "sent_digest": "1a77b457b4077de1effe4de24af63ac8034db2bc28a3314e4f15dfcb470b5b17",
+            "source_digests": [
+              [
+                "parallel-product",
+                "4eefbc41ba5eaab5237dc534bf7caf9038d402a4b78e9acc95d7b2291b1c24db"
+              ],
+              [
+                "public-current",
+                "24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7"
+              ]
+            ],
+            "target_version": "v2",
+            "task_id": "root"
+          }
+        ],
+        "packets": [
+          {
+            "allowed_sources": [
+              "conflict-a",
+              "conflict-b",
+              "parallel-product",
+              "parallel-support",
+              "public-current",
+              "public-old"
+            ],
+            "allowed_tools": [
+              "knowledge",
+              "propose",
+              "read"
+            ],
+            "allowed_writes": [
+              "src/linkcheck.py",
+              "src/policy.py"
+            ],
+            "base_hashes": [],
+            "depth": 1,
+            "goal": "查证星舟工作台当前问答",
+            "input_refs": [
+              "sharing"
+            ],
+            "limits": {
+              "depth": 2,
+              "extra_retries": 1,
+              "handoffs": 4,
+              "inflight": 3,
+              "tool_calls": 16,
+              "verifier_reserve": 2,
+              "worker_decisions": 4
+            },
+            "output_requirements": [
+              "sharing"
+            ],
+            "parent_id": "root",
+            "principal": "public",
+            "target_version": "v2",
+            "task_id": "expert",
+            "worker_id": "expert"
+          },
+          {
+            "allowed_sources": [
+              "conflict-a",
+              "conflict-b",
+              "parallel-product",
+              "parallel-support",
+              "public-current",
+              "public-old"
+            ],
+            "allowed_tools": [
+              "knowledge",
+              "propose",
+              "read"
+            ],
+            "allowed_writes": [
+              "src/linkcheck.py",
+              "src/policy.py"
+            ],
+            "base_hashes": [],
+            "depth": 0,
+            "goal": "查证星舟工作台当前问答",
+            "input_refs": [
+              "sharing"
+            ],
+            "limits": {
+              "depth": 2,
+              "extra_retries": 1,
+              "handoffs": 4,
+              "inflight": 3,
+              "tool_calls": 16,
+              "verifier_reserve": 2,
+              "worker_decisions": 4
+            },
+            "output_requirements": [
+              "sharing"
+            ],
+            "parent_id": null,
+            "principal": "public",
+            "target_version": "v2",
+            "task_id": "root",
+            "worker_id": "manager"
+          }
+        ],
+        "source_digests": [
+          [
+            "parallel-product",
+            "4eefbc41ba5eaab5237dc534bf7caf9038d402a4b78e9acc95d7b2291b1c24db"
+          ],
+          [
+            "public-current",
+            "24c452a4d89266a16b83163be55366f6ebc46e5d18184455121e3417ae880fb7"
+          ]
+        ]
+      },
+      "limits": [
+        "deterministic decision double, not model capability",
+        "logical schedule, not measured concurrency",
+        "trusted fixture, not OS sandbox"
+      ],
+      "metrics": {
+        "budget_limit": 16,
+        "budget_remaining": 16,
+        "coverage_denominator": 1,
+        "coverage_numerator": 0,
+        "decisions": 5,
+        "distinct_eligible_sources": 0,
+        "duplicate_tasks": 0,
+        "duplicate_writes": 0,
+        "policy_refusals": 0,
+        "security_violations": 0,
+        "stale_patch_refusals": 0,
+        "tool_calls": 0,
+        "unresolved_conflicts": 0,
+        "verifier_calls": 0
+      },
+      "reason_code": "handoff_limit",
+      "receipts": [],
+      "status": "stopped",
+      "trajectory": [
+        {
+          "attempt_id": "expert-a1",
+          "data": {
+            "parent": "root",
+            "worker": "expert"
+          },
+          "event_id": "expert:e1",
+          "kind": "task_started",
+          "parent_event_id": null,
+          "task_id": "expert"
+        },
+        {
+          "attempt_id": "expert-a1",
+          "data": {
+            "decision_kind": "handoff"
+          },
+          "event_id": "expert:e2",
+          "kind": "decision",
+          "parent_event_id": "expert:e1",
+          "task_id": "expert"
+        },
+        {
+          "attempt_id": "expert-a1",
+          "data": {
+            "controller": "manager"
+          },
+          "event_id": "expert:e3",
+          "kind": "handoff",
+          "parent_event_id": "expert:e2",
+          "task_id": "expert"
+        },
+        {
+          "attempt_id": "expert-a1",
+          "data": {
+            "decision_kind": "handoff"
+          },
+          "event_id": "expert:e4",
+          "kind": "decision",
+          "parent_event_id": "expert:e3",
+          "task_id": "expert"
+        },
+        {
+          "attempt_id": "expert-a1",
+          "data": {
+            "controller": "manager"
+          },
+          "event_id": "expert:e5",
+          "kind": "handoff",
+          "parent_event_id": "expert:e4",
+          "task_id": "expert"
+        },
+        {
+          "attempt_id": "root-a1",
+          "data": {
+            "parent": null,
+            "worker": "manager"
+          },
+          "event_id": "root:e1",
+          "kind": "task_started",
+          "parent_event_id": null,
+          "task_id": "root"
+        },
+        {
+          "attempt_id": "root-a1",
+          "data": {
+            "decision_kind": "handoff"
+          },
+          "event_id": "root:e2",
+          "kind": "decision",
+          "parent_event_id": "root:e1",
+          "task_id": "root"
+        },
+        {
+          "attempt_id": "root-a1",
+          "data": {
+            "controller": "expert"
+          },
+          "event_id": "root:e3",
+          "kind": "handoff",
+          "parent_event_id": "root:e2",
+          "task_id": "root"
+        },
+        {
+          "attempt_id": "root-a1",
+          "data": {
+            "decision_kind": "handoff"
+          },
+          "event_id": "root:e4",
+          "kind": "decision",
+          "parent_event_id": "root:e3",
+          "task_id": "root"
+        },
+        {
+          "attempt_id": "root-a1",
+          "data": {
+            "controller": "expert"
+          },
+          "event_id": "root:e5",
+          "kind": "handoff",
+          "parent_event_id": "root:e4",
+          "task_id": "root"
+        },
+        {
+          "attempt_id": "root-a1",
+          "data": {
+            "decision_kind": "handoff"
+          },
+          "event_id": "root:e6",
+          "kind": "decision",
+          "parent_event_id": "root:e5",
+          "task_id": "root"
+        },
+        {
+          "attempt_id": "root-a1",
+          "data": {
+            "reason": "handoff_limit"
+          },
+          "event_id": "root:e7",
+          "kind": "stopped",
+          "parent_event_id": "root:e6",
+          "task_id": "root"
+        }
+      ],
+      "worker_results": []
+    }
+  ],
+  "group": 4
+}

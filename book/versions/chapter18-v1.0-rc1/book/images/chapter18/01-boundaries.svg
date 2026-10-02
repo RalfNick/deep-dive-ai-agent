@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">多角色，不一定是多 Agent</title>
+<desc id="desc">看独立决策状态和控制边界，不看提示词里写了几个职位。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">多角色，不一定是多 Agent</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">看独立决策状态和控制边界，不看提示词里写了几个职位。</tspan></text>
+<path d="M 380.0 280.0 L 580.0 280.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1010.0 280.0 L 1190.0 280.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 380.0 490.0 L 580.0 490.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1010.0 490.0 L 1190.0 490.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 380.0 700.0 L 580.0 700.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1010.0 700.0 L 1190.0 700.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="80" y="220" width="300" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="230.0" y="280.0">单 Agent</tspan></text>
+<rect x="580" y="220" width="430" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="795.0" y="265.0">同一控制器</tspan><tspan x="795.0" y="296.2">调用 Tools / Skills</tspan></text>
+<rect x="1190" y="220" width="300" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1340.0" y="265.0">独立任务</tspan><tspan x="1340.0" y="296.2">优先保持简单</tspan></text>
+<rect x="80" y="430" width="300" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="230.0" y="490.0">Workflow</tspan></text>
+<rect x="580" y="430" width="430" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="795.0" y="475.0">预先设计步骤</tspan><tspan x="795.0" y="506.2">条件分支与汇合</tspan></text>
+<rect x="1190" y="430" width="300" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1340.0" y="475.0">程序决定路线</tspan><tspan x="1340.0" y="506.2">模型可用于某一步</tspan></text>
+<rect x="80" y="640" width="300" height="120" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="230.0" y="700.0">Multi-Agent</tspan></text>
+<rect x="580" y="640" width="430" height="120" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="795.0" y="685.0">独立上下文与状态</tspan><tspan x="795.0" y="716.2">有界委派或控制交接</tspan></text>
+<rect x="1190" y="640" width="300" height="120" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1340.0" y="685.0">多控制单元</tspan><tspan x="1340.0" y="716.2">仍需最终验收</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">同一提示词换角色 ≠ 独立 Agent；是否拆分，先看任务边界。</tspan></text>
+</svg>

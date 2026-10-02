@@ -1,0 +1,360 @@
+{
+  "answers": [
+    {
+      "answer": "一个决策上下文配多个工具仍可是单 Agent；固定步骤是 Workflow；独立任务、观察与决策责任才构成协作边界。",
+      "computation": {},
+      "evidence_refs": [],
+      "exercise_id": 1,
+      "kind": "design",
+      "rubric": [
+        "说明理由",
+        "指出证据与未证明范围"
+      ]
+    },
+    {
+      "answer": "资料互不依赖且输出可独立核对时值得拆分；必须等前一步结果的任务先画依赖边，不按角色数量硬拆。",
+      "computation": {},
+      "evidence_refs": [],
+      "exercise_id": 2,
+      "kind": "design",
+      "rubric": [
+        "说明理由",
+        "指出证据与未证明范围"
+      ]
+    },
+    {
+      "answer": "串行为7+11+5=23；理想并行为max(7,11,5)+2+3=16。额外开销达到12时与串行打平，超过12则更慢。",
+      "computation": {
+        "break_even_overhead": 12,
+        "parallel_units": 16,
+        "serial_units": 23
+      },
+      "evidence_refs": [],
+      "exercise_id": 3,
+      "kind": "calculation",
+      "rubric": [
+        "说明理由",
+        "指出证据与未证明范围"
+      ]
+    },
+    {
+      "answer": "将“研究一下”改成明确目标版本、必要资料、身份、允许工具、预算、输出格式与验收证据的有限任务。",
+      "computation": {},
+      "evidence_refs": [],
+      "exercise_id": 4,
+      "kind": "design",
+      "rubric": [
+        "说明理由",
+        "指出证据与未证明范围"
+      ]
+    },
+    {
+      "answer": "缺必要输入应列 missing 并返回 unknown，不把猜测或更宽上下文当作自动补救。",
+      "computation": {},
+      "evidence_refs": [],
+      "exercise_id": 5,
+      "kind": "design",
+      "rubric": [
+        "说明理由",
+        "指出证据与未证明范围"
+      ]
+    },
+    {
+      "answer": "三次引用同一个来源只增加意见数，不增加来源数；不同来源也可能转述同一原始事实。",
+      "computation": {},
+      "evidence_refs": [],
+      "exercise_id": 6,
+      "kind": "design",
+      "rubric": [
+        "说明理由",
+        "指出证据与未证明范围"
+      ]
+    },
+    {
+      "answer": "两份都有效的矛盾资料应保留 conflict，并列来源与差异；需要优先级规则或澄清，不能自选多数。",
+      "computation": {},
+      "evidence_refs": [],
+      "exercise_id": 7,
+      "kind": "design",
+      "rubric": [
+        "说明理由",
+        "指出证据与未证明范围"
+      ]
+    },
+    {
+      "answer": "实际实验拒绝第二份旧补丁，保留第一次写入；重新读取、重新提出，不是关闭基线校验。",
+      "computation": {
+        "stale_patch_refusals": 1,
+        "status": "conflict"
+      },
+      "evidence_refs": [
+        "case:stale-patch",
+        "case:stale-patch/event:coder-a:e1",
+        "case:stale-patch/event:coder-a:e2",
+        "case:stale-patch/event:coder-a:e3",
+        "case:stale-patch/event:coder-a:e4",
+        "case:stale-patch/event:coder-a:e5",
+        "case:stale-patch/event:coder-a:e6",
+        "case:stale-patch/event:coder-a:e7",
+        "case:stale-patch/event:coder-b:e1",
+        "case:stale-patch/event:coder-b:e2",
+        "case:stale-patch/event:coder-b:e3",
+        "case:stale-patch/event:coder-b:e4",
+        "case:stale-patch/event:coder-b:e5",
+        "case:stale-patch/event:coder-b:e6",
+        "case:stale-patch/event:coder-b:e7",
+        "case:stale-patch/event:root:e1",
+        "case:stale-patch/event:root:e2",
+        "case:stale-patch/event:root:e3"
+      ],
+      "exercise_id": 8,
+      "kind": "code",
+      "rubric": [
+        "说明理由",
+        "指出证据与未证明范围"
+      ]
+    },
+    {
+      "answer": "总16中保留验证2，Worker和重试合用14；换一个执行者不重新领取总额度。",
+      "computation": {
+        "total": 16,
+        "verifier": 2,
+        "workers": 14
+      },
+      "evidence_refs": [],
+      "exercise_id": 9,
+      "kind": "calculation",
+      "rubric": [
+        "说明理由",
+        "指出证据与未证明范围"
+      ]
+    },
+    {
+      "answer": "取消后的正常结果不会复活运行；已发生写入仍在回执中。是否需要补偿是另一个受控动作。",
+      "computation": {
+        "committed_actions": 1,
+        "status": "stopped"
+      },
+      "evidence_refs": [
+        "case:cancel-late-result",
+        "case:cancel-late-result/event:coder-a:e1",
+        "case:cancel-late-result/event:coder-a:e2",
+        "case:cancel-late-result/event:coder-a:e3",
+        "case:cancel-late-result/event:coder-a:e4",
+        "case:cancel-late-result/event:coder-a:e5",
+        "case:cancel-late-result/event:coder-a:e6",
+        "case:cancel-late-result/event:coder-a:e7",
+        "case:cancel-late-result/event:coder-a:e8",
+        "case:cancel-late-result/event:root:e1",
+        "case:cancel-late-result/event:root:e2",
+        "case:cancel-late-result/event:root:e3"
+      ],
+      "exercise_id": 10,
+      "kind": "code",
+      "rubric": [
+        "说明理由",
+        "指出证据与未证明范围"
+      ]
+    },
+    {
+      "answer": "public 调用不得读取 staff 资料；换专家或摘要转述都不提升身份，最终报告也不包含受限引句。",
+      "computation": {
+        "policy_refusals": 1,
+        "status": "blocked"
+      },
+      "evidence_refs": [
+        "case:kb-permission-denied",
+        "case:kb-permission-denied/event:expert:e1",
+        "case:kb-permission-denied/event:expert:e2",
+        "case:kb-permission-denied/event:expert:e3",
+        "case:kb-permission-denied/event:expert:e4",
+        "case:kb-permission-denied/event:expert:e5",
+        "case:kb-permission-denied/event:root:e1"
+      ],
+      "exercise_id": 11,
+      "kind": "code",
+      "rubric": [
+        "说明理由",
+        "指出证据与未证明范围"
+      ]
+    },
+    {
+      "answer": "真实补丁、4/4冻结测试、独立行为核对共同构成 verified；执行者的 done 只是待验收结果。",
+      "computation": {
+        "behavior_passed": true,
+        "status": "verified",
+        "tests_passed": 4,
+        "tests_total": 4
+      },
+      "evidence_refs": [
+        "case:repair-verified",
+        "case:repair-verified/event:coder-a:e1",
+        "case:repair-verified/event:coder-a:e2",
+        "case:repair-verified/event:coder-a:e3",
+        "case:repair-verified/event:coder-a:e4",
+        "case:repair-verified/event:coder-a:e5",
+        "case:repair-verified/event:coder-a:e6",
+        "case:repair-verified/event:coder-a:e7",
+        "case:repair-verified/event:root:e1",
+        "case:repair-verified/event:root:e2",
+        "case:repair-verified/event:root:e3"
+      ],
+      "exercise_id": 12,
+      "kind": "code",
+      "rubric": [
+        "说明理由",
+        "指出证据与未证明范围"
+      ]
+    },
+    {
+      "answer": "按业务风险选最小责任闭环，再补身份、治理、动作隔离、持久性、预算和回滚证据，而不是先堆完整平台。",
+      "computation": {},
+      "evidence_refs": [],
+      "exercise_id": 13,
+      "kind": "design",
+      "rubric": [
+        "身份",
+        "数据",
+        "动作隔离",
+        "持久性",
+        "预算",
+        "回滚"
+      ]
+    }
+  ],
+  "case_evidence": [
+    {
+      "case_id": "stale-patch",
+      "event_ids": [
+        "coder-a:e1",
+        "coder-a:e2",
+        "coder-a:e3",
+        "coder-a:e4",
+        "coder-a:e5",
+        "coder-a:e6",
+        "coder-a:e7",
+        "coder-b:e1",
+        "coder-b:e2",
+        "coder-b:e3",
+        "coder-b:e4",
+        "coder-b:e5",
+        "coder-b:e6",
+        "coder-b:e7",
+        "root:e1",
+        "root:e2",
+        "root:e3"
+      ],
+      "metrics": {
+        "budget_limit": 16,
+        "budget_remaining": 11,
+        "coverage_denominator": 1,
+        "coverage_numerator": 0,
+        "decisions": 6,
+        "distinct_eligible_sources": 0,
+        "duplicate_tasks": 1,
+        "duplicate_writes": 0,
+        "policy_refusals": 0,
+        "security_violations": 0,
+        "stale_patch_refusals": 1,
+        "tool_calls": 5,
+        "unresolved_conflicts": 1,
+        "verifier_calls": 0
+      },
+      "status": "conflict"
+    },
+    {
+      "case_id": "cancel-late-result",
+      "event_ids": [
+        "coder-a:e1",
+        "coder-a:e2",
+        "coder-a:e3",
+        "coder-a:e4",
+        "coder-a:e5",
+        "coder-a:e6",
+        "coder-a:e7",
+        "coder-a:e8",
+        "root:e1",
+        "root:e2",
+        "root:e3"
+      ],
+      "metrics": {
+        "budget_limit": 16,
+        "budget_remaining": 13,
+        "coverage_denominator": 1,
+        "coverage_numerator": 0,
+        "decisions": 3,
+        "distinct_eligible_sources": 0,
+        "duplicate_tasks": 0,
+        "duplicate_writes": 0,
+        "policy_refusals": 0,
+        "security_violations": 0,
+        "stale_patch_refusals": 0,
+        "tool_calls": 3,
+        "unresolved_conflicts": 0,
+        "verifier_calls": 0
+      },
+      "status": "stopped"
+    },
+    {
+      "case_id": "kb-permission-denied",
+      "event_ids": [
+        "expert:e1",
+        "expert:e2",
+        "expert:e3",
+        "expert:e4",
+        "expert:e5",
+        "root:e1"
+      ],
+      "metrics": {
+        "budget_limit": 16,
+        "budget_remaining": 15,
+        "coverage_denominator": 1,
+        "coverage_numerator": 0,
+        "decisions": 1,
+        "distinct_eligible_sources": 0,
+        "duplicate_tasks": 0,
+        "duplicate_writes": 0,
+        "policy_refusals": 1,
+        "security_violations": 0,
+        "stale_patch_refusals": 0,
+        "tool_calls": 1,
+        "unresolved_conflicts": 0,
+        "verifier_calls": 0
+      },
+      "status": "blocked"
+    },
+    {
+      "case_id": "repair-verified",
+      "event_ids": [
+        "coder-a:e1",
+        "coder-a:e2",
+        "coder-a:e3",
+        "coder-a:e4",
+        "coder-a:e5",
+        "coder-a:e6",
+        "coder-a:e7",
+        "root:e1",
+        "root:e2",
+        "root:e3"
+      ],
+      "metrics": {
+        "budget_limit": 16,
+        "budget_remaining": 11,
+        "coverage_denominator": 1,
+        "coverage_numerator": 1,
+        "decisions": 3,
+        "distinct_eligible_sources": 0,
+        "duplicate_tasks": 0,
+        "duplicate_writes": 0,
+        "policy_refusals": 0,
+        "security_violations": 0,
+        "stale_patch_refusals": 0,
+        "tool_calls": 5,
+        "unresolved_conflicts": 0,
+        "verifier_calls": 2
+      },
+      "status": "verified"
+    }
+  ],
+  "schema_version": "chapter18.exercises.v1"
+}

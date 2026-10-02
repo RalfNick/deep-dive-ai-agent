@@ -52,11 +52,11 @@ try {
         (viewport.width === 390 && !audit.figureScrollable)) {
       throw new Error(JSON.stringify({ viewport, audit, errors, remoteRequests }));
     }
-    await page.screenshot({ path: path.join(captures, `chapter18-rc1-${viewport.width}x${viewport.height}-top.png`) });
+    await page.screenshot({ path: path.join(captures, `chapter18-rc2-${viewport.width}x${viewport.height}-top.png`) });
     // Capture the complete overview and delegation figure as additional reading evidence.
     for (const index of [2, 6]) {
       await page.locator('figure').nth(index).screenshot({
-        path: path.join(captures, `chapter18-rc1-${viewport.width}-figure-${index + 1}.png`),
+        path: path.join(captures, `chapter18-rc2-${viewport.width}-figure-${index + 1}.png`),
       });
     }
     results.push({ ...audit, pageErrors: errors.length, remoteRequests: remoteRequests.length });

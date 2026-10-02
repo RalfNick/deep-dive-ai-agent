@@ -17,6 +17,7 @@ def main(argv: list[str] | None = None) -> int:
     except ValueError as error:
         parser.exit(2, str(error) + "\n")
     print(json.dumps({"status": result["status"], "reason_code": result["reason_code"], "metrics": result["metrics"],
+                      "evidence_verdict": result["evidence_verdict"],
                       "acceptance": result["acceptance"], "receipts": result["receipts"]}, ensure_ascii=False, indent=2))
     return 0
 

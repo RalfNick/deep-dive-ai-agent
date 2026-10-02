@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">额度与取消，都不能抹账</title>
+<desc id="desc">总额度 16 已包含验证保留 2；Worker 最多用 14，不是 16 + 2。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">额度与取消，都不能抹账</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">总额度 16 已包含验证保留 2；Worker 最多用 14，不是 16 + 2。</tspan></text>
+<path d="M 440.0 280.0 L 620.0 280.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="485.0" y="245.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="530.0" y="268.0">总额内分池</tspan></text>
+<path d="M 990.0 280.0 L 1160.0 280.0" fill="none" stroke="#c46b18" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1030.0" y="245.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1075.0" y="268.0">不重置</tspan></text>
+<path d="M 310.0 590.0 L 440.0 590.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 720.0 590.0 L 850.0 590.0" fill="none" stroke="#b8443b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="722.0" y="555.0" width="126" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="785.0" y="578.0">身份与状态检查</tspan></text>
+<path d="M 1130.0 590.0 L 1240.0 590.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1131.0" y="555.0" width="108" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1185.0" y="578.0">取消不是回滚</tspan></text>
+<rect x="90" y="220" width="350" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="265.0" y="265.0">Worker 池</tspan><tspan x="265.0" y="296.2">最多 14 次</tspan></text>
+<rect x="620" y="220" width="370" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="805.0" y="265.0">Verifier 保留</tspan><tspan x="805.0" y="296.2">2 次只用于验收</tspan></text>
+<rect x="1160" y="220" width="350" height="120" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1335.0" y="265.0">共享总账本</tspan><tspan x="1335.0" y="296.2">重试和写入也扣费</tspan></text>
+<rect x="70" y="530" width="240" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="190.0" y="590.0">运行中</tspan></text>
+<rect x="440" y="530" width="280" height="120" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="580.0" y="575.0">取消确认</tspan><tspan x="580.0" y="606.2">stopped</tspan></text>
+<rect x="850" y="530" width="280" height="120" rx="24" fill="#fde3df" stroke="#b8443b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="990.0" y="575.0">迟到结果</tspan><tspan x="990.0" y="606.2">拒绝接纳</tspan></text>
+<rect x="1240" y="530" width="280" height="120" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1380.0" y="575.0">已提交回执</tspan><tspan x="1380.0" y="606.2">仍然保留</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">超时要留缺项；取消要留副作用；换控制器也不获得新预算。</tspan></text>
+</svg>

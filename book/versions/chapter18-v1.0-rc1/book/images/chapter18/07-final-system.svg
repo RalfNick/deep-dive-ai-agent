@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">最终系统：两条业务路，一套边界</title>
+<desc id="desc">知识回答要合格来源；代码修改要审批、执行回执与最终验证。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">最终系统：两条业务路，一套边界</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">知识回答要合格来源；代码修改要审批、执行回执与最终验证。</tspan></text>
+<path d="M 360.0 480.0 L 460.0 490.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 625.0 330.0 L 625.0 430.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 625.0 650.0 L 625.0 550.0" fill="none" stroke="#c46b18" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 790.0 490.0 L 900.0 270.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1230.0 270.0 L 1290.0 270.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1215.0" y="235.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1260.0" y="258.0">验收</tspan></text>
+<path d="M 790.0 490.0 L 900.0 610.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1230.0 610.0 L 1290.0 570.0" fill="none" stroke="#c46b18" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1215.0" y="555.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1260.0" y="578.0">批准</tspan></text>
+<path d="M 1420.0 630.0 L 1420.0 690.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1375.0" y="625.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1420.0" y="648.0">最终验收</tspan></text>
+<rect x="60" y="420" width="300" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="210.0" y="465.0">用户目标</tspan><tspan x="210.0" y="496.2">身份 + 成功条件</tspan></text>
+<rect x="460" y="210" width="330" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="625.0" y="255.0">上下文装配</tspan><tspan x="625.0" y="286.2">版本与最小可见域</tspan></text>
+<rect x="460" y="430" width="330" height="120" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="625.0" y="475.0">有界 Runtime</tspan><tspan x="625.0" y="506.2">任务与全局账本</tspan></text>
+<rect x="460" y="650" width="330" height="120" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="625.0" y="695.0">权限与状态检查</tspan><tspan x="625.0" y="726.2">拒绝扩权 / 迟到结果</tspan></text>
+<rect x="900" y="210" width="330" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1065.0" y="255.0">知识证据</tspan><tspan x="1065.0" y="286.2">来源 + 覆盖 + 冲突</tspan></text>
+<rect x="1290" y="210" width="260" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1420.0" y="255.0">answer</tspan><tspan x="1420.0" y="286.2">缺证据则 unknown</tspan></text>
+<rect x="900" y="550" width="330" height="120" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1065.0" y="595.0">补丁提案 + 审批</tspan><tspan x="1065.0" y="626.2">无批准则暂停</tspan></text>
+<rect x="1290" y="510" width="260" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1420.0" y="555.0">execute</tspan><tspan x="1420.0" y="586.2">受控写入 + 回执</tspan></text>
+<rect x="1290" y="690" width="260" height="100" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1420.0" y="725.0">verify</tspan><tspan x="1420.0" y="756.2">测试 + 行为探针</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">最小系统不是全书组件的堆叠；让每项结论都找得到边界和证据。</tspan></text>
+</svg>

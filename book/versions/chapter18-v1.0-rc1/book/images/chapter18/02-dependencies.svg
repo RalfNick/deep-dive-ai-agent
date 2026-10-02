@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">先画依赖，再讨论并行</title>
+<desc id="desc">固定逻辑单位：串行 7 + 11 + 5 = 23；并行 max(7,11,5) + 2 + 3 = 16。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">先画依赖，再讨论并行</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">固定逻辑单位：串行 7 + 11 + 5 = 23；并行 max(7,11,5) + 2 + 3 = 16。</tspan></text>
+<path d="M 330.0 470.0 L 550.0 260.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 330.0 470.0 L 550.0 470.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 330.0 470.0 L 550.0 680.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 880.0 260.0 L 1190.0 470.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 880.0 470.0 L 1190.0 470.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="990.0" y="435.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1035.0" y="458.0">最长分支</tspan></text>
+<path d="M 880.0 680.0 L 1190.0 470.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="80" y="410" width="250" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="205.0" y="455.0">委派</tspan><tspan x="205.0" y="486.2">成本 2</tspan></text>
+<rect x="550" y="200" width="330" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="715.0" y="245.0">产品查询</tspan><tspan x="715.0" y="276.2">7 逻辑单位</tspan></text>
+<rect x="550" y="410" width="330" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="715.0" y="455.0">版本查询</tspan><tspan x="715.0" y="486.2">11 逻辑单位</tspan></text>
+<rect x="550" y="620" width="330" height="120" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="715.0" y="665.0">支持查询</tspan><tspan x="715.0" y="696.2">5 逻辑单位</tspan></text>
+<rect x="1190" y="410" width="320" height="120" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1350.0" y="455.0">汇合与核验</tspan><tspan x="1350.0" y="486.2">成本 3</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">三项查询必须独立；23 / 16 是教学排程，不是实测加速比。</tspan></text>
+</svg>

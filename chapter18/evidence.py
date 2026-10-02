@@ -45,6 +45,8 @@ def check_claims(packet: TaskPacket, claims: tuple[Claim, ...], sources: tuple[S
             if (doc is None or not eligible(packet, doc) or ref.location != doc.location
                     or ref.digest != doc.digest or ref.version != doc.version or not ref.eligible
                     or not ref.quote.strip() or ref.quote not in doc.text
+                    or not any(claim.value in line and not line.lstrip().startswith("#")
+                               for line in ref.quote.splitlines())
                     or dict(doc.facts).get(claim.key) != claim.value):
                 valid = False
         if valid:

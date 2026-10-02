@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">委派返回；交接接管</title>
+<desc id="desc">上行仍由 Manager 验收；下行由 Expert 成为当前控制器。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">委派返回；交接接管</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">上行仍由 Manager 验收；下行由 Expert 成为当前控制器。</tspan></text>
+<path d="M 430.0 330.0 L 630.0 330.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="485.0" y="295.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="530.0" y="318.0">委派</tspan></text>
+<path d="M 960.0 330.0 L 1190.0 330.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1030.0" y="295.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1075.0" y="318.0">返回结果</tspan></text>
+<path d="M 430.0 660.0 L 630.0 660.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="485.0" y="625.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="530.0" y="648.0">接管控制权</tspan></text>
+<path d="M 960.0 660.0 L 1190.0 660.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1030.0" y="625.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1075.0" y="648.0">继续运行</tspan></text>
+<rect x="70" y="270" width="360" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="250.0" y="315.0">Manager</tspan><tspan x="250.0" y="346.2">保留主任务控制权</tspan></text>
+<rect x="630" y="270" width="330" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="795.0" y="315.0">Worker</tspan><tspan x="795.0" y="346.2">完成有界子任务</tspan></text>
+<rect x="1190" y="270" width="340" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1360.0" y="315.0">Manager</tspan><tspan x="1360.0" y="346.2">接纳或拒绝结果</tspan></text>
+<rect x="70" y="600" width="360" height="120" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="250.0" y="645.0">Manager</tspan><tspan x="250.0" y="676.2">交接前的控制器</tspan></text>
+<rect x="630" y="600" width="330" height="120" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="795.0" y="645.0">Expert</tspan><tspan x="795.0" y="676.2">交接后的控制器</tspan></text>
+<rect x="1190" y="600" width="340" height="120" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1360.0" y="645.0">Expert 继续</tspan><tspan x="1360.0" y="676.2">状态与预算不重置</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">结果流向与控制权流向不同；handoff 不是给子任务改个名字。</tspan></text>
+</svg>

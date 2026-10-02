@@ -25,7 +25,7 @@ def test_manuscript_density_and_frozen_evidence_links():
             continue
         relative = unquote(target.split("#")[0])
         assert (path.parent / relative).exists(), target
-    assert "../chapter18/reports/reference-rc1-reviewed/summary.md" in targets
+    assert "../chapter18/reports/reference-rc2/summary.md" in targets
 
 
 def test_reader_materials_explain_actual_commands_and_limits():

@@ -129,6 +129,9 @@ def validate_case(case) -> None:
         raise ValueError("aggregated original source proof mismatch")
     claims = []
     seen_results = set()
+    contexts = {c["task_id"]: c for c in case["input_proof"]["context_digests"]}
+    if len(contexts) != len(case["input_proof"]["context_digests"]):
+        raise ValueError("duplicate worker context")
     for result in case["worker_results"]:
         p = packets[result["task_id"]]
         if result["worker_id"] != p.worker_id or result["attempt_id"] != attempts[p.task_id] or p.task_id in seen_results:
@@ -142,6 +145,15 @@ def validate_case(case) -> None:
         if (result["decisions"], result["tool_calls"]) != (actual_decisions, actual_calls):
             raise ValueError("worker counters must match events")
         for row in result["claims"]:
+            context = contexts.get(p.task_id)
+            sent = dict(context["sent"]) if context and not context.get("redacted", False) else {}
+            if row["key"] not in p.input_refs:
+                raise ValueError("worker claim outside task scope")
+            for ref in row["evidence"]:
+                if ref["source_id"] not in p.allowed_sources:
+                    raise ValueError("worker evidence outside source scope")
+                if not ref["quote"].strip() or ref["quote"] not in sent.get(ref["source_id"], ""):
+                    raise ValueError("worker evidence missing from sent context")
             claims.append(Claim(row["key"], row["value"], tuple(EvidenceRef(**ref) for ref in row["evidence"])))
     if {e["task_id"] for e in events.values() if e["kind"] == "result_accepted"} != seen_results:
         raise ValueError("acceptance events and exported results disagree")
@@ -197,8 +209,10 @@ def validate_case(case) -> None:
     verdict = check_claims(root_packet, tuple(claims), load_sources(ROOT))
     if encode(verdict) != case["evidence_verdict"]:
         raise ValueError("evidence verdict cannot be forged")
-    if case["status"] == "answer" and (verdict.status != "answer" or not case["acceptance"]):
-        raise ValueError("answer requires current eligible evidence")
+    if case["status"] == "answer":
+        expected_acceptance = [f"source:{ref.source_id}:{ref.digest}" for c in verdict.claims for ref in c.evidence]
+        if verdict.status != "answer" or not expected_acceptance or case["acceptance"] != expected_acceptance:
+            raise ValueError("answer requires matching current eligible evidence")
     if case["status"] == "verified":
         executed = [r for r in case["receipts"] if r["executed"]]
         if not executed or metrics["security_violations"] or not case["acceptance"]:

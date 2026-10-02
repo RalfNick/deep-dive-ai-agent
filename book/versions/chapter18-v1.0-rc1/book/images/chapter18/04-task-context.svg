@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">任务说明，先让人读懂</title>
+<desc id="desc">父任务的身份、版本、范围和预算，只能继承或收窄。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">任务说明，先让人读懂</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">父任务的身份、版本、范围和预算，只能继承或收窄。</tspan></text>
+<path d="M 410.0 460.0 L 600.0 260.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 410.0 460.0 L 600.0 480.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 410.0 460.0 L 600.0 700.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 970.0 260.0 L 1170.0 365.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 970.0 480.0 L 1170.0 365.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1350.0 440.0 L 1350.0 590.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1287.0" y="480.0" width="126" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1350.0" y="503.0">证据随结果返回</tspan></text>
+<rect x="70" y="380" width="340" height="160" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="240.0" y="445.0">父任务</tspan><tspan x="240.0" y="476.2">身份 · 目标 · 上限</tspan></text>
+<rect x="600" y="200" width="370" height="120" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="785.0" y="245.0">两句说明</tspan><tspan x="785.0" y="276.2">查什么 · 交什么</tspan></text>
+<rect x="600" y="420" width="370" height="120" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="785.0" y="465.0">TaskPacket</tspan><tspan x="785.0" y="496.2">版本 · 来源 · 写入范围</tspan></text>
+<rect x="600" y="640" width="370" height="120" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="785.0" y="685.0">共享账本</tspan><tspan x="785.0" y="716.2">子任务没有新额度</tspan></text>
+<rect x="1170" y="290" width="360" height="150" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1350.0" y="350.0">实际发送的上下文</tspan><tspan x="1350.0" y="381.2">原文片段 + 来源哈希</tspan></text>
+<rect x="1170" y="590" width="360" height="150" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1350.0" y="650.0">WorkerResult</tspan><tspan x="1350.0" y="681.2">结论 · 缺项 · 提案</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">保留文件与发送内容是两回事；Worker 不会自动看见主对话。</tspan></text>
+</svg>

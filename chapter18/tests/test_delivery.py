@@ -37,3 +37,30 @@ def test_fixture_tests_are_inputs_not_repository_pytest_collection():
                              "-q", "-p", "no:cacheprovider"], cwd=ROOT, capture_output=True, text=True)
     assert result.returncode == 0, result.stdout + result.stderr
     assert "fixtures/link-checker/tests/test_existing.py" not in result.stdout.replace("\\", "/")
+
+
+def test_rc1_snapshot_and_report_bytes_match_frozen_commit():
+    from hashlib import sha1
+    if not (ROOT / ".git").exists() or not shutil.which("git"):
+        pytest.skip("snapshot proof requires preserved author Git history")
+    archive = ROOT / "book/versions/chapter18-v1.0-rc1"
+    result = subprocess.run(["git", "ls-tree", "-r", "c1c2586", "--", "book/chapter18.md",
+                             "book/sources/chapter18-sources.md", "book/images/chapter18",
+                             "chapter18", "infographic/chapter18"], cwd=ROOT, text=True,
+                            capture_output=True, check=True)
+    expected = {}
+    for line in result.stdout.splitlines():
+        metadata, relative = line.split("\t", 1)
+        if relative.startswith(("chapter18/tests/", "chapter18/fixtures/")):
+            continue
+        archived_relative = relative + ".txt" if relative == "chapter18/conftest.py" else relative
+        expected[archived_relative] = metadata.split()[2]
+    assert len(expected) == 63
+    assert not list(archive.rglob("conftest.py"))
+    assert {p.relative_to(archive).as_posix() for p in archive.rglob("*") if p.is_file() and p != archive / "README.md"} == set(expected)
+    for relative, blob in expected.items():
+        content = (archive / relative).read_bytes()
+        assert sha1(b"blob " + str(len(content)).encode() + b"\0" + content).hexdigest() == blob, relative
+    for directory in ("reference-rc1", "reference-rc1-reviewed"):
+        for original in (archive / "chapter18/reports" / directory).iterdir():
+            assert original.read_bytes() == (ROOT / "chapter18/reports" / directory / original.name).read_bytes()

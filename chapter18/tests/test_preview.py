@@ -19,7 +19,7 @@ def test_preview_is_local_with_seven_figures_and_five_scrollable_tables():
         if target.startswith("https://"):
             continue
         assert (page.parent / target.split("#")[0]).exists(), target
-    assert "reference-rc1-reviewed/summary.md" in html and "reference-answers.md" in html
+    assert "reference-rc2/summary.md" in html and "reference-answers.md" in html
     assert sha256(manifest.read_bytes()).hexdigest() == before
 
 
