@@ -1,0 +1,12 @@
+{
+  "diagnosis": "check_interpreter",
+  "evidence": "offline_fixture",
+  "group": "environment",
+  "installer": "env-A",
+  "network_access": false,
+  "provider_status": "not_run",
+  "runner": "env-B",
+  "same_interpreter": false,
+  "scenario": "pip and runner select different interpreters",
+  "schema_version": "appendix-a/1"
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">先定位失败层，再改变一个变量</title>
+<desc id="desc">有 HTTP 响应，不等于模型已执行；超时，也不等于服务端什么都没做。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">先定位失败层，再改变一个变量</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">有 HTTP 响应，不等于模型已执行；超时，也不等于服务端什么都没做。</tspan></text>
+<path d="M 450.0 475.0 L 600.0 255.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 450.0 475.0 L 600.0 475.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 450.0 475.0 L 600.0 695.0" fill="none" stroke="#c46b18" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 980.0 255.0 L 1180.0 255.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 980.0 475.0 L 1180.0 475.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 980.0 695.0 L 1180.0 695.0" fill="none" stroke="#c46b18" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="80" y="410" width="370" height="130" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="265.0" y="460.0">一条失败记录</tspan><tspan x="265.0" y="491.2">命令 + 类型 + 安全信息</tspan></text>
+<rect x="600" y="190" width="380" height="130" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="790.0" y="240.0">尚未发送</tspan><tspan x="790.0" y="271.2">导入 / JSON / 文件</tspan></text>
+<rect x="600" y="410" width="380" height="130" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="790.0" y="460.0">收到 HTTP 响应</tspan><tspan x="790.0" y="491.2">状态码 + 原因码</tspan></text>
+<rect x="600" y="630" width="380" height="130" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="790.0" y="680.0">无明确响应</tspan><tspan x="790.0" y="711.2">连接失败 / 超时</tspan></text>
+<rect x="1180" y="190" width="330" height="130" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1345.0" y="240.0">修正本机输入</tspan><tspan x="1345.0" y="271.2">解释器 / 路径 / 参数</tspan></text>
+<rect x="1180" y="410" width="330" height="130" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1345.0" y="460.0">分清永久与暂时</tspan><tspan x="1345.0" y="491.2">查账户或有界重试</tspan></text>
+<rect x="1180" y="630" width="330" height="130" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1345.0" y="680.0">保留 unknown</tspan><tspan x="1345.0" y="711.2">核对尝试与副作用</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">429 先读原因码；未知原因先检查；不要用无限重试代替诊断。</tspan></text>
+</svg>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">命令找谁，包就装给谁</title>
+<desc id="desc">导入看解释器；相对路径看当前目录。两条线都需要对齐。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">命令找谁，包就装给谁</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">导入看解释器；相对路径看当前目录。两条线都需要对齐。</tspan></text>
+<path d="M 380.0 315.0 L 570.0 315.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="430.0" y="280.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="475.0" y="303.0">找到程序</tspan></text>
+<path d="M 960.0 315.0 L 1170.0 315.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1020.0" y="280.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1065.0" y="303.0">决定可见包</tspan></text>
+<path d="M 380.0 655.0 L 570.0 655.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="412.0" y="620.0" width="126" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="475.0" y="643.0">路径从这里起算</tspan></text>
+<path d="M 765.0 380.0 L 765.0 590.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="720.0" y="450.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="765.0" y="473.0">运行</tspan></text>
+<rect x="80" y="250" width="300" height="130" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="230.0" y="300.0">终端</tspan><tspan x="230.0" y="331.2">命令查找</tspan></text>
+<rect x="570" y="250" width="390" height="130" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="765.0" y="300.0">所选解释器</tspan><tspan x="765.0" y="331.2">sys.executable</tspan></text>
+<rect x="1170" y="250" width="350" height="130" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1345.0" y="300.0">该环境的依赖</tspan><tspan x="1345.0" y="331.2">python -m pip</tspan></text>
+<rect x="80" y="590" width="300" height="130" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="230.0" y="640.0">当前工作目录</tspan><tspan x="230.0" y="671.2">仓库根目录</tspan></text>
+<rect x="570" y="590" width="390" height="130" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="765.0" y="640.0">程序入口</tspan><tspan x="765.0" y="671.2">模块路径与相对文件</tspan></text>
+<rect x="1170" y="590" width="350" height="130" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1345.0" y="640.0">env-A 安装</tspan><tspan x="1345.0" y="671.2">env-B 运行仍会失败</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">虚拟环境隔离依赖，不隔离文件和网络；直接调用环境内解释器即可。</tspan></text>
+</svg>

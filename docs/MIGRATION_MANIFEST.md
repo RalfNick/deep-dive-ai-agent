@@ -88,7 +88,7 @@
 | `book/sources/chapter5-sources.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 16912 | `573d0007d6a61513bb1e7c193f2617f50f0fad2554e35c486776a73fe720958f` |
 | `book/sources/chapter6-sources.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 15077 | `2e85a167dfef71813214274deaa996b384a1a0a1006530bd4555b2255fee5ac5` |
 | `book/tests/render_checks.test.mjs` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 1390 | `922496b3f6f386f665729877649c94b1c1bcc7f3572319ad3f3d5e5cbf67e3ca` |
-| `book/versions/CHAPTER_VERSIONS.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 32236 | `d8d12338af77fb576eacfa77f51bd140cc2c3f2c220e3b5e0596832cd41e8231` |
+| `book/versions/CHAPTER_VERSIONS.md` | `chapter6-worktree` | `faa56e968affe2469ef828b62bf0947c6e9ebdbb` | 33179 | `3ffbd70688817e3f09553ba8e656c39abac73538b13784dcc03cf1419db13eb5` |
 | `chapter1/README.md` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 3255 | `8514edc8758aa046214b81a9a40e4d78c813b505e8da6f9c0719076b9fa1bd36` |
 | `chapter1/attention_demo.py` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 1891 | `b6ba5e462adb1f522c43d7fd3b5b4afe5363257675f6e16a24486b3e1501ed46` |
 | `chapter1/bigram_lm.py` | `current-workspace` | `93931cc43b862e525e5c1c77473a2024af09b162` | 2431 | `9eb969dfc5e9052e573d693b1ca74be999de14324117ced3795cd2b77acf3ad7` |

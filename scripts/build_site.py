@@ -71,6 +71,8 @@ def _allowlisted_sources(root: Path) -> tuple[Path, ...]:
             for path in sorted(images.rglob("*"))
             if path.is_file()
             and path.suffix.casefold() in IMAGE_SUFFIXES
+            # Appendix A is a local candidate, just like chapters 15–18.
+            and "appendix-a" not in path.relative_to(images).parts
             and not any(
                 re.fullmatch(r"chapter(?:1[5-9]|[2-9][0-9])", part)
                 for part in path.relative_to(images).parts

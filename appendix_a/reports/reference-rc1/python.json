@@ -1,0 +1,21 @@
+{
+  "awaited": {
+    "ok": true,
+    "source": "fixture",
+    "tool": "read_file"
+  },
+  "decoded_type": "dict",
+  "evidence": "offline_fixture",
+  "group": "python",
+  "network_access": false,
+  "rejected": [
+    "invalid_budget",
+    "invalid_budget",
+    "invalid_fields"
+  ],
+  "schema_version": "appendix-a/1",
+  "task": {
+    "goal": "检查链接",
+    "max_steps": 3
+  }
+}

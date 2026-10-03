@@ -1,0 +1,9 @@
+{
+  "files": {
+    "api.json": "a654601b083fe56ed866e835f46c932e77cece7f078956856f24b5efc7b54428",
+    "environment.json": "2bf8116444ba7175210f495513f8ddc6ecee475d42283c5fd5c89b1b174c8d43",
+    "python.json": "7502bfe06e4d3b491584ffb5a65e833fa5de4dfefe25ebacbc4df799f5575d73"
+  },
+  "network_access": false,
+  "schema_version": "appendix-a/1"
+}

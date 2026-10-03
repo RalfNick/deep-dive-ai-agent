@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc">
+<title id="title">SDK 名字，不是 Provider 身份</title>
+<desc id="desc">五项配置共同决定请求；离线草图不会读取凭据，也不会跨过网络边界。</desc>
+<defs><marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M 0 1 L 10 6 L 0 11 z" fill="#17365d"/></marker></defs>
+<style>.label{font-family:"KaiTi","STKaiti","Microsoft YaHei",sans-serif;fill:#17365d}.small{font-family:"Microsoft YaHei",sans-serif;fill:#46617f}</style>
+<rect width="1600" height="960" fill="#fbf5e8"/>
+<rect x="24" y="24" width="1552" height="912" rx="34" fill="#fffdf7" stroke="#17365d" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="42" font-weight="700"><tspan x="800.0" y="92.0">SDK 名字，不是 Provider 身份</tspan></text>
+<text class="label" text-anchor="middle" font-size="21" font-weight="400"><tspan x="800.0" y="150.0">五项配置共同决定请求；离线草图不会读取凭据，也不会跨过网络边界。</tspan></text>
+<path d="M 390.0 240.0 L 560.0 490.0" fill="none" stroke="#155b9a" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 390.0 390.0 L 560.0 520.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 390.0 540.0 L 560.0 550.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 390.0 690.0 L 560.0 580.0" fill="none" stroke="#6846a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 735.0 290.0 L 735.0 460.0" fill="none" stroke="#c46b18" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 910.0 535.0 L 1160.0 400.0" fill="none" stroke="#c46b18" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)" stroke-dasharray="10 9"/>
+<rect x="990.0" y="432.5" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1035.0" y="455.5">显式发送</tspan></text>
+<path d="M 1340.0 470.0 L 1340.0 630.0" fill="none" stroke="#287a4b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1295.0" y="515.0" width="90" height="32" rx="12" fill="#fffdf7" opacity="0.94"/>
+<text class="label" text-anchor="middle" font-size="18" font-weight="500"><tspan x="1340.0" y="538.0">接收</tspan></text>
+<rect x="60" y="190" width="330" height="100" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="225.0" y="225.0">Provider</tspan><tspan x="225.0" y="256.2">谁处理请求</tspan></text>
+<rect x="60" y="340" width="330" height="100" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="225.0" y="375.0">凭据</tspan><tspan x="225.0" y="406.2">服务端注入</tspan></text>
+<rect x="60" y="490" width="330" height="100" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="225.0" y="525.0">地址</tspan><tspan x="225.0" y="556.2">base URL / 端点</tspan></text>
+<rect x="60" y="640" width="330" height="100" rx="24" fill="#ece3fa" stroke="#6846a5" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="225.0" y="675.0">协议</tspan><tspan x="225.0" y="706.2">input / messages</tspan></text>
+<rect x="560" y="190" width="350" height="100" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="735.0" y="225.0">模型 ID</tspan><tspan x="735.0" y="256.2">账户可用标识</tspan></text>
+<rect x="560" y="460" width="350" height="150" rx="24" fill="#dceeff" stroke="#155b9a" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="735.0" y="520.0">本地请求构造</tspan><tspan x="735.0" y="551.2">不公开认证头</tspan></text>
+<rect x="1160" y="330" width="360" height="140" rx="24" fill="#fff0d8" stroke="#c46b18" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1340.0" y="385.0">Provider 接口</tspan><tspan x="1340.0" y="416.2">需账户、网络与预算</tspan></text>
+<rect x="1160" y="630" width="360" height="110" rx="24" fill="#dff3e4" stroke="#287a4b" stroke-width="4"/>
+<text class="label" text-anchor="middle" font-size="25" font-weight="600"><tspan x="1340.0" y="670.0">实际响应</tspan><tspan x="1340.0" y="701.2">新增远端证据</tspan></text>
+<rect x="150" y="825" width="1300" height="70" rx="20" fill="#fff7c9" stroke="#9d7510" stroke-width="3"/>
+<text class="label" text-anchor="middle" font-size="22" font-weight="600"><tspan x="800.0" y="862.0">接口外形兼容 ≠ 全部能力等价；小请求通过 ≠ 应用迁移完成。</tspan></text>
+</svg>

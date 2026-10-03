@@ -1,0 +1,97 @@
+{
+  "errors": [
+    {
+      "action": "check_credentials",
+      "code": "",
+      "kind": "",
+      "provider_received": "http_response_received",
+      "status": 401
+    },
+    {
+      "action": "bounded_retry",
+      "code": "rate_limit_exceeded",
+      "kind": "",
+      "provider_received": "http_response_received",
+      "status": 429
+    },
+    {
+      "action": "check_account",
+      "code": "credit_balance_exhausted",
+      "kind": "",
+      "provider_received": "http_response_received",
+      "status": 429
+    },
+    {
+      "action": "inspect_before_retry",
+      "code": "",
+      "kind": "timeout",
+      "provider_received": "unknown",
+      "status": null
+    }
+  ],
+  "evidence": "offline_fixture",
+  "group": "api",
+  "network_access": false,
+  "requests": [
+    {
+      "body": {
+        "input": "你好",
+        "model": "reader-model"
+      },
+      "endpoint": "https://api.openai.com/v1/responses",
+      "key_variable": "OPENAI_API_KEY",
+      "network_access": false,
+      "protocol": "responses",
+      "provider": "openai",
+      "provider_status": "not_run"
+    },
+    {
+      "body": {
+        "messages": [
+          {
+            "content": "你好",
+            "role": "user"
+          }
+        ],
+        "model": "reader-model"
+      },
+      "endpoint": "https://api.deepseek.com/chat/completions",
+      "key_variable": "DEEPSEEK_API_KEY",
+      "network_access": false,
+      "protocol": "chat",
+      "provider": "deepseek",
+      "provider_status": "not_run"
+    },
+    {
+      "body": {
+        "input": "你好",
+        "model": "reader-model"
+      },
+      "endpoint": "https://api.deepseek.com/responses",
+      "key_variable": "DEEPSEEK_API_KEY",
+      "network_access": false,
+      "protocol": "responses",
+      "provider": "deepseek",
+      "provider_status": "not_run"
+    },
+    {
+      "body": {
+        "max_tokens": 128,
+        "messages": [
+          {
+            "content": "你好",
+            "role": "user"
+          }
+        ],
+        "model": "reader-model"
+      },
+      "endpoint": "https://api.anthropic.com/v1/messages",
+      "key_variable": "ANTHROPIC_API_KEY",
+      "network_access": false,
+      "protocol": "messages",
+      "provider": "anthropic",
+      "provider_status": "not_run"
+    }
+  ],
+  "schema_version": "appendix-a/1"
+}

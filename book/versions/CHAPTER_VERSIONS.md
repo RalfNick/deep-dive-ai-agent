@@ -224,6 +224,14 @@ RC2 详见[版本记录](chapter17-v1.0-rc2.md)与[新上下文复审处理](../
 
 当前第18章候选为[RC2](chapter18-v1.0-rc2.md)，对应[本轮读者/技术审稿](../reviews/chapter18-review-codex-v1.0-rc2.md)与[RC2规范包](../../chapter18/reports/reference-rc2/manifest.json)。[RC1原稿快照](chapter18-v1.0-rc1/README.md)、原版本记录及报告保留；旧段落描述的是当时冻结状态，不回填RC2验证。未推送、未发布，公开manifest与导航不变。
 
+## 附录 A：Python、TypeScript 与模型 API 快速准备
+
+| 版本 | 日期 | 基线/保存位置 | 内容与状态 | 验证范围 |
+| --- | --- | --- | --- | --- |
+| v1.0-rc1 | 2026-10-03 | 第18章RC2冻结点fffa620；本地codex/appendix-a-environment-setup | 首个附录候选，四图、三组离线练习、九题答案、来源、双视角自审与独立只读审查、本地预览；不改18章旧内容 | 14项无第三方核心、22项交付、相关477项与107子测试、Node4项；双宽度预览及218源严格构建通过；真实API、tsc与跨平台全量验证未执行 |
+
+详见[附录 A RC1记录](appendix-a-v1.0-rc1.md)、[审稿](../reviews/appendix-a-review-codex-v1.0-rc1.md)及[规范包](../../appendix_a/reports/reference-rc1/manifest.json)。首次版本由本轮本地提交冻结，后续另立RC2并保留原包；公开manifest仍0.14.0、18章目录与已发布状态不变，不推送、不部署。
+
 ## 后续版本要求
 
 其他章节首次纳入版本管理时，先按当时状态建立 `v1.0` 基线并生成版本化 PDF，再开始 Review 修订。任何正文、配套代码、练习答案、资料台账或图示发生实质变化，都必须在本文件新增版本记录；不能先覆盖旧版、事后再猜测历史内容。
