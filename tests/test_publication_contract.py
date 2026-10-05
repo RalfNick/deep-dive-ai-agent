@@ -248,13 +248,26 @@ class MkDocsAnchorTests(unittest.TestCase):
     def render(self, text: str) -> str:
         import markdown
         from mkdocs.config import load_config
-        config = load_config(str(ROOT / "mkdocs.yml"))
+        config = load_config(str(ROOT / "mkdocs.yml"), docs_dir=str(ROOT / "book"))
         return markdown.Markdown(extensions=config["markdown_extensions"],
                                  extension_configs=config["mdx_configs"]).convert(text)
 
     def test_chapter17_answers_chinese_fragment_has_a_rendered_destination(self):
         html = self.render((ROOT / "book/chapter17.md").read_text(encoding="utf-8"))
         self.assertIn('id="十三道分层练习"', html)
+
+    def test_render_uses_real_extensions_without_a_generated_web_directory(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            write(root / "mkdocs.yml", (ROOT / "mkdocs.yml").read_text(encoding="utf-8"))
+            text = "## 十三道分层练习\n\n## Quick Start\n"
+            write(root / "book/chapter17.md", text)
+            self.assertFalse((root / "_web").exists())
+            with patch(f"{__name__}.ROOT", root):
+                html = self.render(text)
+            self.assertIn('id="十三道分层练习"', html)
+            self.assertIn('id="quick-start"', html)
+            self.assertFalse((root / "_web").exists())
 
     def test_existing_english_heading_slug_contract_is_preserved(self):
         html = self.render("## Quick Start\n\n## api_contract-v1\n\n## REST API: Error Handling\n")

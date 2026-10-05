@@ -15,7 +15,7 @@
 | MkDocs默认TOC丢中文，17章练习fragment失效 | Unicode slugify；实际配置渲染中文anchor和英文兼容测试通过，strict提示消失 |
 | Windows git show JSON默认GBK解码失败 | 两处调用显式UTF-8；无UTF8环境开关时9项delivery通过 |
 
-仓库78项、发布专项15项、博客37文件147项测试通过；TypeScript与lint退出0。第12章锁定框架环境210项通过，其余分章结果见[正式记录](../versions/book-v0.18.0.md)。部分审查员沙盒临时文件权限阻断不作为代码失败，主代理与实施者在授权原生环境完成fresh回归。
+初次仓库78项、发布专项15项通过；干净远端CI进一步暴露锚点测试对`_web`的隐式依赖，新增只有实际配置与book的fixture复现RED，再显式指定测试docs_dir，专项16项、仓库79项GREEN；不改CI顺序或跳过断言。博客同步20个真实条目后，旧ContextPacket标题搜索断言失效，改为实际章节heading与搜索title/anchor对照；37文件147项测试、TypeScript与lint通过。第12章锁定框架环境210项通过，其余分章结果见[正式记录](../versions/book-v0.18.0.md)。部分审查员沙盒临时文件权限阻断不作为代码失败，主代理与实施者在授权原生环境完成fresh回归。
 
 ## 不外推
 

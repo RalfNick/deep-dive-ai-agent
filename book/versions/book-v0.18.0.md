@@ -24,7 +24,7 @@ Windows原生环境：Python 3.11.15。第12章单独安装完整哈希锁并使
 
 | 入口 | 本轮结果 |
 | --- | --- |
-| 仓库unittest（含15项发布专项） | 78项通过 |
+| 仓库unittest（含16项发布专项） | 79项通过 |
 | 第1章unittest | 10项通过 |
 | 第2章README七个离线脚本 | 7/7退出0 |
 | 第3–11章逐章unittest | 20、24、63、143、65、71、47、42、26项通过 |
@@ -39,5 +39,7 @@ Windows原生环境：Python 3.11.15。第12章单独安装完整哈希锁并使
 上述命令在仓库根执行；Python解释器分别指向隔离环境。常用入口为 `python -B -m unittest discover -s tests -q`、`python -B -m pytest chapterN/tests -q -p no:cacheprovider`、`python -B -m unittest discover -s appendix_a/tests -q`、`node --test book/tests/*.test.mjs`、`python -B scripts/check_repository.py --root . --git-history`、`python -B -m scripts.build_site --root .` 及 `python -B -m mkdocs build --strict`。第1–11章沿用独立unittest入口，第2章七个具体脚本见实验README。
 
 发布审查修正了无哈希预览依赖误用hash模式、Windows历史JSON文本解码和中文站点锚点；不修改原依赖锁、实验实现或规范报告。个人网站另补附录目录、上下篇、进度、SEO与搜索支持，验证不把附录计为第19章。
+
+首次远端CI在两项锚点测试失败：干净checkout尚未生成`_web`，测试加载MkDocs配置误依赖本地构建目录。新增只含实际配置与book的干净fixture复现RED，再使测试显式从book加载扩展配置；专项16项、仓库79项GREEN。没有前移站点构建来掩盖测试依赖，也没有跳过断言。个人站点同步后原搜索测试引用旧ContextPacket标题，现从真实章节heading核对搜索title/anchor；37文件147项、TypeScript和lint通过。
 
 GitHub CI、Pages及Cloudflare线上状态以本次源提交对应的实际部署回执为准；本记录的本地通过不能代替线上成功。
