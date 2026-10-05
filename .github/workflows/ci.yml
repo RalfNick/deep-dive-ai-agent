@@ -79,7 +79,7 @@ jobs:
         run: |
           python -m unittest discover -s chapter1/tests -v
           python chapter2/sft_mask_demo.py
-          python chapter2/real_sft_evidence.py
+          python chapter2/real_sft_evidence.py --no-artifacts
           python chapter2/preference_demo.py
           python chapter2/sampling_demo.py
           python chapter2/reasoning_budget_demo.py

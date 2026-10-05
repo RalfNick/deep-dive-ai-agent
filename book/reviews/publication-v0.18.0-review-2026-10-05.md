@@ -14,8 +14,13 @@
 | 附录真实title包含标签，SEO/search再次添加造成重复 | 保留源title，去重展示前缀；真实title测试由RED转GREEN |
 | MkDocs默认TOC丢中文，17章练习fragment失效 | Unicode slugify；实际配置渲染中文anchor和英文兼容测试通过，strict提示消失 |
 | Windows git show JSON默认GBK解码失败 | 两处调用显式UTF-8；无UTF8环境开关时9项delivery通过 |
+| CI真实训练覆盖第二章归档报告，触发第16章历史保护 | CI调用已有`--no-artifacts`，真实训练/评估仍执行；隔离fixture三项SHA由RED到GREEN，保护与运行时代码不变 |
 
 初次仓库78项、发布专项15项通过；干净远端CI进一步暴露锚点测试对`_web`的隐式依赖，新增只有实际配置与book的fixture复现RED，再显式指定测试docs_dir，专项16项、仓库79项GREEN；不改CI顺序或跳过断言。博客同步20个真实条目后，旧ContextPacket标题搜索断言失效，改为实际章节heading与搜索title/anchor对照；37文件147项测试、TypeScript与lint通过。第12章锁定框架环境210项通过，其余分章结果见[正式记录](../versions/book-v0.18.0.md)。部分审查员沙盒临时文件权限阻断不作为代码失败，主代理与实施者在授权原生环境完成fresh回归。
+
+第二次CI的报告覆盖问题经独立只读复核通过；新增回归真实执行训练脚本，不用mock或略过训练。完整仓库80项、精确历史gate与第16章delivery 5项通过；旧JSON、CSV、SVG字节、历史哈希及未提交改动检查原样保留。具体Linux浮点差值未留在日志中，未宣称其幅度或跨平台数值完全一致。
+
+站点发布文案的最终回归为38文件150项、TypeScript和lint通过：完整书籍不再显示“写作中”，未完整fixture仍保留原状态说明。仅变更两个页面实现与对应测试，旧文件备份留在站点项目。
 
 ## 不外推
 
