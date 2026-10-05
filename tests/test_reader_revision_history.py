@@ -1,0 +1,169 @@
+"""Revision-aware historical checks must not excuse lost or altered archives."""
+from __future__ import annotations
+
+import hashlib
+import json
+from pathlib import Path
+import subprocess
+from tempfile import TemporaryDirectory
+import unittest
+
+
+ROOT = Path(__file__).resolve().parents[1]
+ARCHIVE = "book/versions/whole-book-reader-v2-before-2026-10-03"
+BASELINE = "c8f2995343e90de0721c4236f880c88bbcb3d324"
+
+
+class ReaderRevisionHistoryTests(unittest.TestCase):
+    def setUp(self):
+        temporary = TemporaryDirectory(prefix="reader-history-test-")
+        self.addCleanup(temporary.cleanup)
+        self.root = Path(temporary.name)
+
+    def helper(self):
+        self.assertTrue((ROOT / "book/tests/edition_contracts.py").is_file(),
+                        "revision-aware archive reader is missing")
+        from book.tests import edition_contracts
+        return edition_contracts
+
+    def fixture(self, relative="book/chapter6.md"):
+        current = self.root / relative
+        current.parent.mkdir(parents=True, exist_ok=True)
+        current.write_bytes(b"new approved edition\n")
+        old = b"frozen original edition\n"
+        snapshot = self.root / ARCHIVE / (relative + ".snapshot")
+        snapshot.parent.mkdir(parents=True, exist_ok=True)
+        snapshot.write_bytes(old)
+        manifest = {
+            "version": "whole-book-reader-v2-before-2026-10-03",
+            "baseline_commit": BASELINE,
+            "files": [{"source": relative, "sha256": hashlib.sha256(old).hexdigest()}],
+        }
+        (self.root / ARCHIVE / "snapshot-hashes.json").write_text(
+            json.dumps(manifest), encoding="utf-8")
+        return snapshot, old
+
+    def prose_fixture(self, relative="chapter12/tests/test_manuscript.py"):
+        current = self.root / relative
+        current.parent.mkdir(parents=True, exist_ok=True)
+        current.write_bytes(b"new documentation contract\n")
+        old = b"frozen documentation contract\n"
+        archive = self.root / "book/versions/whole-book-prose-v3-before-2026-10-05"
+        snapshot = archive / (relative + ".snapshot")
+        snapshot.parent.mkdir(parents=True, exist_ok=True)
+        snapshot.write_bytes(old)
+        manifest = {
+            "version": "whole-book-prose-v3-before-2026-10-05",
+            "baseline_commit": BASELINE,
+            "predecessor_edition": "editorial-v2-local",
+            "files": [{"source": relative, "sha256": hashlib.sha256(old).hexdigest()}],
+        }
+        (archive / "snapshot-hashes.json").write_text(json.dumps(manifest), encoding="utf-8")
+        return snapshot, old
+
+    def test_prose_revision_can_read_frozen_documentation_test(self):
+        _, old = self.prose_fixture()
+        self.assertEqual(old, self.helper().preserved_payload(
+            self.root, "chapter12/tests/test_manuscript.py"))
+
+    def test_corrupted_prose_test_snapshot_is_rejected(self):
+        snapshot, _ = self.prose_fixture()
+        snapshot.write_bytes(b"corrupted frozen test\n")
+        helper = self.helper()
+        with self.assertRaises(AssertionError):
+            helper.preserved_payload(self.root, "chapter12/tests/test_manuscript.py")
+
+    def test_missing_prose_test_snapshot_is_rejected(self):
+        snapshot, _ = self.prose_fixture()
+        snapshot.unlink()
+        helper = self.helper()
+        with self.assertRaises(AssertionError):
+            helper.preserved_payload(self.root, "chapter12/tests/test_manuscript.py")
+
+    def test_documentation_test_revision_retains_real_frozen_git_bytes(self):
+        self.prose_fixture()
+        relative = "chapter12/tests/test_manuscript.py"
+        baseline = self.commit_file(relative, b"frozen documentation contract\n")
+        (self.root / relative).write_bytes(b"new documentation contract\n")
+        self.helper().assert_frozen_history(self.root, baseline, [relative])
+
+    def test_prose_manifest_never_authorizes_runtime_changes(self):
+        relative = "chapter4/harness/runtime.py"
+        self.prose_fixture(relative)
+        baseline = self.commit_file(relative, b"frozen runtime\n")
+        (self.root / relative).write_bytes(b"mutated runtime\n")
+        helper = self.helper()
+        with self.assertRaises(AssertionError):
+            helper.assert_frozen_history(self.root, baseline, [relative])
+
+    def test_approved_manuscript_uses_frozen_bytes_not_new_edition(self):
+        self.fixture()
+        self.assertEqual(b"frozen original edition\n",
+                         self.helper().preserved_payload(self.root, "book/chapter6.md"))
+
+    def test_corrupted_snapshot_is_rejected(self):
+        snapshot, _ = self.fixture()
+        snapshot.write_bytes(b"silently rewritten old edition\n")
+        helper = self.helper()
+        with self.assertRaises(AssertionError):
+            helper.preserved_payload(self.root, "book/chapter6.md")
+
+    def test_missing_snapshot_is_rejected(self):
+        snapshot, _ = self.fixture()
+        snapshot.unlink()
+        helper = self.helper()
+        with self.assertRaises(AssertionError):
+            helper.preserved_payload(self.root, "book/chapter6.md")
+
+    def test_snapshot_registry_cannot_authorize_runtime_edits(self):
+        self.fixture("chapter4/harness/runtime.py")
+        helper = self.helper()
+        with self.assertRaises(AssertionError):
+            helper.preserved_payload(self.root, "chapter4/harness/runtime.py")
+
+    def test_unregistered_file_is_still_checked_in_current_tree(self):
+        self.fixture()
+        current = self.root / "chapter4/reports/reference.json"
+        current.parent.mkdir(parents=True)
+        current.write_bytes(b'{"unchanged": true}\n')
+        self.assertEqual(b'{"unchanged": true}\n',
+                         self.helper().preserved_payload(self.root, "chapter4/reports/reference.json"))
+
+    def commit_file(self, relative, content):
+        path = self.root / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(content)
+        def git(*args):
+            return subprocess.run(["git", *args], cwd=self.root, check=True,
+                                  capture_output=True).stdout
+        git("init", "-q")
+        git("add", "--", relative)
+        git("-c", "user.name=History Fixture", "-c", "user.email=fixture@example.invalid",
+            "commit", "-qm", "frozen fixture")
+        return git("rev-parse", "HEAD").decode().strip()
+
+    def test_authorized_edit_retains_bytes_from_real_frozen_commit(self):
+        self.fixture()
+        baseline = self.commit_file("book/chapter6.md", b"frozen original edition\n")
+        (self.root / "book/chapter6.md").write_bytes(b"new approved edition\n")
+        self.helper().assert_frozen_history(self.root, baseline, ["book/chapter6.md"])
+
+    def test_runtime_mutation_is_not_exempted_by_document_snapshots(self):
+        self.fixture()
+        baseline = self.commit_file("chapter4/harness/runtime.py", b"frozen runtime\n")
+        (self.root / "chapter4/harness/runtime.py").write_bytes(b"unexpected runtime change\n")
+        helper = self.helper()
+        with self.assertRaises(AssertionError):
+            helper.assert_frozen_history(self.root, baseline, ["chapter4/harness/runtime.py"])
+
+    def test_valid_digest_cannot_replace_different_frozen_git_bytes(self):
+        self.fixture()
+        baseline = self.commit_file("book/chapter6.md", b"actual frozen git bytes\n")
+        (self.root / "book/chapter6.md").write_bytes(b"new approved edition\n")
+        helper = self.helper()
+        with self.assertRaises(AssertionError):
+            helper.assert_frozen_history(self.root, baseline, ["book/chapter6.md"])
+
+
+if __name__ == "__main__":
+    unittest.main()

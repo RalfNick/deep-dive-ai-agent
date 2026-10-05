@@ -1,0 +1,161 @@
+{
+  "schema_version": "book.editorial-revision.v1",
+  "edition": "editorial-v2-local",
+  "date": "2026-10-03",
+  "baseline_commit": "c8f2995343e90de0721c4236f880c88bbcb3d324",
+  "status": "local_unpublished",
+  "artifacts": [
+    {
+      "source": "book/chapter1.md",
+      "sha256": "E1FD66528F7A6705E60ADD5AAB3C40C5E32BE0C82052239EE772EFC40EABE075"
+    },
+    {
+      "source": "book/chapter2.md",
+      "sha256": "7F22F08E872FD053893ED6D12F262C8AEB9310ECFF7440027DA21AE1F56C82CC"
+    },
+    {
+      "source": "book/chapter3.md",
+      "sha256": "284FF78279BB3EC712C04B7DBD0351B5A367853666CEF4B924B91DF7AA72486E"
+    },
+    {
+      "source": "book/chapter4.md",
+      "sha256": "467E2247082DAEF49DE089E866D6F5F082A85C77019535DD9FB0BF86C4DEE94B"
+    },
+    {
+      "source": "book/chapter5.md",
+      "sha256": "E1B9D5ADAC1289D2964CF5EF1557A2B533DEED6407F834018A432DAF5EAA9373"
+    },
+    {
+      "source": "book/chapter6.md",
+      "sha256": "347365CC8380C67CD025082590E92247731AF160C6B41AA6867A51E14CF035DD"
+    },
+    {
+      "source": "book/chapter7.md",
+      "sha256": "44F745581F13BBE1415B38DFEC6A73E0FAE4649E4C2F585C4E32D279AA04E823"
+    },
+    {
+      "source": "book/chapter8.md",
+      "sha256": "96D9B9F0B0EA7FA2AC2AF1D34618EF81838C619E45E86FF3A6CE0186307B8D21"
+    },
+    {
+      "source": "book/chapter9.md",
+      "sha256": "63533D273C41C0BF00F2FC4EAF5E45F8EF1340DE404603D05A92E32DC63AD92D"
+    },
+    {
+      "source": "book/chapter10.md",
+      "sha256": "98580B9EF8E3E85DB0F8FD692FF2AD1D9E6EA586E791F35246E2BAFB6E09A8A4"
+    },
+    {
+      "source": "book/chapter11.md",
+      "sha256": "E264573E34887D1B61C321B8578815372BD320B697B8538BE9AA8256D60B5424"
+    },
+    {
+      "source": "book/chapter12.md",
+      "sha256": "017F7908BE6FC34A90D08F588CF2453E3CC0BFF9A45A3DD270816CBBB83107BF"
+    },
+    {
+      "source": "book/chapter13.md",
+      "sha256": "B964CF3B84F20C192593021206558AA6D9B0D4FDC2279097FFA91351F25D3D86"
+    },
+    {
+      "source": "book/chapter14.md",
+      "sha256": "77D1F527807DCF5B39DC5541955B7716CD9B3C06B8E7E25DC9DC71BB0D896BF5"
+    },
+    {
+      "source": "book/chapter15.md",
+      "sha256": "BF9A502438EB1207A734F9F993FF433B982A74490FF93C896541EE44C30E834D"
+    },
+    {
+      "source": "book/chapter16.md",
+      "sha256": "745B9A4B009B71D2CEDABB5E623417F18682C692F881E7811F3DE916C2D2C2AA"
+    },
+    {
+      "source": "book/chapter17.md",
+      "sha256": "2EA777015C11EC582AC5EB57DD90BD9F19ACF0677CC2AC5F3E415562E306DEF1"
+    },
+    {
+      "source": "book/chapter18.md",
+      "sha256": "BF04DD3181E3D712C25A2ED95567FB7549B3C7BF40AF1E9DEAD47D8562B7DDE6"
+    },
+    {
+      "source": "book/OUTLINE.md",
+      "sha256": "148C14650922F3EBB65E3A1A396FC8F39E73E708CFF5830E7C34B8A8C809D6E9"
+    },
+    {
+      "source": "book/WRITING_GUIDE.md",
+      "sha256": "E8DC308E13219D59CF7CEBA4479034FD264B815BCE5E1CF2EB87A75213213846"
+    },
+    {
+      "source": "book/versions/CHAPTER_VERSIONS.md",
+      "sha256": "FE0591A97F175D4E1DC82B492601694844530725D769C2F6F81CC87A1804200F"
+    },
+    {
+      "source": "chapter12/README.md",
+      "sha256": "91C6E3D26F9EB38A57A44E717E9EF20CA58280D31C41AB731C0B3FA518D97E48"
+    },
+    {
+      "source": "book/READING_PATHS.md",
+      "sha256": "D72A631ABCA9100A3923A8D2C9EB86DD7DBE05DF006A553AB539BD9E8F1EC2CD"
+    },
+    {
+      "source": "book/versions/whole-book-reader-v2-local.md",
+      "sha256": "B6938A4FB070CD208450E0091F5A96A5DB51461180F7AB984FBDB79BC7C4CC0B"
+    },
+    {
+      "source": "book/reviews/whole-book-reader-revision-v2-review-2026-10-03.md",
+      "sha256": "41F50648A4207EE006BD071CDB2B662B137D3F37A14E1E2ACDE72E9F5872A74E"
+    },
+    {
+      "source": "book/versions/whole-book-reader-v2-before-2026-10-03/snapshot-hashes.json",
+      "sha256": "224175EA3D90C74B518FBCCD2A571465116B15FA6F44FA9744847F683EC47166"
+    },
+    {
+      "source": "book/versions/whole-book-reader-v2-before-2026-10-03/README.md",
+      "sha256": "62934CE749844CBA49D36970FA98B3998BA715270301C1E4730DA17C1E355308"
+    },
+    {
+      "source": "book/tests/edition_contracts.py",
+      "sha256": "6E9ADF390AC95349DC46CC7DB5270D832087B6D91AF938D5BA26B26746075EE8"
+    },
+    {
+      "source": "tests/test_reader_revision_history.py",
+      "sha256": "62D7A0B8D1E830722373EDCC8245DF25CBB9E5F11B447601E34D7B1AFEC4A874"
+    },
+    {
+      "source": "tests/test_migration_manifest.py",
+      "sha256": "6418D0A9C6DE148E75BCBFE1DE057EF95E000BF75CAD35B68C3E090B1FE306FC"
+    },
+    {
+      "source": "chapter12/tests/test_delivery.py",
+      "sha256": "72972BF9A5F7D3CFE7462F0A12C7558558436F6C8987E91DCCC1DE986574DB95"
+    },
+    {
+      "source": "chapter14/tests/test_reader_tools.py",
+      "sha256": "7E13EC477FA5875D15669147B5057F230BA7B7E12303DBE6F35A5B244BAF3B7A"
+    },
+    {
+      "source": "chapter16/tests/test_delivery.py",
+      "sha256": "65656405AFD26D68011A61C301AEE4AF389534394BD03FDADC36C929E59E52CF"
+    },
+    {
+      "source": "chapter16/tests/test_manuscript.py",
+      "sha256": "A6525778DF7DAE1E2FFE198DB5B4DFE88D0C38859F80444FB7495D87D42D927D"
+    },
+    {
+      "source": "chapter18/tests/test_delivery.py",
+      "sha256": "FC07573965D9FF6EAA68345983B675EF266BCDF71A0FCDD21E4C2B209DE62333"
+    },
+    {
+      "source": "book/manifest.json",
+      "sha256": "8FB37DA97B23B98B3E73E1A00361D328063C69A4A12ECD1D962A0C687CD8375A"
+    },
+    {
+      "source": "scripts/build_site.py",
+      "sha256": "B434E8D04E1D9BACEA1700963E18256C311E529BDAB3BB169B57F5C2F4BFBDD5"
+    },
+    {
+      "source": "mkdocs.yml",
+      "sha256": "8DB9447438912BDE0B8D64F6CB765F1665B1B25C0273D904A36BE40627FC2A9C"
+    }
+  ]
+}

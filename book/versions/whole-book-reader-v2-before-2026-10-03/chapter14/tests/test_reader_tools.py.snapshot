@@ -1,0 +1,98 @@
+from __future__ import annotations
+
+import json
+from pathlib import Path
+import re
+
+from chapter14.exercise_solutions import assess_incident_submission, main as solutions_main, solve
+from chapter14.preview import build_preview
+
+
+ROOT = Path(__file__).resolve().parents[2]
+CHAPTER = ROOT / "book" / "chapter14.md"
+SOURCES = ROOT / "book" / "sources" / "chapter14-sources.md"
+REPORT = ROOT / "chapter14" / "reports" / "diagnostic-report.json"
+
+
+def test_all_fourteen_reference_solutions_are_machine_checkable() -> None:
+    answers = [solve(number) for number in range(1, 15)]
+    assert [item["number"] for item in answers] == list(range(1, 15))
+    assert all(item["status"] in {"passed", "answered"} for item in answers)
+
+    assert solve(3)["evidence"]["nearest_rank"] == {"p50": 111, "p95": 900}
+    assert solve(5)["evidence"]["critical_path_duration_ms"] == 320
+    assert solve(5)["evidence"]["work_span_duration_sum_ms"] == 440
+    assert solve(5)["evidence"]["incident_retry_amplification"] == 1.4375
+    assert solve(6)["evidence"]["trace_coverage"] == 49 / 72
+    assert solve(6)["evidence"]["telemetry_completeness"] == 69 / 72
+
+
+def test_incident_submission_rejects_missing_completeness_or_counterevidence() -> None:
+    canonical = json.loads(REPORT.read_text(encoding="utf-8"))["incident_report"]
+    assert assess_incident_submission(canonical) == {"accepted": True, "reason_codes": []}
+
+    missing_completeness = dict(canonical)
+    missing_completeness.pop("data_completeness")
+    assert assess_incident_submission(missing_completeness) == {
+        "accepted": False,
+        "reason_codes": ["missing_data_completeness"],
+    }
+
+    missing_counterevidence = dict(canonical, counterevidence_trace_ids=[])
+    assert assess_incident_submission(missing_counterevidence) == {
+        "accepted": False,
+        "reason_codes": ["missing_counterevidence"],
+    }
+
+
+def test_solution_cli_writes_stable_json_and_refuses_overwrite(tmp_path, capsys) -> None:
+    output = tmp_path / "answers.json"
+    second = tmp_path / "answers-second.json"
+    assert solutions_main(["--all", "--output", str(output)]) == 0
+    first = output.read_bytes()
+    payload = json.loads(first)
+    assert payload["schema_version"] == "chapter14.exercises.v1"
+    assert payload["summary"] == {"count": 14, "all_passed": True}
+    assert solutions_main(["--all", "--output", str(second)]) == 0
+    assert second.read_bytes() == first
+    assert solutions_main(["--all", "--output", str(output)]) == 3
+    assert output.read_bytes() == first
+    assert "output_exists" in capsys.readouterr().err
+
+
+def test_manuscript_reader_contract_and_canonical_numbers() -> None:
+    text = CHAPTER.read_text(encoding="utf-8")
+    exercise_section = text.split("## 分层练习", 1)[1].split("## 与下一章", 1)[0]
+    source_text = SOURCES.read_text(encoding="utf-8")
+    source_anchors = {
+        heading.strip().lower()
+        for heading in re.findall(r"(?m)^### (.+)$", source_text)
+    }
+
+    assert len(re.findall(r"!\[图 14-[1-7]：", text)) == 7
+    assert len(re.findall(r"> \*\*实验 14-[1-5] ", text)) == 5
+    assert len(re.findall(r"(?m)^(?:[1-9]|1[0-4])\. \*\*", exercise_section)) == 14
+    assert "images/chapter14/" in text
+    assert "images/chapter13/" not in text
+    assert 23_000 <= len(text) <= 28_000
+    assert 25 <= len(re.findall(r"(?m)^#{2,3} ", text)) <= 35
+
+    for target in re.findall(r"\[[^\]]+\]\((?!https?://)([^)#]+)(?:#[^)]+)?\)", text):
+        assert (CHAPTER.parent / target).resolve().exists(), target
+    for anchor in re.findall(r"sources/chapter14-sources\.md#([a-z0-9-]+)", text):
+        assert anchor in source_anchors
+
+    for literal in ("0.958333", "432", "612", "16.03", "17.74", "1.3125", "1.4375", "49", "72"):
+        assert literal in text
+
+
+def test_preview_contains_only_chapter14_assets_and_reader_guards(tmp_path) -> None:
+    output = build_preview(ROOT, output=tmp_path / "index.html")
+    html = output.read_text(encoding="utf-8")
+    assert "第 14 章 · Benchmark、Tracing 与生产诊断" in html
+    assert html.count("<figure>") == 7
+    assert html.count('class="table-wrap"') == 6
+    assert "../../book/images/chapter14/" in html
+    assert "images/chapter13/" not in html
+    assert 'class="figure-link"' in html
+    assert 'class="mobile-figure-hint"' in html

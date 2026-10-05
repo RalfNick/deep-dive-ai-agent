@@ -6,9 +6,9 @@
 
 另一个系统先读取 `pricing.py`，运行测试得到 `exit_code=1`，应用最小补丁，再运行同一组测试得到 `exit_code=0`，最后才报告完成。两者可能使用同一个底层模型，差别却不在“哪段代码更聪明”，而在于第二个系统把生成接入了一个能够观察、行动和验证的闭环。
 
-> **阅读提示**：本章不从 LangChain 的类名开始，而是先用 Python 标准库手写一个最小 Agent Loop。必读主线是“一次生成为什么不够 → 工具调用怎样成为环境行动 → 观察怎样进入下一轮 → 谁拥有停止权”。`chapter3/` 中包含 5 个编号实验和 1 个 Trace 补充实验，均不需要 API Key；它们会创建临时仓库、启动真实测试进程并输出完整轨迹。
+`chapter3/` 包含 5 个编号实验和 1 个 Trace 补充实验，均使用 Python 标准库，不需要 API Key。实验会创建临时仓库、启动真实测试进程并输出执行轨迹。
 
-先给出整章答案：**Agent 不是“会调用工具的模型”，而是一个让模型在目标、环境反馈和控制边界之间反复选择下一步的运行系统。模型负责提出决策，Harness 负责校验和执行，环境负责产生新事实，Verifier 负责判断目标是否真的满足。** 没有反馈循环，工具只是一次增强；没有运行时控制，工具提议只是字符串；没有外部验收，“完成”只是模型的一句话。
+**Agent 不是“会调用工具的模型”，而是一个让模型在目标、环境反馈和控制边界之间反复选择下一步的运行系统。模型负责提出决策，Harness 负责校验和执行，环境负责产生新事实，Verifier 负责判断目标是否真的满足。** 没有反馈循环，工具只是一次增强；没有运行时控制，工具提议只是字符串；没有外部验收，“完成”只是模型的一句话。
 
 本章围绕七个问题展开：
 
@@ -287,6 +287,8 @@ for step in range(1, max_steps + 1):
 return stopped("max_steps", events)
 ~~~
 
+这里的 `continue` 是一项明确的教学策略：验收失败成为新的观察，只要仍在 `max_steps` 预算内，策略就可以再提修复动作。它不表示任何失败都应无限重试。第 4 章为单独检验 Harness 边界，会采用“验收拒绝即结束本次运行”的另一种策略；两者的差异是失败后是否允许再次决策，而不是有没有 Verifier。
+
 短不代表简单。`validate()` 背后有 Schema、权限、审批和预算；`execute()` 背后有沙箱、超时、异常与幂等；`events` 后面还有持久化、压缩和隐私。框架的价值正是封装这些重复机制，但理解循环后才能知道框架替你做了什么、没做什么。
 
 > **实验 3-1 ★：一次正确回答为什么仍不算完成**
@@ -318,11 +320,13 @@ return stopped("max_steps", events)
 > [run] status=completed calls=4
 > ~~~
 >
+> 上面是控制台节选，不是完整 Trace。对应工具依次为：第 1 步 `read_file`，第 2 步 `run_tests`，第 3 步 `apply_patch`，第 4 步再次 `run_tests`；第 5 步才是独立 Verifier。读 `result` 时应回到它对应的调用 ID，不把不同工具的结果当成同一种“模型回答”。
+>
 > 注意第 3 步才改变文件；读取与测试都只改变 Agent 的知识，不改变仓库。第 5 步也不是模型单方面结束，而是 Verifier 同时记录测试规则、受保护文件检查、测试命令、退出码和状态摘要。这里的 `RepairPolicy` 是基于结构化观察推进的确定性决策策略，用来固定“模型侧变量”；它没有比较任何真实模型的能力。
 
-为防止成功路径掩盖合同漏洞，本章把 Review 中可复现的反例写成了回归测试：
+以下回归测试覆盖成功路径容易掩盖的合同漏洞：
 
-| 故障注入 | v1.0 行为 | v1.1 预期结果 | 证明的边界 |
+| 故障注入 | 缺少相应防护时的行为 | 合同要求的结果 | 证明的边界 |
 | --- | --- | --- | --- |
 | 初始实现改成 `return float(value.strip())` | 固定旧文本冲突并重复动作 | 从最近一次读取内容生成补丁，`completed` | 策略必须消费 Observation |
 | 同时存在一个无关测试失败 | 仍套用固定价格补丁 | 不修改源码并返回 `failed` | 目标证据不明确时应停止 |
@@ -478,7 +482,7 @@ OpenAI Agents SDK 当前 Runner 也显式提供 `max_turns`：省略时默认使
 >
 > Naive Runner 在第 1 步接受“已修复”，但随后检查 `tests_pass=False`。Verified Runner 把同一句话判为未通过，将结果写回轨迹；策略随后应用补丁、运行测试，第二次 final 才被接受。这个实验说明完成权必须外移，却不说明单元测试覆盖了全部需求。
 
-v1.1 的 Verifier 不再返回一个裸布尔值，而是返回不可变的 `VerificationResult`：`rules` 说明哪些硬规则通过，`command` 与 `exit_code` 记录真实验收命令，`state_digest` 绑定被检查的仓库版本，`protected_files_unchanged` 防止通过篡改测试伪造成功。Agent Loop 只有在 `accepted=True` 且交付前摘要仍与验收摘要一致时才写入 `run_finished: completed`。
+Verifier 返回不可变的 `VerificationResult`：`rules` 说明哪些硬规则通过，`command` 与 `exit_code` 记录真实验收命令，`state_digest` 绑定被检查的仓库版本，`protected_files_unchanged` 防止通过篡改测试伪造成功。Agent Loop 只有在 `accepted=True` 且交付前摘要仍与验收摘要一致时才写入 `run_finished: completed`。
 
 ### 好的验收合同应该长什么样
 
@@ -604,7 +608,7 @@ Claude Agent SDK 则把驱动 Claude Code 的工具、Agent Loop 和上下文管
 
 LangChain 当前 `create_agent` 接受模型、工具、system prompt、结构化输出、中间件、checkpointer 等配置；持久化多轮历史需要配置 checkpointer。其 Agent 构建于 LangGraph 的运行时之上，图层负责状态与执行，LangChain 提供更高层的模型和工具接口。[^ch3-langchain]
 
-学习顺序应是：先理解本章的 Call/Result/Event/Verifier，再使用框架。否则看到 `agent.invoke()` 返回最终消息，很容易误以为框架已经替你解决了业务验收、幂等和权限。
+框架返回最终消息，不代表已经解决业务验收、幂等和权限；这些边界仍需独立定义和检查。
 
 | 层级 | 本章最小实现 | OpenAI Agents SDK | Claude Agent SDK | LangChain / LangGraph |
 | --- | --- | --- | --- | --- |

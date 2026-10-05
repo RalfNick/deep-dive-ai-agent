@@ -16,8 +16,9 @@ def test_part_i_has_reader_first_opening_and_exact_title() -> None:
     text = _text()
 
     assert text.startswith("# 第 15 章 Agent 的后训练：什么时候 Prompt 已经不够\n")
-    assert "> **阅读提示**" in text
-    assert "**全章的短答案是：" in text
+    assert "核心实验完全离线" in text
+    assert "不需要 API Key、不下载模型，也不执行 GPU 训练" in text
+    assert "后训练适合修正跨任务重复" in text
     assert all(phrase in text for phrase in (
         "信息不足时直接猜测",
         "修改了不应修改的验收文件",

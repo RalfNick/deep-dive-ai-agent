@@ -8,11 +8,8 @@
 
 这就是 Agent 评估比普通问答评估更难的地方：**我们评估的不是一句答案，而是模型、Harness、工具、环境、状态变化和验证器共同构成的系统。**
 
-> **阅读提示**
->
-> 第 12 章已经实现了可恢复的 Mini Coding Agent，并留下 Trace、动作回执和 Verifier。本章不再扩写 Agent Loop，而是把这些运行证据交给另一个系统：Evaluation Harness。我们会从一个“看起来成功”的反例出发，逐层加入任务集、多次试验、结果评分、轨迹评分、安全门禁、统计区间和 Judge 校准。核心实验完全离线，不需要 API Key。
 
-**全章的短答案是：最终回复只能说明 Agent 说了什么，不能证明环境里发生了什么；单次运行只能提供一个样本，不能证明系统是否可靠；单个平均分只能压缩信息，不能替团队做发布决策。**
+**最终回复只能说明 Agent 说了什么，不能证明环境里发生了什么；单次运行只能提供一个样本，不能证明系统是否可靠；单个平均分只能压缩信息，不能替团队做发布决策。**
 
 ## 先运行本章实验
 
@@ -328,6 +325,8 @@ pass@1 = c / n
 pass@k = 1 - C(n-c, k) / C(n, k)
 ```
 
+`C(n,k)` 读作“从 n 次中不计顺序选 k 次，有多少种选法”，这里选的是已有样本，不重复抽取同一次运行。例如从五次中选三次，按顺序选有 `5×4×3=60` 种，但同一组三次有 `3×2×1=6` 种排列，所以 `C(5,3)=60/6=10`。公式里的分子只选失败样本：先算“全失败的选法占多少”，再用 1 减去它，就得到“至少一次成功”。
+
 例如 `n=5`、`c=2`、`k=3`：
 
 ```text
@@ -345,6 +344,8 @@ pass@3 = 1 - C(3,3) / C(5,3)
 ```text
 pass^k = C(c, k) / C(n, k)
 ```
+
+这次分子只从成功样本里选：`C(c,k)` 是“全部成功的组合数”。当成功次数少于 k 时，它为 0；它不是另一个可以和 pass@k 混用的平均分。
 
 还是 `n=5`、`c=2`，当 `k=3` 时，因为总共只有两次成功：
 
@@ -639,9 +640,9 @@ LangSmith 把离线 Benchmark、单元测试、回归测试、回测和成对评
 
 本章生成 JSON 和 Markdown 两份报告。JSON 适合回归和机器比较，Markdown 适合审阅。稳定报告不包含随机临时路径、墙钟时间和真实密钥；这些易变或敏感信息应进入受控运行元数据，而不是公开规范样本。
 
-## 本章实验代码的阅读顺序
+## 实现分工
 
-建议按下面顺序阅读：
+模块职责如下：
 
 1. [contracts.py](../chapter13/contracts.py)：TaskSpec、TrialRecord、GraderResult、EvaluationReport；
 2. [fixtures/tasks.json](../chapter13/fixtures/tasks.json)：12 个任务如何切片；
@@ -651,7 +652,7 @@ LangSmith 把离线 Benchmark、单元测试、回归测试、回测和成对评
 6. [judge.py](../chapter13/judge.py)：离线校准与显式 Live 边界；
 7. [experiments.py](../chapter13/experiments.py)：120 条 Trial 怎样汇总成五组报告。
 
-先看合同，再看报告，不要从 CLI 参数开始背。只要理解“Task → Trial → Outcome/Trajectory → Graders → Aggregation → Gate”这条数据流，换成别的评估框架仍然能判断每层责任。
+评估的数据流是 `Task → Trial → Outcome/Trajectory → Graders → Aggregation → Gate`，各层职责不因框架改变。
 
 ## 本章证明了什么，又没有证明什么
 

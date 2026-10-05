@@ -1,0 +1,237 @@
+# 《深入浅出 AI Agent》章节版本记录
+
+本书采用“稳定入口 + Git tag + 版本化预览”的方式保留历史。
+
+- `book/chapterN.md`、`chapterN/` 与 `book/images/figN-*` 始终指向该章最新版本；
+- 每个正式版本使用 annotated tag `book-chapterN-vMAJOR.MINOR` 保存完整源码；
+- `output/pdf/chapterN-preview.pdf` 是最新预览，历史 PDF 保存到 `output/pdf/versions/chapterN/`；
+- 结构重写或读者路径不兼容时增加主版本，修正、扩充和实验增强时增加次版本；
+- 已发布 tag 和历史 PDF 不覆盖、不改写。若发现旧版错误，在新版本记录中说明。
+
+## 恢复与比较
+
+### 2026-09-07 第八章 v1.4：证据边界与读者路径复审
+
+由 v1.4-rc2 通过发布门禁后转为正式版本，使用 annotated tag `book-chapter8-v1.4` 固定完整源码。完整前版基线为 `49d185efd2b5463cd6962d45ac1d13d8a7710d22`；此前 editorial-v1 候选记录和公开 tag 均保留。
+
+- 修正 Chunk 继承整篇 fact_ids：显式人工引句标注，只让完整包含引句的片段支持事实；无标注不覆盖。
+- 重排后再次验证资格与父摘要；新增重排期间撤回、原文更新配旧索引、SSO 段缺成员事实等失败先行测试。
+- 正文 v0—v7 改为教学阶段，核心接口与实现一致；标准答案、冲突解析与自然语言验真的交付边界写明。
+- 新增 inspect_request 入口，完整请求移至 v7 后；生产清单移至 chapter8/production-guide.md。有效中文约 2.28 万，字数门槛对齐写作指南的 1.8 万。
+- 报告 schema_version=2，单查询 mrr 更名 reciprocal_rank；图 8-5、8-8 新增 v2 SVG，原图保留。
+
+回归记录见[第八章本轮复审](../reviews/chapter8-review-v1.4-rc2.md)。比较命令：`git diff 49d185e -- book/chapter8.md chapter8/`。
+
+### 2026-09-07 全书读者路径修订：editorial-v1
+
+本轮以 annotated tag `book-editorial-v1` 发布到 GitHub 与网站。修改前完整基线为 `46be2bbca32dde80abadff65f20884407441859d`（已发布的 `book-chapter9-v1.0.3`）；该提交保存本轮修改前的全书、实验、来源与旧图。旧 tag 不移动。
+
+| 章节 | 编辑候选版本 | 本轮变化 |
+| --- | --- | --- |
+| 1 | editorial-v1 | 新主图以候选表对应 Logit / Softmax；采样项与追加项一致；原 WebP 保留 |
+| 2 | editorial-v1 | 沿用 float 验收，产品观察标为进阶；保留原事实核对日期 |
+| 3 | editorial-v1 | 收束生产清单，以四个闭环问题衔接第四章 |
+| 4 | editorial-v1 | 开场改为审批中断与恢复，突出本章区别于最小循环的职责 |
+| 5 | editorial-v1 | 先装小输入，再读完整字段；后移实验合同；说明教学优先级的适用边界 |
+| 6 | editorial-v1 | 任务卡先行，七类状态后移，Artifact 字段标为进阶 |
+| 7 | 不变 | 本轮保留偏好生命周期主线，不为统一形式改写有效内容 |
+| 8 | v1.4 | 实事求是说明 Embedding 适配器未交付，删重，补 BM25/RRF 完整答案与核对命令；随后由 rc2 修正证据边界并正式发布 |
+| 9 | editorial-v1 | 22 个 FAQ 移到配套材料，下一章名与目录一致；字数下限对齐全书写作标准 |
+
+候选阶段的验证记录见[本轮 Review](../reviews/editorial-review-2026-09-06.md)。原 RC 名称只标识发布前稿；正式发布由 `book-editorial-v1` 与 `book-chapter8-v1.4` 固定，未生成新版 PDF。
+
+查询旧稿示例：`git show 46be2bbca32dde80abadff65f20884407441859d:book/chapter5.md`。比较时对同一路径运行 `git diff 46be2bbca32dde80abadff65f20884407441859d -- book/chapter5.md`。
+
+### 已有版本的恢复方式
+
+只查看某版正文：
+
+```powershell
+git show book-chapter1-v1.0:book/chapter1.md
+```
+
+临时查看该版完整工程：
+
+```powershell
+git switch --detach book-chapter1-v1.0
+```
+
+比较两个版本：
+
+```powershell
+git diff book-chapter1-v1.0 book-chapter1-v1.1 -- book/chapter1.md chapter1
+```
+
+查看结束后切回工作分支，不要在 detached HEAD 上直接提交。
+
+## 第 1 章：大模型入门
+
+| 版本 | 日期 | Git tag | 状态与主要变化 | 自动验证 | PDF |
+| --- | --- | --- | --- | --- | --- |
+| v1.0 | 2026-08-13 | `book-chapter1-v1.0` | Review 前基线；保留原正文、6 张图、5 个实验与参考答案 | 5 个脚本与编译检查通过；独立测试 `0 discovered` | `output/pdf/versions/chapter1/chapter1-v1.0.pdf`，42 页，SHA-256 `64778C17C2601EC6B15508EBCB9B9B633524943FDBDB866B210A1E18C0FE437A` |
+| v1.1 | 2026-08-13 | `book-chapter1-v1.1` | 按 Codex Review 完成证据收口、技术纠错、实验报告、独立测试、引用与练习答案增强 | 9 项独立测试通过；5 个实验与报告生成通过；SVG、链接和脚注静态检查通过 | `output/pdf/versions/chapter1/chapter1-v1.1.pdf`，43 页，SHA-256 `CC2DA449EA45ABED88921E91E0A7B0E06658954C2BEC0218EBD73394B9252113` |
+| v1.2 | 2026-08-30 | `book-chapter1-v1.2` | 新增中文原创“大模型如何工作”主信息图，用四阶段视觉主线解释 Token、Transformer、概率生成与自回归循环；原 6 张 SVG 技术图和正文机制说明全部保留 | 第 1 章 10 项测试、仓库 41 项合同测试、4 项渲染测试与 MkDocs strict 构建通过；WebP 主图约 224 KiB | 未生成独立 PDF；网站与 Git tag 为本次发布载体 |
+
+## 第 3 章：从生成到闭环执行
+
+| 版本 | 日期 | Git tag | 状态与主要变化 | 自动验证 | PDF |
+| --- | --- | --- | --- | --- | --- |
+| v1.0 | 2026-08-14 | `book-chapter3-v1.0` | Review 前基线；保留原正文、7 张图、5 个编号实验与 1 个 Trace 补充实验 | 6 项旧测试通过；Review 的 4 个反例可复现 | `output/pdf/versions/chapter3/chapter3-v1.0.pdf`，28 页，SHA-256 `D259D6B8207D334E209AD7B42432EE9953960F4E67F82DFF6F0C89C20F7400F6` |
+| v1.1 | 2026-08-14 | `book-chapter3-v1.1` | 按 Codex Review 完成 Observation 驱动策略、结构化 Verifier、Trace 审计、超时与幂等失败注入、框架事实复核、答案与排版修订 | 19 项 Python 测试、6 个实验脚本、4 项渲染门禁测试通过；30 页 PDF 全页目检通过 | `output/pdf/versions/chapter3/chapter3-v1.1.pdf`，30 页，SHA-256 `3E2E6319B17B0A972FEEB4A8172E74D2EAD55FC2FCB70A91230EC882DFEEE54D` |
+
+## 第 5 章：上下文工程
+
+| 版本 | 日期 | Git tag | 状态与主要变化 | 自动验证 | PDF |
+| --- | --- | --- | --- | --- | --- |
+| v1.0 | 2026-08-16 | `book-chapter5-v1.0` | 首个复审发布版；包含 ContextItem、SourcePolicy、Context Builder、Context Packet、五组边界实验、7 张原创图、14 道分层练习与双视角 Review | 第 5 章 50 项及第 4 章 24 项 Python 测试、4 项渲染门禁通过；28 变体报告二次生成 SHA-256 一致；SVG、链接、敏感信息与 P1 静态检查通过；35 页 PDF 全页目检通过 | `output/pdf/versions/chapter5/chapter5-v1.0.pdf`，35 页，SHA-256 `1F63F6FF87F3AB4DCAD493DE49731C1CEFB1A55F82EBC80C2604E7DDEBEC9CD4` |
+| v1.1 | 2026-08-16 | `book-chapter5-v1.1` | 按独立 Review 完成练习答案同步、真实 Grader 门禁、结构化缺 Key 报告、预算语义重构、冲突矩阵扩展及工具协议证据收口；v1.0 不改写 | 第 5 章 63 项及第 4 章 24 项 Python 测试、4 项渲染门禁通过；30 变体报告二次生成 SHA-256 一致；链接、15 脚注、7 SVG、凭据与旧 P1 静态检查通过；36 页 PDF 全页目检通过 | `output/pdf/versions/chapter5/chapter5-v1.1.pdf`，36 页，SHA-256 `2843EF79D820A4EC3B18FFDA1DD1EC73CD598160301FDEDE291AD37460C50874` |
+
+## 第 6 章：长任务中的上下文架构
+
+| 版本 | 日期 | Git tag | 状态与主要变化 | 自动验证 | PDF |
+| --- | --- | --- | --- | --- | --- |
+| v1.0 | 2026-08-17 | `book-chapter6-v1.0` | 首个正式发布版；包含 Event Log、Working Set、CompactionArtifact、RunCheckpoint、Context Rehydration、五组确定性实验、失败矩阵、7 张原创图、14 道分层练习与四视角 Review；保留 `chapter6-v1.0-draft`。后续复核发现第 23 页独立粗体段首、第 45 页小结孤行，以及 PDF 内 16 个作者本机文件链接，已由 v1.0.1 修复；本版标记为 superseded，历史文件与 tag 不改写 | 第 4/5/6 章分别 24/63/140 项 Python 测试及 5 项渲染门禁通过；15-case JSON、Markdown、JSONL Trace 两次生成 SHA-256 一致，分别为 `50CBBC74C8D938D619DAB131F8D37BBB8443162C1FEA74233C90FD6EB3686E5E`、`F05FBA8F7A4EF7177EA7FE1B1FA18F8CC7528BD9D806D0FEEB1AFF86F87CE107`、`CBCC12216DF02182D9E5B4F64A3A1B29EF9554140877E33CBC986FE69604EB96`；7 SVG 的 XML、安全、桌面与 390px 响应式门禁通过；47 页 PDF 全页目检通过 | `output/pdf/versions/chapter6/chapter6-v1.0.pdf`，47 页，SHA-256 `211B722B74715C0C139BE4E70266327348DCF2833C61648E055AB8B30D072C1E` |
+| v1.0.1 | 2026-08-17 | `book-chapter6-v1.0.1` | 当前发布版；合并第 23 页独立粗体段首，收束小结以消除第 45 页孤行；发布 HTML 不再嵌入 `<base>`、作者本机样式或脚本路径，仓库内链接改为不可点击的可移植引用，图片使用相对路径；PDF 只保留 10 个外部 HTTPS URI，作者本机 URI 为 0 | 第 4/5/6 章分别 24/63/143 项 Python 测试及 5 项 Node 渲染门禁通过；新增 HTML 搬迁语义、PDF annotation URI 和历史 PDF 保留测试；15-case JSON、Markdown、JSONL Trace 两次生成及 canonical SHA-256 仍分别为 `50CBBC74C8D938D619DAB131F8D37BBB8443162C1FEA74233C90FD6EB3686E5E`、`F05FBA8F7A4EF7177EA7FE1B1FA18F8CC7528BD9D806D0FEEB1AFF86F87CE107`、`CBCC12216DF02182D9E5B4F64A3A1B29EF9554140877E33CBC986FE69604EB96`；47 页替代 PDF 全页目检通过，最终渲染与已目检页面逐页像素一致 | `output/pdf/versions/chapter6/chapter6-v1.0.1.pdf`，47 页，SHA-256 `15B08A2679710CE06E0115C46A9457648F782215448F8B03BC28FADF42C73000`；稳定预览与版本 PDF 字节一致 |
+
+## 第 8 章：RAG 与知识库
+
+| 版本 | 日期 | Git tag | 状态与主要变化 | 自动验证 | PDF |
+| --- | --- | --- | --- | --- | --- |
+| v1.0 | 2026-08-28 | `book-chapter8-v1.0` | 首个网站发布版；包含 v0—v7 主线、18 篇虚构文档、20 个确定性案例、8 张原创图、14 道练习与四视角 Review；后续复审发现状态预期与实际结果未分流、两条拒答夹具合同不完整、Precision@K 口径不一致，由 v1.1 修复 | 56 项第 8 章测试通过；三份规范报告可重复生成；CI 与 Pages 发布成功 | 未生成独立 PDF；历史正文、代码与网站源文件由 Git tag 固定 |
+| v1.1 | 2026-08-28 | `book-chapter8-v1.1` | 当前优化版；补齐无答案 fact 合同和 Partial 事实集合，区分 10 个符合性案例与 3 个失败探针，新增状态分类与摘要，统一唯一文档/固定 K 指标口径，同步报告、Trace、图 8-8、正文、来源和 Review | 60 项第 8 章测试通过；JSON、Markdown、JSONL SHA-256 分别为 `FA711B9F6203D97602612C8A017B82FC6B275E5CF02083F4981837D2236317EB`、`2D53AE220A48466701D9DFA2B507E3D6339DB6AACEB8CDC588CE1927C099259A`、`A6C6BA9F668173A1C3A9DBFC4246A2402ACA127D261C6B2D1C80EB9B38F18C9C` | 未生成独立 PDF；网站为本章当前发布载体 |
+| v1.2 | 2026-08-29 | `book-chapter8-v1.2` | 加入检索前知识加工、派生问答与 Source Chunk 的来源边界，补充二值量化适用条件，并据此优化主流程、实验边界与图 8-2 | 第 8 章 61 项测试与规范报告复现通过；GitHub CI、Pages 和 `wlxralf.com` 发布成功 | 未生成独立 PDF；历史正文、代码与网站源文件由 Git tag 固定 |
+| v1.3 | 2026-08-30 | `book-chapter8-v1.3` | 新增中文原创“RAG 如何工作”主信息图，用离线知识加工、在线证据回答和四道责任边界建立第一遍阅读路线；原 8 张 SVG 技术图全部保留 | 第 8 章 61 项测试、仓库 41 项合同测试、4 项渲染测试与 MkDocs strict 构建通过；WebP 主图约 206 KiB | 未生成独立 PDF；网站与 Git tag 为本次发布载体 |
+| v1.4 | 2026-09-07 | `book-chapter8-v1.4` | 修正 Chunk 事实继承边界和重排后的资格、父摘要回查；统一 reciprocal_rank 口径；新增真实请求检查入口并将生产扩展移到独立指南；同步全书读者路径编辑版 | 第 8 章 71 项、仓库 43 项合同测试及 4 项渲染测试通过；其他已发布章节 372 项回归通过；规范报告可重复生成，MkDocs strict 构建通过 | 未生成独立 PDF；网站与 Git tag 为本次发布载体 |
+
+## 第 9 章：工具调用与 MCP
+
+| 版本 | 日期 | Git tag | 状态与主要变化 | 自动验证 | PDF |
+| --- | --- | --- | --- | --- | --- |
+| v1.0 | 2026-09-01 | `book-chapter9-v1.0` | 首个正式发布版；包含 v0–v6 渐进主线、8 幅原创手绘图、5 组 20 个确定性案例、14 道练习、来源台账与双视角 Review | 第 9 章 46 项测试、仓库发布检查与 MkDocs strict 构建通过 | 未生成独立 PDF；网站与 Git tag 为本章发布载体 |
+| v1.0.1 | 2026-09-01 | `book-chapter9-v1.0.1` | 发布扫描热修版；仓库级安全检查忽略本地 Worktree，避免把工程工作目录误判为待发布内容；正文和实验结论不变 | 新增 Worktree 扫描回归测试；标签与 v1.0 指向同一最终发布提交 | 未生成独立 PDF；历史由 Git tag 固定 |
+| v1.0.2 | 2026-09-04 | `book-chapter9-v1.0.2` | 复审优化版；修正旧版 MCP 握手方向和 Function Calling / Runtime / MCP 架构关系；统一“三份调用合同 + 一份写操作回执”的语义；为三个 Tool 落实 Output Schema 及运行时验证；增加阅读路线、版本冻结点和一个输出合同失败实验；旧图、旧 Review 与旧 tag 均保留 | 第 9 章 47 项测试；规范报告 21 个 Case，其中 20 个 Runtime Observation、1 个 Specification Fixture；仓库发布检查与 MkDocs strict 构建通过 | 未生成独立 PDF；网站与 Git tag 为本章发布载体 |
+| v1.0.3 | 2026-09-04 | `book-chapter9-v1.0.3` | 当前发布元数据热修版；正文、代码、报告和插图与 v1.0.2 相同；修正 `book/manifest.json` 中全书更新时间、第 9 章更新时间和仍写作“四份工具合同”的旧摘要，增加回归断言，确保独立博客同步后不会继续显示旧口径 | 第 9 章 47 项测试；仓库 42 项合同测试；发布安全检查与 MkDocs strict 构建通过 | 未生成独立 PDF；网站与 Git tag 为本章发布载体 |
+
+## 第 10 章：大规模工具集与异步任务
+
+| 版本 | 日期 | Git tag / 保存位置 | 状态与主要变化 | 自动验证 | PDF |
+| --- | --- | --- | --- | --- | --- |
+| v1.0-rc1 | 2026-09-07 | `codex/chapter10-tools-async-v1` 候选分支，候选提交 `b11240b`、交接提交 `a51511f` | 首个完整写作候选；约 2 万中文字符、6 幅原创手绘图、5 组标准库实验、14 道练习与答案、官方来源和自审；保留第 1–9 章全部正文、旧图和 tag，未覆盖公开版本 | 37 项章节检查（36 项运行/解答，1 项可选 HTML 预览）；双连接领取、事务失败回滚、规范报告复现；不含真实模型、外部 SDK 或分布式 exactly-once | 未生成或发布 PDF/EPUB |
+| v1.0 | 2026-09-08 | `book-chapter10-v1.0` | 首个正式发布版；正文与候选主线不变，补齐发布清单、网站导航、实验状态、版本恢复入口和 CI 合同；v1.0-rc1 候选提交继续保留 | 第 10 章 37 项检查、仓库合同、已发布章节回归、4 项 Node 排版合同、规范报告复现、发布安全检查与 MkDocs strict 构建通过 | 未生成独立 PDF；网站与 Git tag 为本章发布载体 |
+| v1.1 | 2026-09-09 | `book-chapter10-v1.1` | 当前发布版；修复截止时间后同意图重试无法找回既有作业，新增完整 quickstart，明确提交资格与业务正确性边界，补充状态表、版本化图 10-4、练习答案与复审记录；v1.0 不改写 | 第 10 章 42 项测试、仓库 43 项合同、4 项 Node 渲染合同通过；原规范报告逐字节复现；双宽度预览、发布安全检查与 MkDocs strict 构建通过 | 未生成独立 PDF；网站与 Git tag 为本章发布载体 |
+
+v1.0-rc1 是正式发布前的冻结候选，未单独创建 tag；其两个提交仍可从 Git 历史恢复。v1.0 只增加发布所需元数据、导航和门禁，不重写候选提交。第十章未生成或发布 PDF/EPUB。
+
+### v1.1 发布说明（2026-09-09）
+
+保存分支：`codex/chapter10-review-v1.1`。基线为 `book-chapter10-v1.0`（`c50a5ec`），旧 tag、旧图和旧 Review 保留。
+
+- 修复同意图在原截止时间后重试被错误拒绝；新意图继续受期限与容量约束，同键参数冲突不绕过，重试不改写原预算。
+- 新增 `chapter10/quickstart.py`，用完整报表流程连接提交、领取、计算、进度、提交与查询。
+- 区分提交资格验证和业务正确性，新增状态转移表；图 10-4 使用版本化新文件并注明常见路径，补齐参考答案。
+- 验证：42 项章节测试、43 项仓库合同、4 项 Node 渲染合同通过；原规范报告逐字节复现；1280px/390px 预览六图加载、片段链接与整页宽度检查通过；MkDocs strict 构建通过。
+- 正式版本由 `book-chapter10-v1.1` 固定，公开 manifest 升级为 v0.10.1；发布后分别验收 GitHub Pages 与独立阅读站点。
+
+## 第 11 章：Coding Agent：代码库就是它的环境
+
+| 版本 | 日期 | 保存位置 | 状态与主要变化 | 验证范围 |
+| --- | --- | --- | --- | --- |
+| v1.0-rc1 | 2026-09-10 | `codex/chapter11-coding-agent-v1` 本地候选分支 | 首个完整书稿；约 1.96 万中文字符、7 幅在用图、5 组实验、14 题及答案；附产品观察指南、来源和自审；保留已发布 1–10 章与旧 tag | 17 项章节检查；真实 Git/文件/子进程操作与规范报告复现；不含真实模型、产品端修复或沙箱安全评估 |
+| v1.0-rc2 | 2026-09-10 | `codex/chapter11-review-rc2` 本地修订分支；rc1 提交 `2ad0791` 不改写 | Review 优化；分离日志与结果、保留失败诊断、确认目标红灯后才冻结并修复；增加产品完整手动路线、最小 Skill 示例与练习 6–10 独立入口；旧报告和旧 Review 保留 | 26 项章节检查、4 项 Node 渲染合同、两宽度预览通过；规范报告逐字节复现；产品步骤未作为真实运行成绩 |
+| v1.0 | 2026-09-27 | `book-chapter11-v1.0` | 首个正式发布版；以 rc2 为内容基线，补齐公开 manifest、站点导航、CI、实验状态和版本恢复入口 | 26 项章节测试、仓库合同、发布安全检查、Node 排版合同与 MkDocs strict 构建通过；未执行产品端修复 |
+
+rc1/rc2 候选历史不改写；v1.0 由独立正式 tag 固定。图片技术修订使用版本化文件，初稿保留。未生成 PDF/EPUB。
+
+## 第 12 章：手写一个 Mini Coding Agent
+
+| 版本 | 日期 | 保存位置 | 状态与主要变化 | 验证范围 |
+| --- | --- | --- | --- | --- |
+| v1.0-rc1 | 2026-09-20 | `codex/chapter12-mini-agent` 本地候选分支 | 首个完整候选；手写 Loop、审批恢复、Verifier、Trace、真实框架适配、7 幅图、5 组实验与 14 题 | 209 项通过、1 项因 Windows 符号链接权限跳过；真实模型和容器隔离未验证 |
+| v1.0-rc2 | 2026-09-24 | 同一候选历史 | 修订教学边界与容器表述，完成权限环境下的符号链接回归 | 210 项章节测试、43 项仓库回归、站点与安全门禁通过 |
+| v1.0 | 2026-09-27 | `book-chapter12-v1.0` | 首个正式发布版；以 rc2 为内容基线，补齐公开清单、导航、隔离 CI 与版本记录 | 210 项章节测试、规范报告复现、仓库合同、Node 排版合同与 MkDocs strict 构建通过；真实模型运行未执行，容器隔离未验证 |
+
+rc1/rc2 候选记录和固定报告不改写。v1.0 发布不扩大实验边界，也未生成 PDF/EPUB。
+
+## 第 13 章：Agent 评估：答案正确还不够
+
+| 版本 | 日期 | 保存位置 | 状态与主要变化 | 验证范围 |
+| --- | --- | --- | --- | --- |
+| v1.0-rc1 | 2026-09-24 | `codex/chapter13-agent-evaluation` 本地候选分支；提交 `74e143d` | 首个完整书稿；12 个任务、120 条计分 Trial、7 幅图、5 组实验、14 题及答案；建立 Outcome、Trajectory、Safety、Efficiency 证据阶梯与三态发布门禁 | 33 项章节测试、43 项仓库回归、双目录报告复现、双宽度预览和 MkDocs strict 构建通过；不含真实模型或平台能力评测 |
+| v1.0-rc2 | 2026-09-26 | 同一本地候选分支；rc1 提交保持不变 | Review 优化；落实 capability/regression/adversarial 用途视图与 Regression 门禁，升级 v2 Schema 并接入真实校验，增加异质 Bootstrap 教学样本、事件序列校验、任务路径边界和 Live Judge 响应合同 | 38 项章节测试、43 项仓库回归、双目录报告逐字节一致、Draft 2020-12 Schema、双宽度预览、仓库检查与 MkDocs strict 构建通过 |
+| v1.0 | 2026-09-27 | `book-chapter13-v1.0` | 首个正式发布版；以 rc2 为内容基线，接入公开清单、站点与隔离 CI | 38 项章节测试、Schema、报告复现、仓库合同、Node 排版合同与 MkDocs strict 构建通过；不含真实模型或平台能力评测 |
+
+两个候选版本未单独创建发布 tag；v1.0 由正式 tag 固定并进入公开章节清单。rc2 新增文件保存修订历史，不覆盖 rc1 审稿与版本记录。未生成 PDF/EPUB。
+
+## 第 14 章：Benchmark、Tracing 与生产诊断
+
+| 版本 | 日期 | 保存位置 | 状态与主要变化 | 验证范围 |
+| --- | --- | --- | --- | --- |
+| v1.0-rc1 | 2026-09-26 | `codex/chapter14-benchmark-tracing` 本地候选分支；基线 `be655ca` | 首个完整书稿；24 个场景、72 条 Trace、5 组实验、7 幅图、14 题及答案；建立 Benchmark Card、依赖感知 Trace、采样/隐私与生产诊断闭环 | 66 项章节测试、43 项仓库回归、双目录报告与练习逐字节复现、Draft 2020-12 Schema、双宽度预览、仓库检查与 MkDocs strict 构建通过；不含真实模型、平台兼容或生产因果证明 |
+| v1.0-rc2 | 2026-09-26 | 同一本地候选分支 | Review 优化；加强未归因时间、证据充分性、采样隐私顺序与 Trace 合同 | 69 项章节测试、Schema、图形合同、报告复现、双宽度预览、仓库检查与 MkDocs strict 构建通过 |
+| v1.0 | 2026-09-27 | `book-chapter14-v1.0` | 首个正式发布版；以 rc2 为内容基线，接入公开清单、站点与隔离 CI | 69 项章节测试、Schema、报告复现、仓库合同、Node 排版合同与 MkDocs strict 构建通过；不含真实模型、平台兼容或生产因果证明 |
+
+rc1/rc2 候选未单独创建发布 tag；v1.0 由正式 tag 固定并进入公开章节清单。未生成 PDF/EPUB。
+
+## 第 15 章：Agent 的后训练
+
+| 版本 | 日期 | 保存位置 | 状态与主要变化 | 验证范围 |
+| --- | --- | --- | --- | --- |
+| v1.0-rc1 | 2026-09-27 | `codex/chapter15-agent-post-training` 本地候选分支 | 首个完整书稿；24 条教学轨迹、有限动作 SFT/DPO、奖励投机与硬门禁、5 组实验、7 幅图、13 题及答案、来源台账和双视角审稿 | 第 15 章锁定依赖测试、两次规范报告复现、仓库合同、桌面与移动预览、严格站点构建；真实模型与 GPU 训练未执行，公开 manifest 保持 `0.14.0` |
+| v1.0-rc2 | 2026-09-28 | 同一本地候选分支；内容修订 `fc3ba4a`，复审修复 `56aa08a` | 打通审计→SFT；补齐偏好来源与双侧敏感检测、家族泄漏闭包；增加真实有限策略奖励更新、预算和探索，区分静态门禁；补充 Token/LoRA 迁移桥梁，修订图文；rc1 正文、7 图和报告另存 | 175 项章节与仓库合同、89 个子测试、4 项 Node 合同通过；两套报告哈希一致；7 图/6 表双宽度预览和严格构建通过；未执行真实模型/GPU，未发布 |
+
+rc1 不推送、不合并、不创建发布 tag，不进入公开章节清单。其细节与可恢复提交见 [第 15 章 rc1 记录](chapter15-v1.0-rc1.md)。
+
+rc2 同样仅保留本地候选，不改写 rc1 或已发布章节。详见 [rc2 版本记录](chapter15-v1.0-rc2.md)、[rc2 审稿](../reviews/chapter15-review-codex-v1.0-rc2.md) 与 [rc1 归档](chapter15-v1.0-rc1/README.md)。第 14 章转场只记录待发布勘误，不在本轮修改其原稿。
+
+## 第 16 章：从失败中学习：持续改进系统
+
+| 版本 | 日期 | 保存位置 | 状态与主要变化 | 验证范围 |
+| --- | --- | --- | --- | --- |
+| v1.0-rc1 | 2026-09-29 | `codex/chapter16-continuous-improvement` 本地候选分支 | 12 条反馈、6 份文档、16 项任务；五组离线实验、三类实际消费资产、独立验收与审批、稳定灰度与回滚；7 幅图、13 题及答案 | 锁定章节测试、规范报告复现、读者/专家自审与一次新上下文整分支审查、本地预览及严格站点构建；实际结果见版本记录，不代表真实模型收益或线上安全 |
+| v1.0-rc2 | 2026-09-29 | 同一本地候选分支；RC1 冻结点 `c693d3a` 不改写 | 修复回滚旁路及停用后的旧激活重试；逐资产绑定来源实际行为字段；回放区分输出变化与正向修复；补充四组关键输出与候选卡，序列化细节移入进阶说明；RC1 稿图/报告/记录保留 | 新正常路径回归、两套九文件与练习字节复现、双宽度预览和公开构建边界；完整结果及最终审稿状态见 RC2 记录，仍不含真实模型/线上 A/B |
+
+详见 [第 16 章 RC1 版本记录](chapter16-v1.0-rc1.md)与[双视角审稿](../reviews/chapter16-review-codex-v1.0-rc1.md)。[审稿前稿图快照](chapter16-draft-before-review/README.md)和[旧报告](../../chapter16/report-history/draft-before-review/manifest.json)保留；第 1–15 章原稿、插图及旧版本记录不改写。公开 manifest 仍为 `0.14.0`，第 15/16 章保持 `planned`，本轮不推送、不建 tag/PR、不合并、不部署。
+
+RC2 详见[版本记录](chapter16-v1.0-rc2.md)与[双视角修订审稿](../reviews/chapter16-review-codex-v1.0-rc2.md)。[RC1 稿图快照](chapter16-v1.0-rc1/README.md)及[RC1 九份报告](../../chapter16/report-history/v1.0-rc1/manifest.json)保留；RC1 原 Review 和版本记录不改写。技术图布局与来源台账不变，不新增平台、模型安装、翻译或发布动作。
+
+## 第 17 章：多模态与实时 Agent
+
+| 版本 | 日期 | 保存位置 | 状态与主要变化 | 验证范围 |
+| --- | --- | --- | --- | --- |
+| v1.0-rc1 | 2026-09-30 | `codex/chapter17-multimodal-realtime` 本地候选分支 | 首个完整书稿；受限 SVG/CSV 图表、合成屏幕、固定语音事件与跨模态证据合同；20 个固定案例、五组实验、七图、13 题及答案、来源台账和双视角审稿 | 第 17 章 62 项测试，连同第 15/16 章与仓库合同共 325 项及 93 子测试通过；两套九文件报告逐字节复现，双宽度预览、历史安全扫描与严格站点构建通过；不含真实模型、OCR、桌面控制、录音或实时延迟评测 |
+| v1.0-rc2 | 2026-09-30 | 同一本地分支；RC1 冻结点 `549de84`、九文件旧报告和原 Review/版本记录不改写 | 新上下文整分支复审修订：严格 UTF-8 与扁平 SVG、重复 CSV 表头、像素下取整和后验时间；安全硬门禁从逐案例重算；组 2/5 增加五个失败/刷新案例，补预览依赖与练习事件缺号语义 | 第 17 章 73 项、与第 15/16 章及仓库合同合计 336 项和 93 子测试通过；RC2 两套九文件逐字节一致、Node 4 项、双宽度预览、历史扫描及严格站点构建通过；仍无真实模型/生产接入 |
+| v1.0-rc3 | 2026-10-01 | 同一本地分支；RC2 冻结点 `4d96603`、稿图与直接链接证据快照、RC1/RC2 原报告和记录保留 | 收窄 SVG 的 viewport/着色/图层合同；分开生成取消请求、确认与播放状态；三个语音案例绑定各自真实输入摘要；补实际输出与短代码路径，精简开场与重复说明，图 17-6 同步标签 | 第 17 章 85 项、相关矩阵 348 项及 93 子测试；两套九文件和独立练习逐字节复现；正文示例、七图双宽度预览与严格站点构建通过。整库根目录命令有 15 项收集错误，详见 RC3 记录，不宣称全书测试通过 |
+
+本版仅本地候选，不推送、不合并、不建 tag/PR、不部署。详见[RC1 版本记录](chapter17-v1.0-rc1.md)与[双视角审稿](../reviews/chapter17-review-codex-v1.0-rc1.md)。公开 manifest 和第 1–16 章历史内容不改写。
+
+RC2 详见[版本记录](chapter17-v1.0-rc2.md)与[新上下文复审处理](../reviews/chapter17-review-codex-v1.0-rc2.md)。RC1 冻结提交与[RC1 报告](../../chapter17/reports/reference-rc1/manifest.json)保持原样；当前正文以[RC2 报告](../../chapter17/reports/reference-rc2/manifest.json)为准。未发布，不新增平台或模型接入。
+
+以上 RC2 段落是当版历史状态，不回写。最新本地正文为 RC3，以[RC3 报告](../../chapter17/reports/reference-rc3/manifest.json)为准，见[修订记录](chapter17-v1.0-rc3.md)和[读者/专家复核](../reviews/chapter17-review-codex-v1.0-rc3.md)。[RC2 快照](chapter17-v1.0-rc2/README.md)的 14 份冻结文件已逐字节核对；公开 manifest 仍为 `0.14.0`，第 17 章未发布。
+
+## 第 18 章：Multi-Agent 与最终系统：不是 Agent 越多越好
+
+| 版本 | 日期 | 保存位置 | 状态与主要变化 | 验证范围 |
+| --- | --- | --- | --- | --- |
+| v1.0-rc1 | 2026-10-01 | `codex/chapter18-multi-agent-final-system` 本地候选分支；审稿前 `14493f9`、修复内容点 `e95b211` | 首个完整候选；24,021叙述汉字、七图、五组20案与13题；知识/修复双路、有界协作、控制交接、子树预算和单写者验收；旧九文件与原提交保留，当前包另存reviewed目录 | 101项本章测试，相关矩阵348项与93子测试、Node4项；两次九文件及独立答案字节一致，双宽度预览、仓库扫描和严格公开清单构建。整库根目录仍15项既有收集错误，不称全书通过；无真实模型/并发性能/生产隔离 |
+
+仅本地候选，不推送、不合并、不建tag/PR、不部署，未生成译文或PDF。详见[RC1版本记录](chapter18-v1.0-rc1.md)与[读者/专家及独立审稿处理](../reviews/chapter18-review-codex-v1.0-rc1.md)。[审稿前报告](../../chapter18/reports/reference-rc1/manifest.json)保持原字节；当前正文以[审稿后规范包](../../chapter18/reports/reference-rc1-reviewed/manifest.json)为准。第1–17章稿图、代码、报告与旧版本记录不改写，公开manifest仍 `0.14.0`。
+
+### 第18章增量优化：v1.0-rc2
+
+| 版本 | 日期 | 基线/冻结范围 | 主要变化 | 验证 |
+| --- | --- | --- | --- | --- |
+| v1.0-rc2 | 2026-10-02 | RC1完整冻结点 `c1c2586`；本地候选分支不变 | 保留63份旧文件快照及两套RC1原包；四幕、七图、20案与13题不变；24,870叙述汉字，改善状态说明/实验输出/知识答案，补强四项知识证据关联 | 107项本章、相关348项与93子测试、Node4项；两次九文件与两次独立答案一致；双宽度预览、218源严格构建。根整库仍15项既有收集错误，不称全书通过 |
+
+当前第18章候选为[RC2](chapter18-v1.0-rc2.md)，对应[本轮读者/技术审稿](../reviews/chapter18-review-codex-v1.0-rc2.md)与[RC2规范包](../../chapter18/reports/reference-rc2/manifest.json)。[RC1原稿快照](chapter18-v1.0-rc1/README.md)、原版本记录及报告保留；旧段落描述的是当时冻结状态，不回填RC2验证。未推送、未发布，公开manifest与导航不变。
+
+## 附录 A：Python、TypeScript 与模型 API 快速准备
+
+| 版本 | 日期 | 基线/保存位置 | 内容与状态 | 验证范围 |
+| --- | --- | --- | --- | --- |
+| v1.0-rc1 | 2026-10-03 | 第18章RC2冻结点fffa620；本地codex/appendix-a-environment-setup | 首个附录候选，四图、三组离线练习、九题答案、来源、双视角自审与独立只读审查、本地预览；不改18章旧内容 | 14项无第三方核心、22项交付、相关477项与107子测试、Node4项；双宽度预览及218源严格构建通过；真实API、tsc与跨平台全量验证未执行 |
+
+详见[附录 A RC1记录](appendix-a-v1.0-rc1.md)、[审稿](../reviews/appendix-a-review-codex-v1.0-rc1.md)及[规范包](../../appendix_a/reports/reference-rc1/manifest.json)。首次版本由本轮本地提交冻结，后续另立RC2并保留原包；公开manifest仍0.14.0、18章目录与已发布状态不变，不推送、不部署。
+
+## 后续版本要求
+
+其他章节首次纳入版本管理时，先按当时状态建立 `v1.0` 基线并生成版本化 PDF，再开始 Review 修订。任何正文、配套代码、练习答案、资料台账或图示发生实质变化，都必须在本文件新增版本记录；不能先覆盖旧版、事后再猜测历史内容。

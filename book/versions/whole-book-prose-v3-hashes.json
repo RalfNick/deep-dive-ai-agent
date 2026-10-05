@@ -1,0 +1,199 @@
+{
+  "schema_version": "book.editorial-revision.v1",
+  "edition": "editorial-v3-local",
+  "date": "2026-10-05",
+  "baseline_commit": "c8f2995343e90de0721c4236f880c88bbcb3d324",
+  "predecessor_edition": "editorial-v2-local",
+  "before_archive": "whole-book-prose-v3-before-2026-10-05",
+  "status": "local_unpublished",
+  "artifacts": [
+    {
+      "source": "book/appendix-a.md",
+      "sha256": "201FD1532B7D72F99F455634BE7025718ED3EAFB0D450B474C441A71991FC9E3"
+    },
+    {
+      "source": "book/chapter1.md",
+      "sha256": "AA6BDAD44D793F3562E7BAB86BB9DDBAEF0ED2985F971A8B56503B884E71A267"
+    },
+    {
+      "source": "book/chapter10.md",
+      "sha256": "116E9CFD4B679DEAC80BF1B0789CA772A46220E851D78B5B22A8756E5D95A53B"
+    },
+    {
+      "source": "book/chapter11.md",
+      "sha256": "52E14DC9B11C77AFA4BE0F398BE53F011E5AA1D0A727BBB019A9BCC10908A86C"
+    },
+    {
+      "source": "book/chapter12.md",
+      "sha256": "6737D4C37E3651E7FF4C85D41FE9F39E2340FA4371125C734E1A267DD000E3F8"
+    },
+    {
+      "source": "book/chapter13.md",
+      "sha256": "5E7C0F79079215FF758244222ECC3B25410BFB95399539C6957ECAA37561B33C"
+    },
+    {
+      "source": "book/chapter14.md",
+      "sha256": "75AE3D69097730A615B24453EBB94E8DE1E42662FF78872A15E778AEAB706120"
+    },
+    {
+      "source": "book/chapter15.md",
+      "sha256": "B3C7EDA64A91FD8C7CAC22F51AE80B7DD2ABA731499B5BA96EBD52D363CB3469"
+    },
+    {
+      "source": "book/chapter16.md",
+      "sha256": "850B1A33F4E5C1DD497FA10B4045E3D835187091681EE35D3EBAFB72ABDDF07C"
+    },
+    {
+      "source": "book/chapter17.md",
+      "sha256": "C37DB74E5373DCFBDD1A2C50624F9FB7D7DF6D10D13D26529B04AEBBDE937430"
+    },
+    {
+      "source": "book/chapter18.md",
+      "sha256": "6941A868FB68EDFB28AF7CE4A49457CCFD6983C2EE65D7A5C438F44AD94E2E0D"
+    },
+    {
+      "source": "book/chapter2.md",
+      "sha256": "6FE14BF7011FD56908ACB9C87ABD0DE4E8F0EB158FBF3D229F4C05BFD48451AE"
+    },
+    {
+      "source": "book/chapter3.md",
+      "sha256": "AAAEF5C1E318EC337A21FA6D0690798D322F273A5A2DB1AC39FA5035573BFE68"
+    },
+    {
+      "source": "book/chapter4.md",
+      "sha256": "954A3F89E7F09E45701E5557AE3FD88D3BF8763502E051EA483613E11A10181D"
+    },
+    {
+      "source": "book/chapter5.md",
+      "sha256": "591E8546A1F60CFC4FBDF666B1DA14013EEB25767D2CEC8341A53B13682837CC"
+    },
+    {
+      "source": "book/chapter6.md",
+      "sha256": "C2E077CFBBC34ED5BDCD01E3BFCD780912F87AC1EBBCC9F27E70B2FB02F2B4F5"
+    },
+    {
+      "source": "book/chapter7.md",
+      "sha256": "08034171123672B359907BCE6ECC2082DD83D652487D1471D0C22E17A8565518"
+    },
+    {
+      "source": "book/chapter8.md",
+      "sha256": "637CE202CE03E5A5E377392EECBD044CEA63EB1F043B14DCBABCA6E2DCA1E586"
+    },
+    {
+      "source": "book/chapter9.md",
+      "sha256": "F3133A1ADBC5B77F27CDE4F750AA4D2105953AB4E017252ED1E3D1EE2518F234"
+    },
+    {
+      "source": "book/introduction.md",
+      "sha256": "481E9C77E68098FD63E5DC785AA85DE4C0D24810BB6999A334CCC18530688737"
+    },
+    {
+      "source": "book/manifest.json",
+      "sha256": "8FB37DA97B23B98B3E73E1A00361D328063C69A4A12ECD1D962A0C687CD8375A"
+    },
+    {
+      "source": "book/OUTLINE.md",
+      "sha256": "148C14650922F3EBB65E3A1A396FC8F39E73E708CFF5830E7C34B8A8C809D6E9"
+    },
+    {
+      "source": "book/READING_PATHS.md",
+      "sha256": "D72A631ABCA9100A3923A8D2C9EB86DD7DBE05DF006A553AB539BD9E8F1EC2CD"
+    },
+    {
+      "source": "book/reviews/whole-book-reader-revision-v2-review-2026-10-03.md",
+      "sha256": "41F50648A4207EE006BD071CDB2B662B137D3F37A14E1E2ACDE72E9F5872A74E"
+    },
+    {
+      "source": "book/tests/edition_contracts.py",
+      "sha256": "9F3CAEDA4FD2BF422C13B9246F5BB3556BEACAB43D48737D2F31370A2A1590C7"
+    },
+    {
+      "source": "book/versions/CHAPTER_VERSIONS.md",
+      "sha256": "7B8DC04388E7B2F0404B61E8005BA36C01E2B4078233315A3FDBED425A801B2B"
+    },
+    {
+      "source": "book/versions/whole-book-reader-v2-before-2026-10-03/README.md",
+      "sha256": "62934CE749844CBA49D36970FA98B3998BA715270301C1E4730DA17C1E355308"
+    },
+    {
+      "source": "book/versions/whole-book-reader-v2-before-2026-10-03/snapshot-hashes.json",
+      "sha256": "224175EA3D90C74B518FBCCD2A571465116B15FA6F44FA9744847F683EC47166"
+    },
+    {
+      "source": "book/versions/whole-book-reader-v2-hashes.json",
+      "sha256": "9F21EF161FF4EA1AFF0581D000B53FC7B29E2E9EE2410ADA03D7B4E60B43A58D"
+    },
+    {
+      "source": "book/versions/whole-book-reader-v2-local.md",
+      "sha256": "B6938A4FB070CD208450E0091F5A96A5DB51461180F7AB984FBDB79BC7C4CC0B"
+    },
+    {
+      "source": "book/WRITING_GUIDE.md",
+      "sha256": "E8DC308E13219D59CF7CEBA4479034FD264B815BCE5E1CF2EB87A75213213846"
+    },
+    {
+      "source": "chapter12/README.md",
+      "sha256": "91C6E3D26F9EB38A57A44E717E9EF20CA58280D31C41AB731C0B3FA518D97E48"
+    },
+    {
+      "source": "chapter12/tests/test_delivery.py",
+      "sha256": "72972BF9A5F7D3CFE7462F0A12C7558558436F6C8987E91DCCC1DE986574DB95"
+    },
+    {
+      "source": "chapter12/tests/test_manuscript.py",
+      "sha256": "7F4FC351DB61114E7E2E5079508BA49896592F717BE86CAADF8C7C338D1B236E"
+    },
+    {
+      "source": "chapter14/tests/test_reader_tools.py",
+      "sha256": "7E13EC477FA5875D15669147B5057F230BA7B7E12303DBE6F35A5B244BAF3B7A"
+    },
+    {
+      "source": "chapter15/tests/test_manuscript.py",
+      "sha256": "1F8137F56A6FF05FE55271FB594D14E2EB4EA4D42F195ED826ABF88669D622EB"
+    },
+    {
+      "source": "chapter16/tests/test_delivery.py",
+      "sha256": "65656405AFD26D68011A61C301AEE4AF389534394BD03FDADC36C929E59E52CF"
+    },
+    {
+      "source": "chapter16/tests/test_manuscript.py",
+      "sha256": "A6525778DF7DAE1E2FFE198DB5B4DFE88D0C38859F80444FB7495D87D42D927D"
+    },
+    {
+      "source": "chapter18/tests/test_delivery.py",
+      "sha256": "FC07573965D9FF6EAA68345983B675EF266BCDF71A0FCDD21E4C2B209DE62333"
+    },
+    {
+      "source": "mkdocs.yml",
+      "sha256": "8DB9447438912BDE0B8D64F6CB765F1665B1B25C0273D904A36BE40627FC2A9C"
+    },
+    {
+      "source": "scripts/build_site.py",
+      "sha256": "B434E8D04E1D9BACEA1700963E18256C311E529BDAB3BB169B57F5C2F4BFBDD5"
+    },
+    {
+      "source": "tests/test_migration_manifest.py",
+      "sha256": "6418D0A9C6DE148E75BCBFE1DE057EF95E000BF75CAD35B68C3E090B1FE306FC"
+    },
+    {
+      "source": "tests/test_reader_revision_history.py",
+      "sha256": "609CFF76BCA2CBB72A777CFE9E6ABFFAEF3D78116272D9DAC9346FB879871D84"
+    },
+    {
+      "source": "book/versions/whole-book-prose-v3-before-2026-10-05/README.md",
+      "sha256": "7767F7B5DCC35088A4DE2F3A7421EBCEC7D0574A62D4AB176CEC2D7374786C0C"
+    },
+    {
+      "source": "book/versions/whole-book-prose-v3-before-2026-10-05/snapshot-hashes.json",
+      "sha256": "F58D7A25C30D8DE58C21825D857BAAC21463D98F917690E18A732B6C23F694AA"
+    },
+    {
+      "source": "book/versions/whole-book-prose-v3-local.md",
+      "sha256": "AB442B8B0E4BD6D88534C00AFB2DD5F16380C344CC6A2F33A9E83B8D02E27FEF"
+    },
+    {
+      "source": "book/reviews/whole-book-prose-v3-review-2026-10-05.md",
+      "sha256": "3F5779B82CB73A2F006FA3588CE9962FEE63CE596D8A063828E886F6FA61BC4F"
+    }
+  ]
+}

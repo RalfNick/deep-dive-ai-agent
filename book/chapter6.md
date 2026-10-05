@@ -9,7 +9,7 @@ event_cursor: 24
 workspace_digest: workspace-price-v1
 ```
 
-> **证据说明**：这个 `run-tests` 场景是单元测试中的策略消融，用来单独观察“恢复步骤但丢失已证伪知识”；它不是固定报告里的 `checkpoint-only-v1`。两者的逐项对应放在后文实验部分。
+开头的 `run-tests` 场景取自单元测试，用于观察“恢复步骤却丢失已证伪知识”；它与固定报告中的 `checkpoint-only-v1` 不是同一输入。
 
 这看起来是一次成功恢复：运行编号没有变，Workspace 版本对得上，程序也确实回到了“运行测试”这一步。新的 Agent 执行测试，看到一部分用例通过，于是继续沿着“只调整最终舍入”的方案修改代码。
 
@@ -40,11 +40,11 @@ workspace_digest: workspace-price-v1
 
 接着问：如果卡片还在，但程序不知道哪个工具已经执行、哪个动作正在等待审批，能安全继续吗？也不能。于是我们需要保存两类内容：一类供程序定位执行位置，一类供下一轮决策理解任务。后文将它们称为**执行连续性**与**语义连续性**。
 
-先把这两个问题记住就够了：**程序从哪里继续？接手者带着哪些依据继续？** `RunCheckpoint`、`CompactionArtifact` 等名称，是随后实现这两项责任时才需要的工具。
+恢复必须回答两个问题：**程序从哪里继续？接手者带着哪些依据继续？**
 
-> **阅读提示**：第一遍先沿“任务卡 → 滑动窗口与摘要的失败 → 双连续性 → 恢复流程”阅读；标为进阶的状态分类和字段合同留到实现时查阅。本章接着第 5 章的 `ContextPacket`，讨论它在几十轮之后怎样被压缩、持久化和重建。正文使用一条固定的 30 事件价格修复轨迹和确定性 `ScriptedRepairPolicy`；离线结果只检验上下文生命周期边界，不比较真实模型、Claude Code、Codex 或框架能力。当前代码入口位于 [`chapter6/`](../chapter6/)，固定报告位于 [`context-continuity.json`](../chapter6/reports/context-continuity.json)，资料台账见 [`chapter6-sources.md`](./sources/chapter6-sources.md) 的 S01—S19。
+实验使用固定的 30 事件价格修复轨迹和确定性 `ScriptedRepairPolicy`，只检验压缩、持久化与重建的边界，不比较真实模型或产品能力。代码见 [`chapter6/`](../chapter6/)，固定报告见 [`context-continuity.json`](../chapter6/reports/context-continuity.json)，来源见 [`chapter6-sources.md`](./sources/chapter6-sources.md)。
 
-先给出全章短答案：**长任务需要同时恢复两种连续性。RunCheckpoint 恢复执行连续性，回答“从哪里继续”；Context Rehydration 恢复语义连续性，回答“带着哪些目标、约束、决定、未决问题与证据继续”。两者通过一个经过校验的 `CompactionArtifact` 协作，却不能互相替代。**
+**长任务需要同时恢复两种连续性。RunCheckpoint 恢复执行连续性，回答“从哪里继续”；Context Rehydration 恢复语义连续性，回答“带着哪些目标、约束、决定、未决问题与证据继续”。两者通过一个经过校验的 `CompactionArtifact` 协作，却不能互相替代。**
 
 ## 从一张 ContextPacket 到一条上下文生命周期
 
@@ -113,7 +113,18 @@ workspace_digest: workspace-price-v1
 
 ## 贯穿实验：冻结同一条价格修复轨迹
 
-本章不为每种策略换一个故事，而是固定同一个仓库任务：修复价格计算逻辑，同时满足旧配置兼容、公共函数签名不变、补充回归测试三个条件。Fixture 定义在 [`price_repair.py`](../chapter6/fixtures/price_repair.py)，共有 30 个按序事件：事件 1—24 形成压缩边界，事件 25—30 描述恢复后的确定性路径。
+第 1–5 章的 `parse_price()` 主要说明一次修复怎样闭环。本章换成 `calculate_price(config, amount)`，因为长任务需要同时携带配置兼容、公共接口和未完成测试三类信息。先用两份配置看清问题：
+
+| 输入 | 字段形状 | 希望得到什么 |
+| --- | --- | --- |
+| 新配置 | `rate=Decimal("1.05")`、`precision=Decimal("0.01")` | 金额按 1.05 倍计算，并保留两位小数 |
+| 旧配置 | `rate="1.05"`、`precision="0.01"` | 与新配置相同，不能要求所有旧调用方迁移 |
+
+这是说明业务的手算例，不是规范轨迹的运行结果：约定 `amount=Decimal("100.00")`，先乘 `rate`，再按 `precision` 舍入，两类配置都应得到 `Decimal("105.00")`。`Decimal` 在这里表示十进制数；`precision="0.01"` 还是字符串，需要先转换才能交给十进制舍入。只把舍入操作挪到最终返回处，不能补上旧分支缺失的配置转换。
+
+**任务的四个锚点**因此很清楚：输入是新旧两种配置；目标是结果一致；失败包括旧配置测试不通过或公共签名被改；验收要同时检查兼容行为、原有回归和接口不变。要改的是函数内部的归一化，不是让调用方换一套参数。
+
+本章固定这一个任务，不为每种 Context 策略换故事。Fixture 定义在 [`price_repair.py`](../chapter6/fixtures/price_repair.py)，冻结的是30个语义事件，并不执行上述示例业务函数；事件 1—24 形成压缩边界，事件 25—30 描述恢复后的确定性路径。
 
 轨迹故意把关键信息分散在时间上：
 
@@ -131,17 +142,7 @@ workspace_digest: workspace-price-v1
 
 五个主要实验组共享同一份 30 事件 Fixture、事件内容与顺序、`CompactionSeed`、`ScriptedRepairPolicy` 和工具结果；每个变体只选择声明的 cursor、Context 策略或恢复边界。`context_growth` 比较同一 Event Log 的两个冻结 cursor，其余主要对照都从事件 1—24 的同一压缩前缀开始。权限、沙箱、重试、Verifier 与模型能力不参与变化。
 
-失败矩阵也不能概括成“每一行都从可通过的结构化 Artifact 出发，只破坏一个字段”。[`failure_matrix.py`](../chapter6/experiments/failure_matrix.py) 实际包含两类构造：
-
-| Failure variant | 怎样构造 | 它精确检验什么 |
-| --- | --- | --- |
-| `early-constraint-loss` | 直接运行 `SlidingWindowStrategy(keep_events=8)`，再手工补回稳定 Goal | 这是窗口派生的受控失忆；事件 1—16 除 Goal 外整体离开可见集合，因而可能同时丢掉多项早期语义，不是对结构化基线的单字段破坏 |
-| `omitted-open-failure` | 从结构化策略的可见 key 集合中删除 open issue，再加入无证据的 `repair-complete` | 这是单个语义边界注入，观察开放问题被完成声明替换后的 `false_completion`；它不经过 Rehydrator 拒绝路径，也不是损坏 Artifact 文件 |
-| `workspace-digest-mismatch` | 保持已构造 Artifact 不变，只把 live Workspace Digest 改为 stale 值 | 单个恢复边界不匹配，Rehydrator 以 `stale_workspace_digest` 拒绝 |
-| `unsupported-artifact-schema` | 只把 `schema_version` 改为不支持值，并特意绕过构造器校验 | 单个 Artifact Schema 破坏，Rehydrator 以 `artifact_rejected_schema` 拒绝 |
-| `corrupt-artifact-source-digest` | 只替换 `source_digest` | 单个 Artifact 来源完整性破坏，Rehydrator 复算来源后以 `artifact_source_digest_mismatch` 拒绝 |
-
-因此，只有后三个是“保持其余边界不变、触发 Rehydrator 拒绝”的单边界案例；`omitted-open-failure` 是从结构化可见状态派生的单语义注入，`early-constraint-loss` 则是会连带移除多项早期语义的窗口案例。主要实验回答“Context 或恢复边界不同会怎样”，失败矩阵进一步展示几种性质不同的破坏方式，不能把它们写成同一种消融模板。
+信息被遗漏时，系统可能继续运行却做错；来源、版本或结构校验失败时，系统应拒绝恢复。两类故障的处理不同。
 
 下表列的是五个**实验组**；一个实验组可以包含多个 variant：
 
@@ -243,7 +244,19 @@ Append-all 的价值在于提供损失最少、容易解释的控制组。它告
 > python -m unittest chapter6.tests.test_experiments.ContinuityExperimentsTest.test_sliding_window_keeps_task_anchor_but_loses_early_constraint -v
 > ~~~
 >
-> **关键输出**：事件 2 的 `public-signature` 被裁掉，`constraint_retention=0.500`、`negative_constraint_retention=0.000`，固定决策为 `unsafe_signature_change`。
+> 这条测试命令只打印通过/失败，指标在断言中检查，不会逐项打印。要亲眼看到指标，从仓库根目录生成一份读者报告，再取出对应案例：
+>
+> ~~~powershell
+> python -m chapter6.experiments.run_all --output chapter6/.runs/reader-window
+> $report = Get-Content -Raw chapter6/.runs/reader-window/context-continuity.json | ConvertFrom-Json
+> $case = $report.cases | Where-Object variant -eq 'sliding-window-8-events'
+> $case | Select-Object variant,decision_kind
+> $case.grade | Select-Object constraint_retention,negative_constraint_retention
+> ~~~
+>
+> 请使用自己的新报告目录，不把输出指向仓库中的规范基线。生成器会写出三个报告路径；上面的查看命令才显示字段。也可以直接打开生成的 `context-continuity.md`，找到同名行。
+>
+> **关键观察（报告摘录）**：事件 2 的 `public-signature` 被裁掉，`constraint_retention=0.500`、`negative_constraint_retention=0.000`，固定决策为 `unsafe_signature_change`。
 >
 > **结论边界**：结果只说明当前轨迹的八事件窗口破坏了声明的不变量，不证明八是普遍错误的窗口大小。
 
@@ -448,7 +461,9 @@ Checkpoint-only 行的 Packet、恢复正确性和重复工作是“—”，因
 
 结构化不代表信息一定正确。字段可以被错误填充，来源事件也可能本来就错。因此 Artifact 仍要携带来源和版本；结构的收益是让系统知道应该检查什么、缺什么，而不是让错误自动消失。
 
-## 有序压缩提交：先证明 Artifact 存在，再让 Checkpoint 引用
+## 进阶阅读：有序压缩提交，先保存制品再引用
+
+制品保存成功后，检查点才能引用它。
 
 压缩跨越事实层、派生层与执行层。如果保存顺序含糊，进程恰好在中间退出，就可能出现“Checkpoint 指向不存在的语义制品”或“新 Artifact 被误当成已提交”的状态。
 
@@ -650,7 +665,7 @@ JSONL Trace 负责把表格结果还原成因果过程。看到 `unsafe_signatur
 
 对漂移告警也要设置优先级。文风、顺序或非必需背景变化可以进入观察队列；Goal、负向约束、Open Issue、Verification State、authority 和 Workspace 版本变化则应阻断恢复。若所有差异都报警，值班人员会迅速忽略噪声；若只比较最终决策，又会错过尚未触发危险动作的潜伏损失。字段分级让告警与恢复代价匹配。
 
-最后要把恢复演练纳入日常测试。定期从某个历史 Artifact 启动只读恢复，要求系统列出目标、仍开放问题、下一动作与证据来源，再与 Event Log 的黄金合同对账。演练不能只问“能否解析 JSON”，还要模拟旧 Schema、删除的 Locator、变化的 Workspace、缺失的源事件和跨版本生成器。只有停止、回滚和再生路径都被实际走过，代际漂移才从一条写作建议变成可运营的故障模型。
+最后要把恢复演练纳入日常测试。定期从某个历史 Artifact 启动只读恢复，要求系统列出目标、仍开放问题、下一动作与证据来源，再与 Event Log 的黄金合同对账。演练不能只问“能否解析 JSON”，还要模拟旧 Schema、删除的 Locator、变化的 Workspace、缺失的源事件和跨版本生成器。只有停止、回滚和再生路径都被实际走过，代际漂移才能成为可运营的故障模型。
 
 ## 故障矩阵：失败后应进入什么状态
 
@@ -665,6 +680,20 @@ JSONL Trace 负责把表格结果还原成因果过程。看到 `unsafe_signatur
 | 来源 Digest 被破坏 | `rejected_artifact_source_digest_mismatch` | 隔离制品，查明损坏或替换来源 |
 
 这五行不能读成同一种“恢复失败”。前两项产生的是语义缺失：系统仍可构造输入，但固定策略给出危险或虚假结论；后三项是边界验证拒绝，Rehydrator 不应构造半份 Packet。Trace 合同在全部案例中通过，只说明选择、拒绝与原因码可解释，不代表日志已满足某个行业合规认证。
+
+> **进阶：五个失败样本怎样构造。** 先看上表中的结果与恢复动作即可；需要复现实验时，再核对下面的构造区别。
+>
+> 失败矩阵也不能概括成“每一行都从可通过的结构化 Artifact 出发，只破坏一个字段”。[`failure_matrix.py`](../chapter6/experiments/failure_matrix.py) 实际包含两类构造：
+>
+> | Failure variant | 怎样构造 | 它精确检验什么 |
+> | --- | --- | --- |
+> | `early-constraint-loss` | 直接运行 `SlidingWindowStrategy(keep_events=8)`，再手工补回稳定 Goal | 这是窗口派生的受控失忆；事件 1—16 除 Goal 外整体离开可见集合，因而可能同时丢掉多项早期语义，不是对结构化基线的单字段破坏 |
+> | `omitted-open-failure` | 从结构化策略的可见 key 集合中删除 open issue，再加入无证据的 `repair-complete` | 这是单个语义边界注入，观察开放问题被完成声明替换后的 `false_completion`；它不经过 Rehydrator 拒绝路径，也不是损坏 Artifact 文件 |
+> | `workspace-digest-mismatch` | 保持已构造 Artifact 不变，只把 live Workspace Digest 改为 stale 值 | 单个恢复边界不匹配，Rehydrator 以 `stale_workspace_digest` 拒绝 |
+> | `unsupported-artifact-schema` | 只把 `schema_version` 改为不支持值，并特意绕过构造器校验 | 单个 Artifact Schema 破坏，Rehydrator 以 `artifact_rejected_schema` 拒绝 |
+> | `corrupt-artifact-source-digest` | 只替换 `source_digest` | 单个 Artifact 来源完整性破坏，Rehydrator 复算来源后以 `artifact_source_digest_mismatch` 拒绝 |
+>
+> 因此，只有后三个是“保持其余边界不变、触发 Rehydrator 拒绝”的单边界案例；`omitted-open-failure` 是从结构化可见状态派生的单语义注入，`early-constraint-loss` 则是会连带移除多项早期语义的窗口案例。主要实验回答“Context 或恢复边界不同会怎样”，失败矩阵进一步展示几种性质不同的破坏方式，不能把它们写成同一种消融模板。
 
 先看早期约束丢失的因果链。`early-constraint-loss` 不是把一份完整 Artifact 的某个字段随机置空，而是从八事件滑动窗口结果出发，再手工补回 Goal。窗口保留了较新的信息和一个约束，却没有事件 2 的“公共函数签名不得变化”；与此同时，验收条件和仍开放的失败也不在可见集合中。固定策略因此不是“没找到答案”，而是基于残缺输入给出一个看似可执行的 `unsafe_signature_change`。这类失败最难发现，因为 Runtime、Parser 和工具协议都可能正常工作，只有字段对账或执行网关才能看见越界。
 

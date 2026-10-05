@@ -1,0 +1,245 @@
+{
+  "slug": "deep-dive-ai-agent",
+  "title": "深入浅出 AI Agent",
+  "subtitle": "从大模型原理到手写 Coding Agent",
+  "description": "从模型、上下文和工具出发，逐步搭建可运行、可验证、可持续改进的 AI Agent 工程体系。",
+  "version": "0.14.0",
+  "updated": "2026-09-27",
+  "cover": "images/deep-dive-ai-agent-cover.webp",
+  "repositoryUrl": "https://github.com/RalfNick/deep-dive-ai-agent",
+  "totalChapters": 18,
+  "introduction": {
+    "slug": "introduction",
+    "title": "为什么现在还需要一本 AI Agent 的书",
+    "status": "published",
+    "summary": "说明全书的问题意识、演进主线、实验方法，以及为什么从 Coding Agent 切入现代 Agent 工程。",
+    "source": "introduction.md",
+    "updated": "2026-08-20"
+  },
+  "sections": [
+    {
+      "order": 1,
+      "title": "模型是怎样变成 Agent 的",
+      "summary": "先建立模型、Workflow、Agent 与 Harness 的边界，再进入可执行闭环。",
+      "chapters": [
+        {
+          "order": 1,
+          "slug": "chapter-1",
+          "title": "大模型入门：从 Token 到 Transformer",
+          "status": "published",
+          "summary": "从 Token、自注意力和 Transformer 出发，解释下一步预测如何成为 Agent 的模型基础。",
+          "source": "chapter1.md",
+          "experiment": "../chapter1/README.md",
+          "answers": "../chapter1/reference-answers.md",
+          "updated": "2026-09-07"
+        },
+        {
+          "order": 2,
+          "slug": "chapter-2",
+          "title": "大模型的训练、对齐与推理",
+          "status": "published",
+          "summary": "拆解预训练、监督微调、偏好优化、推理预算与模型 API 的工程边界。",
+          "source": "chapter2.md",
+          "experiment": "../chapter2/README.md",
+          "answers": "../chapter2/reference-answers.md",
+          "updated": "2026-09-07"
+        },
+        {
+          "order": 3,
+          "slug": "chapter-3",
+          "title": "AI Agent：从一次生成到闭环执行",
+          "status": "published",
+          "summary": "手写最小 Agent 循环，理解观察、决策、行动与验证如何组成闭环。",
+          "source": "chapter3.md",
+          "experiment": "../chapter3/README.md",
+          "answers": "../chapter3/reference-answers.md",
+          "updated": "2026-09-07"
+        },
+        {
+          "order": 4,
+          "slug": "chapter-4",
+          "title": "Harness Engineering：模型之外，谁在让 Agent 真正工作",
+          "status": "published",
+          "summary": "拆解提示词、工具、权限、沙箱、状态、审批和可观测性组成的 Agent 运行系统。",
+          "source": "chapter4.md",
+          "experiment": "../chapter4/README.md",
+          "answers": "../chapter4/reference-answers.md",
+          "updated": "2026-09-07"
+        }
+      ]
+    },
+    {
+      "order": 2,
+      "title": "上下文、记忆与知识",
+      "summary": "处理 Agent 看见什么、记住什么，以及如何获得可更新的外部知识。",
+      "chapters": [
+        {
+          "order": 5,
+          "slug": "chapter-5",
+          "title": "上下文工程：Agent 真正看到的世界",
+          "status": "published",
+          "summary": "把消息、文件、工具描述、权限和预算装配成可消费、可解释的上下文。",
+          "source": "chapter5.md",
+          "experiment": "../chapter5/README.md",
+          "answers": "../chapter5/reference-answers.md",
+          "updated": "2026-09-07"
+        },
+        {
+          "order": 6,
+          "slug": "chapter-6",
+          "title": "长任务中的上下文架构",
+          "status": "published",
+          "summary": "用压缩、Artifact、Checkpoint 与 Rehydration 维持长任务的连续性和可恢复性。",
+          "source": "chapter6.md",
+          "experiment": "../chapter6/README.md",
+          "answers": "../chapter6/reference-answers.md",
+          "updated": "2026-09-07"
+        },
+        {
+          "order": 7,
+          "slug": "chapter-7",
+          "title": "记忆：不是把聊天记录全部塞回去",
+          "status": "published",
+          "summary": "从完整历史的失败出发，实现带 Write Gate、Namespace、版本修正、Tombstone 和可解释 Recall 的记忆模块。",
+          "source": "chapter7.md",
+          "experiment": "../chapter7/README.md",
+          "answers": "../chapter7/reference-answers.md",
+          "updated": "2026-08-25"
+        },
+        {
+          "order": 8,
+          "slug": "chapter-8",
+          "title": "RAG 与知识库：让 Agent 先查证，再回答",
+          "status": "published",
+          "summary": "以 18 篇受版本、权限和时效约束的知识文档，完成切块、混合召回、重排、证据、引用、拒答和分层评估。",
+          "source": "chapter8.md",
+          "experiment": "../chapter8/README.md",
+          "answers": "../chapter8/reference-answers.md",
+          "updated": "2026-09-07"
+        }
+      ]
+    },
+    {
+      "order": 3,
+      "title": "工具、MCP 与 Coding Agent",
+      "summary": "从单次工具调用走向大规模工具系统，并手写一个 Coding Agent。",
+      "chapters": [
+        {
+          "order": 9,
+          "slug": "chapter-9",
+          "title": "工具调用与 MCP：从‘模型想做’到‘系统真的做了’",
+          "status": "published",
+          "summary": "从三份调用合同、输入输出门禁与写操作回执出发，实现确定性 Tool Loop，并用官方 SDK 映射 MCP 的 Tool、Resource 与 Prompt。",
+          "source": "chapter9.md",
+          "experiment": "../chapter9/README.md",
+          "answers": "../chapter9/reference-answers.md",
+          "updated": "2026-09-07"
+        },
+        {
+          "order": 10,
+          "slug": "chapter-10",
+          "title": "大规模工具集与异步任务",
+          "status": "published",
+          "summary": "从大规模工具发现、按需加载与有限并发出发，建立可恢复的持久异步作业、租约、取消、超时与幂等边界。",
+          "source": "chapter10.md",
+          "experiment": "../chapter10/README.md",
+          "answers": "../chapter10/reference-answers.md",
+          "updated": "2026-09-09"
+        },
+        {
+          "order": 11,
+          "slug": "chapter-11",
+          "title": "Coding Agent：代码库就是它的环境",
+          "status": "published",
+          "summary": "从一次文档链接修复出发，拆解 Coding Agent 的仓库调查、补丁、验证、项目指令与会话恢复边界。",
+          "source": "chapter11.md",
+          "experiment": "../chapter11/README.md",
+          "answers": "../chapter11/reference-answers.md",
+          "updated": "2026-09-27"
+        },
+        {
+          "order": 12,
+          "slug": "chapter-12",
+          "title": "手写一个 Mini Coding Agent",
+          "status": "published",
+          "summary": "从确定性 Replay 和最小 Loop 开始，实现工具合同、补丁、审批、恢复、上下文控制、Verifier 与框架适配。",
+          "source": "chapter12.md",
+          "experiment": "../chapter12/README.md",
+          "answers": "../chapter12/reference-answers.md",
+          "updated": "2026-09-27"
+        }
+      ]
+    },
+    {
+      "order": 4,
+      "title": "评估、可观测与模型选择",
+      "summary": "用任务、轨迹、评分和生产诊断判断 Agent 是否真正可用。",
+      "chapters": [
+        {
+          "order": 13,
+          "slug": "chapter-13",
+          "title": "Agent 评估：答案正确还不够",
+          "status": "published",
+          "summary": "建立可复现任务集，用 Outcome、Trajectory、多评分器、重复试验与三态门禁同时衡量结果、过程、安全和效率。",
+          "source": "chapter13.md",
+          "experiment": "../chapter13/README.md",
+          "answers": "../chapter13/reference-answers.md",
+          "updated": "2026-09-27"
+        },
+        {
+          "order": 14,
+          "slug": "chapter-14",
+          "title": "Benchmark、Tracing 与生产诊断",
+          "status": "published",
+          "summary": "从可比 Benchmark、Trace 数据模型、分位数与采样出发，用切片、反证和消融定位生产退化。",
+          "source": "chapter14.md",
+          "experiment": "../chapter14/README.md",
+          "answers": "../chapter14/reference-answers.md",
+          "updated": "2026-09-27"
+        }
+      ]
+    },
+    {
+      "order": 5,
+      "title": "训练、反馈与持续进化",
+      "summary": "明确何时需要后训练，并把真实失败转化为持续改进资产。",
+      "chapters": [
+        {
+          "order": 15,
+          "slug": "chapter-15",
+          "title": "Agent 的后训练",
+          "status": "planned",
+          "summary": "设计轨迹、工具调用和拒绝样本，理解 SFT、偏好优化与强化学习的边界。"
+        },
+        {
+          "order": 16,
+          "slug": "chapter-16",
+          "title": "从失败中学习：持续改进系统",
+          "status": "planned",
+          "summary": "把失败转成回放样本、回归测试、规则、Skill、记忆或训练数据。"
+        }
+      ]
+    },
+    {
+      "order": 6,
+      "title": "多模态、多 Agent 与生产系统",
+      "summary": "扩展到图像、语音、实时交互、多 Agent 协作和完整生产系统。",
+      "chapters": [
+        {
+          "order": 17,
+          "slug": "chapter-17",
+          "title": "多模态与实时 Agent",
+          "status": "planned",
+          "summary": "处理图像、语音、屏幕、文档、Computer Use 与实时事件流。"
+        },
+        {
+          "order": 18,
+          "slug": "chapter-18",
+          "title": "Multi-Agent 与最终系统",
+          "status": "planned",
+          "summary": "讨论委派、并行研究、共享状态、交接、冲突处理与停止条件。"
+        }
+      ]
+    }
+  ]
+}

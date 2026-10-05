@@ -1,0 +1,118 @@
+{
+  "version": "whole-book-reader-v2-before-2026-10-03",
+  "baseline_commit": "c8f2995343e90de0721c4236f880c88bbcb3d324",
+  "files": [
+    {
+      "source": "book/chapter1.md",
+      "sha256": "ED9CAC85FD0159D0F9677E7DD9C15EF47A3D76025C4B687CEF19387F5C91658A"
+    },
+    {
+      "source": "book/chapter2.md",
+      "sha256": "A943B91A271617BDA3BFAB9AD2F8749E11418337E47C8FABBE175936B062BA72"
+    },
+    {
+      "source": "book/chapter3.md",
+      "sha256": "A4A88696F43E20B0DE3790CD42A17071D33739D98B01D78740AE88A88EC9FDA2"
+    },
+    {
+      "source": "book/chapter4.md",
+      "sha256": "E99F22449590AC9A89C88D5B16696F4C2B5646EC6163CA57906C8144FFD3580C"
+    },
+    {
+      "source": "book/chapter5.md",
+      "sha256": "1AA076788702F192D614593866A7B05DD73F6792C6C675053F2DC50079A38B11"
+    },
+    {
+      "source": "book/chapter6.md",
+      "sha256": "4304D810D1713B10019E33757C37097171424A8285D86AE4CBD77021BD28719E"
+    },
+    {
+      "source": "book/chapter7.md",
+      "sha256": "019043B0D676087D5ACF06D5D53D44945CB1CB549E965414307E26E2977E3425"
+    },
+    {
+      "source": "book/chapter8.md",
+      "sha256": "B1EEBA8BADC0E71A203E55A272DEC918742A29FE415A9068165B8F6FB5F9E0A0"
+    },
+    {
+      "source": "book/chapter9.md",
+      "sha256": "F87E90325902E3EBB5C0C889EEE9A0572B2D0C058CE5724FFB0C70B03ED32605"
+    },
+    {
+      "source": "book/chapter10.md",
+      "sha256": "C1FD280C86B7F7AC77508366C1263F62393141D51D19495E2B64E2A819CF2E05"
+    },
+    {
+      "source": "book/chapter11.md",
+      "sha256": "0E57C9F6B1C5003371A0E4F2E4CF51F1A3C84097041204DA5414C0FB565E144C"
+    },
+    {
+      "source": "book/chapter12.md",
+      "sha256": "506FD879D18FF506C48182F477FF1E5E6EB45FE311FF3AD18FBDC89F6CFFF4B1"
+    },
+    {
+      "source": "book/chapter13.md",
+      "sha256": "A05B6820906D04AD17932B4EAA21C9C03E982295C82CF10C0CD6DDE07F07FBB4"
+    },
+    {
+      "source": "book/chapter14.md",
+      "sha256": "978C7DFFE0E4E22D83C4D0B6297EDDDA48BAC8AF8B200DD85805FF24D63C14DA"
+    },
+    {
+      "source": "book/chapter15.md",
+      "sha256": "25334FA9B122C7FBC761A5F56BCC5141FB3D25CD2F753B6C326397206725A061"
+    },
+    {
+      "source": "book/chapter16.md",
+      "sha256": "DCEE68701F5C33FEC91C0C421B8A2DDA4F1280E5E5AE3B419465793C16A419A6"
+    },
+    {
+      "source": "book/chapter17.md",
+      "sha256": "74BF1981CDC929197FE299D00BB449D77EE33CA79A2EB1BFF1A44A9463E65AF8"
+    },
+    {
+      "source": "book/chapter18.md",
+      "sha256": "BF04DD3181E3D712C25A2ED95567FB7549B3C7BF40AF1E9DEAD47D8562B7DDE6"
+    },
+    {
+      "source": "book/OUTLINE.md",
+      "sha256": "44C920B36EC80EB5A310F890FAEB1BD11A15A56F8A4287CCB82D71800C114BD5"
+    },
+    {
+      "source": "book/WRITING_GUIDE.md",
+      "sha256": "E8DC308E13219D59CF7CEBA4479034FD264B815BCE5E1CF2EB87A75213213846"
+    },
+    {
+      "source": "chapter12/README.md",
+      "sha256": "9E451992662A8DB44F3EBFDB9FD8756EB59A0B3DFD00380C5DA36AD178025373"
+    },
+    {
+      "source": "chapter14/tests/test_reader_tools.py",
+      "sha256": "1ECD745A312319C618C5D925153D5F54EAC3EAD85FA6FEA47597BD2AB41219AE"
+    },
+    {
+      "source": "chapter16/tests/test_manuscript.py",
+      "sha256": "F2A7CF46530F2366B9777AB8A171288B61A3D4BA44F8DC745ACCB570BA09581A"
+    },
+    {
+      "source": "tests/test_migration_manifest.py",
+      "sha256": "0C4CE713CE13948EC49F8338C5D2F5C1251E2966B3256118559FD7709EB57FAD"
+    },
+    {
+      "source": "chapter12/tests/test_delivery.py",
+      "sha256": "B4FE05ED09FDFDD088C5A1E925B5358A1ED6B34875D08543534FA68F8E1D2849"
+    },
+    {
+      "source": "chapter16/tests/test_delivery.py",
+      "sha256": "6EA326C8167B8C21A0B1F02EBC57B068BF0369D34574C443F312E1E65614DD41"
+    },
+    {
+      "source": "chapter18/tests/test_delivery.py",
+      "sha256": "12EF8CB1030816B50439D974516FBF838CBF07E67FC866502C4B18D40020D5BB"
+    },
+    {
+      "source": "book/versions/CHAPTER_VERSIONS.md",
+      "sha256": "3FFBD70688817E3F09553BA8E656C39ABAC73538B13784DCC03CF1419DB13EB5"
+    }
+  ]
+}
