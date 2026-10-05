@@ -14,12 +14,13 @@ class RepositoryContractTests(unittest.TestCase):
 
     def test_required_roots_exist(self) -> None:
         expected = ["book", "book-en", "docs", "scripts"]
-        expected.extend(f"chapter{number}" for number in range(1, 15))
+        expected.extend(f"chapter{number}" for number in range(1, 19))
+        expected.append("appendix_a")
         self.assertEqual([], [name for name in expected if not (ROOT / name).is_dir()])
 
-    def test_fourteen_chapters_have_prose_and_experiment_index(self) -> None:
+    def test_eighteen_chapters_have_prose_and_experiment_index(self) -> None:
         missing = []
-        for number in range(1, 15):
+        for number in range(1, 19):
             if not (ROOT / "book" / f"chapter{number}.md").is_file():
                 missing.append(f"book/chapter{number}.md")
             if not (ROOT / f"chapter{number}" / "README.md").is_file():
@@ -32,23 +33,26 @@ class RepositoryContractTests(unittest.TestCase):
 
     def test_root_readme_links_every_published_chapter_and_experiment(self) -> None:
         readme = (ROOT / "README.md").read_text(encoding="utf-8")
-        for number in range(1, 15):
+        for number in range(1, 19):
             with self.subTest(chapter=number):
                 self.assertIn(f"(book/chapter{number}.md)", readme)
                 self.assertIn(f"(chapter{number}/README.md)", readme)
         self.assertIn("18 章", readme)
         self.assertIn("https://wlxralf.com/books/deep-dive-ai-agent", readme)
+        self.assertIn("(book/appendix-a.md)", readme)
+        self.assertIn("(appendix_a/README.md)", readme)
 
     def test_book_index_defines_the_published_reading_order(self) -> None:
         index = (ROOT / "book" / "README.md").read_text(encoding="utf-8")
         expected = ["(./introduction.md)"]
-        expected.extend(f"(./chapter{number}.md)" for number in range(1, 15))
+        expected.extend(f"(./chapter{number}.md)" for number in range(1, 19))
         positions = [index.find(target) for target in expected]
         self.assertTrue(all(position >= 0 for position in positions), positions)
         self.assertEqual(positions, sorted(positions))
+        self.assertIn("(./appendix-a.md)", index)
 
     def test_chapter_navigation_connects_prose_experiments_and_next_reading(self) -> None:
-        for number in range(1, 15):
+        for number in range(1, 19):
             prose = (ROOT / "book" / f"chapter{number}.md").read_text(
                 encoding="utf-8"
             )
@@ -59,10 +63,10 @@ class RepositoryContractTests(unittest.TestCase):
                 self.assertIn(f"../chapter{number}/README.md", prose)
                 self.assertIn(f"../chapter{number}/reference-answers.md", prose)
                 self.assertIn(f"../book/chapter{number}.md", experiment)
-                if number < 14:
-                    self.assertIn(f"./chapter{number + 1}.md", prose)
+                if number < 18:
+                    self.assertRegex(prose, rf"\]\((?:\./)?chapter{number + 1}\.md\)")
                 else:
-                    self.assertIn("./OUTLINE.md", prose)
+                    self.assertNotIn("./chapter19.md", prose)
 
     def test_unstarted_translations_are_truthfully_marked_planned(self) -> None:
         english_index = ROOT / "book-en" / "README.md"

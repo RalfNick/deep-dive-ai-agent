@@ -43,12 +43,15 @@ def test_release_record_and_agent_status_are_explicit():
         "210 passed",
     ):
         assert phrase in record
-    assert "第 1–14 章已有发布版本" in agents
+    assert "第 1–18 章与附录 A" in agents
     manifest = json.loads((ROOT / "book/manifest.json").read_text(encoding="utf-8"))
     later = [chapter for section in manifest["sections"] for chapter in section["chapters"]
              if 15 <= chapter["order"] <= 18]
     assert {chapter["order"] for chapter in later} == {15, 16, 17, 18}
-    assert all(chapter["status"] == "planned" and "source" not in chapter for chapter in later)
+    assert all(chapter["status"] == "published" and chapter["source"] == f"chapter{chapter['order']}.md"
+               for chapter in later)
+    assert any(entry["slug"] == "appendix-a" and entry["status"] == "published"
+               for entry in manifest["appendices"])
 
     for name in ("offline-canonical.json", "framework-comparison.json",
                  "exercise-results.json"):

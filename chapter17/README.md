@@ -1,5 +1,7 @@
 # 第 17 章：多模态与实时 Agent 离线实验
 
+2026-10-05：已随全书 `0.18.0` 公开，正式版本说明见[本次记录](../book/versions/chapter17-v1.0.md)。以下离线范围与旧候选记录继续保留。
+
 这是《深入浅出 AI Agent》第 17 章的自包含教学包。Python 3.11+ 实验运行时仅用标准库；测试依赖版本及哈希在 `requirements-dev.txt`，本地 HTML 预览与完整测试还需 `requirements-preview.txt` 中锁定的 Markdown 3.10.2。独立环境请先安装这两份依赖；只运行实验无需预览依赖。默认不需要 API Key、网络、模型、麦克风或真实桌面控制。
 
 若使用全新虚拟环境做完整测试与预览，先运行 `python -m pip install -r chapter17/requirements-dev.txt` 和 `python -m pip install -r chapter17/requirements-preview.txt`；只复现五组实验不需要安装这两份开发依赖。

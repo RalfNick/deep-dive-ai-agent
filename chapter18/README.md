@@ -1,12 +1,14 @@
 # 第18章：有界协作与最小最终系统
 
+2026-10-05：已随全书 `0.18.0` 公开，正式版本说明见[本次记录](../book/versions/chapter18-v1.0.md)。以下离线范围与旧候选记录继续保留。
+
 固定决策策略、真实资料读取、真实可信夹具修改和验证。无需 API Key，运行时只用 Python 标准库；不是模型能力或 SDK 排名。
 
 从仓库根目录运行。建议 Python 3.11；测试依赖和哈希锁在 `requirements-dev.txt`，预览依赖在 `requirements-preview.txt`。本轮验证环境为 Python 3.11.15 / pytest 9.0.2 / jsonschema 4.26.0 / Markdown 3.10.2。已有兼容环境可直接用；本章不自动安装工具，不联网读取模型。
 
 ```powershell
 python -m pip install --require-hashes -r chapter18/requirements-dev.txt
-python -m pip install --require-hashes -r chapter18/requirements-preview.txt
+python -m pip install -r chapter18/requirements-preview.txt
 python -B -m pytest chapter18/tests -q
 python -B -m chapter18.experiments --group all --output chapter18/.runs/reader-first
 python -B -m chapter18.exercise_solutions --all --output chapter18/.runs/answers-reader.json

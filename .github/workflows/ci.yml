@@ -46,6 +46,10 @@ jobs:
             chapter15/requirements-preview.txt
             chapter16/requirements-dev.txt
             chapter16/requirements-preview.txt
+            chapter17/requirements-dev.txt
+            chapter17/requirements-preview.txt
+            chapter18/requirements-dev.txt
+            chapter18/requirements-preview.txt
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -111,19 +115,28 @@ jobs:
           .venv-evaluation/bin/python -B -m pytest chapter13/tests -q
           .venv-evaluation/bin/python -B -m pytest chapter14/tests -q
 
-      - name: Run Chapter 15 candidate tests in its locked environment
+      - name: Run Chapter 15 tests in its locked environment
         run: |
           python -m venv .venv-chapter15
           .venv-chapter15/bin/python -m pip install --require-hashes -r chapter15/requirements-dev.txt
           .venv-chapter15/bin/python -m pip install -r chapter15/requirements-preview.txt
           .venv-chapter15/bin/python -B -m pytest chapter15/tests -q
 
-      - name: Run Chapter 16 candidate tests in its locked environment
+      - name: Run Chapter 16 tests in its locked environment
         run: |
           python -m venv .venv-chapter16
           .venv-chapter16/bin/python -m pip install --require-hashes -r chapter16/requirements-dev.txt
           .venv-chapter16/bin/python -m pip install -r chapter16/requirements-preview.txt
           .venv-chapter16/bin/python -B -m pytest chapter16/tests -q
+
+      - name: Run Chapter 17, Chapter 18 and Appendix A tests in a locked environment
+        run: |
+          python -m venv .venv-final-chapters
+          .venv-final-chapters/bin/python -m pip install --require-hashes -r chapter17/requirements-dev.txt -r chapter18/requirements-dev.txt
+          .venv-final-chapters/bin/python -m pip install -r chapter17/requirements-preview.txt -r chapter18/requirements-preview.txt
+          .venv-final-chapters/bin/python -B -m pytest chapter17/tests -q
+          .venv-final-chapters/bin/python -B -m pytest chapter18/tests -q
+          .venv-final-chapters/bin/python -B -m unittest discover -s appendix_a/tests -v
 
       - name: Regenerate deterministic teaching reports
         run: |

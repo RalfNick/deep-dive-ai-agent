@@ -1,4 +1,5 @@
 from hashlib import sha256
+import json
 from pathlib import Path
 import tempfile
 import unittest
@@ -54,6 +55,22 @@ class BuildSiteTests(unittest.TestCase):
             )
         write(root / "chapter1" / "reports" / "report.json", "{}\n")
         (root / "chapter1" / "ignored.pdf").write_bytes(b"pdf")
+        chapters = []
+        for number in range(1, 19):
+            entry = {"order": number, "slug": f"chapter-{number}", "title": f"Chapter {number}",
+                     "status": "published" if number <= 14 else "planned", "summary": "fixture"}
+            if number <= 14:
+                entry.update(source=f"chapter{number}.md", experiment=f"../chapter{number}/README.md",
+                             answers=f"../chapter{number}/reference-answers.md", updated="2026-09-27")
+            chapters.append(entry)
+        write(root / "book/manifest.json", json.dumps({
+            "slug": "fixture", "title": "Fixture", "subtitle": "Fixture", "description": "Fixture",
+            "version": "0.14.0", "updated": "2026-09-27", "cover": "images/figure.svg",
+            "repositoryUrl": "https://example.com/repo", "totalChapters": 18,
+            "introduction": {"slug": "introduction", "title": "Introduction", "status": "published",
+                             "summary": "fixture", "source": "introduction.md", "updated": "2026-09-27"},
+            "sections": [{"order": 1, "chapters": chapters}],
+        }))
 
     def test_builds_the_allowlisted_chinese_site_tree_deterministically(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -116,9 +133,9 @@ class BuildSiteTests(unittest.TestCase):
             for number in range(1, 15):
                 self.assertIn(f"book/chapter{number}.md", published)
                 self.assertIn(f"chapter{number}/index.md", published)
-            manifest = validate_manifest(Path(__file__).resolve().parents[1])
+            manifest = validate_manifest(root)
             self.assertEqual("0.14.0", manifest["version"])
-            self.assertEqual("planned", manifest["sections"][4]["chapters"][0]["status"])
+            self.assertEqual("planned", manifest["sections"][0]["chapters"][14]["status"])
 
     def test_chapter16_stays_out_of_public_tree(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

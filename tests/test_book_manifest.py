@@ -8,9 +8,9 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class BookManifestTest(unittest.TestCase):
-    def test_manifest_exposes_fourteen_published_and_four_unpublished_chapters(self):
+    def test_manifest_exposes_eighteen_published_chapters_and_one_appendix(self):
         manifest = validate_manifest(ROOT)
-        self.assertEqual("0.14.0", manifest["version"])
+        self.assertEqual("0.18.0", manifest["version"])
         chapters = [
             chapter
             for section in manifest["sections"]
@@ -19,9 +19,12 @@ class BookManifestTest(unittest.TestCase):
 
         self.assertEqual(18, len(chapters))
         self.assertEqual(list(range(1, 19)), [chapter["order"] for chapter in chapters])
-        self.assertEqual(14, sum(chapter["status"] == "published" for chapter in chapters))
-        self.assertTrue(all(chapter["status"] == "published" for chapter in chapters[:14]))
-        self.assertTrue(all(chapter["status"] == "planned" for chapter in chapters[14:]))
+        self.assertEqual(18, sum(chapter["status"] == "published" for chapter in chapters))
+        self.assertTrue(all(chapter["status"] == "published" for chapter in chapters))
+        self.assertEqual(["appendix-a"], [entry["slug"] for entry in manifest["appendices"]])
+        appendix = manifest["appendices"][0]
+        self.assertEqual("published", appendix["status"])
+        self.assertNotIn("order", appendix)
 
         chapter9 = chapters[8]
         # Later editorial updates may advance the date; never regress before
@@ -39,7 +42,7 @@ class BookManifestTest(unittest.TestCase):
         self.assertIn("异步", chapter10["summary"])
         self.assertIn("可恢复", chapter10["summary"])
 
-        for chapter in chapters[10:14]:
+        for chapter in chapters[10:]:
             self.assertGreaterEqual(chapter["updated"], "2026-09-27")
             self.assertEqual(f"chapter{chapter['order']}.md", chapter["source"])
             self.assertEqual(
@@ -51,7 +54,7 @@ class BookManifestTest(unittest.TestCase):
 
     def test_every_published_entry_has_reachable_publication_files(self):
         manifest = validate_manifest(ROOT)
-        entries = [manifest["introduction"]] + [
+        entries = [manifest["introduction"]] + manifest["appendices"] + [
             chapter
             for section in manifest["sections"]
             for chapter in section["chapters"]
@@ -63,7 +66,7 @@ class BookManifestTest(unittest.TestCase):
 
         self.assertTrue((ROOT / "book" / manifest["cover"]).is_file())
 
-    def test_unpublished_chapters_do_not_expose_publication_files(self):
+    def test_published_chapters_and_appendices_expose_their_publication_files(self):
         manifest = validate_manifest(ROOT)
         chapters = [
             chapter
@@ -71,12 +74,10 @@ class BookManifestTest(unittest.TestCase):
             for chapter in section["chapters"]
         ]
 
-        for chapter in chapters:
-            if chapter["status"] != "published":
-                self.assertTrue(
-                    {"source", "experiment", "answers"}.isdisjoint(chapter),
-                    chapter["slug"],
-                )
+        for entry in chapters + manifest["appendices"]:
+            self.assertTrue({"source", "experiment", "answers", "updated"}.issubset(entry), entry["slug"])
+            for field in ("source", "experiment", "answers"):
+                self.assertTrue((ROOT / "book" / entry[field]).is_file(), entry["slug"])
 
 
 if __name__ == "__main__":

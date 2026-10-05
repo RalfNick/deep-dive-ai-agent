@@ -49,6 +49,9 @@ markdown_extensions:
   - tables
   - toc:
       permalink: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
   - pymdownx.details
   - pymdownx.highlight:
       anchor_linenums: true
@@ -75,7 +78,12 @@ nav:
       - 第 12 章 手写 Mini Coding Agent: book/chapter12.md
       - 第 13 章 Agent 评估: book/chapter13.md
       - 第 14 章 Benchmark、Tracing 与生产诊断: book/chapter14.md
-      - 18 章写作地图: book/OUTLINE.md
+      - 第 15 章 Agent 的后训练: book/chapter15.md
+      - 第 16 章 从失败中学习: book/chapter16.md
+      - 第 17 章 多模态与实时 Agent: book/chapter17.md
+      - 第 18 章 Multi-Agent 与最终系统: book/chapter18.md
+      - 附录 A 环境与模型 API 准备: book/appendix-a.md
+      - 全书目录: book/OUTLINE.md
   - 配套实验:
       - 第 1 章实验: chapter1/index.md
       - 第 2 章实验: chapter2/index.md
@@ -91,6 +99,11 @@ nav:
       - 第 12 章实验: chapter12/index.md
       - 第 13 章实验: chapter13/index.md
       - 第 14 章实验: chapter14/index.md
+      - 第 15 章实验: chapter15/index.md
+      - 第 16 章实验: chapter16/index.md
+      - 第 17 章实验: chapter17/index.md
+      - 第 18 章实验: chapter18/index.md
+      - 附录 A 实验: appendix_a/index.md
   - 验证与贡献:
       - 实验状态: docs/EXPERIMENT_STATUS.md
       - 发布规则: docs/RELEASES.md

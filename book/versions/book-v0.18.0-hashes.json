@@ -1,0 +1,92 @@
+{
+  "schema_version": "book.publication.v1",
+  "version": "0.18.0",
+  "date": "2026-10-05",
+  "editorial_commit": "363b05a",
+  "artifacts": [
+    {
+      "source": "book/chapter1.md",
+      "sha256": "aa6bdad44d793f3562e7bab86bb9ddbaef0ed2985f971a8b56503b884e71a267"
+    },
+    {
+      "source": "book/chapter2.md",
+      "sha256": "6fe14bf7011fd56908acb9c87abd0de4e8f0eb158fbf3d229f4c05bfd48451ae"
+    },
+    {
+      "source": "book/chapter3.md",
+      "sha256": "aaaef5c1e318ec337a21fa6d0690798d322f273a5a2db1ac39fa5035573bfe68"
+    },
+    {
+      "source": "book/chapter4.md",
+      "sha256": "954a3f89e7f09e45701e5557ae3fd88d3bf8763502e051ea483613e11a10181d"
+    },
+    {
+      "source": "book/chapter5.md",
+      "sha256": "591e8546a1f60cfc4fbdf666b1da14013eeb25767d2cec8341a53b13682837cc"
+    },
+    {
+      "source": "book/chapter6.md",
+      "sha256": "c2e077cfbbc34ed5bdcd01e3bfcd780912f87ac1ebbcc9f27e70b2fb02f2b4f5"
+    },
+    {
+      "source": "book/chapter7.md",
+      "sha256": "08034171123672b359907bce6ecc2082dd83d652487d1471d0c22e17a8565518"
+    },
+    {
+      "source": "book/chapter8.md",
+      "sha256": "637ce202ce03e5a5e377392eecbd044cea63eb1f043b14dcbabca6e2dca1e586"
+    },
+    {
+      "source": "book/chapter9.md",
+      "sha256": "f3133a1adbc5b77f27cde4f750aa4d2105953ab4e017252ed1e3d1ee2518f234"
+    },
+    {
+      "source": "book/chapter10.md",
+      "sha256": "116e9cfd4b679deac80bf1b0789ca772a46220e851d78b5b22a8756e5d95a53b"
+    },
+    {
+      "source": "book/chapter11.md",
+      "sha256": "52e14dc9b11c77afa4be0f398be53f011e5aa1d0a727bbb019a9bcc10908a86c"
+    },
+    {
+      "source": "book/chapter12.md",
+      "sha256": "6737d4c37e3651e7ff4c85d41fe9f39e2340fa4371125c734e1a267dd000e3f8"
+    },
+    {
+      "source": "book/chapter13.md",
+      "sha256": "5e7c0f79079215ff758244222ecc3b25410bfb95399539c6957ecaa37561b33c"
+    },
+    {
+      "source": "book/chapter14.md",
+      "sha256": "75ae3d69097730a615b24453ebb94e8de1e42662ff78872a15e778aeab706120"
+    },
+    {
+      "source": "book/chapter15.md",
+      "sha256": "ba590c213e221f033902326470493199f54655a40267af61c113d19edcb82d19"
+    },
+    {
+      "source": "book/chapter16.md",
+      "sha256": "850b1a33f4e5c1dd497fa10b4045e3d835187091681ee35d3ebafb72abddf07c"
+    },
+    {
+      "source": "book/chapter17.md",
+      "sha256": "859564444ef00a93013691c50fcd123ed2a2181dc4ab000ca3b958e405c0e881"
+    },
+    {
+      "source": "book/chapter18.md",
+      "sha256": "6941a868fb68edfb28af7ce4a49457ccfd6983c2ee65d7a5c438f44ad94e2e0d"
+    },
+    {
+      "source": "book/appendix-a.md",
+      "sha256": "201fd1532b7d72f99f455634be7025718ed3eafb0d450b474c441a71991fc9e3"
+    },
+    {
+      "source": "book/introduction.md",
+      "sha256": "481e9c77e68098fd63e5dc785aa85de4c0d24810bb6999a334ccc18530688737"
+    },
+    {
+      "source": "book/manifest.json",
+      "sha256": "7c11c0b202d5ac47d4475b810ccb0a802a2873a6c5270937f299738067c55ba9"
+    }
+  ]
+}

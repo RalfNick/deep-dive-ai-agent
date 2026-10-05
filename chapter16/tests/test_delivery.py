@@ -5,7 +5,7 @@ import re
 import subprocess
 from pathlib import Path
 
-from book.tests.edition_contracts import assert_frozen_history, preserved_payload
+from book.tests.edition_contracts import PUBLICATION_BASELINE, assert_frozen_history, preserved_payload
 
 ROOT = Path(__file__).resolve().parents[2]
 BASE = "2bcfaf0250fdd8dbf8b1f051bc62d576bef52875"
@@ -57,12 +57,17 @@ def test_rc1_records_manuscript_figures_and_reports_remain_recoverable():
         assert report.read_bytes() == original("chapter16/reports/" + report.name)
 
 
-def test_chapter16_stays_out_of_public_manifest():
-    manifest = json.loads((ROOT / "book/manifest.json").read_text(encoding="utf-8"))
+def test_chapter16_publication_preserves_the_original_candidate_manifest():
+    manifest = json.loads(subprocess.run(["git", "show", f"{BASE}:book/manifest.json"], cwd=ROOT,
+                                        check=True, capture_output=True, text=True, encoding="utf-8").stdout)
     chapters = [c for section in manifest["sections"] for c in section["chapters"]]
     assert manifest["version"] == "0.14.0"
     assert sum(c["status"] == "published" for c in chapters) == 14
     assert all(c["status"] == "planned" and "source" not in c for c in chapters if c["order"] in (15, 16))
+    current = json.loads((ROOT / "book/manifest.json").read_text(encoding="utf-8"))
+    entry = next(c for section in current["sections"] for c in section["chapters"] if c["order"] == 16)
+    assert current["version"] == "0.18.0"
+    assert entry["status"] == "published" and entry["source"] == "chapter16.md"
     ci = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
     assert ".venv-chapter16/bin/python -B -m pytest chapter16/tests -q" in ci
     assert "--require-hashes -r chapter16/requirements-dev.txt" in ci
@@ -76,5 +81,8 @@ def test_old_chapters_and_rc_history_unchanged():
     assert protected
     assert_frozen_history(ROOT, BASE, protected)
     for path in ("book/manifest.json", "mkdocs.yml", ".github/workflows/pages.yml"):
-        assert not subprocess.run(["git", "diff", "--name-only", BASE, "--", path], cwd=ROOT,
-                                  check=True, capture_output=True, text=True).stdout
+        old = subprocess.run(["git", "show", f"{BASE}:{path}"], cwd=ROOT,
+                             check=True, capture_output=True).stdout
+        frozen = subprocess.run(["git", "show", f"{PUBLICATION_BASELINE}:{path}"], cwd=ROOT,
+                                check=True, capture_output=True).stdout
+        assert old == frozen, path

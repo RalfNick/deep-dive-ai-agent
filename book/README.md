@@ -40,8 +40,13 @@
 13. [第 12 章：手写一个 Mini Coding Agent](./chapter12.md)
 14. [第 13 章：Agent 评估——答案正确还不够](./chapter13.md)
 15. [第 14 章：Benchmark、Tracing 与生产诊断](./chapter14.md)
+16. [第 15 章：Agent 的后训练——什么时候 Prompt 已经不够](./chapter15.md)
+17. [第 16 章：从失败中学习——持续改进系统](./chapter16.md)
+18. [第 17 章：多模态与实时 Agent](./chapter17.md)
+19. [第 18 章：Multi-Agent 与最终系统——不是 Agent 越多越好](./chapter18.md)
+20. [附录 A：Python、TypeScript 与模型 API 快速准备](./appendix-a.md)
 
-每章末尾都连接正文、配套实验、参考答案和下一阅读位置。第 15–18 章只有[写作规划](./OUTLINE.md)，不把规划标题计为已发布章节。
+每章均附配套实验与参考答案。附录 A 帮助准备 Python、TypeScript 和模型 API 环境。
 
 ## 阅读路径
 
@@ -56,7 +61,7 @@
 
 ## 书稿状态
 
-当前为 2026-09-27 发布版。第 1–14 章已发布；第 11–14 章由各自最新 rc 候选验收后发布，旧稿、旧图、候选记录和既有 tag 均保留。恢复入口见[章节版本记录](./versions/CHAPTER_VERSIONS.md)。
+当前公开清单为 `0.18.0`（2026-10-05），包含第 1–18 章与附录 A。全书读者修订与去话术版本已合入；旧稿、旧图、rc 记录、报告及既有 tag 均保留。恢复入口见[章节版本记录](./versions/CHAPTER_VERSIONS.md)与[本次记录](./versions/book-v0.18.0.md)。下表第 1–14 章的图表和测试数为原发布基线，最新验证另见本次记录。
 
 | 文件 | 状态 | 说明 |
 | --- | --- | --- |
@@ -75,6 +80,11 @@
 | [chapter12.md](./chapter12.md) | v1.0 | 手写 Loop、工具合同、审批恢复、Verifier、Trace 与框架适配；7 幅图、5 组实验、14 题与 210 项测试 |
 | [chapter13.md](./chapter13.md) | v1.0 | 12 个任务、120 条 Trial、多评分器、统计区间、Judge 校准与三态发布门禁；7 幅图、14 题与 38 项测试 |
 | [chapter14.md](./chapter14.md) | v1.0 | Benchmark Card、72 条教学 Trace、采样、隐私、切片、反证与消融诊断；7 幅图、14 题与 69 项测试 |
+| [chapter15.md](./chapter15.md) | v1.0 | 干预路由、轨迹数据、有限动作 SFT/DPO、奖励投机与门禁；7 图、13 题 |
+| [chapter16.md](./chapter16.md) | v1.0 | 失败回放、证据失效、记忆/Skill/规则干预、验证与回滚；7 图 |
+| [chapter17.md](./chapter17.md) | v1.0 | 媒体证据、实时事件、取消与执行边界；7 图 |
+| [chapter18.md](./chapter18.md) | v1.0 | 有界协作、子树预算、单写者与最终验收；7 图、20 案、13 题 |
+| [appendix-a.md](./appendix-a.md) | v1.0 | Python、TypeScript 与模型 API 准备；4 图、9 题 |
 | [sources/chapter1-sources.md](./sources/chapter1-sources.md) | 已建立 | 第 1 章资料台账与更新策略 |
 | [sources/chapter2-sources.md](./sources/chapter2-sources.md) | 已建立 | 作者资料页级映射、论文、官方文档、书籍与前沿信息核对台账 |
 | [sources/chapter3-sources.md](./sources/chapter3-sources.md) | 已建立 | Agent 经典论文、OpenAI/Anthropic/LangChain 官方文档与出版前复核清单 |
@@ -104,6 +114,6 @@
 
 ## 2026-09-27 发布说明
 
-第 11–14 章已经进入公开 manifest、站点导航和逐章实验表。正式版本分别冻结在 `book-chapter11-v1.0`、`book-chapter12-v1.0`、`book-chapter13-v1.0` 与 `book-chapter14-v1.0`；rc1/rc2 记录继续保留，便于核对候选到正式版的变化。第 15–18 章仍只按 [OUTLINE.md](./OUTLINE.md) 规划。
+第 11–14 章已经进入公开 manifest、站点导航和逐章实验表。正式版本分别冻结在 `book-chapter11-v1.0`、`book-chapter12-v1.0`、`book-chapter13-v1.0` 与 `book-chapter14-v1.0`；rc1/rc2 记录继续保留，便于核对候选到正式版的变化。此处保留当次发布历史；第 15–18 章与附录 A 已在 2026-10-05 纳入公开清单。
 
 后续核心章节的篇幅、插图、实验和失败案例密度统一遵守 [WRITING_GUIDE.md](./WRITING_GUIDE.md)。

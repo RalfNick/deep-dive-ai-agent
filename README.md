@@ -6,12 +6,15 @@
 
 ## 当前状态
 
-- 简体中文是唯一权威正文，已发布第 1–14 章；每章均经过读者或工程视角 Review、实验与发布门禁。
-- 第 1–14 章都包含配套实验、测试、固定报告或结果，以及参考答案。
-- 第 15–18 章仍在规划中。
+- 简体中文是唯一权威正文，第 1–18 章与附录 A 均已纳入公开阅读清单。
+- 每章及附录均包含配套实验、测试、固定报告或结果，以及参考答案。
 - 英文版状态为 `planned`，当前没有译文章节；暂不建立繁体中文版。
 - 在线阅读已发布：<https://wlxralf.com/books/deep-dive-ai-agent>。
 - PDF/EPUB 尚未在本仓库发布，未来只通过 GitHub Releases 提供。
+
+## 2026-10-05 全书简体中文版
+
+公开清单升级为 `0.18.0`，新增第 15–18 章与附录 A，并同步第 1–14 章的全书读者修订和去话术版本。章节正文、实验、答案及插图一起发布；原 rc、旧稿、旧图、报告与既有 tag 不改写。完整恢复入口见[本次版本记录](book/versions/book-v0.18.0.md)。这次发布不包含翻译、PDF/EPUB、真实模型评测、GPU 训练或容器隔离实测。
 
 ## 2026-09-27 第 11–14 章发布
 
@@ -43,6 +46,11 @@
 | 第 12 章 手写一个 Mini Coding Agent | [正文](book/chapter12.md) | [实验](chapter12/README.md) | [答案](chapter12/reference-answers.md) | [210 项测试通过](docs/EXPERIMENT_STATUS.md) |
 | 第 13 章 Agent 评估：答案正确还不够 | [正文](book/chapter13.md) | [实验](chapter13/README.md) | [答案](chapter13/reference-answers.md) | [38 项测试通过](docs/EXPERIMENT_STATUS.md) |
 | 第 14 章 Benchmark、Tracing 与生产诊断 | [正文](book/chapter14.md) | [实验](chapter14/README.md) | [答案](chapter14/reference-answers.md) | [69 项测试通过](docs/EXPERIMENT_STATUS.md) |
+| 第 15 章 Agent 的后训练 | [正文](book/chapter15.md) | [实验](chapter15/README.md) | [答案](chapter15/reference-answers.md) | [验证记录](docs/EXPERIMENT_STATUS.md) |
+| 第 16 章 从失败中学习 | [正文](book/chapter16.md) | [实验](chapter16/README.md) | [答案](chapter16/reference-answers.md) | [验证记录](docs/EXPERIMENT_STATUS.md) |
+| 第 17 章 多模态与实时 Agent | [正文](book/chapter17.md) | [实验](chapter17/README.md) | [答案](chapter17/reference-answers.md) | [验证记录](docs/EXPERIMENT_STATUS.md) |
+| 第 18 章 Multi-Agent 与最终系统 | [正文](book/chapter18.md) | [实验](chapter18/README.md) | [答案](chapter18/reference-answers.md) | [验证记录](docs/EXPERIMENT_STATUS.md) |
+| 附录 A 环境与模型 API 准备 | [正文](book/appendix-a.md) | [实验](appendix_a/README.md) | [答案](appendix_a/EXERCISE_ANSWERS.md) | [验证记录](docs/EXPERIMENT_STATUS.md) |
 
 建议先读[全书介绍](book/introduction.md)，再按[中文阅读顺序](book/README.md)推进。详细来源、Review 和版本记录均保留在 `book/` 中。
 
@@ -64,12 +72,12 @@
 12. 手写一个 Mini Coding Agent
 13. Agent 评估：答案正确还不够
 14. Benchmark、Tracing 与生产诊断
-15. Agent 的后训练
+15. Agent 的后训练：什么时候 Prompt 已经不够
 16. 从失败中学习：持续改进系统
 17. 多模态与实时 Agent
-18. Multi-Agent 与最终系统
+18. Multi-Agent 与最终系统：不是 Agent 越多越好
 
-每章范围和前后依赖见[完整大纲](book/OUTLINE.md)。第 15–18 章的标题仍是规划，不代表正文或实验已经完成。
+每章范围和前后依赖见[完整大纲](book/OUTLINE.md)。第 1–18 章与附录 A 的正文和配套实验均可阅读；来源与实验限制仍以各章记录为准。
 
 ## 实验证据的四种状态
 

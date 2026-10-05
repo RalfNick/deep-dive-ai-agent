@@ -1,6 +1,6 @@
 # 附录 A 配套：先跑通，再理解，再接模型
 
-对应[正文](../book/appendix-a.md)。本地RC1候选，不推送、不发布。
+对应[正文](../book/appendix-a.md)。2026-10-05 随全书 `0.18.0` 公开；实验以原 RC1 为基线，见[正式记录](../book/versions/appendix-a-v1.0.md)。
 
 ## 最短入口
 

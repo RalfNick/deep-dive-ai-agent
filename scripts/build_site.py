@@ -7,11 +7,21 @@ import re
 import shutil
 from urllib.parse import urlsplit
 
+if __package__:
+    from .validate_book_manifest import validate_manifest
+else:
+    from validate_book_manifest import validate_manifest
+
 
 REPOSITORY_URL = "https://github.com/RalfNick/deep-dive-ai-agent"
 MARKDOWN_LINK_RE = re.compile(r"(?P<prefix>!?\[[^\]]*\]\()(?P<target>[^)]+)(?P<suffix>\))")
 IMAGE_SUFFIXES = {".gif", ".jpeg", ".jpg", ".png", ".svg", ".webp"}
 REPORT_SUFFIXES = {".csv", ".json", ".jsonl", ".md", ".txt"}
+CURRENT_REPORT_BUNDLES = {
+    "chapter17": "reference-rc3",
+    "chapter18": "reference-rc2",
+    "appendix_a": "reference-rc1",
+}
 
 
 def _output_relative(source_relative: Path) -> Path:
@@ -23,7 +33,8 @@ def _output_relative(source_relative: Path) -> Path:
         return Path("book-en/index.md")
     if (
         len(source_relative.parts) == 2
-        and re.fullmatch(r"chapter(?:1[0-4]|[1-9])", source_relative.parts[0])
+        and (re.fullmatch(r"chapter[1-9][0-9]*", source_relative.parts[0])
+             or source_relative.parts[0] == "appendix_a")
         and source_relative.name == "README.md"
     ):
         return Path(source_relative.parts[0]) / "index.md"
@@ -31,12 +42,15 @@ def _output_relative(source_relative: Path) -> Path:
 
 
 def _allowlisted_sources(root: Path) -> tuple[Path, ...]:
+    manifest = validate_manifest(root)
+    entries = [entry for section in manifest["sections"] for entry in section["chapters"]]
+    entries += manifest.get("appendices", [])
+    published = [entry for entry in entries if entry["status"] == "published"]
     explicit = (
         "README.md",
         "CONTRIBUTING.md",
         "LICENSE",
         "book/README.md",
-        "book/introduction.md",
         "book/OUTLINE.md",
         "book/WRITING_GUIDE.md",
         "book-en/README.md",
@@ -44,24 +58,30 @@ def _allowlisted_sources(root: Path) -> tuple[Path, ...]:
         "docs/TRANSLATION.md",
         "docs/RELEASES.md",
     )
-    explicit += tuple(f"book/chapter{number}.md" for number in range(1, 15))
-    explicit += tuple(f"chapter{number}/README.md" for number in range(1, 15))
-    explicit += tuple(
-        f"chapter{number}/reference-answers.md" for number in range(1, 15)
-    )
     sources = [root / relative for relative in explicit]
+    sources.append(root / "book" / manifest["introduction"]["source"])
+    for entry in published:
+        sources.extend(root / "book" / entry[field] for field in ("source", "experiment", "answers"))
+    reading_paths = root / "book/READING_PATHS.md"
+    if reading_paths.is_file():
+        sources.append(reading_paths)
+    public_packages = {(root / "book" / entry["experiment"]).resolve().parent.name for entry in published}
+    public_image_groups = {Path(entry["source"]).stem for entry in published}
     # Supplemental reading stays opt-in; do not expose private review/source trees.
-    if (root / "chapter9" / "faq.md").is_file():
+    if "chapter9" in public_packages and (root / "chapter9" / "faq.md").is_file():
         sources.append(root / "chapter9" / "faq.md")
-    if (root / "chapter8" / "production-guide.md").is_file():
+    if "chapter8" in public_packages and (root / "chapter8" / "production-guide.md").is_file():
         sources.append(root / "chapter8" / "production-guide.md")
     for relative in (
         "chapter11/product-walkthrough.md",
         "chapter12/pi-source-study.md",
         "chapter14/integrations.md",
+        "chapter15/real-training-guide.md",
+        "chapter18/IMPLEMENTATION.md",
+        "appendix_a/EXERCISE_ANSWERS.md",
     ):
         supplemental = root / relative
-        if supplemental.is_file():
+        if Path(relative).parts[0] in public_packages and supplemental.is_file():
             sources.append(supplemental)
 
     images = root / "book" / "images"
@@ -71,20 +91,21 @@ def _allowlisted_sources(root: Path) -> tuple[Path, ...]:
             for path in sorted(images.rglob("*"))
             if path.is_file()
             and path.suffix.casefold() in IMAGE_SUFFIXES
-            # Appendix A is a local candidate, just like chapters 15–18.
-            and "appendix-a" not in path.relative_to(images).parts
-            and not any(
-                re.fullmatch(r"chapter(?:1[5-9]|[2-9][0-9])", part)
-                for part in path.relative_to(images).parts
+            and all(
+                part in public_image_groups
+                for part in path.relative_to(images).parts[:-1]
+                if re.fullmatch(r"chapter[1-9][0-9]*|appendix-[a-z]+", part)
             )
         )
-    for number in range(1, 15):
-        reports = root / f"chapter{number}" / "reports"
+    for package in sorted(public_packages):
+        reports = root / package / "reports"
+        if package in CURRENT_REPORT_BUNDLES:
+            reports /= CURRENT_REPORT_BUNDLES[package]
         if not reports.is_dir():
             continue
         sources.extend(
             path
-            for path in sorted(reports.rglob("*"))
+            for path in sorted(reports.iterdir())
             if path.is_file() and path.suffix.casefold() in REPORT_SUFFIXES
         )
     missing = [path.relative_to(root).as_posix() for path in sources if not path.is_file()]

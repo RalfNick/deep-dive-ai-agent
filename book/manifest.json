@@ -3,8 +3,8 @@
   "title": "深入浅出 AI Agent",
   "subtitle": "从大模型原理到手写 Coding Agent",
   "description": "从模型、上下文和工具出发，逐步搭建可运行、可验证、可持续改进的 AI Agent 工程体系。",
-  "version": "0.14.0",
-  "updated": "2026-09-27",
+  "version": "0.18.0",
+  "updated": "2026-10-05",
   "cover": "images/deep-dive-ai-agent-cover.webp",
   "repositoryUrl": "https://github.com/RalfNick/deep-dive-ai-agent",
   "totalChapters": 18,
@@ -31,7 +31,7 @@
           "source": "chapter1.md",
           "experiment": "../chapter1/README.md",
           "answers": "../chapter1/reference-answers.md",
-          "updated": "2026-09-07"
+          "updated": "2026-10-05"
         },
         {
           "order": 2,
@@ -42,7 +42,7 @@
           "source": "chapter2.md",
           "experiment": "../chapter2/README.md",
           "answers": "../chapter2/reference-answers.md",
-          "updated": "2026-09-07"
+          "updated": "2026-10-05"
         },
         {
           "order": 3,
@@ -53,7 +53,7 @@
           "source": "chapter3.md",
           "experiment": "../chapter3/README.md",
           "answers": "../chapter3/reference-answers.md",
-          "updated": "2026-09-07"
+          "updated": "2026-10-05"
         },
         {
           "order": 4,
@@ -64,7 +64,7 @@
           "source": "chapter4.md",
           "experiment": "../chapter4/README.md",
           "answers": "../chapter4/reference-answers.md",
-          "updated": "2026-09-07"
+          "updated": "2026-10-05"
         }
       ]
     },
@@ -82,7 +82,7 @@
           "source": "chapter5.md",
           "experiment": "../chapter5/README.md",
           "answers": "../chapter5/reference-answers.md",
-          "updated": "2026-09-07"
+          "updated": "2026-10-05"
         },
         {
           "order": 6,
@@ -93,7 +93,7 @@
           "source": "chapter6.md",
           "experiment": "../chapter6/README.md",
           "answers": "../chapter6/reference-answers.md",
-          "updated": "2026-09-07"
+          "updated": "2026-10-05"
         },
         {
           "order": 7,
@@ -104,7 +104,7 @@
           "source": "chapter7.md",
           "experiment": "../chapter7/README.md",
           "answers": "../chapter7/reference-answers.md",
-          "updated": "2026-08-25"
+          "updated": "2026-10-05"
         },
         {
           "order": 8,
@@ -115,7 +115,7 @@
           "source": "chapter8.md",
           "experiment": "../chapter8/README.md",
           "answers": "../chapter8/reference-answers.md",
-          "updated": "2026-09-07"
+          "updated": "2026-10-05"
         }
       ]
     },
@@ -133,7 +133,7 @@
           "source": "chapter9.md",
           "experiment": "../chapter9/README.md",
           "answers": "../chapter9/reference-answers.md",
-          "updated": "2026-09-07"
+          "updated": "2026-10-05"
         },
         {
           "order": 10,
@@ -144,7 +144,7 @@
           "source": "chapter10.md",
           "experiment": "../chapter10/README.md",
           "answers": "../chapter10/reference-answers.md",
-          "updated": "2026-09-09"
+          "updated": "2026-10-05"
         },
         {
           "order": 11,
@@ -155,7 +155,7 @@
           "source": "chapter11.md",
           "experiment": "../chapter11/README.md",
           "answers": "../chapter11/reference-answers.md",
-          "updated": "2026-09-27"
+          "updated": "2026-10-05"
         },
         {
           "order": 12,
@@ -166,7 +166,7 @@
           "source": "chapter12.md",
           "experiment": "../chapter12/README.md",
           "answers": "../chapter12/reference-answers.md",
-          "updated": "2026-09-27"
+          "updated": "2026-10-05"
         }
       ]
     },
@@ -184,7 +184,7 @@
           "source": "chapter13.md",
           "experiment": "../chapter13/README.md",
           "answers": "../chapter13/reference-answers.md",
-          "updated": "2026-09-27"
+          "updated": "2026-10-05"
         },
         {
           "order": 14,
@@ -195,7 +195,7 @@
           "source": "chapter14.md",
           "experiment": "../chapter14/README.md",
           "answers": "../chapter14/reference-answers.md",
-          "updated": "2026-09-27"
+          "updated": "2026-10-05"
         }
       ]
     },
@@ -207,16 +207,24 @@
         {
           "order": 15,
           "slug": "chapter-15",
-          "title": "Agent 的后训练",
-          "status": "planned",
-          "summary": "设计轨迹、工具调用和拒绝样本，理解 SFT、偏好优化与强化学习的边界。"
+          "title": "Agent 的后训练：什么时候 Prompt 已经不够",
+          "status": "published",
+          "summary": "从故障归因与干预路由出发，审计轨迹数据，通过有限动作 SFT、DPO 与奖励投机实验理解后训练的适用条件。",
+          "source": "chapter15.md",
+          "experiment": "../chapter15/README.md",
+          "answers": "../chapter15/reference-answers.md",
+          "updated": "2026-10-05"
         },
         {
           "order": 16,
           "slug": "chapter-16",
           "title": "从失败中学习：持续改进系统",
-          "status": "planned",
-          "summary": "把失败转成回放样本、回归测试、规则、Skill、记忆或训练数据。"
+          "status": "published",
+          "summary": "把失败转成可回放样本，比较规则、Skill、记忆和训练数据的干预边界，用新验证约束发布与回滚。",
+          "source": "chapter16.md",
+          "experiment": "../chapter16/README.md",
+          "answers": "../chapter16/reference-answers.md",
+          "updated": "2026-10-05"
         }
       ]
     },
@@ -229,17 +237,37 @@
           "order": 17,
           "slug": "chapter-17",
           "title": "多模态与实时 Agent",
-          "status": "planned",
-          "summary": "处理图像、语音、屏幕、文档、Computer Use 与实时事件流。"
+          "status": "published",
+          "summary": "用图像、文档、语音与屏幕的离线固定案例理解媒体证据、实时事件、取消和安全执行边界。",
+          "source": "chapter17.md",
+          "experiment": "../chapter17/README.md",
+          "answers": "../chapter17/reference-answers.md",
+          "updated": "2026-10-05"
         },
         {
           "order": 18,
           "slug": "chapter-18",
-          "title": "Multi-Agent 与最终系统",
-          "status": "planned",
-          "summary": "讨论委派、并行研究、共享状态、交接、冲突处理与停止条件。"
+          "title": "Multi-Agent 与最终系统：不是 Agent 越多越好",
+          "status": "published",
+          "summary": "以知识问答和仓库修复双路径，理解委派、子树预算、证据交接、单写者和最终验收如何组成有界协作系统。",
+          "source": "chapter18.md",
+          "experiment": "../chapter18/README.md",
+          "answers": "../chapter18/reference-answers.md",
+          "updated": "2026-10-05"
         }
       ]
+    }
+  ],
+  "appendices": [
+    {
+      "slug": "appendix-a",
+      "title": "附录 A：Python、TypeScript 与模型 API 快速准备",
+      "status": "published",
+      "summary": "从解释器、独立环境和离线练习开始，辨清 TypeScript 运行与类型检查，再理解模型 API 的请求、返回与密钥边界。",
+      "source": "appendix-a.md",
+      "experiment": "../appendix_a/README.md",
+      "answers": "../appendix_a/EXERCISE_ANSWERS.md",
+      "updated": "2026-10-05"
     }
   ]
 }

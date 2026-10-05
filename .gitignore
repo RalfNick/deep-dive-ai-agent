@@ -4,6 +4,7 @@
 !.env.example
 .venv/
 .venv-*/
+chapter6/.runs/
 chapter12/.runs/
 chapter13/.runs/
 chapter15/.runs/
@@ -37,6 +38,7 @@ chapter8/live-output/
 **/preview-pages/
 **/rendered-pages/
 output/playwright/
+outputs/releases/
 
 # Editors and operating systems
 .idea/

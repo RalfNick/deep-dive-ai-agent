@@ -626,3 +626,5 @@ python -B -m chapter15.experiments `
 - [Benchmark Contamination：训练与评测重叠如何削弱结论](sources/chapter15-sources.md#benchmark-contamination)
 - [Hugging Face TRL 与数据工具的官方入口](sources/chapter15-sources.md#hf-trl-sft)
 - [本章确定性实验报告及证据限制](sources/chapter15-sources.md#local-post-training-report)
+
+[配套实验](../chapter15/README.md) · [参考答案](../chapter15/reference-answers.md) · [下一章：从失败中学习](chapter16.md)

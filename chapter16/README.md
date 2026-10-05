@@ -1,6 +1,8 @@
 # 第16章：从失败中学习
 
-本地 v1.0-rc2 候选，未发布；[RC1 稿图](../book/versions/chapter16-v1.0-rc1/README.md)和[RC1 报告](report-history/v1.0-rc1/manifest.json)保留。Python3.11+标准库运行时；不联网，不读取环境密钥，不调用模型/外部工具。固定seed1601、时钟2026-09-28T00:00:00Z；TTL实验显式推进时钟。夹具是虚构Atlas帮助中心，不是客户数据。
+2026-10-05：已随全书 `0.18.0` 公开，正式版本说明见[本次记录](../book/versions/chapter16-v1.0.md)。以下离线范围与旧候选记录继续保留。
+
+正式 v1.0 实验基线；[RC1 稿图](../book/versions/chapter16-v1.0-rc1/README.md)和[RC1 报告](report-history/v1.0-rc1/manifest.json)保留。Python3.11+标准库运行时；不联网，不读取环境密钥，不调用模型/外部工具。固定seed1601、时钟2026-09-28T00:00:00Z；TTL实验显式推进时钟。夹具是虚构Atlas帮助中心，不是客户数据。
 
 在仓库根运行；若需要独立环境：
 

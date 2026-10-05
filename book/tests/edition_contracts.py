@@ -16,6 +16,8 @@ from typing import Sequence
 ARCHIVE = "book/versions/whole-book-reader-v2-before-2026-10-03"
 BASELINE = "c8f2995343e90de0721c4236f880c88bbcb3d324"
 PROSE_ARCHIVE = "book/versions/whole-book-prose-v3-before-2026-10-05"
+PUBLICATION_BASELINE = "363b05a0ed080abc2e251c3be5d68668b8508934"
+PUBLICATION_METADATA = frozenset(f"chapter{n}/README.md" for n in range(15, 19)) | {"book/README.md"}
 PROSE_DOCUMENTATION_TESTS = frozenset({
     "chapter12/tests/test_manuscript.py",
     "chapter15/tests/test_manuscript.py",
@@ -42,6 +44,11 @@ def preserved_payload(root: Path, relative: str) -> bytes:
     root = root.resolve()
     current = root.joinpath(*relative_path.parts)
     assert current.resolve().is_relative_to(root), relative
+    if relative in PUBLICATION_METADATA:
+        return subprocess.run(
+            ["git", "show", f"{PUBLICATION_BASELINE}:{relative}"], cwd=root,
+            check=True, capture_output=True,
+        ).stdout
     prose_contract = relative in PROSE_DOCUMENTATION_TESTS
     archive = root / (PROSE_ARCHIVE if prose_contract else ARCHIVE)
     manifest_path = archive / "snapshot-hashes.json"
@@ -76,10 +83,11 @@ def assert_frozen_history(root: Path, base: str, protected: Sequence[str]) -> No
         check=True, capture_output=True, text=True,
     ).stdout.splitlines()
     for relative in changes:
-        assert relative in EDITABLE_SOURCES, f"unexpected protected edit: {relative}"
-        archive = PROSE_ARCHIVE if relative in PROSE_DOCUMENTATION_TESTS else ARCHIVE
-        snapshot = root / archive / (relative + ".snapshot")
-        assert snapshot.is_file(), f"unarchived protected edit: {relative}"
+        assert relative in EDITABLE_SOURCES | PUBLICATION_METADATA, f"unexpected protected edit: {relative}"
+        if relative not in PUBLICATION_METADATA:
+            archive = PROSE_ARCHIVE if relative in PROSE_DOCUMENTATION_TESTS else ARCHIVE
+            snapshot = root / archive / (relative + ".snapshot")
+            assert snapshot.is_file(), f"unarchived protected edit: {relative}"
         archived = preserved_payload(root, relative)
         original = subprocess.run(
             ["git", "show", f"{base}:{relative}"], cwd=root,

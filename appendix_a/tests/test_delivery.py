@@ -76,10 +76,14 @@ class DeliveryTests(unittest.TestCase):
                         r["props"]["end"]["normalizedAnchor"]["y"]) for r in incoming]
             self.assertEqual(len(set(anchors)), 4)
 
-    def test_public_build_does_not_collect_local_appendix_images(self):
+    def test_public_build_collects_published_appendix_images_without_history(self):
         from scripts.build_site import _allowlisted_sources
         sources = _allowlisted_sources(ROOT)
-        self.assertFalse(any(path.is_relative_to(ROOT / "book/images/appendix-a") for path in sources))
+        images = [path for path in sources if path.is_relative_to(ROOT / "book/images/appendix-a")]
+        self.assertEqual(4, len(images))
+        self.assertIn(ROOT / "book/appendix-a.md", sources)
+        self.assertIn(ROOT / "appendix_a/README.md", sources)
+        self.assertFalse(any(path.is_relative_to(ROOT / "book/versions") for path in sources))
 
     def test_inspection_cannot_save_machine_observations_as_stable_reports(self):
         result = subprocess.run(

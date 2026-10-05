@@ -542,3 +542,5 @@ python -B -m pytest chapter17/tests -q
 [^live]: [OpenAI Getting started with GPT-Live](https://developers.openai.com/api/docs/guides/live)，2026-09-30 核对。
 
 延伸阅读与每条来源的适用边界见[第 17 章资料台账](sources/chapter17-sources.md)。
+
+[配套实验](../chapter17/README.md) · [参考答案](../chapter17/reference-answers.md) · [下一章：Multi-Agent 与最终系统](chapter18.md)

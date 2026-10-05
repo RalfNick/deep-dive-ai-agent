@@ -91,27 +91,34 @@ def validate_manifest(root: Path) -> dict[str, Any]:
     if [chapter.get("order") for chapter in chapters] != list(range(1, 19)):
         raise ValueError("chapters must be ordered from 1 through 18")
 
-    slugs = [introduction["slug"]] + [chapter.get("slug") for chapter in chapters]
+    appendices = manifest.get("appendices", [])
+    if not isinstance(appendices, list):
+        raise ValueError("appendices must be an array")
+    entries = chapters + appendices
+    if not all(isinstance(entry, dict) for entry in entries):
+        raise ValueError("publication entries must be objects")
+    slugs = [introduction["slug"]] + [entry.get("slug") for entry in entries]
     if len(slugs) != len(set(slugs)):
         raise ValueError("entry slugs must be unique")
 
-    for chapter in chapters:
-        _require_fields(chapter, REQUIRED_ENTRY_FIELDS | {"order"}, chapter.get("slug", "chapter"))
+    for chapter in entries:
+        required = REQUIRED_ENTRY_FIELDS | ({"order"} if chapter in chapters else set())
+        _require_fields(chapter, required, chapter.get("slug", "entry"))
         status = chapter["status"]
         if status not in ALLOWED_STATUSES:
-            raise ValueError(f"invalid chapter status: {status}")
+            raise ValueError(f"invalid publication status: {status}")
         if status != "published":
             exposed = sorted(PUBLICATION_FIELDS.intersection(chapter))
             if exposed:
                 raise ValueError(
-                    f"unpublished chapter exposes files: {chapter['slug']} ({', '.join(exposed)})"
+                    f"unpublished entry exposes files: {chapter['slug']} ({', '.join(exposed)})"
                 )
             continue
 
         _require_fields(
             chapter,
             REQUIRED_ENTRY_FIELDS
-            | {"order", "source", "updated", "experiment", "answers"},
+            | {"source", "updated", "experiment", "answers"},
             chapter["slug"],
         )
         for field in PUBLICATION_FIELDS:
